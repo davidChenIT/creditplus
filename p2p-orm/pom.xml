@@ -23,5 +23,18 @@
 		<groupId>mysql</groupId>
 		<artifactId>mysql-connector-java</artifactId>
 	</dependency>
+	<dependency>
+		<groupId>org.jboss.narayana.jta</groupId>
+		<artifactId>narayana-jta</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>javax.transaction</groupId>
+		<artifactId>jta</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-jdbc</artifactId>
+		<version>${spring.version}</version>
+	</dependency>	
   </dependencies>
 </project>

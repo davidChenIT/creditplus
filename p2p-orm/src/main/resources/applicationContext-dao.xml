@@ -6,14 +6,17 @@
      http://www.springframework.org/schema/beans/spring-beans.xsd
      http://www.springframework.org/schema/context
      http://www.springframework.org/schema/context/spring-context.xsd ">
-     <context:property-placeholder location="classpath:jdbc.properties" />
- 
-    <bean id="dataSource" class="org.apache.commons.dbcp2.Managed.BasicManagedDataSource" destroy-method="close">
-       <property name="transactionManager" value="transactionManager" />
-       <property name="driverClassName" value="${jdbc.driver}" />
+     
+    <context:property-placeholder location="classpath:jdbc.properties" /> 
+    <bean id="mysqlXADataSource" class="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource">
        <property name="url" value="${mysql.url}" />
-       <property name="username" value="${mysql.username}" />
+       <property name="user" value="${mysql.username}" />
        <property name="password" value="${mysql.password}" />
+    </bean>
+    
+    <bean id="dataSource" class="org.apache.commons.dbcp2.managed.BasicManagedDataSource" destroy-method="close">
+       <property name="transactionManager"   ref="jbossTransactionManager" />
+       <property name="xaDataSourceInstance" ref="mysqlXADataSource" />
        <property name="validationQuery" value="${mysql.validationQuery}" />
        <property name="initialSize" value="${jdbc.initialSize}" />  
        <property name="minIdle" value="${jdbc.minIdle}" /> 
@@ -21,10 +24,11 @@
     </bean>
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
        <property name="dataSource" ref="dataSource" />
-       <property name="mapperLocations" value="classpath:com/tiantian/mybatis/mapper/*.xml" />
+       <property name="mapperLocations" value="classpath:com/creditplus/p2p/mapper/*.xml" />
        <property name="typeAliasesPackage" value="com.creditplus.p2p.model" />
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-       <property name="basePackage" value="com.creditplus.p2p.mapper" />
+       <property name="basePackage" value="com.creditplus.p2p.dao" />
+       <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>         
     </bean>    
 </beans>
