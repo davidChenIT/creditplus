@@ -6,4 +6,11 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>p2p-service</artifactId>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.creditplus.p2p</groupId>
+  		<artifactId>p2p-orm</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  </dependencies>
 </project>
