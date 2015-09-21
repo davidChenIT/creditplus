@@ -106,12 +106,29 @@
   			<groupId>javax.transaction</groupId>
   			<artifactId>jta</artifactId>
   			<version>1.1</version>
-  		</dependency>  		
+  		</dependency>
+  		<dependency>
+  			<groupId>org.apache.logging.log4j</groupId>
+  			<artifactId>log4j-core</artifactId>
+  			<version>${log4j.version}</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>org.apache.logging.log4j</groupId>
+  			<artifactId>log4j-slf4j-impl</artifactId>
+  			<version>${log4j.version}</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+  			<artifactId>jackson-jaxrs-json-provider</artifactId>
+  			<version>${jackson.version}</version>
+  		</dependency>
   	</dependencies>
   </dependencyManagement>
   <properties>
   	<spring.version>4.2.1.RELEASE</spring.version>
   	<cxf.version>3.1.2</cxf.version>
   	<narayana.version>5.2.2.Final</narayana.version>
+  	<log4j.version>2.3</log4j.version>
+  	<jackson.version>2.6.2</jackson.version>
   </properties>
 </project>

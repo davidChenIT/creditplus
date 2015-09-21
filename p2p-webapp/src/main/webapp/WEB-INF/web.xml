@@ -5,7 +5,7 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-		 classpath*:applicationContext-rest.xml,
+		 classpath*:applicationContext-webapp.xml,
 		 classpath*:applicationContext-service.xml,
 		 classpath*:applicationContext-dao.xml,
 		 classpath*:applicationContext-jta.xml</param-value>
@@ -22,6 +22,6 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CXFServlet</servlet-name>
-		<url-pattern>/service/*</url-pattern>
+		<url-pattern>/services/*</url-pattern>
 	</servlet-mapping>
 </web-app>
