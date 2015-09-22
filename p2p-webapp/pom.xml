@@ -67,16 +67,6 @@
 		<artifactId>spring-web</artifactId>
 	</dependency>	
 	<dependency>
-		<groupId>com.creditplus.p2p</groupId>
-		<artifactId>p2p-service</artifactId>
-		<version>${project.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>com.creditplus.p2p</groupId>
-		<artifactId>p2p-orm</artifactId>
-		<version>${project.version}</version>
-	</dependency>
-	<dependency>
 		<groupId>org.apache.logging.log4j</groupId>
 		<artifactId>log4j-core</artifactId>
 	</dependency>
@@ -87,7 +77,12 @@
 	<dependency>
 		<groupId>com.fasterxml.jackson.jaxrs</groupId>
 		<artifactId>jackson-jaxrs-json-provider</artifactId>
-	</dependency>			
+	</dependency>
+	<dependency>
+		<groupId>com.creditplus.p2p</groupId>
+		<artifactId>p2p-orm</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
   </dependencies>
   <build>
     <finalName>p2p-webapp</finalName>
