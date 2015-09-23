@@ -3,12 +3,12 @@ package com.creditplus.p2p.webapp.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import com.creditplus.p2p.service.UserService;
 import com.creditplus.p2p.model.UserVO;
 import com.creditplus.p2p.webapp.UserAction;
 
 
-public class UserActionImpl<UserService> implements UserAction {
+public class UserActionImpl implements UserAction {
 	
 	public static final Logger logger = LogManager.getLogger(UserActionImpl.class);
 	
@@ -19,7 +19,6 @@ public class UserActionImpl<UserService> implements UserAction {
     	logger.info("id=" + id);
     	UserVO userVO = userService.getUserById(id);
     	logger.info("======" + userVO.getUsername() );
-
     	return userVO;
 	}
 
