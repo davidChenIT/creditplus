@@ -26,4 +26,6 @@ public class UserServiceImpl implements UserService {
 	public UserVO getUserById(String id) {
 		return userDao.getUserById(id);
 	}
+	
+	public void test(){};
 }
