@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">                   
+    <http pattern="/js/**" security="none"/>
+    <http pattern="/css/**" security="none"/>
+    <http pattern="/images/**" security="none"/>
+    <http pattern="/login.jsp" security="none"/>
+    
+    <http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
+        <logout/>
+        <!-- 实现免登陆验证 -->
+        <remember-me />
+        <session-management invalid-session-url="/login.jsp">
+            <concurrency-control max-sessions="10" error-if-maximum-exceeded="true" />
+        </session-management>
+        
+       	<custom-filter ref="loginFilter" position="FORM_LOGIN_FILTER"  />
+		<custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+    </http>
+        
+    <!-- 登录验证器 -->
+    <beans:bean id="loginFilter" class="com.creditplus.p2p.security.UsernamePasswordAuthFilter">
+		<!-- 处理登录 -->
+		<beans:property name="filterProcessesUrl" value="/j_spring_security_check"/>
+		<beans:property name="authenticationSuccessHandler" ref="loginLogAuthenticationSuccessHandler"/>
+		<beans:property name="authenticationFailureHandler" ref="simpleUrlAuthenticationFailureHandler"/>
+		<beans:property name="authenticationManager" ref="authenticationManager"/>
+	</beans:bean>
+	<beans:bean id="loginLogAuthenticationSuccessHandler"
+		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/page/index.html"/>
+	</beans:bean>
+	<beans:bean id="simpleUrlAuthenticationFailureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<beans:property name="defaultFailureUrl" value="/login.jsp"/>
+	</beans:bean>
+	
+    <!-- 认证过滤器 -->
+    <beans:bean id="securityFilter" class="com.creditplus.p2p.security.SecurityFilter">
+    	<!-- 用户拥有的权限 -->
+    	<beans:property name="authenticationManager" ref="authenticationManager" />
+    	<!-- 用户是否拥有所请求资源的权限 -->
+    	<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
+    	<!-- 资源与权限对应关系 -->
+    	<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
+    </beans:bean>
+    <!-- 实现了UserDetailsService的Bean -->
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userDetailServiceImpl" />
+    </authentication-manager>
+    
+    <beans:bean id="accessDecisionManager" class="com.creditplus.p2p.security.AccessDecisionManagerImpl"/>
+	<beans:bean id="userDetailServiceImpl" class="com.creditplus.p2p.security.UserDetailServiceImpl" />
+	<beans:bean id="securityMetadataSource" class="com.creditplus.p2p.security.SecurityMetadataSource">
+		<beans:constructor-arg name="resourceDao" ref="resourceDao"/>
+	</beans:bean>
+	
+	<!-- 未登录的切入点 -->
+	<beans:bean id="authenticationProcessingFilterEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:constructor-arg name="loginFormUrl" value="/login.jsp" />
+	</beans:bean>
+</beans:beans>
