@@ -3,18 +3,19 @@ package com.creditplus.p2p.model;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Roles entity. @author MyEclipse Persistence Tools
- */
-
 public class RoleVO implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	// Fields
 	private Integer id;
 	private Integer enable;
 	private String name;
-	private Set roles = new HashSet(0);
-	private Set resources = new HashSet(0);
+	private Set<RoleVO> roles = new HashSet<RoleVO>(0);
+	private Set<ResourceVO> resources = new HashSet<ResourceVO>(0);
 	
 	/** default constructor */
 	public RoleVO() {
@@ -44,27 +45,19 @@ public class RoleVO implements java.io.Serializable {
 		this.name = name;
 	}
 
-
-
-	public Set getRoles() {
+	public Set<RoleVO> getRoles() {
 		return roles;
 	}
 
-
-
-	public void setRoles(Set roles) {
+	public void setRoles(Set<RoleVO> roles) {
 		this.roles = roles;
 	}
 
-
-
-	public Set getResources() {
+	public Set<ResourceVO> getResources() {
 		return resources;
 	}
 
-
-
-	public void setResources(Set resources) {
+	public void setResources(Set<ResourceVO> resources) {
 		this.resources = resources;
 	}
 

@@ -15,7 +15,7 @@ public class UserVO {
 	
 	private String remark;
 	
-	private Set roles = new HashSet(0);
+	private Set<RoleVO> roles = new HashSet<RoleVO>(0);
 
 	public Integer getId() {
 		return id;
@@ -33,11 +33,11 @@ public class UserVO {
 		this.enable = enable;
 	}
 
-	public Set getRoles() {
+	public Set<RoleVO> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set roles) {
+	public void setRoles(Set<RoleVO> roles) {
 		this.roles = roles;
 	}
 
