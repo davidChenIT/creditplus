@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,7 +15,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.creditplus.p2p.dao.UserDao;
-
 import com.creditplus.p2p.model.UserVO;
 
 public class UsernamePasswordAuthFilter extends UsernamePasswordAuthenticationFilter{
@@ -21,10 +22,14 @@ public class UsernamePasswordAuthFilter extends UsernamePasswordAuthenticationFi
 	public static final String USERNAME = "username";
 	public static final String PASSWORD = "password";
 	
+	public static final Logger logger = LogManager.getLogger(UsernamePasswordAuthenticationFilter.class);
+
 	@Autowired
 	private UserDao usersDao;
 
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+		logger.info("------login-start-----");
+		
 		if (!request.getMethod().equals("POST")) {
 			throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
 		}
@@ -33,6 +38,12 @@ public class UsernamePasswordAuthFilter extends UsernamePasswordAuthenticationFi
 		
 		String username = obtainUsername(request);
 		String password = obtainPassword(request);
+		
+		logger.info("------username-----" + username);
+		
+		logger.info("------password-----" + password);
+
+
 		
 		//验证用户账号与密码是否对应
 		username = username.trim();

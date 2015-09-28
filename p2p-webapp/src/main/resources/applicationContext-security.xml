@@ -3,24 +3,35 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:beans="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">                   
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+    <debug/>                            
     <http pattern="/js/**" security="none"/>
     <http pattern="/css/**" security="none"/>
     <http pattern="/images/**" security="none"/>
     <http pattern="/login.jsp" security="none"/>
-    
+     
     <http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
-        <logout/>
+        <intercept-url pattern="/page/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/services/**" access="isAuthenticated()"/>  
+         
         <!-- 实现免登陆验证 -->
         <remember-me />
-        <session-management invalid-session-url="/login.jsp">
+        <session-management invalid-session-url="/login.jsp" >
             <concurrency-control max-sessions="10" error-if-maximum-exceeded="true" />
         </session-management>
         
-       	<custom-filter ref="loginFilter" position="FORM_LOGIN_FILTER"  />
+        <csrf disabled="true" />
+       	<custom-filter ref="loginFilter"    position="FORM_LOGIN_FILTER"  />
 		<custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+        <logout/>		
     </http>
-        
+    
+    <!--beans:bean id="csrfFilter" class="org.springframework.security.web.csrf.CsrfFilter">
+		<beans:constructor-arg>
+  			<beans:bean class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository"/>
+		</beans:constructor-arg>
+	</beans:bean-->
+	      
     <!-- 登录验证器 -->
     <beans:bean id="loginFilter" class="com.creditplus.p2p.security.UsernamePasswordAuthFilter">
 		<!-- 处理登录 -->
@@ -35,7 +46,7 @@
 	</beans:bean>
 	<beans:bean id="simpleUrlAuthenticationFailureHandler"
 		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-		<beans:property name="defaultFailureUrl" value="/login.jsp"/>
+		<beans:property name="defaultFailureUrl" value="/page/index.html"/>
 	</beans:bean>
 	
     <!-- 认证过滤器 -->
@@ -62,4 +73,6 @@
 	<beans:bean id="authenticationProcessingFilterEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
 		<beans:constructor-arg name="loginFormUrl" value="/login.jsp" />
 	</beans:bean>
+	
+    <beans:bean id="loggerListener" class="org.springframework.security.authentication.event.LoggerListener" /> 	
 </beans:beans>

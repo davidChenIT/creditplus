@@ -4,6 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>登录</title>
 <link href="css/credit1.css" rel="stylesheet" type="text/css">
 <link href="css/credit2.css" rel="stylesheet" type="text/css">
@@ -20,7 +22,7 @@
 		if(!username || !$.trim(username)){
 		  var usernameTipLength=$("span[name='usernameTip']").length;
 		  if(usernameTipLength==0){
-		    $("input[name='username']").parent().after("<span name='usernameTip' style='color:red;'>请输入用户名！</span>");
+		  	$("input[name='username']").parent().after("<span name='usernameTip' style='color:red;'>请输入用户名！</span>");
 		  }
 		  return false;
 		}else{
@@ -30,7 +32,7 @@
 		if(!password){
 		   var passwordTipLength=$("span[name='passwordTip']").length;
 		   if(passwordTipLength==0){
-		    $("input[name='password']").parent().after("<span name='passwordTip' style='color:red;'>请输入密码！</span>");
+		   	$("input[name='password']").parent().after("<span name='passwordTip' style='color:red;'>请输入密码！</span>");
 		   }
 		   
 		   return false;
@@ -68,8 +70,9 @@
 	</header>
 	<!--  头部end -->
 	
-   <form action="j_spring_security_check" method="post" onsubmit="return validateForm(this)" autocomplete="off">	
-	<!-- 中间区域 -->
+   <form action="j_spring_security_check" method="post" onsubmit="return validateForm(this)" autocomplete="off">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
+    <!-- 中间区域 -->
 	<section id="hae_Body" class="hae-layout layout-equalheight ">
 		<section class="row">
 			
