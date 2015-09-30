@@ -56,21 +56,42 @@
 						}
 					}
 					checkAllParents(treeNode);
+					//设置面包屑
 					$(".hae-breadcrumb").html(liHtml);
+					
+					//获取页面
+					var fileName=treeNode.url;
+					if(fileName){
+						fileName=fileName.substring(fileName.indexOf("#")+2);
+						$.ajax({ 
+							url: fileName,
+							//context: document.body,
+							success: function(data){
+								debugger;	
+								if(data){
+								  $("#hae_Main").html(data);
+								}
+							},error:function(error){
+							  debugger;
+							}
+						});
+					}
+					
+					
 				}
 		}
 
 	},
 	
 	zTreeNodes = [
-		{"id":1,"pId":0,"name":"首页","url":"#hh.html","target":"_self"},
+		{"id":1,"pId":0,"name":"首页","url":"#/hh.html","target":"_self"},
 		{"id":2,"pId":0,"name":"风控管理"},
 		{"id":3,"pId":0,"name":"系统管理"},
-		{"id":4,"pId":3,"name":"权限管理","url":"#hh.html","target":"_self"},
-		{"id":5,"pId":2,"name":"信用初审","url":"#hh.html","target":"_self"},
-		{"id":6,"pId":2,"name":"信用复审","url":"#hh.html","target":"_self"},
-		{"id":7,"pId":2,"name":"标的管理","url":"#hh.html","target":"_self"},
-		{"id":8,"pId":2,"name":"投标","url":"#hh.html","target":"_self"}
+		{"id":4,"pId":3,"name":"权限管理","url":"#/hh.html","target":"_self"},
+		{"id":5,"pId":2,"name":"信用初审","url":"#/firstTrialList.html","target":"_self"},
+		{"id":6,"pId":2,"name":"信用复审","url":"#/hh.html","target":"_self"},
+		{"id":7,"pId":2,"name":"标的管理","url":"#/tenderMng.html","target":"_self"},
+		{"id":8,"pId":2,"name":"投标","url":"#/makeTenderList.html","target":"_self"}
 		
 	];
 	zTreeObj = $.fn.zTree.init($("#menu_ztree"), setting, zTreeNodes);
@@ -78,8 +99,9 @@
 	
 	
 	//展开或隐藏左侧栏目区域
-	$(".toggle-icon").click(function(){
-	    var thisClss=$(this).attr("class");
+	$("#hae_Menu").on("click",".toggle-icon",function(){
+		
+		var thisClss=$(this).attr("class");
 		if(thisClss.indexOf("icon-chevron-left")!=-1){
 		     $(this).attr("class",thisClss.replace("icon-chevron-left","icon-chevron-right"));
 		     $(this).text(">");
@@ -91,26 +113,29 @@
 			 $("#hae_LeftPanel").width("216");
 			 $("#menu_ztree").show()
 		}
+		
 	});
 	
 	
 	//tab页面点击事件
-	$(".tabs-head li").click(function(){
-	    var tabId=$(this).attr("tabid");
-		var liClass=$(this).attr("class");
-		if("tabs-selected"!=liClass){
-		   //设置标题为选中状态
-		   $(this).attr("class","tabs-selected");
-		   //设置相邻元素的标题为未选择状态
-		   $(this).siblings("li").attr("class","");
-		   
-		   //设置当前选中tab对应的内容区域显示
-		   var currentTab=$("div[tabid='"+tabId+"']");
-		   currentTab.attr("class","tabs-body-item haePageContext hae-validator");
-		  
-		   //相邻的内容区域隐藏
-		   currentTab.siblings("div").attr("class","tabs-body-item haePageContext hae-validator hae-hide");
-		}
+	$("#hae_Main").on("click",".tabs-head li",function(){
+			var tabId=$(this).attr("tabid");
+			var liClass=$(this).attr("class");
+			if("tabs-selected"!=liClass){
+			   //设置标题为选中状态
+			   $(this).attr("class","tabs-selected");
+			   //设置相邻元素的标题为未选择状态
+			   $(this).siblings("li").attr("class","");
+			   
+			   //设置当前选中tab对应的内容区域显示
+			   var currentTab=$("div[tabid='"+tabId+"']");
+			   currentTab.attr("class","tabs-body-item haePageContext hae-validator");
+			  
+			   //相邻的内容区域隐藏
+			   currentTab.siblings("div").attr("class","tabs-body-item haePageContext hae-validator hae-hide");
+			}
+		
+		
 	});
   
   })
