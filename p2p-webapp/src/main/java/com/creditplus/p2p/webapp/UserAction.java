@@ -13,7 +13,7 @@ public interface UserAction {
 
 	@GET
 	@Path("/getUserById/{id}")
-	@Produces({ MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON})	
 	public UserVO getUserById(@PathParam("id") String id);
 
 }

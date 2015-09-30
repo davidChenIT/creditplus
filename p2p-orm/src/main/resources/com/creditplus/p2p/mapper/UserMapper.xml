@@ -7,6 +7,10 @@
     <insert id="insertUser" parameterType="UserVO">
        insert into user_t(id,username, password,remark) values(#{id}, #{username},#{password},#{remark})
     </insert>
+    
+    <delete id="deleteUserById" parameterType="String">
+       delete from user_t where id=#{id}
+    </delete>    
    
     <update id="updateUser" parameterType="UserVO">
        update user_t set username=#{username}, password=#{password} where id=#{id}
@@ -15,8 +19,9 @@
     <select id="getUserById" parameterType="String" resultType="UserVO">
        select * from user_t where id=#{id}
     </select>
-   
-    <delete id="deleteUserById" parameterType="String">
-       delete from user_t where id=#{id}
-    </delete>
+    
+    <select id="findByName" parameterType="String" resultType="UserVO">
+       select * from user_t where username=#{username}
+    </select>    
+  
 </mapper>

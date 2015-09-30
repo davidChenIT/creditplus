@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 		
 	}
 	
-	public UserVO getUserById(String id) {
+	public UserVO getUserById(int id) {
 		return userDao.getUserById(id);
 	}
 	

@@ -27,6 +27,6 @@ public interface UserService {
 	 * @param id user id
 	 * @return user
 	 */
-	UserVO getUserById(String id);
+	UserVO getUserById(int id);
 
 }

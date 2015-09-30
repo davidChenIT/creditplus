@@ -1,59 +1,50 @@
-
+<%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="org.springframework.security.web.WebAttributes" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>登录</title>
-<link href="../css/credit1.css" rel="stylesheet" type="text/css">
-<link href="../css/credit2.css" rel="stylesheet" type="text/css">
-<link href="../css/credit3.css" rel="stylesheet" type="text/css">
-<link href="../css/jqueryztree/zTreeStyle.css" rel="stylesheet" type="text/css">
-<script src="../js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
-<script src="../js/jquery/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
+<link href="css/credit1.css" rel="stylesheet" type="text/css">
+<link href="css/credit2.css" rel="stylesheet" type="text/css">
+<link href="css/credit3.css" rel="stylesheet" type="text/css">
+<link href="css/jqueryztree/zTreeStyle.css" rel="stylesheet" type="text/css">
+<script src="js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="js/jquery/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
 </head>
-
-
 <script>
   //页面初始化加载函数
-  $(function(){
-    $("[name='loginBtn']").click(function(){
-	    $(".login-error").hide();
+  function validateForm(form){
 	    var  username=$("input[name='username']").val();
 		var  password=$("input[name='password']").val();
-		var isCheck=true;
 		if(!username || !$.trim(username)){
 		  var usernameTipLength=$("span[name='usernameTip']").length;
 		  if(usernameTipLength==0){
-		    $("input[name='username']").parent().after("<span name='usernameTip' style='color:red;'>请输入用户名！</span>");
+		  	$("input[name='username']").parent().after("<span name='usernameTip' style='color:red;'>请输入用户名！</span>");
 		  }
-		  isCheck=false;
+		  return false;
 		}else{
 		   $("span[name='usernameTip']").remove();
-		   isCheck=true;
 		}
+		
 		if(!password){
 		   var passwordTipLength=$("span[name='passwordTip']").length;
 		   if(passwordTipLength==0){
-		    $("input[name='password']").parent().after("<span name='passwordTip' style='color:red;'>请输入密码！</span>");
+		   	$("input[name='password']").parent().after("<span name='passwordTip' style='color:red;'>请输入密码！</span>");
 		   }
-		   isCheck=false;
+		   
+		   return false;
 		}else{
-		   $("span[name='passwordTip']").remove();
-		   isCheck=true;
+		   $("span[name='passwordTip']").remove();		  
 		}
-		
-		if(isCheck){
-		   if(username=="wumingtuo" && password=="123456"){
-			   $(".login-error").hide();
-		   }else{
-			   $(".login-error").show();
-			   return false;  
-		   }
-		}
-		return false;
-	
-	});
-  })
+
+		return true;	  
+  }
 </script>
+
+<body>
 
 <body>
 
@@ -79,16 +70,14 @@
 	</header>
 	<!--  头部end -->
 	
-	
-	
-	<!-- 中间区域 -->
+   <form action="j_spring_security_check" method="post" onsubmit="return validateForm(this)" autocomplete="off">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
+    <!-- 中间区域 -->
 	<section id="hae_Body" class="hae-layout layout-equalheight ">
 		<section class="row">
 			
 			<!--  主区域start -->
 			<section id="hae_MainPanel" class="equalheight-item render content-hae-mainPanel haeRendered hae-fullscreen" widget="fullScreen">
-				
-				
 				
 				<!-- 主内容区域 -->
 				<div id="hae_Main" class="hae-page haePageContext" haepagecontextid="main">
@@ -104,17 +93,17 @@
 												<h2>登&nbsp;录</h2>
 											</div>
 									  </div>
-									  
+									  <% if(null != session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION)){ %>
 									  <div class="hae-spacecontrol col-xs-12 col-sm-12 login-error">
 											<div class="row">
 												<p class="title">登录错误提示:</p>
-    <span class="aui-icon icon-error"></span>
-    <ul>
-                    <li>对不起, 你输入的用户不存在或密码不正确,请再次尝试.</li>
-            </ul>
+   												<span class="aui-icon icon-error"></span>
+									    		<ul>
+									                    <li><%=session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION) %></li>
+									            </ul>
 											</div>
 									  </div>
-									  
+									  <%} %>
 								      <div class="hae-spacecontrol col-xs-12 col-sm-12">
 											<div class="row">
 												<label class="col-xs-12 col-sm-3">
@@ -153,7 +142,7 @@
 								
 								<div class="haeRendered center hae-toolbar" >
 									<div >
-										<button name="loginBtn"  type="button">登&nbsp;&nbsp;录</button>
+										<button name="loginBtn"  type="submit">登&nbsp;&nbsp;录</button>
 									</div>
 									
 								</div>
@@ -169,9 +158,8 @@
 			</section>
 			<!--  主区域end -->
 		</section>
-	</section>
-	
-	
+	</section>	
+	</form>	
 	<!-- 底部区域 -->
 	<footer id="hae_Footer" class="hae-footer">
 		<div class="hae-fullwidth clearfix">
@@ -183,7 +171,6 @@
 			</ul>
 		</div>
 	</footer>
-
 </div>
 </body>
 </html>
