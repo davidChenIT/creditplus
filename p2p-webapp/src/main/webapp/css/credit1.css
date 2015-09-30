@@ -6,6 +6,7 @@ figcaption,
 figure,
 footer,
 header,
+
 hgroup,
 main,
 nav,
@@ -422,8 +423,11 @@ table {
   .col-sm-3 {
     width: 30%;
   }
+  
+ /**修改每行放置四个元素 **/
   .col-sm-2 {
-    width: 16.66666667%;
+    /**width: 16.66666667%;**/
+	width: 25%;
   }
   .col-sm-1 {
     width: 8.33333333%;
@@ -3418,8 +3422,9 @@ label {
   -o-transition: all 0.7s;
   transition: all 0.7s;
 }
+/** 设置内容居面包屑距离 */
 .hae-page {
-  margin-top: 5px;
+  margin-top: 9px;
 }
 /* hae layout end */
 .hae-btn {

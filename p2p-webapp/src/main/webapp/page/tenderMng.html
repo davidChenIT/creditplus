@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">
-<title>申请单查询</title>
+<title>标的管理</title>
 <link href="../css/credit1.css" rel="stylesheet" type="text/css">
 <link href="../css/credit2.css" rel="stylesheet" type="text/css">
 <link href="../css/credit3.css" rel="stylesheet" type="text/css">
@@ -71,9 +71,12 @@
 	zTreeNodes = [
 		{"id":1,"pId":0,"name":"首页","url":"#hh.html","target":"_self"},
 		{"id":2,"pId":0,"name":"风控管理"},
-		{"id":3,"pId":2,"name":"申请单查询","url":"#hh.html","target":"_self"},
-		{"id":4,"pId":0,"name":"系统管理"},
-		{"id":5,"pId":4,"name":"权限管理","url":"#hh.html","target":"_self"}
+		{"id":3,"pId":0,"name":"系统管理"},
+		{"id":4,"pId":3,"name":"权限管理","url":"#hh.html","target":"_self"},
+		{"id":5,"pId":2,"name":"信用初审","url":"#hh.html","target":"_self"},
+		{"id":6,"pId":2,"name":"信用复审","url":"#hh.html","target":"_self"},
+		{"id":7,"pId":2,"name":"标的管理","url":"#hh.html","target":"_self"},
+		{"id":8,"pId":2,"name":"投标","url":"#hh.html","target":"_self"}
 	];
 	zTreeObj = $.fn.zTree.init($("#menu_ztree"), setting, zTreeNodes);
 	
@@ -98,6 +101,7 @@
 	
 	//tab页面点击事件
 	$(".tabs-head li").click(function(){
+	 debugger;
 	    var tabId=$(this).attr("tabid");
 		var liClass=$(this).attr("class");
 		if("tabs-selected"!=liClass){
@@ -116,13 +120,13 @@
 	});
   
     //构造grid
-	$("#list").jqGrid({
+	$("#rankPoolGrid").jqGrid({
  
  /**url:'example.php',
  datatype: 'xml',
  mtype: 'GET',*/
  autowidth:true,
- colNames:['申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','申请单状态','初审人','复审人'],
+ colNames:['申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','信用分1','信用分2','排名'],
  colModel :[
 		{name:'applay_code', index:'applay_code',align:'center'},
 		{name:'applay_user', index:'applay_user',align:'center'},
@@ -135,7 +139,7 @@
 		{name:'approve_first_user', index:'approve_first_user',align:'center'},
 		{name:'approve_last_user', index:'approve_last_user',align:'center'}
 	],
-	pager: '#pager',
+	pager: '#rankPoolPager',
 	rowNum:10,
 	rowList:[10,20,30],
 	sortname: 'invid',
@@ -143,6 +147,69 @@
 	viewrecords: true
 	//caption: 'My first grid'
 });
+
+
+
+
+
+$("#cheatInterceptorGrid").jqGrid({
+ 
+ /**url:'example.php',
+ datatype: 'xml',
+ mtype: 'GET',*/
+ autowidth:true,
+ colNames:['申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','状态','操作'],
+ colModel :[
+		{name:'applay_code', index:'applay_code',align:'center'},
+		{name:'applay_user', index:'applay_user',align:'center'},
+		{name:'applay_user_card', index:'applay_user_card',align:'center'},
+		{name:'money', index:'money',align:'center'},
+		{name:'qici', index:'qici',align:'center'},
+		{name:'time', index:'time',align:'center'},
+		{name:'applay_date', index:'applay_date',align:'center'},
+		{name:'applay_status', index:'applay_status',align:'center'},
+		{name:'approve_first_user', index:'approve_first_user',align:'center'}
+	],
+	pager: '#cheatInterceptorPager',
+	rowNum:10,
+	rowList:[10,20,30],
+	sortname: 'invid',
+	sortorder: 'desc',
+	viewrecords: true
+	//caption: 'My first grid'
+});
+
+
+$("#tenderPublishedGrid").jqGrid({
+ 
+ /**url:'example.php',
+ datatype: 'xml',
+ mtype: 'GET',*/
+ autowidth:true,
+ colNames:['申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','信用分1','信用分2','状态','操作'],
+ colModel :[
+		{name:'applay_code', index:'applay_code',align:'center'},
+		{name:'applay_user', index:'applay_user',align:'center'},
+		{name:'applay_user_card', index:'applay_user_card',align:'center'},
+		{name:'money', index:'money',align:'center'},
+		{name:'qici', index:'qici',align:'center'},
+		{name:'time', index:'time',align:'center'},
+		{name:'applay_date', index:'applay_date',align:'center'},
+		{name:'xinyong1', index:'xinyong1',align:'center'},
+		{name:'xinyong2', index:'xinyong2',align:'center'},
+		{name:'applay_status', index:'applay_status',align:'center'},
+		{name:'approve_first_user', index:'approve_first_user',align:'center'}
+	],
+	pager: '#tenderPublishedPager',
+	rowNum:10,
+	rowList:[10,20,30],
+	sortname: 'invid',
+	sortorder: 'desc',
+	viewrecords: true
+	//caption: 'My first grid'
+});
+
+
   
   })
 </script>
@@ -209,7 +276,7 @@
 				
 						 <div>
 								<!-- 整个tab控件区域 -->
-								<div hw_id="_hw_8117" name="taskAssignTab" widget="tab" class="haeRendered hae-tabs" id="Tab_47892031">
+								<div name="tenderTab" widget="tab" class="haeRendered hae-tabs">
 									<!-- 标题区域 -->
 									<div class="tabs-head">
 											<div class="hae-slider slider-tabs hae-hide">
@@ -218,15 +285,16 @@
 											</div>
 											
 											<ul>
-												<li tabid="batchAssign" class="tabs-selected"><span>申请单列表</span></li>
-												<li tabid="batchAssignLog" class=""><span>审核申请单</span></li>
+												<li tabid="rankPool" class="tabs-selected"><span>排名池</span></li>
+												<li tabid="cheatInterceptor" class=""><span>欺诈拦截</span></li>
+												<li tabid="tenderPublished" class=""><span>已发标</span></li>
 											</ul>
 									</div>
 									<!-- 标题区域end -->
 									<!-- 内容区域start -->
 									<div class="tabs-body">
 										<!-- 页签1 -->
-										<div tabid="batchAssign" class="tabs-body-item haePageContext hae-validator" haepagecontextid="page_85823101">
+										<div tabid="rankPool" class="tabs-body-item haePageContext hae-validator">
 											<div>
 												<div class="row">
 													
@@ -361,12 +429,8 @@
 			
 			<!-- grid区域开始 -->
 			<div class="row">
-			     
-				 <table id="list"></table> 
-				 
-				  <div id="pager"></div>
-				 
-				 
+				 <table id="rankPoolGrid"></table> 
+				 <div id="rankPoolPager"></div>
 			</div>
 			<!-- grid区域结束 -->										
 													
@@ -378,70 +442,295 @@
 											</div>
 										</div>
 										<!-- 页签2 -->
-										<div tabid="batchAssignLog" class="tabs-body-item haePageContext hae-validator hae-hide" haepagecontextid="page_06496780">
-												<div>
-													<div class="row">
+										<div tabid="cheatInterceptor" class="tabs-body-item haePageContext hae-validator hae-hide">
+											<div>
+												<div class="row">
 													
 													
-													                    <div class="hae-spacecontrol col-xs-12 col-sm-6">
+													
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
 					<div class="row">
-	 	 				<label class="col-xs-12 col-sm-4">
+	 	 				<label class="col-xs-12 col-sm-3">
 							<div class="hae-label">
-	    						<span class="hae-require">*</span>
-								营销单元
+								申请金额
 							</div>
 		 				</label>
-		 				<div class="col-xs-12 col-sm-8">
+		 				<div class="col-xs-12 col-sm-9">
 							<div class="hae-input">
-						 		<div type="text" hw_id="_hw_8059" name="department_id" datafield="searchTaskAssignLogModel.department_id" widget="popeditor" class="haeRendered hae-input" id="PopEditor_25504368"><input type="text" readonly="readonly"><div class="input-btn"><a class="hae-icon icon-close hae-hide"></a><a class="hae-icon icon-popup"></a></div></div>
-						 	
-						 		
+						 		<input type="text" name="apply_monney" >
 							</div>
 				
 		 				</div>
 					</div>
-				</div>								
-				<div class="hae-spacecontrol col-xs-12 col-sm-5">
+				</div>		
+										
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
 					<div class="row">
-	 	 				<label class="col-xs-12 col-sm-4">
+	 	 				<label class="col-xs-12 col-sm-3">
 							<div class="hae-label">
-								分配时间
+								申请时间
 							</div>
 		 				</label>
-		 				<div class="col-xs-12 col-sm-8">
-						
-						<div style="width:47%;float:left">
-						    <div class="hae-input">
-						 		<div type="text" hw_id="_hw_8060" name="assign_start_time" datafield="searchTaskAssignLogModel.assign_time_start" widget="datepicker" class="haeRendered hae-input hae-validator" id="Datepicker_13611515"><span class="input-icon hae-icon icon-calendar"></span><input type="text"></div>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="apply_date" >
 							</div>
-						</div>
-						<div class="hae-arrow hae-input-arrow">~</div>
-						<div style="width:47%;float:right">
-          					<div class="hae-input">
-						 		<div type="text" id="endDate" hw_id="_hw_8061" name="assign_end_time" datafield="searchTaskAssignLogModel.assign_time_end" widget="datepicker" class="haeRendered hae-input hae-validator"><span class="input-icon hae-icon icon-calendar"></span><input type="text"></div>
-							</div>
-						</div>
 		 				</div>
 					</div>
 				</div>								
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								审批单状态
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="apply_status" >
+							</div>
+		 				</div>
+					</div>
+				</div>								
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								申请单编号
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="apply_code" >
+							</div>
+		 				</div>
+					</div>
+				</div>								
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								申请人姓名
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="apply_username" >
+							</div>
+		 				</div>
+					</div>
+				</div>		
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								申请人身份证号
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="apply_user_card" >
+							</div>
+		 				</div>
+					</div>
+				</div>	
+				
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								初审人
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="approve_first_user" >
+							</div>
+		 				</div>
+					</div>
+				</div>		
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								复审人
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="approve_last_user" >
+							</div>
+		 				</div>
+					</div>
+				</div>										
 			</div>
 				
-			<div hw_id="_hw_8062" widget="toolbar" class="haeRendered hae-toolbar" id="Toolbar_03045344">
-			    <div hw_id="_hw_8063" widget="button" class="search-y-btn haeRendered" id="Button_74680484" style="display: inline-block;">
+			<div hw_id="_hw_8138" widget="toolbar" class="haeRendered center hae-toolbar" id="Toolbar_65545051">
+				<div hw_id="_hw_8139" widget="button" class="search-y-btn haeRendered" id="Button_84127684" style="display: inline-block;">
 					<button class=" hae-btn " type="button">查询</button>
-			    </div>
-				<div hw_id="_hw_8064" widget="button" class="clear-y-btn haeRendered" id="Button_96867220" style="display: inline-block;">
-				    <button class=" hae-btn " type="button">清除</button>
+				</div>
+				<div id="restBtn" hw_id="_hw_8140" widget="button" class="clear-y-btn haeRendered" style="display: inline-block;">
+					<button class=" hae-btn " type="button">清除</button>
 				</div>
 			</div>
+			
+			
+			<!-- grid区域开始 -->
+			<div class="row">
+				 <table id="cheatInterceptorGrid"></table> 
+				 <div id="cheatInterceptorPager"></div>
+			</div>
+			<!-- grid区域结束 -->
 													
-													
-													
-																
-													</div>
-														
-												</div>
+											</div>
 										</div>
+										<!-- 页签2结束 -->
+										
+										
+										
+										<!-- 页签3 -->
+										<div tabid="tenderPublished" class="tabs-body-item haePageContext hae-validator hae-hide">
+											<div>
+												
+													
+												<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								申请金额
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="apply_monney" >
+							</div>
+				
+		 				</div>
+					</div>
+				</div>		
+										
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								申请时间
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="apply_date" >
+							</div>
+		 				</div>
+					</div>
+				</div>								
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								审批单状态
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="apply_status" >
+							</div>
+		 				</div>
+					</div>
+				</div>								
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								申请单编号
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="apply_code" >
+							</div>
+		 				</div>
+					</div>
+				</div>								
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								申请人姓名
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="apply_username" >
+							</div>
+		 				</div>
+					</div>
+				</div>		
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								申请人身份证号
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="apply_user_card" >
+							</div>
+		 				</div>
+					</div>
+				</div>	
+				
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								初审人
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="approve_first_user" >
+							</div>
+		 				</div>
+					</div>
+				</div>		
+				<div class="hae-spacecontrol col-xs-12 col-sm-4">
+					<div class="row">
+	 	 				<label class="col-xs-12 col-sm-3">
+							<div class="hae-label">
+								复审人
+							</div>
+		 				</label>
+		 				<div class="col-xs-12 col-sm-9">
+							<div class="hae-input">
+						 		<input type="text" name="approve_last_user" >
+							</div>
+		 				</div>
+					</div>
+				</div>										
+			</div>
+				
+			<div hw_id="_hw_8138" widget="toolbar" class="haeRendered center hae-toolbar" id="Toolbar_65545051">
+				<div hw_id="_hw_8139" widget="button" class="search-y-btn haeRendered" id="Button_84127684" style="display: inline-block;">
+					<button class=" hae-btn " type="button">查询</button>
+				</div>
+				<div id="restBtn" hw_id="_hw_8140" widget="button" class="clear-y-btn haeRendered" style="display: inline-block;">
+					<button class=" hae-btn " type="button">清除</button>
+				</div>
+			</div>
+			
+			
+			<!-- grid区域开始 -->
+			<div class="row">
+				 <table id="tenderPublishedGrid"></table> 
+				 <div id="tenderPublishedPager"></div>
+			</div>
+			<!-- grid区域结束 -->	
+													
+													
+											</div>
+										</div>
+										<!-- 页签3结束 -->
 									</div>
 									<!-- 内容区域end -->
 								</div>					
