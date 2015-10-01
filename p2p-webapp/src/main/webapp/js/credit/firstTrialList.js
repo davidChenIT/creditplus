@@ -2,7 +2,7 @@
 $(function(){
 	debugger;
 	//构造grid
- $("#list").jqGrid({
+ $("#firstTrialListGrid").jqGrid({
 	/**url:'example.php',
 	datatype: 'xml',
 	mtype: 'GET',*/
@@ -20,7 +20,7 @@ $(function(){
 		{name:'approve_first_user', index:'approve_first_user',align:'center'},
 		{name:'approve_last_user', index:'approve_last_user',align:'center'}
 	],
-	pager: '#pager',
+	pager: '#firstTrialListPager',
 	rowNum:10,
 	rowList:[10,20,30],
 	sortname: 'invid',
