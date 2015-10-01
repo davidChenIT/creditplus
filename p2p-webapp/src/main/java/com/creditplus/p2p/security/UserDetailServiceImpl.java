@@ -33,6 +33,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.info("username is " + username);
 		UserVO userVO = this.userDao.findByName(username);
+		if(null == userVO){
+			throw new UsernameNotFoundException("用户" + username + "不存在！");
+		}
 		
 		Collection<GrantedAuthority> grantedAuths = obtionGrantedAuthorities(userVO);
 		
