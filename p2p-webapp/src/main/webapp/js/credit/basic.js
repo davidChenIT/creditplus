@@ -82,7 +82,7 @@ $(function(){
 		{"id":4,"pId":3,"name":"权限管理","urlstr":"page/hh.html",isloadjs:"true"},
 		{"id":5,"pId":2,"name":"信用初审","urlstr":"page/firstTrialList.html",isloadjs:"true"},
 		{"id":6,"pId":2,"name":"信用复审","urlstr":"page/reviewList.html",isloadjs:"true"},
-		{"id":7,"pId":2,"name":"标的管理","urlstr":"page/tenderMng.html",isloadjs:"true"},
+		{"id":7,"pId":2,"name":"标的管理","urlstr":"page/tenderMngList.html",isloadjs:"true"},
 		{"id":8,"pId":2,"name":"投标","urlstr":"page/makeTenderList.html",isloadjs:"true"}
 		
 	];
