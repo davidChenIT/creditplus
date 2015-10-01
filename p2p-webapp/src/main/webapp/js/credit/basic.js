@@ -1,5 +1,13 @@
 //页面初始化加载函数
 $(function(){
+	
+	//注册window的onpopstate事件
+	window.onpopstate = function(event) {  
+		  debugger;
+		  window.location.href=window.location.href;
+	}; 
+	
+	
 	//设置栏目菜单
 	var zTreeObj,
 	setting = {
@@ -122,10 +130,41 @@ $(function(){
 			   
 			   //设置当前选中tab对应的内容区域显示
 			   var currentTab=$("div[tabid='"+tabId+"']");
-			   currentTab.attr("class","tabs-body-item haePageContext hae-validator");
+			   
+			   //获取tab的pege属性，如果不为空就通过ajax获取页面
+			   var pageAddress=$(this).attr("page");
+			   if(pageAddress){
+				    $(".tabs-body").children("div").attr("class","tabs-body-item haePageContext hae-validator hae-hide");
+				    var requestUrl="http://"+window.location.host+"/p2p-webapp/"+pageAddress;
+				    var jsFileUrl="../js/credit/"+pageAddress.substring(pageAddress.lastIndexOf("/")+1,pageAddress.lastIndexOf("."))+".js";
+					$.ajax({ 
+						url: requestUrl,
+						//context: document.body,
+						success: function(data){
+							debugger;	
+							if(data && data.length>0){
+							  //var  haeMainHtml=data.substring(data.indexOf("<!--hae_Main_start-->"),data.indexOf("<!--hae_Main_end-->")+19);
+							  $(".tabs-body").append(data);
+							  
+							  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
+							}else{
+								$("#hae_Main").html("");
+							}
+							
+						},error:function(error){
+						  debugger;
+						  $("#hae_Main").html("");
+						}
+					});
+					
+					$(this).removeAttr("page");
+			   }else{
+				   currentTab.attr("class","tabs-body-item haePageContext hae-validator");
+				   //相邻的内容区域隐藏
+				   currentTab.siblings("div").attr("class","tabs-body-item haePageContext hae-validator hae-hide");
+			   }
 			  
-			   //相邻的内容区域隐藏
-			   currentTab.siblings("div").attr("class","tabs-body-item haePageContext hae-validator hae-hide");
+			   
 			}
 		
 		
