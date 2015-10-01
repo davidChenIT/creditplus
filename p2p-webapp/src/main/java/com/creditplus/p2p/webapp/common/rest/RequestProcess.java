@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import com.creditplus.p2p.util.PropertiesRead;
 import com.creditplus.p2p.ws.ServiceInterface;
 
-@Path(value="/test")
+@Path(value="/")
 @Produces(MediaType.APPLICATION_JSON)
 public class RequestProcess{
 
