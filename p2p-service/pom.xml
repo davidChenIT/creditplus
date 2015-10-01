@@ -8,13 +8,13 @@
   <artifactId>p2p-service</artifactId>
   <dependencies>
   	<dependency>
-  		<groupId>com.creditplus.p2p</groupId>
-  		<artifactId>p2p-orm</artifactId>
-  		<version>${project.version}</version>
-  	</dependency>
-  	<dependency>
   		<groupId>org.springframework</groupId>
   		<artifactId>spring-beans</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.creditplus.p2p</groupId>
+  		<artifactId>p2p-orm</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
   </dependencies>
 </project>
