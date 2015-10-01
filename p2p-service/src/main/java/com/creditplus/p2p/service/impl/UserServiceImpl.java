@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.creditplus.p2p.dao.UserDao;
 import com.creditplus.p2p.model.UserVO;
-import com.creditplus.p2p.service.UserService;
 import com.creditplus.p2p.ws.ServiceInterface;
 
 public class UserServiceImpl implements ServiceInterface {
@@ -17,7 +16,7 @@ public class UserServiceImpl implements ServiceInterface {
 	}
 
 	public void deleteUserById(String id) {
-		System.out.println("====执行删除不动作======");
+		System.out.println("====鎵ц鍒犻櫎======");
 	}
 
 	public void updateUser(UserVO userVO) {
@@ -28,10 +27,11 @@ public class UserServiceImpl implements ServiceInterface {
 		return userDao.getUserById(id);
 	}
 
-	public Object execute(String module, String method, String request_data) {
+	public Object execute(String module, String method, String request_data) throws Exception {
 		if("deleteUserById".equals(method))
 			deleteUserById("12");
 		return null;
 	}
+
 	
 }
