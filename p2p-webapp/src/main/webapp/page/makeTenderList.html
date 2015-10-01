@@ -1,51 +1,134 @@
-				
-						 <div>
-								<!-- 整个tab控件区域 -->
-								<div hw_id="_hw_8117" name="makeTenderTab" widget="tab" class="haeRendered hae-tabs" id="Tab_47892031">
-									<!-- 标题区域 -->
-									<div class="tabs-head">
-											<div class="hae-slider slider-tabs hae-hide">
-												<span class="hae-icon icon-chevron-left hae-disabled"></span>
-												<span class="hae-icon icon-chevron-right"></span>
-											</div>
-											
-											<ul>
-												<li tabid="makeTenderList" class="tabs-selected"><span>投标列表</span></li>
-											</ul>
-									</div>
-									<!-- 标题区域end -->
-									<!-- 内容区域start -->
-									<div class="tabs-body">
-										<!-- 页签1 -->
-										<div tabid="makeTenderList" class="tabs-body-item haePageContext hae-validator" haepagecontextid="page_85823101">
-											<div>
-												<div class="row">
-													
-													
-													
-		
-			
-			
-			<!-- grid区域开始 -->
-			<div class="row">
-			     
-				 <table id="list"></table> 
-				 
-				  <div id="pager"></div>
-				 
-				 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<title>投标</title>
+<link href="../css/credit1.css" rel="stylesheet" type="text/css">
+<link href="../css/credit2.css" rel="stylesheet" type="text/css">
+<link href="../css/credit3.css" rel="stylesheet" type="text/css">
+<!-- jquery中的ui、ztree、grid对应的css -->
+<link href="../css/jqueryui/jquery-ui.css" rel="stylesheet" type="text/css">
+<link href="../css/jqueryztree/zTreeStyle.css" rel="stylesheet" type="text/css">
+<link href="../css/jqgridui/ui.jqgrid.css" rel="stylesheet" type="text/css">
+
+<script src="../js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="../js/jquery/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
+<script src="../js/jqgrid/i18n/grid.locale-cn.js" type="text/javascript"></script>
+<script src="../js/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>
+
+<script src="../js/credit/basic.js" type="text/javascript"></script>
+
+<script src="../js/credit/makeTenderList.js" type="text/javascript"></script>
+</head>
+
+
+<body>
+<div id="hae_Top">
+	<!--  头部start -->
+	<div id="hae_Header" class="hae-header">
+		<!-- logo区域-->
+		<div class="hae-logo pull-left">
+			<li class="logo-credit"></li>
+			<li class="logo-text">立信贷,好生活!</li>
+		</div>
+		<!-- 右边登录人、角色区域 -->
+		<div class="hae-toprole pull-right">
+			<ul class="hae-menu menu-hor toprloe-admin">
+				<li><span>欢迎 </span><span widget="LogonUser" class="haeRendered" id="LogonUser_23249138">张三</span></li>
+				<li><a class="render haeRendered" widget="roles" id="Roles_54891949">Administrator<span class="hae-icon icon-triangle-down"></span></a></li>
+				<li><a>中文<span class="hae-icon icon-triangle-down"></span></a></li>
+				<li><a>注销</a></li>
+			</ul>
+		</div>
+	</div>
+    <!--  头部end -->
+
+
+
+	<!-- 中间区域 -->
+	<div id="hae_Body" class="hae-layout layout-equalheight ">
+		<div class="row">
+			<!-- 菜单区域开始 -->
+			<div id="hae_LeftPanel" class="equalheight-item content-equalheight-item">
+				<div class="heightfixed-left">
+					<!--展开、收缩图标区域 -->
+					<div id="hae_Menu" widget="ToggleMenu" name="hae_bigIcon" class="render hae-menu menu-tree menu-togglemenu haeRendered tree-togglemenu hae-tree">
+						<div class="hae-menu-toggle">
+							<a class="toggle-icon hae-icon icon-chevron-left" title="点击进行菜单收起到边缘"><</a>
+						</div>
+					</div>
+					<!-- 左侧栏目树区域 -->
+					<div id="menu_ztree" class="ztree">
+					</div>
+				</div>
 			</div>
-			<!-- grid区域结束 -->										
-													
-													
-													
-													
-													
-													
-											</div>
-										</div>
-										
+			<!-- 菜单区域结束 -->
+			
+			<!--  主区域start -->
+			<div id="hae_MainPanel" class="equalheight-item render content-hae-mainPanel haeRendered hae-fullscreen" widget="fullScreen">
+				<!-- 面包屑区域 -->
+				<div class="row" id="hae_MainTop">
+					<div id="breadcrumb" class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+						<ul class="hae-breadcrumb"></ul>
+					</div>
+				</div>
+				
+				
+				<!--hae_Main_start-->
+				<div id="hae_Main" class="hae-page haePageContext" haepagecontextid="main">
+				    <div>
+						<!-- 整个tab控件区域 -->
+						<div hw_id="_hw_8117" name="makeTenderTab" widget="tab" class="haeRendered hae-tabs" id="Tab_47892031">
+							<!-- 标题区域 -->
+							<div class="tabs-head">
+									<div class="hae-slider slider-tabs hae-hide">
+										<span class="hae-icon icon-chevron-left hae-disabled"></span>
+										<span class="hae-icon icon-chevron-right"></span>
 									</div>
-									<!-- 内容区域end -->
-								</div>					
+									
+									<ul>
+										<li tabid="makeTenderList" class="tabs-selected"><span>投标列表</span></li>
+									</ul>
 							</div>
+							<!-- 标题区域end -->
+							<!-- 内容区域start -->
+							<div class="tabs-body">
+								<!-- 页签1 -->
+								<div tabid="makeTenderList" class="tabs-body-item haePageContext hae-validator" haepagecontextid="page_85823101">
+									<div>
+										<!-- grid区域开始 -->
+										<div class="row">
+											<table id="tenderMngListGrid"></table> 
+
+											<div id="tenderMngListPager"></div>
+										</div>
+										<!-- grid区域结束 -->
+									</div>
+								</div>
+							</div>
+							<!-- 内容区域end -->
+						</div>					
+					</div>
+				</div>
+				<!--hae_Main_start-->
+				
+			</div>
+			<!--  主区域end -->
+		</div>
+	</div>
+
+
+	<!-- 底部区域 -->
+	<div id="hae_Footer" class="hae-footer">
+		<div class="hae-fullwidth clearfix">
+			<p class="pull-left">版权所有©诚立信互联网金融服务有限公司2015保留一切权利</p>
+			<ul class="pull-right">
+				<li><a href="#" target="_self">借款</a></li>
+				<li><a href="#" target="_self">投资</a></li>
+				<li><a target="_self" href="#">联系我</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- 底部区域结束 -->
+</div>
+</body>
+</html>
