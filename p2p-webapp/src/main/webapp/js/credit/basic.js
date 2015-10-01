@@ -72,10 +72,9 @@ $(function(){
 									  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
 								  }
 								}
-								
 							},error:function(error){
 							  debugger;
-							  $("#hae_Main").html("");
+							  $("#hae_Main").html('<div class="hae-wrong"><h2 class="hae-errcode">404</h2><p class="hae-errtext">Not Found</p><div></div><p></p><p>城立信金融</p></div>');
 							}
 						});
 					}
@@ -85,7 +84,7 @@ $(function(){
 		}
 
 	},zTreeNodes = [
-		{"id":1,"pId":0,"name":"首页","urlstr":"page/hh.html",isloadjs:"true"},
+		{"id":1,"pId":0,"name":"首页","urlstr":"page/index.html",isloadjs:"true"},
 		{"id":2,"pId":0,"name":"风控管理"},
 		{"id":3,"pId":0,"name":"系统管理"},
 		{"id":4,"pId":3,"name":"权限管理","urlstr":"page/hh.html",isloadjs:"true"},
@@ -148,12 +147,12 @@ $(function(){
 							  
 							  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
 							}else{
-								$("#hae_Main").html("");
+								$("#hae_Main").html('<div class="hae-wrong"><h2 class="hae-errcode">404</h2><p class="hae-errtext">Not Found</p><div></div><p></p><p>城立信金融</p></div>');
 							}
 							
 						},error:function(error){
 						  debugger;
-						  $("#hae_Main").html("");
+						  $("#hae_Main").html('<div class="hae-wrong"><h2 class="hae-errcode">404</h2><p class="hae-errtext">Not Found</p><div></div><p></p><p>城立信金融</p></div>');
 						}
 					});
 					
