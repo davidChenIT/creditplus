@@ -67,6 +67,7 @@ $(function(){
 								
 							},error:function(error){
 							  debugger;
+							  $("#hae_Main").html("");
 							}
 						});
 					}
