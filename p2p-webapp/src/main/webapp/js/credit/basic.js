@@ -1,7 +1,5 @@
 //页面初始化加载函数
 $(function(){
-	debugger;
-	
 	//设置栏目菜单
 	var zTreeObj,
 	setting = {
