@@ -65,7 +65,7 @@
     </authentication-manager>
     
 	<beans:bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">  
-	    <beans:property name="hideUserNotFoundExceptions" value="false" />  
+	    <beans:property name="hideUserNotFoundExceptions" value="true" />  
 	    <beans:property name="userDetailsService" ref="userDetailServiceImpl" />  
 	    <!--<beans:property name="userCache" ref="userCache" />  
 	    <beans:property name="messageSource" ref="messageSource" />  

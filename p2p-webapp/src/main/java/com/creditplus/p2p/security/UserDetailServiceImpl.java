@@ -9,7 +9,9 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.SpringSecurityMessageSource;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,7 +36,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 		logger.info("username is " + username);
 		UserVO userVO = this.userDao.findByName(username);
 		if(null == userVO){
-			throw new UsernameNotFoundException("用户" + username + "不存在！");
+			throw new UsernameNotFoundException("user " + username + " is not exist!");
 		}
 		
 		Collection<GrantedAuthority> grantedAuths = obtionGrantedAuthorities(userVO);
