@@ -3,9 +3,14 @@ package com.creditplus.p2p.model;
 import java.util.HashSet;
 import java.util.Set;
 
-public class UserVO {
+public class UserVO extends BaseVO{
 	
-	private Integer id;
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer userId;
 	
 	private Integer enable;
 	
@@ -17,12 +22,12 @@ public class UserVO {
 	
 	private Set<RoleVO> roles = new HashSet<RoleVO>(0);
 
-	public Integer getId() {
-		return id;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public Integer getEnable() {
@@ -31,14 +36,6 @@ public class UserVO {
 
 	public void setEnable(Integer enable) {
 		this.enable = enable;
-	}
-
-	public Set<RoleVO> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<RoleVO> roles) {
-		this.roles = roles;
 	}
 
 	public String getUsername() {
@@ -63,5 +60,13 @@ public class UserVO {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public Set<RoleVO> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<RoleVO> roles) {
+		this.roles = roles;
 	}
 }

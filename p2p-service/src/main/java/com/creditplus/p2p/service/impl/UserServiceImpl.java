@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
-	public void deleteUserById(String id) {
+	public void deleteUserById(int userId) {
 		
 	}
 
@@ -23,8 +23,8 @@ public class UserServiceImpl implements UserService {
 		
 	}
 	
-	public UserVO getUserById(int id) {
-		return userDao.getUserById(id);
+	public UserVO getUserById(int userId) {
+		return userDao.getUserById(userId);
 	}
 	
 }

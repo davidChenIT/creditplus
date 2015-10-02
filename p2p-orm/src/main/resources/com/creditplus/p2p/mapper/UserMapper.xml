@@ -4,24 +4,99 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.creditplus.p2p.dao.UserDao">
+	<resultMap type="UserVO" id="userAthurityMap">  
+        <id column="user_id"    property="userId"/>  
+        <result column="enable" property="enable"/>
+        <result column="username" property="username"/> 
+        <result column="password" property="password"/>
+        <result column="remark"   property="remark"/>        
+        <result column="created_by" property="createdBy"/>          
+        <result column="created_date" property="createdDate"/>          
+        <result column="last_updated_by" property="lastUpdatedBy"/>          
+        <result column="last_updated_date" property="lastUpdatedDate"/>
+        <collection property="roles" ofType="RoleVO" column="user_id">  
+            <id column="role_id" property="roleId"/>  
+            <result column="role_name" property="roleName"/>
+            <collection property="resources" ofType="ResourceVO" column="role_id">
+	            <id column="resource_id" property="resourceId"/>  
+	            <result column="resource_name" property="resourceName"/>
+	            <result column="resource_type" property="resourceType"/>
+	            <result column="priority" property="priority"/>
+	            <result column="url" property="url"/>
+            </collection>  
+        </collection>
+    </resultMap>
+    
+	<resultMap type="UserVO" id="userDetailMap">  
+        <id column="user_id"    property="userId"/>  
+        <result column="enable" property="enable"/>
+        <result column="username" property="username"/> 
+        <result column="password" property="password"/>
+        <result column="remark"   property="remark"/>        
+        <result column="created_by" property="createdBy"/>          
+        <result column="created_date" property="createdDate"/>          
+        <result column="last_updated_by" property="lastUpdatedBy"/>          
+        <result column="last_updated_date" property="lastUpdatedDate"/>
+        <collection property="roles" ofType="RoleVO" column="user_id">  
+            <id column="role_id" property="roleId"/>  
+            <result column="role_name" property="roleName"/>
+	        <result column="created_by" property="createdBy"/>          
+	        <result column="created_date" property="createdDate"/>            
+        </collection>
+    </resultMap>    
+    
+	<resultMap type="UserVO" id="userVOMap">  
+        <id column="user_id"    property="userId"/>  
+        <result column="enable" property="enable"/>
+        <result column="username" property="username"/> 
+        <result column="password" property="password"/>
+        <result column="remark"   property="remark"/>        
+        <result column="created_by" property="createdBy"/>          
+        <result column="created_date" property="createdDate"/>          
+        <result column="last_updated_by" property="lastUpdatedBy"/>          
+        <result column="last_updated_date" property="lastUpdatedDate"/>
+    </resultMap>
+          
     <insert id="insertUser" parameterType="UserVO">
-       insert into user_t(id,username, password,remark) values(#{id}, #{username},#{password},#{remark})
+       insert into user_t(user_id,enable,username, password,remark,created_by,created_date,last_updated_by,last_updated_date) 
+             values(#{userId},#{enable},#{username},#{password},#{remark},#{createdBy},#{createdDate},#{lastUpdatedBy},#{lastUpdatedDate})
     </insert>
     
     <delete id="deleteUserById" parameterType="String">
-       delete from user_t where id=#{id}
+       delete from user_t where user_id=#{userId}
     </delete>    
    
     <update id="updateUser" parameterType="UserVO">
-       update user_t set username=#{username}, password=#{password} where id=#{id}
+       update user_t set username=#{username}, password=#{password} where user_id=#{userId}
     </update>
    
-    <select id="getUserById" parameterType="String" resultType="UserVO">
-       select * from user_t where id=#{id}
+    <select id="getUserById" parameterType="String" resultMap="userDetailMap">
+       		   select u.*,
+		              r.role_id as role_id,
+		              r.role_name as role_name,
+		              ur.created_by   as created_by,
+		              ur.created_date as created_date, 
+                 from user_t u 
+            left join user_role_t ur on u.user_id = ur.user_id 
+            left join role_t r on ur.role_id = r.role_id 
+                where user_id=#{userId}
     </select>
     
-    <select id="findByName" parameterType="String" resultType="UserVO">
-       select * from user_t where username=#{username}
+    <select id="findByName" parameterType="String" resultMap="userAthurityMap">
+		       select u.*,
+		              r.role_id as role_id,
+		              r.role_name as role_name,
+		              res.resource_id as resource_id,
+		              res.resource_name as resource_name,
+		              res.url as url,
+		              res.resource_type as resource_type,
+		              res.priority as priority
+                 from user_t u 
+            left join user_role_t ur on u.user_id = ur.user_id 
+            left join role_t r on ur.role_id = r.role_id 
+            left join role_resource_t rr on r.role_id = rr.role_id  
+            left join resource_t res on rr.resource_id = rr.resource_id             
+                where username=#{username}
     </select>    
   
 </mapper>

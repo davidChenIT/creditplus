@@ -46,7 +46,7 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
 			for (ResourceVO resource : resources) {
 				Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
 				//以权限名封装为Spring的security Object
-				ConfigAttribute configAttribute = new SecurityConfig(resource.getName());
+				ConfigAttribute configAttribute = new SecurityConfig(resource.getResourceName());
 				configAttributes.add(configAttribute);
 				resourceMap.put(resource.getUrl(), configAttributes);
 			}

@@ -3,80 +3,59 @@ package com.creditplus.p2p.model;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ResourceVO implements java.io.Serializable {
+public class ResourceVO extends BaseVO {
 
 	/**
 	 * serialVersionUID
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+	private Integer resourceId;
+	private String resourceName;	
 	private String url;
 	private Integer priority;
-	private Integer type;
-	private String name;
-	private String memo;
+	private Integer resourceType;
+	private String remark;
 	private Set<RoleVO> roles = new HashSet<RoleVO>(0);
-	
-	// Constructors
-
-	/** default constructor */
-	public ResourceVO() {
+	public Integer getResourceId() {
+		return resourceId;
 	}
-	
-	public String getMemo() {
-		return memo;
+	public void setResourceId(Integer resourceId) {
+		this.resourceId = resourceId;
 	}
-
-	public void setMemo(String memo) {
-		this.memo = memo;
+	public String getResourceName() {
+		return resourceName;
 	}
-
-	public Integer getId() {
-		return this.id;
+	public void setResourceName(String resourceName) {
+		this.resourceName = resourceName;
 	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public String getUrl() {
-		return this.url;
+		return url;
 	}
-
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
 	public Integer getPriority() {
-		return this.priority;
+		return priority;
 	}
-
 	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
-
-	public Integer getType() {
-		return this.type;
+	public Integer getResourceType() {
+		return resourceType;
 	}
-
-	public void setType(Integer type) {
-		this.type = type;
+	public void setResourceType(Integer resourceType) {
+		this.resourceType = resourceType;
 	}
-
-	public String getName() {
-		return this.name;
+	public String getRemark() {
+		return remark;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
-
 	public Set<RoleVO> getRoles() {
 		return roles;
 	}
-
 	public void setRoles(Set<RoleVO> roles) {
 		this.roles = roles;
-	}
-
+	}	
 }

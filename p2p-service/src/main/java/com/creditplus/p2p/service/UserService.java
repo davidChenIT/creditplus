@@ -14,7 +14,7 @@ public interface UserService {
 	 * delete user by id
 	 * @param id
 	 */
-	void deleteUserById(String id);
+	void deleteUserById(int userId);
 	
 	/**
 	 * update user 
@@ -27,6 +27,6 @@ public interface UserService {
 	 * @param id user id
 	 * @return user
 	 */
-	UserVO getUserById(int id);
+	UserVO getUserById(int userId);
 
 }

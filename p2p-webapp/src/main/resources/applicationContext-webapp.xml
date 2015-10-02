@@ -12,7 +12,7 @@
     http://cxf.apache.org/schemas/jaxws.xsd
     http://cxf.apache.org/jaxrs
     http://cxf.apache.org/schemas/jaxrs.xsd">
-      
+         
     <import resource="classpath:META-INF/cxf/cxf.xml" />
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>    
@@ -31,4 +31,13 @@
     	   <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider"/>
     	</jaxrs:providers>  
     </jaxrs:server>
+    
+	<bean id="messageSource"
+	    class="org.springframework.context.support.ResourceBundleMessageSource">
+	    <property name="basenames">
+	        <list>
+	        <value>messages</value>
+	        </list>
+	    </property>
+	</bean>    
 </beans>

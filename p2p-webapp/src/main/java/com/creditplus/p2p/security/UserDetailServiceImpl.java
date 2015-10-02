@@ -9,7 +9,9 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.SpringSecurityMessageSource;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +35,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.info("username is " + username);
 		UserVO userVO = this.userDao.findByName(username);
+		if(null == userVO){
+			throw new UsernameNotFoundException("user " + username + " is not exist!");
+		}
 		
 		Collection<GrantedAuthority> grantedAuths = obtionGrantedAuthorities(userVO);
 		
@@ -52,6 +57,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 		Set<RoleVO> roles = userVO.getRoles();
 		
 		for(RoleVO role : roles) {
+			logger.info("rolename==" + role.getRoleName());
 			Set<ResourceVO> tempRes = role.getResources();
 			for(ResourceVO res : tempRes) {
 				resources.add(res);
@@ -59,7 +65,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
 		}
 		
 		for(ResourceVO res : resources) {
-			authSet.add(new SimpleGrantedAuthority(res.getName()));
+			logger.info("resourcename==" + res.getResourceName());
+			authSet.add(new SimpleGrantedAuthority(res.getResourceName()));
 		}
 		return authSet;
 	}
