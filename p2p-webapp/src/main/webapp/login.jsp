@@ -70,7 +70,7 @@
 	</header>
 	<!--  头部end -->
 	
-   <form action="j_spring_security_check" method="post" onsubmit="return validateForm(this)" autocomplete="off">
+   <form action="<%=request.getContextPath()%>/j_spring_security_check" method="post" onsubmit="return validateForm(this)" autocomplete="off">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
     <!-- 中间区域 -->
 	<section id="hae_Body" class="hae-layout layout-equalheight ">
