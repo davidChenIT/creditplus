@@ -57,6 +57,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 		Set<RoleVO> roles = userVO.getRoles();
 		
 		for(RoleVO role : roles) {
+			logger.info("rolename==" + role.getRoleName());
 			Set<ResourceVO> tempRes = role.getResources();
 			for(ResourceVO res : tempRes) {
 				resources.add(res);
@@ -64,7 +65,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
 		}
 		
 		for(ResourceVO res : resources) {
-			authSet.add(new SimpleGrantedAuthority(res.getName()));
+			logger.info("resourcename==" + res.getResourceName());
+			authSet.add(new SimpleGrantedAuthority(res.getResourceName()));
 		}
 		return authSet;
 	}
