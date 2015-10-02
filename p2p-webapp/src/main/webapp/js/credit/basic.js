@@ -11,10 +11,12 @@ $(function(){
 	//设置栏目菜单
 	var zTreeObj,
 	setting = {
+	    treeId:"menu_ztree",
 		view: {
 			selectedMulti: false,
 			showIcon: false,
-			showLine: false
+			showLine: false,
+			dblClickExpand:false
 		},
 		data:{
 		   simpleData: {
@@ -95,6 +97,24 @@ $(function(){
 		
 	];
 	zTreeObj = $.fn.zTree.init($("#menu_ztree"), setting, zTreeNodes);
+	
+	 debugger;
+		var treeNodes=zTreeObj.getNodesByParam("id",nodeId,null);
+		var curentTreeNode=treeNodes[0];
+		//获取父节点
+		var liHtml="";
+		var checkAllParents1=function(curentTreeNode){
+			zTreeObj.expandNode(curentTreeNode, true, false, true,false);
+			if(curentTreeNode==null){
+				return;
+			}else{
+				liHtml="<li><a>"+curentTreeNode.name+"</a></li>"+liHtml;
+				checkAllParents1(curentTreeNode.getParentNode());
+			}
+		}
+		checkAllParents1(curentTreeNode);
+		//设置面包屑
+		$(".hae-breadcrumb").html(liHtml);
 
 
 
