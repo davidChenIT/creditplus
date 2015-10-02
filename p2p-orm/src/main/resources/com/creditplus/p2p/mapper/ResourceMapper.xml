@@ -4,7 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.creditplus.p2p.dao.ResourceDao">
-    <select id="findAll" parameterType="String" resultType="UserVO">
-       select * from user_t where id=#{id}
+	<resultMap type="ResourceVO" id="resourceVOMap">  
+        <id column="resource_id"    property="resourceId"/>  
+        <result column="resource_name" property="resourceName"/> 
+        <result column="url" property="url"/>
+        <result column="priority" property="priority"/>
+        <result column="resource_type" property="resourceType"/>
+        <result column="remark"   property="remark"/>        
+        <result column="created_by" property="createdBy"/>          
+        <result column="created_date" property="createdDate"/>          
+        <result column="last_updated_by" property="lastUpdatedBy"/>          
+        <result column="last_updated_date" property="lastUpdatedDate"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="resourceVOMap">
+       select * from resource_t
     </select>
 </mapper>
