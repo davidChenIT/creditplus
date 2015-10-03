@@ -1190,7 +1190,7 @@ label {
 .hae-header {
   min-height: 55px;
   margin-bottom: 10px;
-  padding-top: 5px;
+  padding: 0;
   position: fixed;
   top: 0;
   left: 0;
@@ -1199,9 +1199,12 @@ label {
 }
 .hae-footer {
   background: #ffffff;
-  border-top: 2px solid #cccccc;
-  margin-top: 10px;
-  padding: 10px 0;
+  border-top: solid 1px #d1d1d1;
+  margin: 5px;
+  padding: 5px 10px;
+}
+.hae-footer ul {
+  margin: 5px 0;
 }
 .hae-header .hae-logo > li,
 .hae-header .hae-toplink > ul:nth-child(2) > li,
