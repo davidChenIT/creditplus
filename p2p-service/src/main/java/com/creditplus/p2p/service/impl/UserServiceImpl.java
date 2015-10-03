@@ -6,7 +6,7 @@ import com.creditplus.p2p.dao.UserDao;
 import com.creditplus.p2p.model.UserVO;
 import com.creditplus.p2p.ws.ServiceInterface;
 
-public class UserServiceImpl implements ServiceInterface {
+public class UserServiceImpl implements ServiceInterface  {
 	
 	@Autowired 
 	private UserDao userDao;
