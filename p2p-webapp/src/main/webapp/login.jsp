@@ -93,7 +93,7 @@
 												<h2>登&nbsp;录</h2>
 											</div>
 									  </div>									   
-									  <% if(null != session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION)){ %>
+									  <% if(null != session && null != session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION)){ %>
 									  <div class="hae-spacecontrol col-xs-12 col-sm-12 login-error">
 											<div class="row">
 												<p class="title">登录错误提示:</p>
