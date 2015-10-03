@@ -20,14 +20,27 @@ public class RequestProcess{
 	public Object execute(@PathParam("module")String module, @PathParam("method")String method, @PathParam("request_data")String request_data) throws Exception {
 		String className=PropertiesRead.getValueByKey(module);
 		ServiceInterface serviceinterface;
+		Object obj=null;
 		try {
 			serviceinterface = (ServiceInterface) Class.forName(className).newInstance();
+			obj=serviceinterface.execute(module, method, request_data);
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
-		serviceinterface.execute(module, method, request_data);
-		return null;
+		return obj;
+	}
+	
+	public static void main(String[] args) throws Exception {
+		String module="userService";
+		String className=PropertiesRead.getValueByKey(module);
+		ServiceInterface serviceinterface = null;
+		try {
+			serviceinterface = (ServiceInterface) Class.forName(className).newInstance();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		serviceinterface.execute(module, "deleteUserById", "");
 	}
 	
 
