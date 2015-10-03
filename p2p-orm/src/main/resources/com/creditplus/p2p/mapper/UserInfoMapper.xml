@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.creditplus.p2p.dao.UserInfoDao">
+	<resultMap type="UserInfoVO" id="userAthurityMap">  
+        <id column="user_id"    property="userId"/>  
+        <result column="enable" property="enable"/>
+        <result column="username" property="username"/> 
+        <result column="password" property="password"/>
+        <result column="remark"   property="remark"/>        
+        <result column="created_by" property="createdBy"/>          
+        <result column="created_date" property="createdDate"/>          
+        <result column="last_updated_by" property="lastUpdatedBy"/>          
+        <result column="last_updated_date" property="lastUpdatedDate"/>
+        <collection property="roles" ofType="RoleVO" column="user_id">  
+            <id column="role_id" property="roleId"/>  
+            <result column="role_name" property="roleName"/>
+            <collection property="resources" ofType="ResourceVO" column="role_id">
+	            <id column="resource_id" property="resourceId"/>  
+	            <result column="resource_name" property="resourceName"/>
+	            <result column="resource_type" property="resourceType"/>
+	            <result column="priority" property="priority"/>
+	            <result column="url" property="url"/>
+            </collection>  
+        </collection>
+    </resultMap>
+    
+	<resultMap type="UserVO" id="userDetailMap">  
+        <id column="user_id"    property="userId"/>  
+        <result column="enable" property="enable"/>
+        <result column="username" property="username"/> 
+        <result column="password" property="password"/>
+        <result column="remark"   property="remark"/>        
+        <result column="created_by" property="createdBy"/>          
+        <result column="created_date" property="createdDate"/>          
+        <result column="last_updated_by" property="lastUpdatedBy"/>          
+        <result column="last_updated_date" property="lastUpdatedDate"/>
+        <collection property="roles" ofType="RoleVO" column="user_id">  
+            <id column="role_id" property="roleId"/>  
+            <result column="role_name" property="roleName"/>
+	        <result column="created_by" property="createdBy"/>          
+	        <result column="created_date" property="createdDate"/>            
+        </collection>
+    </resultMap>    
+    
+	<resultMap type="UserInfoVO" id="userInfoVOMap">  
+        <id column="user_id"    property="userId"/>  
+        <result column="enable" property="enable"/>
+        <result column="username" property="username"/> 
+        <result column="password" property="password"/>
+        <result column="remark"   property="remark"/>        
+        <result column="created_by" property="createdBy"/>          
+        <result column="created_date" property="createdDate"/>          
+        <result column="last_updated_by" property="lastUpdatedBy"/>          
+        <result column="last_updated_date" property="lastUpdatedDate"/>
+    </resultMap>
+          
+    <insert id="insertUserInfo" parameterType="UserVO">
+       insert into user_info_t(id,name,sex,age,ethnic,province,city,phone,phone_place,id_card,card_bank,card_no,card_tel,work_province,work_city,work_tel,seasame_score,mobile_ser_code,created_date,last_updated_date)values(#{userId},#{name},#{sex},#{age},#{ethnic},#{province},#{city},#{phone},#{phone_place},#{id_card},#{card_bank},#{card_no},#{card_tel},#{work_province},#{work_city},#{work_tel},#{seasame_score},#{mobile_ser_code},sysdate(),sysdate()) 
+    </insert>
+    
+    <delete id="deleteUserInfoById" parameterType="String">
+       delete from user_info_t where id=#{userId}
+    </delete>    
+   
+    <update id="updateUserInfo" parameterType="UserVO">
+       update user_t set username=#{username}, password=#{password} where user_id=#{userId}
+    </update>
+   
+    <select id="getUserInfoById" parameterType="String" resultMap="userDetailMap">
+       		select u.* from user_info_t where user_id=#{userId}
+    </select>
+    
+</mapper>
