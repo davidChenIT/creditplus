@@ -96,25 +96,38 @@ $(function(){
 		{"id":8,"pId":2,"name":"投标","urlstr":"page/makeTenderList.html",isloadjs:"true"}
 		
 	];
+	
+	//获取当前访问的路径
+	var currrentUrl=window.location.pathname.substring(window.location.pathname.indexOf("p2p-webapp/")+11);
+	var nodeId="";
+	if(currrentUrl){
+		for(var i=0;i<zTreeNodes.length;i++){
+		     var nodeObj=zTreeNodes[i];
+			 if(currrentUrl==nodeObj.urlstr){
+				 nodeId=nodeObj.id;
+			 }
+			
+		}
+	}
+	
 	zTreeObj = $.fn.zTree.init($("#menu_ztree"), setting, zTreeNodes);
 	
-	 debugger;
-		var treeNodes=zTreeObj.getNodesByParam("id",nodeId,null);
-		var curentTreeNode=treeNodes[0];
-		//获取父节点
-		var liHtml="";
-		var checkAllParents1=function(curentTreeNode){
-			zTreeObj.expandNode(curentTreeNode, true, false, true,false);
-			if(curentTreeNode==null){
-				return;
-			}else{
-				liHtml="<li><a>"+curentTreeNode.name+"</a></li>"+liHtml;
-				checkAllParents1(curentTreeNode.getParentNode());
-			}
+	var treeNodes=zTreeObj.getNodesByParam("id",nodeId,null);
+	var curentTreeNode=treeNodes[0];
+	//获取父节点
+	var liHtml="";
+	var checkAllParents1=function(curentTreeNode){
+		zTreeObj.expandNode(curentTreeNode, true, false, true,false);
+		if(curentTreeNode==null){
+			return;
+		}else{
+			liHtml="<li><a>"+curentTreeNode.name+"</a></li>"+liHtml;
+			checkAllParents1(curentTreeNode.getParentNode());
 		}
-		checkAllParents1(curentTreeNode);
-		//设置面包屑
-		$(".hae-breadcrumb").html(liHtml);
+	}
+	checkAllParents1(curentTreeNode);
+	//设置面包屑
+	$(".hae-breadcrumb").html(liHtml);
 
 
 
