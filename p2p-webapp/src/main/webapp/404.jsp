@@ -5,9 +5,7 @@
 <head>
 <meta charset="utf-8">
 <title>404</title>
-<link href="<%=request.getContextPath()%>/css/credit1.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath()%>/css/credit2.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath()%>/css/credit3.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/credit.css" rel="stylesheet" type="text/css">
 <!-- jquery中的ui、ztree、grid对应的css -->
 <link href="<%=request.getContextPath()%>/css/jqueryui/jquery-ui.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/jqueryztree/zTreeStyle.css" rel="stylesheet" type="text/css">

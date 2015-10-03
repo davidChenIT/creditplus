@@ -7,9 +7,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>登录</title>
-<link href="css/credit1.css" rel="stylesheet" type="text/css">
-<link href="css/credit2.css" rel="stylesheet" type="text/css">
-<link href="css/credit3.css" rel="stylesheet" type="text/css">
+<link href="css/credit.css" rel="stylesheet" type="text/css">
 <link href="css/jqueryztree/zTreeStyle.css" rel="stylesheet" type="text/css">
 <script src="js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="js/jquery/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
