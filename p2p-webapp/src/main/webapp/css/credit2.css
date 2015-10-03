@@ -2476,21 +2476,7 @@ textarea:focus {
   color: #666666;
   border: 1px solid #d9d9d9;
 }
-.hae-wrong {
-  background: #fdf1e6;
-  -webkit-box-shadow: inset 0 0 500px #d8cec5;
-  box-shadow: inset 0 0 500px #d8cec5;
-}
-.hae-wrong div {
-  background-image: -webkit-linear-gradient(left, #fdf1e6, #909090 50%, #fdf1e6);
-  background-image: linear-gradient(to right, #fdf1e6, #909090 50%, #fdf1e6);
-  background-repeat: no-repeat;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffdf1e6', endColorstr='#fffdf1e6', GradientType=1);
-  box-shadow: 1px 2px 2px #a0a0a0 9;
-}
-.hae-wrong ul a {
-  color: #04c1ff;
-}
+
 .check-disabled {
   color: #dddddd;
 }

@@ -1218,11 +1218,6 @@ label {
   color: rgba(0, 0, 0, 0);
   content: '';
 }
-
-
-
-
-
 .hae-wrong {
   text-align: center;
   padding: 1px 0;
@@ -1256,13 +1251,3 @@ label {
   height: 3px;
   margin: 0 auto;
 }
-.hae-wrong ul {
-  margin: 20px 0 12% 0;
-  text-align: center;
-}
-.hae-wrong ul a {
-  font: bold 1.6em "Microsoft Yahei";
-  margin: 0 10px;
-}
-
-/**wo qu **/
