@@ -1052,14 +1052,14 @@ label {
   vertical-align: middle;
 }
 .layout-equalheight {
-  margin: 0 -10px 0 -10px;
+  margin:0;
 }
 .layout-equalheight > .row {
   display: table;
   width: 100%;
-  border-spacing: 10px 0;
   margin: 0;
   table-layout: fixed;
+  border-spacing: 0;
 }
 .layout-equalheight > .row .equalheight-item {
   float: none;
@@ -1196,6 +1196,7 @@ label {
   left: 0;
   right: 0;
   z-index: 910;
+  background-color: #3e89d4;
 }
 .hae-footer {
   background: #ffffff;
@@ -1254,3 +1255,738 @@ label {
   height: 3px;
   margin: 0 auto;
 }
+
+
+
+#hae_MainPanel {
+  padding: 10px 20px;
+}
+#hae_Header,
+#hae_Footer {
+  position: fixed;
+}
+#hae_Footer {
+  bottom: 0;
+  width: 100%;
+}
+.hae-icon {
+  font-family: 'iconfont';
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.row .hae-tabs .tabs-head {
+  margin-bottom: 0;
+}
+
+label {
+  font-weight: normal;
+}
+
+.hae-btn {
+  height: 30px;
+  line-height: 30px;
+  margin-right: 6px;
+  margin-bottom: 5px;
+  padding: 0 16px;
+}
+
+input[type="text"] {
+  border: 1px solid #e5e9ea;
+  background: #ffffff;
+}
+
+
+.tabs-head li {
+  border: 1px solid #e2ebf3;
+  color: #333333;
+  padding: 0 30px;
+  margin-right: -1px;
+  background: #f8fcfe;
+  border-radius: 3px 3px 0 0;
+}
+.tabs-head li span {
+  color: #999;
+}
+
+.tabs-head li:hover span,
+.tabs-head li.tabs-selected span {
+  color: #1aa0e1;
+}
+
+
+
+.hae-tree.tree-togglemenu {
+  font-family: "microsoft yahei", Arial;
+  font-size: 14px;
+  background: #fafdff;
+  border: 1px solid #d8e8f0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track-piece {
+  background: #eaecea;
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b2dcf1;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b2dcf1;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #a4e0fc;
+}
+::-webkit-scrollbar-thumb {
+  background: #b4d6e6;
+  border-radius: 15px;
+}
+::-webkit-scrollbar-corner {
+  background-color: #eaecea;
+}
+
+/**栏目树**/
+a {
+  color: #333333;
+  cursor: pointer;
+}
+a:hover,
+a:focus {
+  color: #006699;
+  text-decoration: none;
+}
+a.disalbe {
+  color: #f0f0f0;
+}
+a.hae-icon {
+  color: #89bedd;
+}
+a.hae-icon:hover,
+a.hae-icon:focus {
+  color: #89bedd;
+}
+.hae-breadcrumb li a,
+.hae-breadcrumb li span {
+  color: #515256;
+}
+.hae-breadcrumb li a:hover,
+.hae-breadcrumb li.breadcrumb-selected a,
+.hae-breadcrumb li.breadcrumb-selected span {
+  color: #39afdf;
+}
+
+
+
+/* hae-header */
+ .hae-header {
+    background: #3e89d4;
+    min-height: 40px;
+    height: 55px;
+}
+.hae-header .hae-logo .logo-text {
+    font-size: 14px;
+    color:#d0e2f5;
+}
+
+/*全局类样式覆盖*/
+ body {
+    font-family: arial, "微软雅黑";
+    padding-bottom: 0;
+}
+.hae-h2, .hae-h3, .hae-h2:hover, .hae-h3:hover {
+    color: #ff8f00;
+    font-size: 18px;
+    font-weight: normal;
+    background: transparent;
+}
+.hae-input input[type="text"], .hae-input textarea {
+    border-radius: 3px;
+}
+.hae-input input[type="text"]:focus, .hae-input textarea:focus {
+    border-color: #ff8f00;
+}
+.hae-input .input-icon {
+    color: #1AA0E1;
+}
+input[type="text"]:focus + .input-btn .hae-icon {
+    color:#ff8f00;
+}
+/*滚动条*/
+ ::-webkit-scrollbar-track-piece {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+
+/*布局类*/
+ .layout-equalheight.adapt-heightfixed .heightfixed-left {
+    margin-top: 74px;
+}
+/*快速链接*/
+ .hae-linkmenu .linkmenu-setting span, .hae-linkmenu .linkmenu-setting span:hover {
+    color: #ff8f00;
+}
+/*角色管理*/
+ .toprloe-admin {
+    font-size: 14px;
+}
+.hae-toprole .toprloe-admin>ul>li, .hae-toprole .toprloe-admin>ul>li a, .toprloe-admin>ul>li a:hover {
+    color: #888;
+}
+.hae-toprole .poplist-account li, .poplist-language li {
+    background: #F4F4F4;
+}
+.hae-toprole .poplist-account li, .poplist-language li, .poplist-account li a, .poplist-language li a {
+    color: #777;
+}
+.hae-selector {
+    border: 1px solid #CDCDCD;
+}
+.hae-toprole .poplist-account li:hover, .poplist-language li:hover {
+    background: #EDEDED;
+}
+/*按钮*/
+ .hae-btn {
+    color: #fff;
+    background: #ffac33;
+    border: 1px solid #ef9716;
+    border-radius: 3px;
+    height: 32px;
+    padding: 0 15px;
+    min-width:80px;
+    margin-right: 7px;
+}
+.hae-btn:hover {
+    background: #fd9c0e;
+    color: #fff;
+    border: 1px solid #ef9716;
+}
+.search-y-btn .hae-btn::before {
+    content:"";
+    display: inline-block;
+    background: url(./images/icon-u.png) -39px -33px no-repeat;
+    width: 17px;
+    height: 14px;
+    margin-top: 6px;
+    position: relative;
+    top: 2px;
+}
+.clear-y-btn .hae-btn::before {
+    content:"";
+    display: inline-block;
+    background: url(./images/icon-u.png) -39px -81px no-repeat;
+    width: 17px;
+    height: 14px;
+    margin-top: 6px;
+    position: relative;
+    right: 4px;
+    top: 2px;
+}
+.assign-y-btn .hae-btn::before {
+    content:"";
+    display: inline-block;
+    background: url(./images/icon-u.png) -39px -130px no-repeat;
+    width: 19px;
+    height: 16px;
+    margin-top: 3px;
+    position: relative;
+    right: 4px;
+    top: 3px;
+}
+.export-y-btn .hae-btn::before {
+    content:"";
+    display: inline-block;
+    background: url(./images/icon-u.png) -39px -177px no-repeat;
+    width: 19px;
+    height: 14px;
+    margin-top: 5px;
+    position: relative;
+    top: 1px;
+    right: 2px;
+}
+.reset-y-btn .hae-btn::before {
+    content:"";
+    display: inline-block;
+    background: url(./images/icon-u.png) -39px -231px no-repeat;
+    width: 21px;
+    height: 14px;
+    margin-top: 6px;
+    position: relative;
+    top: 2px;
+}
+.publish-y-btn .hae-btn::before {
+    content:"";
+    display: inline-block;
+    background: url(./images/icon-u.png) -39px -271px no-repeat;
+    width: 18px;
+    height: 14px;
+    margin-top: 6px;
+    position: relative;
+    top: 2px;
+    right: 3px;
+}
+.import-y-btn .hae-btn::before {
+    content:"";
+    display: inline-block;
+    background: url(./images/icon-u.png) -39px -312px no-repeat;
+    width: 22px;
+    height: 14px;
+    margin-top: 6px;
+    position: relative;
+    top: 2px;
+}
+.return-y-btn .hae-btn::before {
+    content:"";
+    display: inline-block;
+    background: url(./images/icon-u.png) -39px -346px no-repeat;
+    width: 20px;
+    height: 14px;
+    margin-top: 6px;
+    position: relative;
+    top: 2px;
+}
+.clear-y-btn .hae-btn, .assign-y-btn .hae-btn, .export-y-btn .hae-btn, .reset-y-btn .hae-btn, .import-y-btn .hae-btn, .publish-y-btn .hae-btn, .return-y-btn .hae-btn {
+    background: #fff;
+    color: #666;
+    border: 1px solid #e5e5e5;
+    height: 32px;
+    padding: 0 15px;
+    line-height: 27px;
+    margin-right: 7px;
+}
+.clear-y-btn .hae-btn:hover, .assign-y-btn .hae-btn:hover, .export-y-btn .hae-btn:hover, .reset-y-btn .hae-btn:hover, .import-y-btn .hae-btn:hover, .publish-y-btn .hae-btn:hover, .return-y-btn .hae-btn:hover {
+    background: #f8f8f8;
+    color: #666;
+    border: 1px solid #e5e5e5;
+    height: 32px;
+    padding: 0 15px;
+    line-height: 27px;
+}
+.clear-y-btn .hae-btn:active, .assign-y-btn .hae-btn:active, .export-y-btn .hae-btn:active, .reset-y-btn .hae-btn:active, .import-y-btn .hae-btn:active, .publish-y-btn .hae-btn:active, .return-y-btn .hae-btn:active {
+    background: #f8f8f8;
+    color: #666;
+    border: 1px solid #e5e5e5;
+    box-shadow: inset 2px 2px 5px #edebeb;
+    height: 32px;
+    padding: 0 15px;
+    line-height: 27px;
+}
+.hae-btn span, .hae-btn :hover, .hae-btn > em {
+    color: #fff;
+}
+.hae-menubtn > .hae-btn.btn-minor:nth-child(2), .hae-menubtn > btn-minor:nth-child(2) {
+    border-left: 1px solid #fff;
+}
+.hae-input-arrow {
+    float: left;
+    margin: 5px 4px 0px 5px;
+}
+/*面包屑的高度*/
+ #breadcrumb {
+    height: 20px;
+}
+.hae-breadcrumb {
+    margin-bottom: 60px;
+}
+.hae-breadcrumb > li {
+    line-height: 25px;
+}
+.hae-breadcrumb li a:hover, .hae-breadcrumb li.breadcrumb-selected a, .hae-breadcrumb li.breadcrumb-selected span {
+    color: #757575!important;
+    font-size: 14px;
+}
+.hae-competence {
+    padding: 0 0 10px 0;
+}
+.hae-competence .hae-icon {
+    color: #838383;
+}
+/*弹窗*/
+ .hae-dialog .dialog-head， .hae-dialog .dialog-head .hae-toolbar .hae-icon {
+    color: #ff8f00;
+}
+.hae-dialog .err-center .hae-icon.icon-cue {
+    font-size: 40px;
+    vertical-align: middle;
+}
+.hae-dialog .err-center .center-content {
+    vertical-align: middle;
+    display: inline-block;
+    float: right;
+}
+.hae-dialog .dialog-body .err-center {
+    width: 112px;
+    line-height: 50px;
+}
+/*底部样式*/
+ .hae-footer {
+    font-size: 14px;
+}
+.hae-footer, .hae-footer a {
+    color: #E0B647;
+}
+/*首页下方*/
+ #mainDiv {
+    width: 1000px;
+    margin-left: 50px;
+}
+.hae-repeat {
+    clear: both;
+    min-height: 150px;
+}
+.hae-repeat ul {
+    width: 100%;
+}
+.hae-repeat ul li {
+    float: left;
+    margin: 0 5px;
+}
+.promotionDiv .hae-h3 {
+    color: #c3c3c3;
+    margin: 20px 0 30px 0;
+}
+/*tabs选项卡*/
+ .tabs-head li.tabs-selected {
+    border-color: #ef8600 #d8d8d8 transparent #d8d8d8;
+}
+
+#productContentDiv {
+    background: url(/haesmp/unicom/images/phone-bg.png) no-repeat;
+}
+#customerContentDiv .hae-label, #productContentDiv .hae-label {
+    text-align: left;
+}
+.unicom-view-name {
+    font-size: 20px;
+    color: #f35c26;
+    margin-top: 15px;
+    display: block;
+}
+.append-colon:after {
+    content:"：";
+}
+.customer-nodata {
+    font-size: 18px;
+    text-align: center;
+    height: 100%;
+    line-height: 240px;
+    margin-left: -20px;
+}
+/*进度条*/
+ .hae-flow .flow-node-process {
+    width:14px;
+    height:auto;
+}
+.hae-flow .flow-node-process .icon-radioselected:before {
+    content:"\e6b8";
+}
+.hae-flow .flow-node-line {
+    background:none;
+    border-bottom:2px solid #e8ecee;
+    height:33px;
+    line-height:24px;
+    text-align:center;
+    color:#7b868f;
+    width:auto;
+    padding:0 23px;
+    margin:0;
+}
+.hae-flow .flows-node-selected {
+    color:#4e5e67;
+    border-bottom: 2px solid #9ddbe3;
+}
+.hae-flow .flow-process-selected .hae-icon {
+    color:#9ddbe3;
+}
+.hae-flow .flow-node-process .hae-icon {
+    margin-top:23px;
+    font-size: 14px;
+    cursor: inherit;
+}
+.hae-flow .flow-node-process .icon-radio:before {
+    content:"\e6b7";
+}
+.hae-flow {
+    overflow:hidden;
+}
+.hae-flow .flow-container > li {
+    float:left;
+}
+
+ html, body, #hae_Top {
+    height: auto;
+}
+
+ html, body, #hae_Top {
+    height: auto;
+}
+/*底部样式*/
+ .pull-left {
+    float: left !important;
+    color: #666;
+}
+.hae-fullwidth p {
+    padding: 5px 0;
+}
+.hae-footer .pull-right li a {
+    color: #666;
+}
+
+
+/*数据复制任务设计 按钮样式*/
+ .haeRendered span.icon-search::before {
+    content:"";
+    display: inline-block;
+    background: url(../images/icon.png) -229px -109px no-repeat;
+    width: 14px;
+    height: 14px;
+}
+
+.tabs-head li:hover a, .tabs-head li.tabs-selected a {
+    color: #1aa0e1;
+    font-size: 14px;
+    font-weight: bold;
+}
+#hae_MainPanel, #hae_RightPanel {
+    background: #f3f7f8;
+}
+.hae-tabs .tabs-head ul {
+    height: 32px;
+}
+.tabs-body {
+    border: 1px solid #e2ebf3;
+    background: #ffffff;
+    border-radius: 0 9px 9px;
+}
+.tabs-head ul {
+    border-bottom:none;
+}
+::-webkit-scrollbar-thumb {
+    background: #b2e0f8;
+    border-radius: 15px;
+}
+.hae-tabs .tabs-head ul li {
+    height: 32px;
+    line-height: 32px;
+}
+.tabs-head li.tabs-selected {
+    border-color: #1aa0e1 #e2ebf3 #fff #e2ebf3;
+}
+.tabs-head li:hover, .tabs-head li.tabs-selected {
+    border-width: 2px 1px 1px 1px;
+    border-style: solid;
+    /*border-color: #e2ebf3 #e2ebf3 transparent #e2ebf3;*/
+    background: #ffffff;
+    /*font-weight: normal;*/
+}
+.hae-tabs .tabs-body {
+    padding: 30px 20px 20px;
+    margin-top: -1px;
+}
+.hae-role .hae-validator input[readonly]:nth-last-child(2) {
+    border: 1px solid #e5e9ea;
+    color: #43ace0;
+    background: #fff;
+}
+.hae-input input[type="text"]:focus, .hae-input textarea:focus {
+    border-color: #6EB4F4;
+}
+input[type="text"]:focus {
+    border-color: #66afe9;
+    outline: 0;
+    /* -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6); */
+    /* box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6); */
+}
+
+ .hae-header .hae-logo > li.logo-credit {
+    background: url(../images/logo.png) -380px -190px no-repeat!important;
+    width: 200px;
+    height: 55px;
+    background-color: #3e89d4;
+    margin-left: 20px;
+}
+.toprloe-admin {
+    font-size: 12px;
+}
+.menu-hor {
+    background: #1ba0e1;
+    width: auto;
+    margin-right: 15px;
+}
+.hae-header .toprloe-admin li {
+    padding: 0 14px;
+    margin: 20px 0;
+    height: 12px;
+    line-height: 12px;
+    display: inline-block;
+    border-right: 1px solid #d0e2f5;
+    color: #dbe9f9;
+}
+.hae-header .toprloe-admin li:last-child {
+    padding: 0 14px;
+    margin: 20px 0;
+    height: 12px;
+    line-height: 12px;
+    display: inline-block;
+    border-right: 0px solid #d0e2f5;
+    color: #dbe9f9;
+}
+.pull-right a {
+    color: #dbe9f9;
+}
+.menu-hor {
+    background: none;
+    width: auto;
+    margin-right: 15px;
+}
+#hae_Body {
+    border-top: 0 solid rgba(255, 255, 255, 0.1);
+    margin-top: 55px;
+}
+#hae_LeftPanel {
+    padding: 10px 5px 10px 0;
+    position: relative;
+    width: 216px;
+    overflow: hidden;
+    padding-right: 0;
+    padding-top: 0;
+    border-right: 1px solid #e7eaec;
+}
+
+.btn-minor .hae-icon:hover {
+    color: #666;
+}
+.hae-label {
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.hae-btn {
+    outline-style: none;
+}
+
+.hae-spacecontrol .hae-label {
+    width: 100%;
+    display: inline-block;
+    vertical-align: -12px;
+}
+.hae-toolbar {
+    clear: both;
+    text-align: center;
+    margin: 0;
+    padding-top: 0;
+}
+input[type="text"] {
+    height: 30px;
+    padding: 0 10px;
+}
+
+.row .center .haeRendered:first-child .hae-btn {
+    background: #ffac33;
+    color: #fff;
+    border: 1px solid #ef9716;
+    height: 32px;
+    padding: 0 17px 0 18px;
+    line-height: 27px;
+    margin-right: 7px;
+}
+.row .center .haeRendered:first-child .hae-btn:hover {
+    background: #fd9c0e;
+    color: #fff;
+    border: 1px solid #ef9716;
+    height: 32px;
+    padding: 0 17px 0 18px;
+    line-height: 27px;
+    margin-right: 7px;
+}
+.row .center .haeRendered:last-child .hae-btn {
+    background: #fff;
+    color: #666;
+    border: 1px solid #e5e5e5;
+    height: 32px;
+    padding: 0 17px 0 18px;
+    line-height: 27px;
+    margin-right: 11px;
+}
+/** 登录页面 */
+.hae-input input[type="password"]{
+  border-radius: 3px;
+	width: 100%;
+	vertical-align: middle;
+	height: 32px;
+	padding: 0 10px;
+	border: 1px solid #e5e9ea;
+	background: #ffffff;
+}
+.login-center {
+	border: 1px solid #e2ebf3;
+	background: #ffffff;
+	border-radius: 9px;
+	padding: 30px 9px 0px 20px;
+	margin-bottom:40px ;
+	width: 40%;
+	/**height: 260px;*/
+	margin-top: 5%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 15%;
+}
+
+.login-center h2{
+    border-bottom: 1px solid #ccc;
+    color: #333;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.login-center label{
+    font-size:14px;
+	vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 33px;
+}
+.login-center button{
+	border-width: 0;
+	font-weight: bold;
+	color: white;
+	line-height: normal;
+	padding-top: 0.75em;
+	padding-right: 1.5em;
+	padding-bottom: 0.75em;
+	padding-left: 1.5em;
+	background-color: #3e89d4;
+	border-color: #3e89d4;
+	border-radius: 4px;	
+}
+.login-center .hae-toolbar{
+    padding-bottom: 50px;
+}
+.login-error{
+    background-color: red;
+	margin-top: -20px;
+	border-radius: 5px;
+	color: white;
+	font-size: 14px;
+}
+h3{
+	margin-bottom: 20px;
+	border-bottom: 1px solid #F3F7F8;
+	color:#1aa0e1
+}
+
+
+
