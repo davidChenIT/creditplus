@@ -19,7 +19,7 @@ public class RequestProcess{
 	@Consumes(MediaType.APPLICATION_XML)
 	public Object execute(@PathParam("module")String module, @PathParam("method")String method, @PathParam("request_data")String request_data) throws Exception {
 		String className=PropertiesRead.getValueByKey(module);
-		ServiceInterface serviceinterface; 
+		ServiceInterface serviceinterface;
 		try {
 			serviceinterface = (ServiceInterface) Class.forName(className).newInstance();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
