@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MethodParamType {
 	
-	String [] paramType();
+	Class [] paramType();
+	String [] paramKey();
 
 }

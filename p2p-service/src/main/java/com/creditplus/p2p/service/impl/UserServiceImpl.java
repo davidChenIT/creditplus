@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService  {
 		
 	}
 
-	@MethodParamType(paramType = { "id" })
+	@MethodParamType(paramKey={"id"}, paramType = { String.class })
 	public void deleteUserById(String id) {
 		System.out.println("====执行删除======paramValue="+id);
 	}
@@ -24,8 +24,9 @@ public class UserServiceImpl implements UserService  {
 	public void deleteUserById(int userId) {
 	}
 
+	@MethodParamType(paramKey = { "userVo" }, paramType = { UserVO.class})
 	public void updateUser(UserVO userVO) {
-		
+		System.out.println(userVO);
 	}
 	
 	public UserVO getUserById(int userId) {

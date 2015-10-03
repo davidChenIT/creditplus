@@ -16,21 +16,6 @@
     <import resource="classpath:META-INF/cxf/cxf.xml" />
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>    
-   <!--  <bean id="userAction" class="com.creditplus.p2p.webapp.impl.UserActionImpl"/>
-    <jaxrs:server id="serviceContainer" address="/">
-        <jaxrs:serviceBeans>
-        	<ref bean="userAction" />
-        </jaxrs:serviceBeans>
-        <jaxrs:extensionMappings>
-        	<entry key="json" value="application/json" />
-    	</jaxrs:extensionMappings>
-    	<jaxrs:languageMappings>
-           <entry key="en" value="en-gb"/>  
-    	</jaxrs:languageMappings>      
-    	<jaxrs:providers>
-    	   <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider"/>
-    	</jaxrs:providers>  
-    </jaxrs:server> -->
      <bean id="requestProcess" class="com.creditplus.p2p.webapp.common.rest.RequestProcess"/>
     <jaxrs:server id="serviceContainer" address="/">
         <jaxrs:serviceBeans>
