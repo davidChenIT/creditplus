@@ -44,6 +44,7 @@ public class SecurityFilter extends AbstractSecurityInterceptor implements Filte
 		//2) GrantedAuthority
 		//Collection<GrantedAuthority> authenticated.getAuthorities()
 		System.out.println("用户发送请求！ ");
+	
 		InterceptorStatusToken token = null;
 		
 		token = super.beforeInvocation(fi);

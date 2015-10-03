@@ -18,13 +18,16 @@ public class UserServiceImpl implements ServiceInterface  {
 	public void deleteUserById(String id) {
 		System.out.println("====执行删除======");
 	}
+	
+	public void deleteUserById(int userId) {
+	}
 
 	public void updateUser(UserVO userVO) {
 		
 	}
 	
-	public UserVO getUserById(int id) {
-		return userDao.getUserById(id);
+	public UserVO getUserById(int userId) {
+		return userDao.getUserById(userId);
 	}
 
 	public Object execute(String module, String method, String request_data) throws Exception {

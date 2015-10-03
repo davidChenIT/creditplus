@@ -70,7 +70,7 @@
 	</header>
 	<!--  头部end -->
 	
-   <form action="j_spring_security_check" method="post" onsubmit="return validateForm(this)" autocomplete="off">
+   <form action="<%=request.getContextPath()%>/j_spring_security_check" method="post" onsubmit="return validateForm(this)" autocomplete="off">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
     <!-- 中间区域 -->
 	<section id="hae_Body" class="hae-layout layout-equalheight ">
@@ -92,14 +92,14 @@
 											<div class="row">
 												<h2>登&nbsp;录</h2>
 											</div>
-									  </div>
+									  </div>									   
 									  <% if(null != session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION)){ %>
 									  <div class="hae-spacecontrol col-xs-12 col-sm-12 login-error">
 											<div class="row">
 												<p class="title">登录错误提示:</p>
    												<span class="aui-icon icon-error"></span>
 									    		<ul>
-									                    <li><%=session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION) %></li>
+									                    <li>${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}</li>
 									            </ul>
 											</div>
 									  </div>

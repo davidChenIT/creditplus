@@ -1,22 +1,23 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%response.setStatus(HttpServletResponse.SC_OK);%> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">
-<title>首页</title>
-<link href="../css/credit1.css" rel="stylesheet" type="text/css">
-<link href="../css/credit2.css" rel="stylesheet" type="text/css">
-<link href="../css/credit3.css" rel="stylesheet" type="text/css">
+<title>404</title>
+<link href="<%=request.getContextPath()%>/css/credit1.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/credit2.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/credit3.css" rel="stylesheet" type="text/css">
 <!-- jquery中的ui、ztree、grid对应的css -->
-<link href="../css/jqueryui/jquery-ui.css" rel="stylesheet" type="text/css">
-<link href="../css/jqueryztree/zTreeStyle.css" rel="stylesheet" type="text/css">
-<link href="../css/jqgridui/ui.jqgrid.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/jqueryui/jquery-ui.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/jqueryztree/zTreeStyle.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/jqgridui/ui.jqgrid.css" rel="stylesheet" type="text/css">
 
-<script src="../js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
-<script src="../js/jquery/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
-<script src="../js/jqgrid/i18n/grid.locale-cn.js" type="text/javascript"></script>
-<script src="../js/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>
-
-<script src="../js/credit/basic.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/jquery/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/jqgrid/i18n/grid.locale-cn.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/credit/basic.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -37,7 +38,7 @@
 				<li><span>欢迎 </span><span widget="LogonUser" class="haeRendered" id="LogonUser_23249138">张三</span></li>
 				<li><a class="render haeRendered" widget="roles" id="Roles_54891949">Administrator<span class="hae-icon icon-triangle-down"></span></a></li>
 				<li><a>中文<span class="hae-icon icon-triangle-down"></span></a></li>
-				<li><a href="/p2p-webapp/j_spring_security_logout">注销</a></li>
+				<li><a>注销</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -79,8 +80,8 @@
 				<!--hae_Main_start-->
 				<div id="hae_Main" class="hae-page haePageContext" haepagecontextid="main">
 					<div class="hae-wrong hae-mainpage">
-					    <h3>Credit Plus</h3>
-					    <p>Welcome</p>
+					    <h2>404</h2>
+					    <p>Not Found</p>
 					    <div></div>
 					    <p></p>
 						<p>城立信金融</p>

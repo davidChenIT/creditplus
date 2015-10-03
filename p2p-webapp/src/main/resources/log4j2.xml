@@ -8,7 +8,7 @@
 
     <Loggers>
         <Logger name="com.creditplus.p2p.dao" level="trace"/>
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="Console" />
         </Root>
     </Loggers>

@@ -3,7 +3,7 @@ package com.creditplus.p2p.model;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RoleVO implements java.io.Serializable {
+public class RoleVO extends BaseVO{
 
 	/**
 	 * 
@@ -11,55 +11,32 @@ public class RoleVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	// Fields
-	private Integer id;
+	private Integer roleId;
 	private Integer enable;
-	private String name;
-	private Set<RoleVO> roles = new HashSet<RoleVO>(0);
+	private String  roleName;
 	private Set<ResourceVO> resources = new HashSet<ResourceVO>(0);
-	
-	/** default constructor */
-	public RoleVO() {
+	public Integer getRoleId() {
+		return roleId;
 	}
-
-	public Integer getId() {
-		return this.id;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public Integer getEnable() {
-		return this.enable;
+		return enable;
 	}
-
 	public void setEnable(Integer enable) {
 		this.enable = enable;
 	}
-
-	public String getName() {
-		return this.name;
+	public String getRoleName() {
+		return roleName;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
-
-	public Set<RoleVO> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<RoleVO> roles) {
-		this.roles = roles;
-	}
-
 	public Set<ResourceVO> getResources() {
 		return resources;
 	}
-
 	public void setResources(Set<ResourceVO> resources) {
 		this.resources = resources;
 	}
-
-
 }

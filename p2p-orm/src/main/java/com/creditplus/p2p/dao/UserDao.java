@@ -6,11 +6,11 @@ public interface UserDao {
 	
 	void insertUser(UserVO userVO);
 	
-	void deleteUserById(int id);
+	void deleteUserById(int userId);
 	
 	void updateUser(UserVO userVO);
 	
-	UserVO getUserById(int id);
+	UserVO getUserById(int userId);
 	
 	UserVO findByName(String username);
 

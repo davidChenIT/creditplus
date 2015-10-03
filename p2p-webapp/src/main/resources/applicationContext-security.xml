@@ -23,7 +23,7 @@
         <csrf disabled="true" />
        	<custom-filter ref="loginFilter"    position="FORM_LOGIN_FILTER"  />
 		<custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
-        <logout/>		
+        <logout invalidate-session="true"   logout-success-url="/" logout-url="/j_spring_security_logout"/>  		
     </http>
     
     <!--beans:bean id="csrfFilter" class="org.springframework.security.web.csrf.CsrfFilter">
@@ -58,11 +58,22 @@
     	<!-- 资源与权限对应关系 -->
     	<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
     </beans:bean>
+    
     <!-- 实现了UserDetailsService的Bean -->
     <authentication-manager alias="authenticationManager">
-        <authentication-provider user-service-ref="userDetailServiceImpl" />
+        <authentication-provider ref="authenticationProvider" />
     </authentication-manager>
     
+	<beans:bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">  
+	    <beans:property name="hideUserNotFoundExceptions" value="true" />  
+	    <beans:property name="userDetailsService" ref="userDetailServiceImpl" />  
+	    <!--<beans:property name="userCache" ref="userCache" />  
+	    <beans:property name="messageSource" ref="messageSource" />  
+	    <beans:property name="passwordEncoder" ref="passwordEncode" />  
+	    <beans:property name="saltSource" ref="saltSource" />
+	     -->  
+	</beans:bean>
+	 
     <beans:bean id="accessDecisionManager" class="com.creditplus.p2p.security.AccessDecisionManagerImpl"/>
 	<beans:bean id="userDetailServiceImpl" class="com.creditplus.p2p.security.UserDetailServiceImpl" />
 	<beans:bean id="securityMetadataSource" class="com.creditplus.p2p.security.SecurityMetadataSource">
