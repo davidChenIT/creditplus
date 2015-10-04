@@ -9,6 +9,7 @@
   	<module>p2p-orm</module>
   	<module>p2p-service</module>
     <module>p2p-webapp</module>
+    <module>p2p-common</module>
   </modules>
   <dependencyManagement>
   	<dependencies>
