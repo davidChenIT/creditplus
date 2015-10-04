@@ -1,11 +1,14 @@
 package com.creditplus.p2p.model;
 
+import java.util.Date;
+import java.util.List;
+
 public class UserInfoVO {
 
 	private Integer id;
 	private String name;
 	private String sex;
-	private int age;
+	private Integer age;
 	private String ethnic;
 	private String province;
 	private String city;
@@ -20,8 +23,46 @@ public class UserInfoVO {
 	private String work_tel;
 	private Integer seasame_scope;
 	private String mobile_ser_code;
-	private String created_date;
-	private String last_created_date;
+	private String created_by;
+	private Date creted_date;
+	private String last_updated_by;
+	
+	public String getCreated_by() {
+		return created_by;
+	}
+	public void setCreated_by(String created_by) {
+		this.created_by = created_by;
+	}
+	public Date getCreted_date() {
+		return creted_date;
+	}
+	public void setCreted_date(Date creted_date) {
+		this.creted_date = creted_date;
+	}
+	public String getLast_updated_by() {
+		return last_updated_by;
+	}
+	public void setLast_updated_by(String last_updated_by) {
+		this.last_updated_by = last_updated_by;
+	}
+	public Date getLast_created_date() {
+		return last_created_date;
+	}
+	public void setLast_created_date(Date last_created_date) {
+		this.last_created_date = last_created_date;
+	}
+	public List<LoanAppVO> getLoanAppList() {
+		return loanAppList;
+	}
+	public void setLoanAppList(List<LoanAppVO> loanAppList) {
+		this.loanAppList = loanAppList;
+	}
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+	private Date last_created_date;
+	private List<LoanAppVO> loanAppList;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -130,18 +171,7 @@ public class UserInfoVO {
 	public void setMobile_ser_code(String mobile_ser_code) {
 		this.mobile_ser_code = mobile_ser_code;
 	}
-	public String getCreated_date() {
-		return created_date;
-	}
-	public void setCreated_date(String created_date) {
-		this.created_date = created_date;
-	}
-	public String getLast_created_date() {
-		return last_created_date;
-	}
-	public void setLast_created_date(String last_created_date) {
-		this.last_created_date = last_created_date;
-	}
+	
 	
 	
 	

@@ -6,9 +6,9 @@ public interface UserInfoDao {
 
 	void insertUserInfo(UserInfoVO vo);
 	
-	void deleteUserInfoById(int userId);
+	void deleteUserInfoById(Integer userId);
 	
 	void updateUserInfo(UserInfoVO vo);
 	
-	UserInfoVO getUserInfoById(int userid);
+	UserInfoVO getUserInfoById(Integer userid);
 }
