@@ -21,9 +21,9 @@
         </session-management>
         
         <csrf disabled="true" />
-       <!-- 	<custom-filter ref="loginFilter"    position="FORM_LOGIN_FILTER"  />
-		<custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/> -->
-        <logout invalidate-session="true"   logout-success-url="/" logout-url="/j_spring_security_logout"/>  		
+        <custom-filter ref="loginFilter"    position="FORM_LOGIN_FILTER"  />
+		<custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+        <logout invalidate-session="true"   logout-success-url="/login.jsp" logout-url="/j_spring_security_logout"/>  		
     </http>
     
     <!--beans:bean id="csrfFilter" class="org.springframework.security.web.csrf.CsrfFilter">
