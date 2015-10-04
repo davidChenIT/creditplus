@@ -4,7 +4,6 @@
 <head>
 <meta charset="utf-8">
 <title>投标列表</title>
-<script src="<%=request.getContextPath()%>/js/credit/makeTenderList.js" type="text/javascript"></script>
 </head>
 
 
@@ -19,27 +18,27 @@
        <section class="row">
             <!-- 引入左侧菜单区域 -->
             <jsp:include page="leftMenu.jsp"></jsp:include>
-            
+            <script src="<%=request.getContextPath()%>/js/credit/makeTenderList.js" type="text/javascript"></script>
             <!--  主区域start -->
-			<div id="hae_MainPanel" class="equalheight-item render content-hae-mainPanel haeRendered hae-fullscreen" widget="fullScreen">
+			<div id="credit_MainPanel" class="equalheight-item render content-credit-mainPanel creditRendered credit-fullscreen" widget="fullScreen">
 				<!-- 面包屑区域 -->
-				<div class="row" id="hae_MainTop">
+				<div class="row" id="credit_MainTop">
 					<div id="breadcrumb" class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<ul class="hae-breadcrumb"></ul>
+						<ul class="credit-breadcrumb"></ul>
 					</div>
 				</div>
 				
 				
-				<!--hae_Main_start-->
-				<div id="hae_Main" class="hae-page haePageContext" haepagecontextid="main">
+				<!--credit_Main_start-->
+				<div id="credit_Main" class="credit-page creditPageContext" creditpagecontextid="main">
 				    <div>
 						<!-- 整个tab控件区域 -->
-						<div hw_id="_hw_8117" name="makeTenderTab" widget="tab" class="haeRendered hae-tabs" id="Tab_47892031">
+						<div hw_id="_hw_8117" name="makeTenderTab" widget="tab" class="creditRendered credit-tabs" id="Tab_47892031">
 							<!-- 标题区域 -->
 							<div class="tabs-head">
-									<div class="hae-slider slider-tabs hae-hide">
-										<span class="hae-icon icon-chevron-left hae-disabled"></span>
-										<span class="hae-icon icon-chevron-right"></span>
+									<div class="credit-slider slider-tabs credit-hide">
+										<span class="credit-icon icon-chevron-left credit-disabled"></span>
+										<span class="credit-icon icon-chevron-right"></span>
 									</div>
 									
 									<ul>
@@ -50,7 +49,7 @@
 							<!-- 内容区域start -->
 							<div class="tabs-body">
 								<!-- 页签1 -->
-								<div tabid="makeTenderList" class="tabs-body-item haePageContext hae-validator" haepagecontextid="page_85823101">
+								<div tabid="makeTenderList" class="tabs-body-item creditPageContext credit-validator" creditpagecontextid="page_85823101">
 									<div>
 										<!-- grid区域开始 -->
 										<div class="row">
@@ -66,7 +65,7 @@
 						</div>					
 					</div>
 				</div>
-				<!--hae_Main_end-->
+				<!--credit_Main_end-->
 				
 			</div>
 			<!--  主区域end -->

@@ -4,7 +4,6 @@
 <head>
 <meta charset="utf-8">
 <title>信用复审列表</title>
-<script src="<%=request.getContextPath()%>/js/credit/reviewList.js" type="text/javascript"></script>
 </head>
 
 
@@ -13,6 +12,7 @@
 <div id="credit_Top">
   <!-- 引入头部 -->
   <jsp:include page="header.jsp"></jsp:include>
+  <script src="<%=request.getContextPath()%>/js/credit/reviewList.js" type="text/javascript"></script>
   
   <!-- 中间区域 -->
   <section id="credit_Body" class="credit-layout layout-equalheight ">
