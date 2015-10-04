@@ -7,10 +7,8 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>登录</title>
-<link href="css/credit.css" rel="stylesheet" type="text/css">
-<link href="css/jqueryztree/zTreeStyle.css" rel="stylesheet" type="text/css">
-<script src="js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
-<script src="js/jquery/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
+<link href="<%=request.getContextPath()%>/css/credit.css" rel="stylesheet" type="text/css">
+<script src="<%=request.getContextPath()%>/js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
 </head>
 <script>
   //页面初始化加载函数
@@ -44,26 +42,14 @@
 
 <body>
 
-<body>
-
 <div id="hae_Top">
 
-	<!--  头部start -->
+  <!--  头部start -->
 	<header id="hae_Header" class="hae-header">
 		<!-- logo区域-->
 		<nav class="hae-logo pull-left">
 			<li class="logo-credit"></li>
 			<li class="logo-text">立信贷,好生活!</li>
-		</nav>
-		
-		<!-- 右边登录人、角色区域 -->
-		<nav class="hae-toprole pull-right">
-			<ul class="hae-menu menu-hor toprloe-admin">
-				<li><span>您尚未登录！</span></li>
-				<li><a class="render haeRendered" widget="roles" id="Roles_54891949">Administrator<span class="hae-icon icon-triangle-down"></span></a></li>
-				<li><a>中文<span class="hae-icon icon-triangle-down"></span></a></li>
-				<li><a>注销</a></li>
-			</ul>
 		</nav>
 	</header>
 	<!--  头部end -->
@@ -158,17 +144,8 @@
 		</section>
 	</section>	
 	</form>	
-	<!-- 底部区域 -->
-	<footer id="hae_Footer" class="hae-footer">
-		<div class="hae-fullwidth clearfix">
-			<p class="pull-left">版权所有©诚立信互联网金融服务有限公司2015保留一切权利</p>
-			<ul class="pull-right">
-				<li><a href="#" target="_self">借款</a></li>
-				<li><a href="#" target="_self">投资</a></li>
-				<li><a target="_self" href="#">联系我</a></li>
-			</ul>
-		</div>
-	</footer>
+	<!-- 引入底部 -->
+  <jsp:include page="page/footer.jsp"></jsp:include>
 </div>
 </body>
 </html>
