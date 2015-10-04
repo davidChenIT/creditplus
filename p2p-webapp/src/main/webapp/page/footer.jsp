@@ -6,8 +6,8 @@
 </head>
 <body>
 	<!-- 底部区域 -->
-	<div id="hae_Footer" class="hae-footer">
-		<div class="hae-fullwidth clearfix">
+	<div id="credit_Footer" class="credit-footer">
+		<div class="credit-fullwidth clearfix">
 			<p class="pull-left">版权所有©诚立信互联网金融服务有限公司2015保留一切权利</p>
 			<ul class="pull-right">
 				<li><a href="#" target="_self">借款</a></li>

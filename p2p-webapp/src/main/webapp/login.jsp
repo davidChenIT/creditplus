@@ -42,12 +42,12 @@
 
 <body>
 
-<div id="hae_Top">
+<div id="credit_Top">
 
   <!--  头部start -->
-	<header id="hae_Header" class="hae-header">
+	<header id="credit_Header" class="credit-header">
 		<!-- logo区域-->
-		<nav class="hae-logo pull-left">
+		<nav class="credit-logo pull-left">
 			<li class="logo-credit"></li>
 			<li class="logo-text">立信贷,好生活!</li>
 		</nav>
@@ -57,14 +57,14 @@
    <form action="<%=request.getContextPath()%>/j_spring_security_check" method="post" onsubmit="return validateForm(this)" autocomplete="off">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
     <!-- 中间区域 -->
-	<section id="hae_Body" class="hae-layout layout-equalheight ">
+	<section id="credit_Body" class="credit-layout layout-equalheight ">
 		<section class="row">
 			
 			<!--  主区域start -->
-			<section id="hae_MainPanel" class="equalheight-item render content-hae-mainPanel haeRendered hae-fullscreen" widget="fullScreen">
+			<section id="credit_MainPanel" class="equalheight-item render content-credit-mainPanel creditRendered credit-fullscreen" widget="fullScreen">
 				
 				<!-- 主内容区域 -->
-				<div id="hae_Main" class="hae-page haePageContext" haepagecontextid="main">
+				<div id="credit_Main" class="credit-page creditPageContext" creditpagecontextid="main">
 				
 				     <div>
 					 
@@ -72,13 +72,13 @@
    
 								<div class="row">
 								      
-									  <div class="hae-spacecontrol col-xs-12 col-sm-12">
+									  <div class="credit-spacecontrol col-xs-12 col-sm-12">
 											<div class="row">
 												<h2>登&nbsp;录</h2>
 											</div>
 									  </div>									   
 									  <% if(null != session && null != session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION)){ %>
-									  <div class="hae-spacecontrol col-xs-12 col-sm-12 login-error">
+									  <div class="credit-spacecontrol col-xs-12 col-sm-12 login-error">
 											<div class="row">
 												<p class="title">登录错误提示:</p>
    												<span class="aui-icon icon-error"></span>
@@ -88,15 +88,15 @@
 											</div>
 									  </div>
 									  <%} %>
-								      <div class="hae-spacecontrol col-xs-12 col-sm-12">
+								      <div class="credit-spacecontrol col-xs-12 col-sm-12">
 											<div class="row">
 												<label class="col-xs-12 col-sm-3">
-													<div class="hae-label">
+													<div class="credit-label">
 														用户名
 													</div>
 												</label>
 												<div class="col-xs-12 col-sm-6">
-													<div class="hae-input">
+													<div class="credit-input">
 														<input type="text" name="username" >
 													</div>
 										
@@ -105,15 +105,15 @@
 										</div>	
 										
 										
-										<div class="hae-spacecontrol col-xs-12 col-sm-12">
+										<div class="credit-spacecontrol col-xs-12 col-sm-12">
 											<div class="row">
 												<label class="col-xs-12 col-sm-3">
-													<div class="hae-label">
+													<div class="credit-label">
 														密&nbsp;&nbsp;&nbsp;码
 													</div>
 												</label>
 												<div class="col-xs-12 col-sm-6">
-													<div class="hae-input">
+													<div class="credit-input">
 														<input type="password" name="password" >
 													</div>
 										
@@ -124,7 +124,7 @@
 								</div>
 								
 								
-								<div class="haeRendered center hae-toolbar" >
+								<div class="creditRendered center credit-toolbar" >
 									<div >
 										<button name="loginBtn"  type="submit">登&nbsp;&nbsp;录</button>
 									</div>

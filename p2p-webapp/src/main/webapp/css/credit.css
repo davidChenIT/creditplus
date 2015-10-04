@@ -918,8 +918,8 @@ h6,
 .pull-left {
   float: left !important;
 }
-.hae-hide,
-.hae-i18n {
+.credit-hide,
+.credit-i18n {
   display: none !important;
 }
 .hidden-scroll {
@@ -1007,47 +1007,47 @@ label {
   margin-bottom: 5px;
   font-weight: bold;
 }
-.hae-spacecontrol {
+.credit-spacecontrol {
   line-height: 180%;
   margin-bottom: 10px;
 }
-.hae-spacecontrol .hae-input {
+.credit-spacecontrol .credit-input {
   width: 100%;
 }
-.hae-spacecontrol .hae-label {
+.credit-spacecontrol .credit-label {
   width: 100%;
   display: inline-block;
 }
-.hae-input .list-inline li {
+.credit-input .list-inline li {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-right: 5px;
   float: left;
 }
-.hae-label {
+.credit-label {
   vertical-align: middle;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 @media (min-width: 768px) {
-  .hae-label {
+  .credit-label {
     text-align: right;
   }
 }
-.hae-label:before {
+.credit-label:before {
   content: "  ";
   color: #666666;
   padding-right: 4px\9;
 }
-.hae-input {
+.credit-input {
   position: relative;
   display: inline-block;
   vertical-align: top;
 }
-.hae-input input[type="text"],
-.hae-input textarea {
+.credit-input input[type="text"],
+.credit-input textarea {
   width: 100%;
   vertical-align: middle;
 }
@@ -1071,10 +1071,10 @@ label {
   display: none;
 }
 /** 设置内容居面包屑距离 */
-.hae-page {
+.credit-page {
   margin-top: 9px;
 }
-.hae-btn {
+.credit-btn {
   min-width: 60px;
   height: 25px;
   font-size: 14px;
@@ -1083,76 +1083,76 @@ label {
   padding: 0 10px;
   border: 0;
 }
-.hae-btn img {
+.credit-btn img {
   margin-right: 2px;
 }
-.hae-tree.tree-togglemenu .hae-menu-toggle {
+.credit-tree.tree-togglemenu .credit-menu-toggle {
   height: 40px;
   font-size: 1.66666667em;
   padding-right: 8px;
 }
-.hae-tree.tree-togglemenu .hae-menu-toggle a.hae-icon {
+.credit-tree.tree-togglemenu .credit-menu-toggle a.credit-icon {
   float: right;
   margin-top: 10px;
 }
-.hae-tabs .hae-tabs {
+.credit-tabs .credit-tabs {
   margin: 0 10px;
 }
-.hae-tabs .hae-tabs .tabs-head ul {
+.credit-tabs .credit-tabs .tabs-head ul {
   height: 26px;
 }
-.hae-tabs .tabs-loading {
+.credit-tabs .tabs-loading {
   background: url(../images/container-loading.gif) center no-repeat;
   min-height: 200px;
   width: 100%;
 }
-.hae-tabs .hae-nav-tabs-head {
+.credit-tabs .credit-nav-tabs-head {
   margin: 0 -10px 0 -10px;
 }
-.hae-tabs .tabs-head {
+.credit-tabs .tabs-head {
   white-space: nowrap;
   margin: 0 -10px 10px -10px;
   overflow: hidden;
 }
-.hae-tabs .tabs-head ul {
+.credit-tabs .tabs-head ul {
   position: relative;
   width: 9999px;
   height: 28px;
 }
-.hae-tabs .tabs-head li {
+.credit-tabs .tabs-head li {
   float: left !important;
   position: relative;
   margin-right: -1px;
   cursor: pointer;
 }
-.hae-tabs .tabs-head li.tabs-selected {
+.credit-tabs .tabs-head li.tabs-selected {
   font-weight: bold;
 }
-.hae-tabs .tabs-head .hae-small-close {
+.credit-tabs .tabs-head .credit-small-close {
   top: 7px;
   right: 3px;
 }
-.row .hae-tabs .tabs-head {
+.row .credit-tabs .tabs-head {
   margin: 0 0 20px 0;
 }
-.hae-toolbar {
+.credit-toolbar {
   clear: both;
   text-align: center;
   margin: 10px 0 10px 0;
 }
 @media (max-width: 480px) {
-  .hae-toolbar .hae-btn,
-  .hae-toolbar .btn-minor {
+  .credit-toolbar .credit-btn,
+  .credit-toolbar .btn-minor {
     margin-bottom: 10px;
   }
 }
-.hae-toolbar + .hae-toolbar {
+.credit-toolbar + .credit-toolbar {
   clear: none;
 }
-.hae-breadcrumb li {
+.credit-breadcrumb li {
   display: inline-block;
 }
-.hae-breadcrumb li + li:before {
+.credit-breadcrumb li + li:before {
   content: ">";
   font-family: "宋体", sans-serif;
   font-weight: bold;
@@ -1160,34 +1160,34 @@ label {
   color: #cccccc;
 }
 /* body */
-#hae_Body {
+#credit_Body {
   border-top: 65px solid rgba(255, 255, 255, 0.1);
 }
-#hae_LeftPanel,
-#hae_MainPanel,
-#hae_RightPanel {
+#credit_LeftPanel,
+#credit_MainPanel,
+#credit_RightPanel {
   padding: 10px;
 }
-#hae_LeftPanel[class$="equalheight-item"],
-#hae_MainPanel[class$="equalheight-item"],
-#hae_RightPanel[class$="equalheight-item"] {
+#credit_LeftPanel[class$="equalheight-item"],
+#credit_MainPanel[class$="equalheight-item"],
+#credit_RightPanel[class$="equalheight-item"] {
   height: 500px;
 }
-#hae_LeftPanel,
-#hae_RightPanel {
+#credit_LeftPanel,
+#credit_RightPanel {
   width: 240px;
 }
 @media (max-width: 1023px) {
-  #hae_LeftPanel,
-  #hae_RightPanel {
+  #credit_LeftPanel,
+  #credit_RightPanel {
     display: none !important;
   }
 }
-#hae_LeftPanel {
+#credit_LeftPanel {
   padding: 10px 0;
 }
 /* header  */
-.hae-header {
+.credit-header {
   min-height: 55px;
   margin-bottom: 10px;
   padding: 0;
@@ -1198,59 +1198,59 @@ label {
   z-index: 910;
   background-color: #3e89d4;
 }
-.hae-footer {
+.credit-footer {
   background: #ffffff;
   border-top: solid 1px #d1d1d1;
   margin: 5px;
   padding: 5px 10px;
 }
-.hae-footer ul {
+.credit-footer ul {
   margin: 5px 0;
 }
-.hae-header .hae-logo > li,
-.hae-header .hae-toplink > ul:nth-child(2) > li,
-.hae-footer ul > li {
+.credit-header .credit-logo > li,
+.credit-header .credit-toplink > ul:nth-child(2) > li,
+.credit-footer ul > li {
   display: inline-block;
   margin: 0;
   vertical-align: middle;
 }
-.hae-header .hae-logo > li + li:before,
-.hae-header .hae-toplink > ul:nth-child(2) > li + li:before,
-.hae-footer ul > li + li:before {
+.credit-header .credit-logo > li + li:before,
+.credit-header .credit-toplink > ul:nth-child(2) > li + li:before,
+.credit-footer ul > li + li:before {
   padding-right: 10px;
   padding-left: 0;
   color: rgba(0, 0, 0, 0);
   content: '';
 }
-.hae-wrong {
+.credit-wrong {
   text-align: center;
   padding: 1px 0;
 }
-.hae-wrong .hae-mainpage {
+.credit-wrong .credit-mainpage {
   background: none;
   box-shadow: none;
 }
-.hae-wrong h2,
-.hae-wrong h3,
-.hae-wrong h4 {
+.credit-wrong h2,
+.credit-wrong h3,
+.credit-wrong h4 {
   color: #333333;
   margin-top: 10%;
   font: bold 12em Impact, Arial;
 }
-.hae-wrong h3,
-.hae-wrong h4 {
+.credit-wrong h3,
+.credit-wrong h4 {
   font: bold 6em "simhei";
 }
-.hae-wrong h4 {
+.credit-wrong h4 {
   font-size: 4.6em;
   margin: 0 0 30px 0;
   font-weight: normal;
 }
-.hae-wrong p {
+.credit-wrong p {
   font: normal 1.7em "Microsoft Yahei";
   margin-bottom: 20px;
 }
-.hae-wrong div {
+.credit-wrong div {
   width: 80%;
   height: 3px;
   margin: 0 auto;
@@ -1258,18 +1258,18 @@ label {
 
 
 
-#hae_MainPanel {
+#credit_MainPanel {
   padding: 10px 20px;
 }
-#hae_Header,
-#hae_Footer {
+#credit_Header,
+#credit_Footer {
   position: fixed;
 }
-#hae_Footer {
+#credit_Footer {
   bottom: 0;
   width: 100%;
 }
-.hae-icon {
+.credit-icon {
   font-family: 'iconfont';
   position: relative;
   top: 1px;
@@ -1280,7 +1280,7 @@ label {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.row .hae-tabs .tabs-head {
+.row .credit-tabs .tabs-head {
   margin-bottom: 0;
 }
 
@@ -1288,7 +1288,7 @@ label {
   font-weight: normal;
 }
 
-.hae-btn {
+.credit-btn {
   height: 30px;
   line-height: 30px;
   margin-right: 6px;
@@ -1321,7 +1321,7 @@ input[type="text"] {
 
 
 
-.hae-tree.tree-togglemenu {
+.credit-tree.tree-togglemenu {
   font-family: "microsoft yahei", Arial;
   font-size: 14px;
   background: #fafdff;
@@ -1366,32 +1366,32 @@ a:focus {
 a.disalbe {
   color: #f0f0f0;
 }
-a.hae-icon {
+a.credit-icon {
   color: #89bedd;
 }
-a.hae-icon:hover,
-a.hae-icon:focus {
+a.credit-icon:hover,
+a.credit-icon:focus {
   color: #89bedd;
 }
-.hae-breadcrumb li a,
-.hae-breadcrumb li span {
+.credit-breadcrumb li a,
+.credit-breadcrumb li span {
   color: #515256;
 }
-.hae-breadcrumb li a:hover,
-.hae-breadcrumb li.breadcrumb-selected a,
-.hae-breadcrumb li.breadcrumb-selected span {
+.credit-breadcrumb li a:hover,
+.credit-breadcrumb li.breadcrumb-selected a,
+.credit-breadcrumb li.breadcrumb-selected span {
   color: #39afdf;
 }
 
 
 
-/* hae-header */
- .hae-header {
+/* credit-header */
+ .credit-header {
     background: #3e89d4;
     min-height: 40px;
     height: 55px;
 }
-.hae-header .hae-logo .logo-text {
+.credit-header .credit-logo .logo-text {
     font-size: 14px;
     color:#d0e2f5;
 }
@@ -1401,22 +1401,22 @@ a.hae-icon:focus {
     font-family: arial, "微软雅黑";
     padding-bottom: 0;
 }
-.hae-h2, .hae-h3, .hae-h2:hover, .hae-h3:hover {
+.credit-h2, .credit-h3, .credit-h2:hover, .credit-h3:hover {
     color: #ff8f00;
     font-size: 18px;
     font-weight: normal;
     background: transparent;
 }
-.hae-input input[type="text"], .hae-input textarea {
+.credit-input input[type="text"], .credit-input textarea {
     border-radius: 3px;
 }
-.hae-input input[type="text"]:focus, .hae-input textarea:focus {
+.credit-input input[type="text"]:focus, .credit-input textarea:focus {
     border-color: #ff8f00;
 }
-.hae-input .input-icon {
+.credit-input .input-icon {
     color: #1AA0E1;
 }
-input[type="text"]:focus + .input-btn .hae-icon {
+input[type="text"]:focus + .input-btn .credit-icon {
     color:#ff8f00;
 }
 /*滚动条*/
@@ -1433,30 +1433,30 @@ input[type="text"]:focus + .input-btn .hae-icon {
     margin-top: 74px;
 }
 /*快速链接*/
- .hae-linkmenu .linkmenu-setting span, .hae-linkmenu .linkmenu-setting span:hover {
+ .credit-linkmenu .linkmenu-setting span, .credit-linkmenu .linkmenu-setting span:hover {
     color: #ff8f00;
 }
 /*角色管理*/
  .toprloe-admin {
     font-size: 14px;
 }
-.hae-toprole .toprloe-admin>ul>li, .hae-toprole .toprloe-admin>ul>li a, .toprloe-admin>ul>li a:hover {
+.credit-toprole .toprloe-admin>ul>li, .credit-toprole .toprloe-admin>ul>li a, .toprloe-admin>ul>li a:hover {
     color: #888;
 }
-.hae-toprole .poplist-account li, .poplist-language li {
+.credit-toprole .poplist-account li, .poplist-language li {
     background: #F4F4F4;
 }
-.hae-toprole .poplist-account li, .poplist-language li, .poplist-account li a, .poplist-language li a {
+.credit-toprole .poplist-account li, .poplist-language li, .poplist-account li a, .poplist-language li a {
     color: #777;
 }
-.hae-selector {
+.credit-selector {
     border: 1px solid #CDCDCD;
 }
-.hae-toprole .poplist-account li:hover, .poplist-language li:hover {
+.credit-toprole .poplist-account li:hover, .poplist-language li:hover {
     background: #EDEDED;
 }
 /*按钮*/
- .hae-btn {
+ .credit-btn {
     color: #fff;
     background: #ffac33;
     border: 1px solid #ef9716;
@@ -1466,12 +1466,12 @@ input[type="text"]:focus + .input-btn .hae-icon {
     min-width:80px;
     margin-right: 7px;
 }
-.hae-btn:hover {
+.credit-btn:hover {
     background: #fd9c0e;
     color: #fff;
     border: 1px solid #ef9716;
 }
-.search-y-btn .hae-btn::before {
+.search-y-btn .credit-btn::before {
     content:"";
     display: inline-block;
     background: url(./images/icon-u.png) -39px -33px no-repeat;
@@ -1481,7 +1481,7 @@ input[type="text"]:focus + .input-btn .hae-icon {
     position: relative;
     top: 2px;
 }
-.clear-y-btn .hae-btn::before {
+.clear-y-btn .credit-btn::before {
     content:"";
     display: inline-block;
     background: url(./images/icon-u.png) -39px -81px no-repeat;
@@ -1492,7 +1492,7 @@ input[type="text"]:focus + .input-btn .hae-icon {
     right: 4px;
     top: 2px;
 }
-.assign-y-btn .hae-btn::before {
+.assign-y-btn .credit-btn::before {
     content:"";
     display: inline-block;
     background: url(./images/icon-u.png) -39px -130px no-repeat;
@@ -1503,7 +1503,7 @@ input[type="text"]:focus + .input-btn .hae-icon {
     right: 4px;
     top: 3px;
 }
-.export-y-btn .hae-btn::before {
+.export-y-btn .credit-btn::before {
     content:"";
     display: inline-block;
     background: url(./images/icon-u.png) -39px -177px no-repeat;
@@ -1514,7 +1514,7 @@ input[type="text"]:focus + .input-btn .hae-icon {
     top: 1px;
     right: 2px;
 }
-.reset-y-btn .hae-btn::before {
+.reset-y-btn .credit-btn::before {
     content:"";
     display: inline-block;
     background: url(./images/icon-u.png) -39px -231px no-repeat;
@@ -1524,7 +1524,7 @@ input[type="text"]:focus + .input-btn .hae-icon {
     position: relative;
     top: 2px;
 }
-.publish-y-btn .hae-btn::before {
+.publish-y-btn .credit-btn::before {
     content:"";
     display: inline-block;
     background: url(./images/icon-u.png) -39px -271px no-repeat;
@@ -1535,7 +1535,7 @@ input[type="text"]:focus + .input-btn .hae-icon {
     top: 2px;
     right: 3px;
 }
-.import-y-btn .hae-btn::before {
+.import-y-btn .credit-btn::before {
     content:"";
     display: inline-block;
     background: url(./images/icon-u.png) -39px -312px no-repeat;
@@ -1545,7 +1545,7 @@ input[type="text"]:focus + .input-btn .hae-icon {
     position: relative;
     top: 2px;
 }
-.return-y-btn .hae-btn::before {
+.return-y-btn .credit-btn::before {
     content:"";
     display: inline-block;
     background: url(./images/icon-u.png) -39px -346px no-repeat;
@@ -1555,7 +1555,7 @@ input[type="text"]:focus + .input-btn .hae-icon {
     position: relative;
     top: 2px;
 }
-.clear-y-btn .hae-btn, .assign-y-btn .hae-btn, .export-y-btn .hae-btn, .reset-y-btn .hae-btn, .import-y-btn .hae-btn, .publish-y-btn .hae-btn, .return-y-btn .hae-btn {
+.clear-y-btn .credit-btn, .assign-y-btn .credit-btn, .export-y-btn .credit-btn, .reset-y-btn .credit-btn, .import-y-btn .credit-btn, .publish-y-btn .credit-btn, .return-y-btn .credit-btn {
     background: #fff;
     color: #666;
     border: 1px solid #e5e5e5;
@@ -1564,7 +1564,7 @@ input[type="text"]:focus + .input-btn .hae-icon {
     line-height: 27px;
     margin-right: 7px;
 }
-.clear-y-btn .hae-btn:hover, .assign-y-btn .hae-btn:hover, .export-y-btn .hae-btn:hover, .reset-y-btn .hae-btn:hover, .import-y-btn .hae-btn:hover, .publish-y-btn .hae-btn:hover, .return-y-btn .hae-btn:hover {
+.clear-y-btn .credit-btn:hover, .assign-y-btn .credit-btn:hover, .export-y-btn .credit-btn:hover, .reset-y-btn .credit-btn:hover, .import-y-btn .credit-btn:hover, .publish-y-btn .credit-btn:hover, .return-y-btn .credit-btn:hover {
     background: #f8f8f8;
     color: #666;
     border: 1px solid #e5e5e5;
@@ -1572,7 +1572,7 @@ input[type="text"]:focus + .input-btn .hae-icon {
     padding: 0 15px;
     line-height: 27px;
 }
-.clear-y-btn .hae-btn:active, .assign-y-btn .hae-btn:active, .export-y-btn .hae-btn:active, .reset-y-btn .hae-btn:active, .import-y-btn .hae-btn:active, .publish-y-btn .hae-btn:active, .return-y-btn .hae-btn:active {
+.clear-y-btn .credit-btn:active, .assign-y-btn .credit-btn:active, .export-y-btn .credit-btn:active, .reset-y-btn .credit-btn:active, .import-y-btn .credit-btn:active, .publish-y-btn .credit-btn:active, .return-y-btn .credit-btn:active {
     background: #f8f8f8;
     color: #666;
     border: 1px solid #e5e5e5;
@@ -1581,13 +1581,13 @@ input[type="text"]:focus + .input-btn .hae-icon {
     padding: 0 15px;
     line-height: 27px;
 }
-.hae-btn span, .hae-btn :hover, .hae-btn > em {
+.credit-btn span, .credit-btn :hover, .credit-btn > em {
     color: #fff;
 }
-.hae-menubtn > .hae-btn.btn-minor:nth-child(2), .hae-menubtn > btn-minor:nth-child(2) {
+.credit-menubtn > .credit-btn.btn-minor:nth-child(2), .credit-menubtn > btn-minor:nth-child(2) {
     border-left: 1px solid #fff;
 }
-.hae-input-arrow {
+.credit-input-arrow {
     float: left;
     margin: 5px 4px 0px 5px;
 }
@@ -1595,44 +1595,44 @@ input[type="text"]:focus + .input-btn .hae-icon {
  #breadcrumb {
     height: 20px;
 }
-.hae-breadcrumb {
+.credit-breadcrumb {
     margin-bottom: 60px;
 }
-.hae-breadcrumb > li {
+.credit-breadcrumb > li {
     line-height: 25px;
 }
-.hae-breadcrumb li a:hover, .hae-breadcrumb li.breadcrumb-selected a, .hae-breadcrumb li.breadcrumb-selected span {
+.credit-breadcrumb li a:hover, .credit-breadcrumb li.breadcrumb-selected a, .credit-breadcrumb li.breadcrumb-selected span {
     color: #757575!important;
     font-size: 14px;
 }
-.hae-competence {
+.credit-competence {
     padding: 0 0 10px 0;
 }
-.hae-competence .hae-icon {
+.credit-competence .credit-icon {
     color: #838383;
 }
 /*弹窗*/
- .hae-dialog .dialog-head， .hae-dialog .dialog-head .hae-toolbar .hae-icon {
+ .credit-dialog .dialog-head， .credit-dialog .dialog-head .credit-toolbar .credit-icon {
     color: #ff8f00;
 }
-.hae-dialog .err-center .hae-icon.icon-cue {
+.credit-dialog .err-center .credit-icon.icon-cue {
     font-size: 40px;
     vertical-align: middle;
 }
-.hae-dialog .err-center .center-content {
+.credit-dialog .err-center .center-content {
     vertical-align: middle;
     display: inline-block;
     float: right;
 }
-.hae-dialog .dialog-body .err-center {
+.credit-dialog .dialog-body .err-center {
     width: 112px;
     line-height: 50px;
 }
 /*底部样式*/
- .hae-footer {
+ .credit-footer {
     font-size: 14px;
 }
-.hae-footer, .hae-footer a {
+.credit-footer, .credit-footer a {
     color: #E0B647;
 }
 /*首页下方*/
@@ -1640,18 +1640,18 @@ input[type="text"]:focus + .input-btn .hae-icon {
     width: 1000px;
     margin-left: 50px;
 }
-.hae-repeat {
+.credit-repeat {
     clear: both;
     min-height: 150px;
 }
-.hae-repeat ul {
+.credit-repeat ul {
     width: 100%;
 }
-.hae-repeat ul li {
+.credit-repeat ul li {
     float: left;
     margin: 0 5px;
 }
-.promotionDiv .hae-h3 {
+.promotionDiv .credit-h3 {
     color: #c3c3c3;
     margin: 20px 0 30px 0;
 }
@@ -1661,9 +1661,9 @@ input[type="text"]:focus + .input-btn .hae-icon {
 }
 
 #productContentDiv {
-    background: url(/haesmp/unicom/images/phone-bg.png) no-repeat;
+    background: url(/creditsmp/unicom/images/phone-bg.png) no-repeat;
 }
-#customerContentDiv .hae-label, #productContentDiv .hae-label {
+#customerContentDiv .credit-label, #productContentDiv .credit-label {
     text-align: left;
 }
 .unicom-view-name {
@@ -1683,14 +1683,14 @@ input[type="text"]:focus + .input-btn .hae-icon {
     margin-left: -20px;
 }
 /*进度条*/
- .hae-flow .flow-node-process {
+ .credit-flow .flow-node-process {
     width:14px;
     height:auto;
 }
-.hae-flow .flow-node-process .icon-radioselected:before {
+.credit-flow .flow-node-process .icon-radioselected:before {
     content:"\e6b8";
 }
-.hae-flow .flow-node-line {
+.credit-flow .flow-node-line {
     background:none;
     border-bottom:2px solid #e8ecee;
     height:33px;
@@ -1701,33 +1701,33 @@ input[type="text"]:focus + .input-btn .hae-icon {
     padding:0 23px;
     margin:0;
 }
-.hae-flow .flows-node-selected {
+.credit-flow .flows-node-selected {
     color:#4e5e67;
     border-bottom: 2px solid #9ddbe3;
 }
-.hae-flow .flow-process-selected .hae-icon {
+.credit-flow .flow-process-selected .credit-icon {
     color:#9ddbe3;
 }
-.hae-flow .flow-node-process .hae-icon {
+.credit-flow .flow-node-process .credit-icon {
     margin-top:23px;
     font-size: 14px;
     cursor: inherit;
 }
-.hae-flow .flow-node-process .icon-radio:before {
+.credit-flow .flow-node-process .icon-radio:before {
     content:"\e6b7";
 }
-.hae-flow {
+.credit-flow {
     overflow:hidden;
 }
-.hae-flow .flow-container > li {
+.credit-flow .flow-container > li {
     float:left;
 }
 
- html, body, #hae_Top {
+ html, body, #credit_Top {
     height: auto;
 }
 
- html, body, #hae_Top {
+ html, body, #credit_Top {
     height: auto;
 }
 /*底部样式*/
@@ -1735,16 +1735,16 @@ input[type="text"]:focus + .input-btn .hae-icon {
     float: left !important;
     color: #666;
 }
-.hae-fullwidth p {
+.credit-fullwidth p {
     padding: 5px 0;
 }
-.hae-footer .pull-right li a {
+.credit-footer .pull-right li a {
     color: #666;
 }
 
 
 /*数据复制任务设计 按钮样式*/
- .haeRendered span.icon-search::before {
+ .creditRendered span.icon-search::before {
     content:"";
     display: inline-block;
     background: url(../images/icon.png) -229px -109px no-repeat;
@@ -1757,10 +1757,10 @@ input[type="text"]:focus + .input-btn .hae-icon {
     font-size: 14px;
     font-weight: bold;
 }
-#hae_MainPanel, #hae_RightPanel {
+#credit_MainPanel, #credit_RightPanel {
     background: #f3f7f8;
 }
-.hae-tabs .tabs-head ul {
+.credit-tabs .tabs-head ul {
     height: 32px;
 }
 .tabs-body {
@@ -1775,7 +1775,7 @@ input[type="text"]:focus + .input-btn .hae-icon {
     background: #b2e0f8;
     border-radius: 15px;
 }
-.hae-tabs .tabs-head ul li {
+.credit-tabs .tabs-head ul li {
     height: 32px;
     line-height: 32px;
     display: inline-block;
@@ -1791,16 +1791,16 @@ input[type="text"]:focus + .input-btn .hae-icon {
     background: #ffffff;
     /*font-weight: normal;*/
 }
-.hae-tabs .tabs-body {
+.credit-tabs .tabs-body {
     padding: 30px 20px 20px;
     margin-top: -1px;
 }
-.hae-role .hae-validator input[readonly]:nth-last-child(2) {
+.credit-role .credit-validator input[readonly]:nth-last-child(2) {
     border: 1px solid #e5e9ea;
     color: #43ace0;
     background: #fff;
 }
-.hae-input input[type="text"]:focus, .hae-input textarea:focus {
+.credit-input input[type="text"]:focus, .credit-input textarea:focus {
     border-color: #6EB4F4;
 }
 input[type="text"]:focus {
@@ -1810,7 +1810,7 @@ input[type="text"]:focus {
     /* box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6); */
 }
 
- .hae-header .hae-logo > li.logo-credit {
+ .credit-header .credit-logo > li.logo-credit {
     background: url(../images/logo.png) -380px -190px no-repeat!important;
     width: 200px;
     height: 55px;
@@ -1825,7 +1825,7 @@ input[type="text"]:focus {
     width: auto;
     margin-right: 15px;
 }
-.hae-header .toprloe-admin li {
+.credit-header .toprloe-admin li {
     padding: 0 14px;
     margin: 20px 0;
     height: 12px;
@@ -1834,7 +1834,7 @@ input[type="text"]:focus {
     border-right: 1px solid #d0e2f5;
     color: #dbe9f9;
 }
-.hae-header .toprloe-admin li:last-child {
+.credit-header .toprloe-admin li:last-child {
     padding: 0 14px;
     margin: 20px 0;
     height: 12px;
@@ -1851,11 +1851,11 @@ input[type="text"]:focus {
     width: auto;
     margin-right: 15px;
 }
-#hae_Body {
+#credit_Body {
     border-top: 0 solid rgba(255, 255, 255, 0.1);
     margin-top: 55px;
 }
-#hae_LeftPanel {
+#credit_LeftPanel {
     padding: 10px 5px 10px 0;
     position: relative;
     width: 216px;
@@ -1865,26 +1865,26 @@ input[type="text"]:focus {
     border-right: 1px solid #e7eaec;
 }
 
-.btn-minor .hae-icon:hover {
+.btn-minor .credit-icon:hover {
     color: #666;
 }
-.hae-label {
+.credit-label {
     vertical-align: middle;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.hae-btn {
+.credit-btn {
     outline-style: none;
 }
 
-.hae-spacecontrol .hae-label {
+.credit-spacecontrol .credit-label {
     width: 100%;
     display: inline-block;
     vertical-align: -12px;
 }
-.hae-toolbar {
+.credit-toolbar {
     clear: both;
     text-align: center;
     margin: 0;
@@ -1895,7 +1895,7 @@ input[type="text"] {
     padding: 0 10px;
 }
 
-.row .center .haeRendered:first-child .hae-btn {
+.row .center .creditRendered:first-child .credit-btn {
     background: #ffac33;
     color: #fff;
     border: 1px solid #ef9716;
@@ -1904,7 +1904,7 @@ input[type="text"] {
     line-height: 27px;
     margin-right: 7px;
 }
-.row .center .haeRendered:first-child .hae-btn:hover {
+.row .center .creditRendered:first-child .credit-btn:hover {
     background: #fd9c0e;
     color: #fff;
     border: 1px solid #ef9716;
@@ -1913,7 +1913,7 @@ input[type="text"] {
     line-height: 27px;
     margin-right: 7px;
 }
-.row .center .haeRendered:last-child .hae-btn {
+.row .center .creditRendered:last-child .credit-btn {
     background: #fff;
     color: #666;
     border: 1px solid #e5e5e5;
@@ -1923,7 +1923,7 @@ input[type="text"] {
     margin-right: 11px;
 }
 /** 登录页面 */
-.hae-input input[type="password"]{
+.credit-input input[type="password"]{
   border-radius: 3px;
 	width: 100%;
 	vertical-align: middle;
@@ -1974,7 +1974,7 @@ input[type="text"] {
 	border-color: #3e89d4;
 	border-radius: 4px;	
 }
-.login-center .hae-toolbar{
+.login-center .credit-toolbar{
     padding-bottom: 50px;
 }
 .login-error{
