@@ -9,31 +9,31 @@
 
 <body>
 
-<div id="hae_Top">
+<div id="credit_Top">
   <!-- 引入底部 -->
   <jsp:include page="page/header.jsp"></jsp:include>
 	
 	
 	
 	<!-- 中间区域 -->
-	<section id="hae_Body" class="hae-layout layout-equalheight ">
+	<section id="credit_Body" class="credit-layout layout-equalheight ">
 		<section class="row">
 			<!-- 引入左侧菜单区域 -->
             <jsp:include page="page/leftMenu.jsp"></jsp:include>
 			
 			<!--  主区域start -->
-			<section id="hae_MainPanel" class="equalheight-item render content-hae-mainPanel haeRendered hae-fullscreen" widget="fullScreen">
+			<section id="credit_MainPanel" class="equalheight-item render content-credit-mainPanel creditRendered credit-fullscreen" widget="fullScreen">
 				<!-- 面包屑区域 -->
-				<div class="row" id="hae_MainTop">
+				<div class="row" id="credit_MainTop">
 					<div id="breadcrumb" class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<ol class="hae-breadcrumb"></ol>
+						<ol class="credit-breadcrumb"></ol>
 					</div>
 				</div>
 				
 				
-				<!--hae_Main_start-->
-				<div id="hae_Main" class="hae-page haePageContext" haepagecontextid="main">
-					<div class="hae-wrong hae-mainpage">
+				<!--credit_Main_start-->
+				<div id="credit_Main" class="credit-page creditPageContext" creditpagecontextid="main">
+					<div class="credit-wrong credit-mainpage">
 					    <h2>500</h2>
 					    <p>Error</p>
 					    <div></div>
@@ -41,7 +41,7 @@
 						<p>城立信金融</p>
 					</div>
 				</div>
-				<!--hae_Main_end-->
+				<!--credit_Main_end-->
 				
 			</section>
 			<!--  主区域end -->
