@@ -1778,6 +1778,8 @@ input[type="text"]:focus + .input-btn .hae-icon {
 .hae-tabs .tabs-head ul li {
     height: 32px;
     line-height: 32px;
+    display: inline-block;
+    
 }
 .tabs-head li.tabs-selected {
     border-color: #1aa0e1 #e2ebf3 #fff #e2ebf3;
