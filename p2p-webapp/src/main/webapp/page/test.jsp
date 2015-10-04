@@ -7,11 +7,11 @@
 <script src="<%=request.getContextPath()%>/js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/services/" method="post">
+<form action="<%=request.getContextPath()%>/services/process" method="post">
 	<textarea name="request_data" rows="20" cols="100"></textarea> <br/>
 	<input type="text" name="module"  />
 	<input type="text" name="method" />
-	<input type="submit" value="text" />
+	<input type="submit" value="submit" />
 </form>
 
 </body>

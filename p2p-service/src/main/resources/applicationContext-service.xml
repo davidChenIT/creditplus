@@ -30,8 +30,11 @@
     <aop:config> 
         <aop:pointcut id="pointCut" expression="execution(* com.creditplus.p2p.service.*.*(..))" /> 
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut" /> 
-    </aop:config>      
-     
-    <bean id="userService"  class=" com.creditplus.p2p.service.impl.UserServiceImpl"/>
+    </aop:config>   
+    
+    <context:annotation-config  />
+    <!-- <context:component-scan base-package="com.creditplus.p2p" />  
+    <tx:annotation-driven transaction-manager="transactionManager" /> -->              
+    <bean id="userService" class=" com.creditplus.p2p.service.impl.UserServiceImpl" />
      
 </beans>

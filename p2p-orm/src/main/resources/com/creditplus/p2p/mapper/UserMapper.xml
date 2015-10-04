@@ -70,16 +70,16 @@
        update user_t set username=#{username}, password=#{password} where user_id=#{userId}
     </update>
    
-    <select id="getUserById" parameterType="String" resultMap="userDetailMap">
+    <select id="getUserById" parameterType="Integer" resultMap="userDetailMap">
        		   select u.*,
 		              r.role_id as role_id,
 		              r.role_name as role_name,
 		              ur.created_by   as created_by,
-		              ur.created_date as created_date, 
+		              ur.created_date as created_date
                  from user_t u 
             left join user_role_t ur on u.user_id = ur.user_id 
             left join role_t r on ur.role_id = r.role_id 
-                where user_id=#{userId}
+                where u.user_id=#{userId}
     </select>
     
     <select id="findByName" parameterType="String" resultMap="userAthurityMap">
