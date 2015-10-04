@@ -3,6 +3,7 @@ package com.creditplus.p2p.webapp.common.rest;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +18,13 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.creditplus.p2p.common.annotation.ParamName;
 import com.creditplus.p2p.common.json.JSONTools;
+import com.creditplus.p2p.model.BaseVO;
 
 @Path(value="/process")
 @Produces(MediaType.APPLICATION_JSON)
@@ -99,7 +103,8 @@ public class RequestProcess{
         for(int i = 0; i < annotations.length;i++){
         	Annotation[] paramAnnotations = annotations[i];
         	if(paramAnnotations.length == 0){
-        		argsList.add(null);
+    			Object obj = JSONTools.JSON2Object(requestData,clazz[i]);
+        		argsList.add(obj);
         	}else{
         		for(int j = 0;j < paramAnnotations.length;j++){
         			ParamName  paramName = (ParamName)annotations[i][j];
@@ -108,20 +113,45 @@ public class RequestProcess{
         		}
         	}
         }
-                
-        return argsList.toArray();
+        
+        Object[] args = argsList.toArray();
+        if( null != args && args.length > 0){
+        	String currentUser = "System";
+        	User user = ((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());        	
+        	if(null != user){
+        		currentUser = user.getUsername();
+        	}
+
+        	for(Object arg : args){
+        		if(arg instanceof BaseVO){
+        			BaseVO baseVO = (BaseVO)arg;
+        			baseVO.setLastUpdatedBy(currentUser);        			
+        			String createdBy = baseVO.getCreatedBy();
+        			if(StringUtils.isBlank(createdBy)){
+        				baseVO.setCreatedBy(currentUser);
+        			}
+        			
+        			Date createdDate = baseVO.getCreatedDate();
+        			if(null == createdDate){
+        				baseVO.setCreatedDate(new Date());
+        			}
+        		}        		
+        	}
+        }
+        
+        return args;
 	}	
 	
-//	public static void main(String[] args) {
-//		UserService userService = new UserServiceImpl();
-//        Method classMethod = getMethod(userService, "getUserById");
-//        try {
-//			 getArgs(classMethod,"{\"userId\":1}");
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}        
-//
-//		
-//	}
+	public static void main(String[] args) {
+		try {
+			Object obj = JSONTools.JSON2Object("",BaseVO.class);
+			System.out.println("===" + obj);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+   
+
+		
+	}
 }

@@ -37,7 +37,12 @@
   			<groupId>org.jboss.narayana.jta</groupId>
   			<artifactId>narayana-jta</artifactId>
   			<version>${narayana.version}</version>
-  		</dependency>  		
+  		</dependency> 
+		<dependency>
+		    <groupId>org.jboss.logging</groupId>
+		    <artifactId>jboss-logging</artifactId>
+		    <version>3.3.0.Final</version>
+		</dependency> 		 		
   		<dependency>
   			<groupId>org.apache.cxf</groupId>
   			<artifactId>cxf-rt-frontend-jaxws</artifactId>

@@ -59,7 +59,7 @@
           
     <insert id="insertUser" parameterType="UserVO">
        insert into user_t(user_id,enable,username, password,remark,created_by,created_date,last_updated_by,last_updated_date) 
-             values(#{userId},#{enable},#{username},#{password},#{remark},#{createdBy},#{createdDate},#{lastUpdatedBy},#{lastUpdatedDate})
+             values(#{userId},#{enable},#{username},#{password},#{remark},#{createdBy},#{createdDate},#{lastUpdatedBy},now())
     </insert>
     
     <delete id="deleteUserById" parameterType="String">
