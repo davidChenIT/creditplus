@@ -11,7 +11,7 @@
 
 <div id="hae_Top">
   <!-- 引入底部 -->
-  <jsp:include page="page/index.jsp"></jsp:include>
+  <jsp:include page="page/header.jsp"></jsp:include>
 	
 	
 	
