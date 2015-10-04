@@ -7,7 +7,7 @@ import java.util.Properties;
 
 import org.springframework.util.StringUtils;
 
-public class PropertiesRead {
+public class PropertiesRead { 
  
 	private static Map<String,String> proMap=new HashMap<String, String>();
 	
