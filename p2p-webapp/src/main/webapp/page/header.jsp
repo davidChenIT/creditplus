@@ -19,17 +19,17 @@
 <body>
 
 	<!--  头部start -->
-	<header id="hae_Header" class="hae-header">
+	<header id="credit_Header" class="credit-header">
 		<!-- logo区域-->
-		<nav class="hae-logo pull-left">
+		<nav class="credit-logo pull-left">
 			<li class="logo-credit"></li>
 			<li class="logo-text">立信贷,好生活!</li>
 		</nav>
 		
 		<!-- 右边登录人、角色区域 -->
-		<nav class="hae-toprole pull-right">
-			<ul class="hae-menu menu-hor toprloe-admin">
-				<li><span>欢迎</span>&nbsp;<span class="haeRendered"><sec:authentication property="name"/></span>&nbsp;<span>登录！</span></li>
+		<nav class="credit-toprole pull-right">
+			<ul class="credit-menu menu-hor toprloe-admin">
+				<li><span>欢迎</span>&nbsp;<span class="creditRendered"><sec:authentication property="name"/></span>&nbsp;<span>登录！</span></li>
 				<li><a href="/p2p-webapp/j_spring_security_logout">注销</a></li>
 			</ul>
 		</nav>

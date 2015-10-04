@@ -7,12 +7,12 @@
 
 <body>
    <!-- 菜单区域 -->
-	<section id="hae_LeftPanel" class="equalheight-item content-equalheight-item">
+	<section id="credit_LeftPanel" class="equalheight-item content-equalheight-item">
 		<div class="heightfixed-left">
 			<!--展开、收缩图标区域 -->
-			<div id="hae_Menu" widget="ToggleMenu" name="hae_bigIcon" class="render hae-menu menu-tree menu-togglemenu haeRendered tree-togglemenu hae-tree">
-				<div class="hae-menu-toggle">
-					<a class="toggle-icon hae-icon icon-chevron-left" title="点击进行菜单收起到边缘"><</a>
+			<div id="credit_Menu" widget="ToggleMenu" name="credit_bigIcon" class="render credit-menu menu-tree menu-togglemenu creditRendered tree-togglemenu credit-tree">
+				<div class="credit-menu-toggle">
+					<a class="toggle-icon credit-icon icon-chevron-left" title="点击进行菜单收起到边缘"><</a>
 				</div>
 			</div>
 			
