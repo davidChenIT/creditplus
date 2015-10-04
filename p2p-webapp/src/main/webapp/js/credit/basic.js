@@ -53,7 +53,7 @@ $(function(){
 					}
 					checkAllParents(treeNode);
 					//设置面包屑
-					$(".hae-breadcrumb").html(liHtml);
+					$(".credit-breadcrumb").html(liHtml);
 					
 					//获取页面
 					var fileUrlstr=treeNode.urlstr;
@@ -68,15 +68,15 @@ $(function(){
 							success: function(data){
 								debugger;	
 								if(data && data.length>0){
-								  var  haeMainHtml=data.substring(data.indexOf("<!--hae_Main_start-->"),data.indexOf("<!--hae_Main_end-->")+19);
-								  $("#hae_Main").html(haeMainHtml);
+								  var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->"),data.indexOf("<!--credit_Main_end-->")+19);
+								  $("#credit_Main").html(creditMainHtml);
 								  if(treeNode.isloadjs=="true"){
 									  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
 								  }
 								}
 							},error:function(error){
 							  debugger;
-							  $("#hae_Main").html('<div class="hae-wrong"><h2 class="hae-errcode">404</h2><p class="hae-errtext">Not Found</p><div></div><p></p><p>城立信金融</p></div>');
+							  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>城立信金融</p></div>');
 							}
 						});
 					}
@@ -86,14 +86,14 @@ $(function(){
 		}
 
 	},zTreeNodes = [
-		{"id":1,"pId":0,"name":"首页","urlstr":"page/index.html",isloadjs:"true"},
+		{"id":1,"pId":0,"name":"首页","urlstr":"page/index.jsp",isloadjs:"true"},
 		{"id":2,"pId":0,"name":"风控管理"},
 		{"id":3,"pId":0,"name":"系统管理"},
 		{"id":4,"pId":3,"name":"权限管理","urlstr":"page/hh.html",isloadjs:"true"},
-		{"id":5,"pId":2,"name":"信用初审","urlstr":"page/firstTrialList.html",isloadjs:"true"},
-		{"id":6,"pId":2,"name":"信用复审","urlstr":"page/reviewList.html",isloadjs:"true"},
-		{"id":7,"pId":2,"name":"标的管理","urlstr":"page/tenderMngList.html",isloadjs:"true"},
-		{"id":8,"pId":2,"name":"投标","urlstr":"page/makeTenderList.html",isloadjs:"true"}
+		{"id":5,"pId":2,"name":"信用初审","urlstr":"page/firstTrialList.jsp",isloadjs:"true"},
+		{"id":6,"pId":2,"name":"信用复审","urlstr":"page/reviewList.jsp",isloadjs:"true"},
+		{"id":7,"pId":2,"name":"标的管理","urlstr":"page/tenderMngList.jsp",isloadjs:"true"},
+		{"id":8,"pId":2,"name":"投标","urlstr":"page/makeTenderList.jsp",isloadjs:"true"}
 		
 	];
 	
@@ -127,23 +127,23 @@ $(function(){
 	}
 	checkAllParents1(curentTreeNode);
 	//设置面包屑
-	$(".hae-breadcrumb").html(liHtml);
+	$(".credit-breadcrumb").html(liHtml);
 
 
 
 	//展开或隐藏左侧栏目区域
-	$("#hae_Menu").on("click",".toggle-icon",function(){
+	$("#credit_Menu").on("click",".toggle-icon",function(){
 		
 		var thisClss=$(this).attr("class");
 		if(thisClss.indexOf("icon-chevron-left")!=-1){
 			 $(this).attr("class",thisClss.replace("icon-chevron-left","icon-chevron-right"));
 			 $(this).text(">");
-			 $("#hae_LeftPanel").width("30");
+			 $("#credit_LeftPanel").width("30");
 			 $("#menu_ztree").hide()
 		}else{
 			 $(this).attr("class",thisClss.replace("icon-chevron-right","icon-chevron-left"));
 			 $(this).text("<");
-			 $("#hae_LeftPanel").width("216");
+			 $("#credit_LeftPanel").width("216");
 			 $("#menu_ztree").show()
 		}
 		
@@ -151,7 +151,7 @@ $(function(){
 
 
 	//tab页面点击事件
-	$("#hae_Main").on("click",".tabs-head li",function(){
+	$("#credit_Main").on("click",".tabs-head li",function(){
 			var tabId=$(this).attr("tabid");
 			var liClass=$(this).attr("class");
 			if("tabs-selected"!=liClass){
@@ -166,7 +166,7 @@ $(function(){
 			   //获取tab的pege属性，如果不为空就通过ajax获取页面
 			   var pageAddress=$(this).attr("page");
 			   if(pageAddress){
-				    $(".tabs-body").children("div").attr("class","tabs-body-item haePageContext hae-validator hae-hide");
+				    $(".tabs-body").children("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
 				    var requestUrl="http://"+window.location.host+"/p2p-webapp/"+pageAddress;
 				    var jsFileUrl="../js/credit/"+pageAddress.substring(pageAddress.lastIndexOf("/")+1,pageAddress.lastIndexOf("."))+".js";
 					$.ajax({ 
@@ -175,28 +175,26 @@ $(function(){
 						success: function(data){
 							debugger;	
 							if(data && data.length>0){
-							  //var  haeMainHtml=data.substring(data.indexOf("<!--hae_Main_start-->"),data.indexOf("<!--hae_Main_end-->")+19);
+							  //var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->"),data.indexOf("<!--credit_Main_end-->")+19);
 							  $(".tabs-body").append(data);
 							  
 							  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
 							}else{
-								$("#hae_Main").html('<div class="hae-wrong"><h2 class="hae-errcode">404</h2><p class="hae-errtext">Not Found</p><div></div><p></p><p>城立信金融</p></div>');
+								$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>城立信金融</p></div>');
 							}
 							
 						},error:function(error){
 						  debugger;
-						  $("#hae_Main").html('<div class="hae-wrong"><h2 class="hae-errcode">404</h2><p class="hae-errtext">Not Found</p><div></div><p></p><p>城立信金融</p></div>');
+						  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>城立信金融</p></div>');
 						}
 					});
 					
 					$(this).removeAttr("page");
 			   }else{
-				   currentTab.attr("class","tabs-body-item haePageContext hae-validator");
+				   currentTab.attr("class","tabs-body-item creditPageContext credit-validator");
 				   //相邻的内容区域隐藏
-				   currentTab.siblings("div").attr("class","tabs-body-item haePageContext hae-validator hae-hide");
+				   currentTab.siblings("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
 			   }
-			  
-			   
 			}
 		
 		
