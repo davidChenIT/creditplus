@@ -22,7 +22,7 @@ import com.creditplus.p2p.util.JsonUtils;
 public class RequestProcess{
 
 	@GET
-	@Path("/{module}/{method}/{request_data}")
+	@Path("/{module}/{method}/{request_data}") 
 	@Produces(MediaType.APPLICATION_JSON)	
 	@Consumes(MediaType.APPLICATION_XML)
 	public Object execute(@PathParam("module")String module, @PathParam("method")String method, @PathParam("request_data")String request_data,@Context HttpServletRequest servletRequest) throws Exception  {
