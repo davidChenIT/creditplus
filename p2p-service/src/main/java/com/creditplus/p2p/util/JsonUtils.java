@@ -15,7 +15,7 @@ public class JsonUtils {
 	public static void main(String[] args) throws Exception {
 		ObjectMapper objMapper=new ObjectMapper();
 		objMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-		
+		 
 		String json="{\"userVO\":{\"username\":\"23242\"}}";
 		String userJson="{\"username\":\"23242\"}";
 		Map map=new HashMap();

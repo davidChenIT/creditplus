@@ -1,6 +1,5 @@
 package com.creditplus.p2p.util;
 
-import java.beans.PropertyEditorManager;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +8,7 @@ import java.util.Properties;
 import org.springframework.util.StringUtils;
 
 public class PropertiesRead {
-
+ 
 	private static Map<String,String> proMap=new HashMap<String, String>();
 	
 	public static String getValueByKey(String key){

@@ -10,7 +10,7 @@ public class GUIDUtil {
 		String guid=UUID.randomUUID().toString();
 		if(!StringUtils.isEmpty(guid))
 			guid=guid.replaceAll("-", "");
-		return guid;
+		return guid; 
 	}
 	
 	public static void main(String[] args) {
