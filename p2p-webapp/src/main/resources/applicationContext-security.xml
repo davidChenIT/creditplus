@@ -21,8 +21,8 @@
         </session-management>
         
         <csrf disabled="true" />
-       	<custom-filter ref="loginFilter"    position="FORM_LOGIN_FILTER"  />
-		<custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+       <!-- 	<custom-filter ref="loginFilter"    position="FORM_LOGIN_FILTER"  />
+		<custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/> -->
         <logout invalidate-session="true"   logout-success-url="/" logout-url="/j_spring_security_logout"/>  		
     </http>
     
@@ -51,11 +51,11 @@
 	
     <!-- 认证过滤器 -->
     <beans:bean id="securityFilter" class="com.creditplus.p2p.security.SecurityFilter">
-    	<!-- 用户拥有的权限 -->
+    	用户拥有的权限
     	<beans:property name="authenticationManager" ref="authenticationManager" />
-    	<!-- 用户是否拥有所请求资源的权限 -->
+    	用户是否拥有所请求资源的权限
     	<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
-    	<!-- 资源与权限对应关系 -->
+    	资源与权限对应关系
     	<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
     </beans:bean>
     

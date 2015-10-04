@@ -42,14 +42,14 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
 	private void loadResourceDefine() {
 		if(resourceMap == null) {
 			resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
-			List<ResourceVO> resources = this.resourceDao.findAll();
-			for (ResourceVO resource : resources) {
-				Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
-				//以权限名封装为Spring的security Object
-				ConfigAttribute configAttribute = new SecurityConfig(resource.getResourceName());
-				configAttributes.add(configAttribute);
-				resourceMap.put(resource.getUrl(), configAttributes);
-			}
+//			List<ResourceVO> resources = this.resourceDao.findAll();
+//			for (ResourceVO resource : resources) {
+//				Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
+//				//以权限名封装为Spring的security Object
+//				ConfigAttribute configAttribute = new SecurityConfig(resource.getResourceName());
+//				configAttributes.add(configAttribute);
+//				resourceMap.put(resource.getUrl(), configAttributes);
+//			}
 		}
 		
 		Set<Entry<String, Collection<ConfigAttribute>>> resourceSet = resourceMap.entrySet();
