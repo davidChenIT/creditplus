@@ -101,6 +101,11 @@
 			<artifactId>p2p-orm</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.creditplus.p2p</groupId>
+			<artifactId>p2p-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>p2p-webapp</finalName>
