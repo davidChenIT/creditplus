@@ -19,6 +19,9 @@ public class BaseVO implements java.io.Serializable {
 	private Date createdDate;
 	private String lastUpdatedBy;
 	private Date lastUpdatedDate;
+	private int startNum;
+	private int pageSize;
+	
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -43,5 +46,16 @@ public class BaseVO implements java.io.Serializable {
 	public void setLastUpdatedDate(Date lastUpdatedDate) {
 		this.lastUpdatedDate = lastUpdatedDate;
 	}
-	
+	public int getStartNum() {
+		return startNum;
+	}
+	public void setStartNum(int startNum) {
+		this.startNum = startNum;
+	}
+	public int getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
 }

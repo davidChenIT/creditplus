@@ -56,7 +56,7 @@ $(function(){
 					//获取页面
 					var fileUrlstr=treeNode.urlstr;
 					if(fileUrlstr){
-						var jsFileUrl="../js/credit/"+fileUrlstr.substring(fileUrlstr.lastIndexOf("/")+1,fileUrlstr.lastIndexOf("."))+".js";
+						var jsFileUrl="/p2p-webapp/js/credit/"+fileUrlstr.substring(fileUrlstr.lastIndexOf("/")+1,fileUrlstr.lastIndexOf("."))+".js";
 						var requestUrl="http://"+window.location.host+"/p2p-webapp/"+fileUrlstr;
 						window.history.pushState({},treeNode.name, requestUrl+"?"+(new Date()).getTime());
 						$("title").text(treeNode.name);
@@ -67,7 +67,8 @@ $(function(){
 								debugger;	
 								if(data && data.length>0){
 								  var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->"),data.indexOf("<!--credit_Main_end-->")+19);
-								  $("#credit_Main").html(creditMainHtml);
+								  $("#credit_MainPanel").find("#credit_Main").remove();
+								  $("#credit_MainPanel").append(creditMainHtml);
 								  if(treeNode.isloadjs=="true"){
 									  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
 								  }
@@ -87,11 +88,16 @@ $(function(){
 		{"id":1,"pId":0,"name":"首页","urlstr":"page/index.jsp",isloadjs:"true"},
 		{"id":2,"pId":0,"name":"风控管理"},
 		{"id":3,"pId":0,"name":"系统管理"},
-		{"id":4,"pId":3,"name":"权限管理","urlstr":"page/hh.html",isloadjs:"true"},
-		{"id":5,"pId":2,"name":"信用初审","urlstr":"page/firstTrialList.jsp",isloadjs:"true"},
-		{"id":6,"pId":2,"name":"信用复审","urlstr":"page/reviewList.jsp",isloadjs:"true"},
-		{"id":7,"pId":2,"name":"标的管理","urlstr":"page/tenderMngList.jsp",isloadjs:"true"},
-		{"id":8,"pId":2,"name":"投标","urlstr":"page/makeTenderList.jsp",isloadjs:"true"}
+		
+		{"id":4,"pId":2,"name":"信用初审","urlstr":"page/firstTrialList.jsp",isloadjs:"true"},
+		{"id":5,"pId":2,"name":"信用复审","urlstr":"page/reviewList.jsp",isloadjs:"true"},
+		{"id":6,"pId":2,"name":"标的管理","urlstr":"page/tenderMngList.jsp",isloadjs:"true"},
+		{"id":7,"pId":2,"name":"投标","urlstr":"page/makeTenderList.jsp",isloadjs:"true"},
+		
+		
+		{"id":8,"pId":3,"name":"栏目管理","urlstr":"page/hh.html",isloadjs:"true"},
+		{"id":9,"pId":3,"name":"角色管理","urlstr":"page/systemmng/roleList.jsp",isloadjs:"true"},
+		{"id":10,"pId":3,"name":"用户管理","urlstr":"page/systemmng/userList.jsp",isloadjs:"true"}
 		
 	];
 	

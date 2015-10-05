@@ -1,6 +1,9 @@
 package com.creditplus.p2p.service;
 
+import java.util.List;
+
 import com.creditplus.p2p.common.annotation.ParamName;
+import com.creditplus.p2p.model.PageVO;
 import com.creditplus.p2p.model.UserVO;
 
 public interface UserService {
@@ -29,5 +32,12 @@ public interface UserService {
 	 * @return user
 	 */
 	UserVO getUserById(@ParamName("userId") int userId);
+	
+	/**
+	 * get user list whit page
+	 * @param userVO
+	 * @return
+	 */
+	PageVO getUserListWithPage(PageVO pageVO,@ParamName("griddata") UserVO userVO);
 
 }
