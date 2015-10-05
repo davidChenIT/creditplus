@@ -19,7 +19,8 @@ user_role_t   用户角色关系表**/
 
 DROP TABLE IF EXISTS user_info;
 DROP TABLE IF EXISTS loan_list;
-DROP TABLE IF EXISTS cheat_inceptor_t;
+DROP TABLE IF EXISTS cheat_intercept_t;
+DROP TABLE IF EXISTS approve_log_t;
 
 DROP TABLE IF EXISTS dict_code_t;
 DROP TABLE IF EXISTS dict_item_t;
@@ -66,6 +67,7 @@ create table user_info
    mobile_ser_code      varchar(50) comment '服务密码',
    state                int,
    modifytime           timestamp,
+   is_done 				enum('Y','N'),
    primary key (user_id)
 );
 
@@ -75,6 +77,7 @@ create table loan_list
    user_id              int,
    loan_full_id         varchar(50) comment '外部id',
    loan_money           float comment '借款金额',
+   start_day			varchar(100) DEFAULT NULL,
    loan_day             int comment '借款天数',
    expire_day           varchar(100) comment '到期时间',
    pay_fee              float comment '借款手续费',
@@ -88,7 +91,20 @@ create table loan_list
    primary key (loan_id)
 );
 
-
+CREATE TABLE approve_log_t (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  loan_id int(11) NOT NULL,
+  first_approve varchar(200)  COMMENT '初审人',
+  two_approve  varchar(200) COMMENT '复审人',
+  three_approve  varchar(200) COMMENT '发标审核人',
+  approve_content varchar(200) COMMENT '审核内容',
+  state int(11)  not null COMMENT '审核状态',
+  created_by varchar(200)  NOT NULL COMMENT '创建人',
+  created_date timestamp NOT NULL COMMENT '创建时间',
+  last_updated_by  varchar(200)  NOT NULL,
+  last_updated_date timestamp NOT NULL , 
+   primary key (id)
+  )COMMENT='审批日志';
 
 CREATE TABLE cheat_intercept_t (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -290,3 +306,13 @@ insert into user_role_t values(1,1,1,'system',now(),'system',now());
 insert into role_resource_t values(1,1,1,'system',now(),'system',now());
 insert into role_resource_t values(2,1,2,'system',now(),'system',now());
 insert into role_resource_t values(3,2,1,'system',now(),'system',now());
+
+
+INSERT INTO user_info VALUES (4,1,'o8EeQw_voTztu6J-jPttrk7LBGSA','朱胜','18923880749',NULL,NULL,NULL,NULL,'中国工商银行','1234','18923880749','1234','10000以上','Qwer','北京','北京','18923880749','博士','1234',NULL,NULL,7,'Y','2015-10-04 10:34:02');
+
+INSERT INTO urgent_contactor_p VALUES (5,4,'1','配偶','18923880749','sysdate','2015-10-04 09:33:20','sysdate','2015-10-04 09:33:20');
+INSERT INTO urgent_contactor_p VALUES (6,4,'18923880749','姐妹','18923880749','sysdate','2015-10-04 09:33:20','sysdate','2015-10-04 09:33:20');
+INSERT INTO urgent_contactor_p VALUES (7,4,'1','配偶','18923880749','sysdate','2015-10-04 09:33:20','sysdate','2015-10-04 09:33:20');
+INSERT INTO urgent_contactor_p VALUES (8,4,'2','情侣','18923880749','sysdate','2015-10-04 09:33:20','sysdate','2015-10-04 09:33:20');
+
+INSERT INTO `loan_list` VALUES (11,4,NULL,5000,'2015-10-04 17:53:55',90,'2016-01-02',0,5000,0,0,NULL,'1234',1,'2015-10-04 09:53:55');

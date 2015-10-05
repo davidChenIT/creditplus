@@ -6,5 +6,5 @@ import java.util.Map;
 
 public interface LoanAppDao {
 
-	List<Map> getLoappVoList(Integer id);
+	List<Map> getLoappVoList(Map paramMap);
 }

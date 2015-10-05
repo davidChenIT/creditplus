@@ -5,25 +5,20 @@
 
 <mapper namespace="com.creditplus.p2p.dao.LoanAppDao">
 
-	<resultMap type="LoanAppVO" id="loanAppVOMap">
-		<id column="id" property="loan_id" />
-		<result column="user_id" property="user_id" />
-		<result column="loan_money" property="loan_money" />
-		<result column="loan_day" property="loan_day" />
-		<result column="expire_date" property="expire_date" />
-		<result column="count" property="count" />
-		<result column="pay_fee" property="pay_fee" />
-		<result column="act_money" property="act_money" />
-		<result column="overdue_fee" property="overdue_fee" />
-		<result column="first_trial_user" property="first_trial_user" />
-		<result column="review_user" property="review_user" />
-		<result column="created_by" property="created_by" />
-		<result column="creted_date" property="creted_date" />
-		<result column="last_updated_by" property="last_updated_by" />
-		<result column="last_created_date" property="last_created_date" />
-	</resultMap>
+	<!-- <resultMap type="LoanAppVO" id="loanAppVOMap"> <id column="id" property="loan_id" 
+		/> <result column="user_id" property="user_id" /> <result column="loan_money" 
+		property="loan_money" /> <result column="loan_day" property="loan_day" /> 
+		<result column="expire_date" property="expire_date" /> <result column="count" 
+		property="count" /> <result column="pay_fee" property="pay_fee" /> <result 
+		column="act_money" property="act_money" /> <result column="overdue_fee" property="overdue_fee" 
+		/> <result column="first_trial_user" property="first_trial_user" /> <result 
+		column="review_user" property="review_user" /> <result column="created_by" 
+		property="created_by" /> <result column="creted_date" property="creted_date" 
+		/> <result column="last_updated_by" property="last_updated_by" /> <result 
+		column="last_created_date" property="last_created_date" /> </resultMap> -->
 
-	<select id="getLoappVoById" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="getLoappVoList" parameterType="java.util.Map"
+		resultType="java.util.Map">
 		SELECT
 		u.user_id,
 		u.login_type,
@@ -58,12 +53,33 @@
 		t.overdue_fee,
 		t.bank_type,
 		t.bank_card,
-		t.state
+		t.state,
+		t.modifytime
 		FROM
 		loan_list t
 		LEFT JOIN
-		user_info u ON t.user_id = u.user_id
-		where t.state=1 and t.loan_id=#{loan_id}
+		user_info u ON
+		t.user_id = u.user_id
+		<where>
+			<if test="loan_id!= null">
+				AND t.loan_id = #{loan_id,jdbcType=INTEGER}
+			</if>
+			<if test="state!= null">
+				AND t.state = #{state,jdbcType=INTEGER}
+			</if>
+			<if test="loan_money!= null">
+				AND t.loan_money = #{loan_money}
+			</if>
+			<if test="modifytime != null">
+				AND t.modifytime = #{modifytime}
+			</if>
+			<if test="name != null">
+				AND t.name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="id_num != null">
+				AND t.loan_money = #{id_num}
+			</if>
+		</where>
 	</select>
 
 </mapper>

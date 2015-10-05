@@ -7,5 +7,5 @@ import com.creditplus.p2p.common.annotation.ParamName;
 
 public interface LoanAppService {
 
-	List<Map> getLoappVoList(@ParamName("loan_id")Integer loan_id);
+	List<Map> getLoappVoList(@ParamName("condition")Map paramMap);
 }
