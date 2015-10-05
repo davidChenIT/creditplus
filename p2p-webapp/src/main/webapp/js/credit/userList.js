@@ -17,6 +17,17 @@ $(function(){
 			pager: '#userListPager',
 			rowNum:10,
 			rowList:[10,20,30],
-			viewrecords: true
+			viewrecords: true,
+			jsonReader : {  
+
+		         root:"griddata",  
+
+		         page: "currpage",  
+
+		         total: "totalpages",  
+
+		         records: "totalrecords"
+
+		     }
 	});
 })
