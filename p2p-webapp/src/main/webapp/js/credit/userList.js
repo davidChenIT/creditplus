@@ -7,12 +7,18 @@ $(function(){
 			url:serviceAddress,
 			datatype: 'json',
 			postData:{"module":"userService","method":"getUserListWithPage","request_data":{}},
-			mtype: 'psot',
+			mtype: 'POST',
 			autowidth:true,
-			colNames:['操作','用户名称'],
+			colNames:["操作","用户名称","是否可用","创建人","创建时间","最后修改人","最后修改时间","备注"],
 			colModel :[
-				{name:'operate_col', index:'operate_col',align:'center',width:"10%","sortable":false},
-				{name:'username', index:'username',align:'center',width:"90%","sortable":false}
+				{name:'operate_col', index:'operate_col',align:'center',"sortable":false},
+				{name:'username', index:'username',align:'center',"sortable":false},
+				{name:'enable', index:'enable',align:'center',"sortable":false},
+				{name:'createdBy', index:'createdBy',align:'center',"sortable":false},
+				{name:'createdDate', index:'createdDate',align:'center',"sortable":false},
+				{name:'lastUpdatedBy', index:'lastUpdatedBy',align:'center',"sortable":false},
+				{name:'lastUpdatedDate', index:'lastUpdatedDate',align:'center',"sortable":false},
+				{name:'remark', index:'remark',align:'center',"sortable":false}
 			],
 			pager: '#userListPager',
 			rowNum:10,
