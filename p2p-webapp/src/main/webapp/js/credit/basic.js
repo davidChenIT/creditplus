@@ -6,8 +6,6 @@ $(function(){
 		  debugger;
 		  window.location.href=window.location.href;
 	}; 
-	
-	
 	//设置栏目菜单
 	var zTreeObj,
 	setting = {

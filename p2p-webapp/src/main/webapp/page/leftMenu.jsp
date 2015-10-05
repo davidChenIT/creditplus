@@ -4,7 +4,6 @@
 <head>
 <meta charset="utf-8">
 </head>
-
 <body>
    <!-- 菜单区域 -->
 	<section id="credit_LeftPanel" class="equalheight-item content-equalheight-item">

@@ -8,14 +8,10 @@
 </head>
 
 <body>
-
 <div id="credit_Top">
 
 	<!-- 引入底部 -->
    <jsp:include page="page/header.jsp"></jsp:include>
-	
-	
-	
 	<!-- 中间区域 -->
 	<section id="credit_Body" class="credit-layout layout-equalheight ">
 		<section class="row">

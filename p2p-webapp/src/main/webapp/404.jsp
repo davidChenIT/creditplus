@@ -6,9 +6,7 @@
 <meta charset="utf-8">
 <title>404</title>
 </head>
-
 <body>
-
 <div id="credit_Top">
 
 	<!-- 引入底部 -->
