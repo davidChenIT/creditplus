@@ -8,7 +8,7 @@ import java.util.Date;
  *
  */
 public class LoanAppVO {
-	private Integer id;
+	private Integer loan_id;
 	private Integer user_id;
 	private  Double loan_money;
 	private Integer loan_day;
@@ -25,11 +25,18 @@ public class LoanAppVO {
 	private String last_updated_by;
 	private Date last_created_date;
 	
-	public Integer getId() {
-		return id;
+	
+	public Integer getLoan_id() {
+		return loan_id;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setLoan_id(Integer loan_id) {
+		this.loan_id = loan_id;
+	}
+	public Date getLast_created_date() {
+		return last_created_date;
+	}
+	public void setLast_created_date(Date last_created_date) {
+		this.last_created_date = last_created_date;
 	}
 	public Integer getUser_id() {
 		return user_id;
