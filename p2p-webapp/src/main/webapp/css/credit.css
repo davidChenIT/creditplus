@@ -1128,9 +1128,12 @@ label {
 .credit-tabs .tabs-head li.tabs-selected {
   font-weight: bold;
 }
-.credit-tabs .tabs-head .credit-small-close {
-  top: 7px;
-  right: 3px;
+.credit-tab-close {
+    right: 5px;
+	position: absolute;
+	top: -9px;
+	font-family: cursive;
+	font-weight: bold;
 }
 .row .credit-tabs .tabs-head {
   margin: 0 0 20px 0;
