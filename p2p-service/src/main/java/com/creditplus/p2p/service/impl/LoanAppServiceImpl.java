@@ -12,12 +12,9 @@ public class LoanAppServiceImpl implements LoanAppService{
 
 	@Autowired 
 	private LoanAppDao loanAppDao;
-	public LoanAppVO getLoappVoById(Integer loan_id) {
-		return loanAppDao.getLoappVoById(loan_id);
-	}
 
-	public List<LoanAppVO> getLoappVoList() {
-		return null;
+	public List<LoanAppVO> getLoappVoList(Integer loan_id) {
+		return loanAppDao.getLoappVoList(loan_id);
 	}
 
 }
