@@ -1,6 +1,7 @@
 package com.creditplus.p2p.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,12 +13,9 @@ public class LoanAppServiceImpl implements LoanAppService{
 
 	@Autowired 
 	private LoanAppDao loanAppDao;
-	public LoanAppVO getLoappVoById(Integer loan_id) {
-		return loanAppDao.getLoappVoById(loan_id);
-	}
 
-	public List<LoanAppVO> getLoappVoList() {
-		return null;
+	public List<Map> getLoappVoList(Integer loan_id) {
+		return loanAppDao.getLoappVoList(loan_id);
 	}
 
 }

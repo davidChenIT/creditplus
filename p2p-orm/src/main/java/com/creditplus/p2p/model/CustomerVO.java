@@ -3,7 +3,7 @@ package com.creditplus.p2p.model;
 import java.util.Date;
 import java.util.List;
 
-public class UserInfoVO {
+public class CustomerVO {
 
 	private Integer id;
 	private String name;
