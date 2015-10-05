@@ -36,5 +36,6 @@
     <!-- <context:component-scan base-package="com.creditplus.p2p" />  
     <tx:annotation-driven transaction-manager="transactionManager" /> -->              
     <bean id="userService" class=" com.creditplus.p2p.service.impl.UserServiceImpl" />
+    <bean id="loanAppServices" class="com.creditplus.p2p.service.impl.LoanAppServiceImpl" />
      
 </beans>
