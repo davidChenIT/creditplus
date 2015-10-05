@@ -115,10 +115,4 @@ public class LoanAppVO {
 	public void setLast_updated_by(String last_updated_by) {
 		this.last_updated_by = last_updated_by;
 	}
-	public String getLast_created_date() {
-		return last_created_date;
-	}
-	public void setLast_created_date(String last_created_date) {
-		this.last_created_date = last_created_date;
-	}
 }
