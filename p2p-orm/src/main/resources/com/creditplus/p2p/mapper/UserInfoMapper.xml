@@ -5,7 +5,7 @@
  
 <mapper namespace="com.creditplus.p2p.dao.UserInfoDao">
     
-    <insert id="insertUserInfo" parameterType="UserVO">
+   <!--  <insert id="insertUserInfo" parameterType="UserVO">
        insert into user_info_t(id,name,sex,age,ethnic,province,city,phone,phone_place,id_card,card_bank,card_no,card_tel,work_province,work_city,work_tel,seasame_score,mobile_ser_code,created_date,last_updated_date)values(#{userId},#{name},#{sex},#{age},#{ethnic},#{province},#{city},#{phone},#{phone_place},#{id_card},#{card_bank},#{card_no},#{card_tel},#{work_province},#{work_city},#{work_tel},#{seasame_score},#{mobile_ser_code},sysdate(),sysdate()) 
     </insert>
     
@@ -19,6 +19,6 @@
    
     <select id="getUserInfoById" parameterType="Integer" resultMap="userDetailMap">
        		select u.* from user_info_t where user_id=#{userId}
-    </select>
+    </select> -->
     
 </mapper>
