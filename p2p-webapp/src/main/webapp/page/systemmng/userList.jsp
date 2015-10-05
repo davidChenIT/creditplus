@@ -41,7 +41,7 @@
 									</div>
 									
 									<ul>
-										<li tabid="userList" class="tabs-selected"><span>投标列表</span></li>
+										<li tabid="userList" class="tabs-selected"><span>用户列表</span></li>
 									</ul>
 							</div>
 							<!-- 标题区域end -->
