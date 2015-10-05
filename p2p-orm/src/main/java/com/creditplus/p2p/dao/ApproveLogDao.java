@@ -8,7 +8,7 @@ public interface ApproveLogDao {
 
 	List<ApproveLogVO> getAppLogByLoanId(Integer loan_id);
 	
-	void deletedeleteApproveLogByLoanId(Integer loan_id);
+	void deleteAppLogByLoanId(Integer loan_id);
 	
 	void insertApproveLog(ApproveLogVO approveLogVo);
 }
