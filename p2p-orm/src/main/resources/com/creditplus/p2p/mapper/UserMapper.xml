@@ -97,6 +97,14 @@
             left join role_resource_t rr on r.role_id = rr.role_id  
             left join resource_t res on rr.resource_id = rr.resource_id             
                 where username=#{username}
+    </select>
+    
+   <select id="getUserListWithPage" parameterType="UserVO" resultMap="userVOMap">
+       		   select u.*
+                 from user_t u
+ 		<if test="username !=null ">  
+                where lower(u.username) LIKE CONCAT(CONCAT('%', lower(#{username, jdbcType=VARCHAR})),'%')  
+    	</if> 
     </select>    
   
 </mapper>

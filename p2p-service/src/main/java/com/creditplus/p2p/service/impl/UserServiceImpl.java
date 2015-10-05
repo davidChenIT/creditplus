@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.creditplus.p2p.common.annotation.ParamName;
 import com.creditplus.p2p.dao.UserDao;
 import com.creditplus.p2p.model.UserVO;
 import com.creditplus.p2p.service.UserService;
@@ -30,7 +29,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserById(userId);
 	}
 	
-	public List<UserVO> getUsersWithPage(){
-		return null;
+	public List<UserVO> getUserListWithPage(UserVO userVO){
+		return userDao.getUserListWithPage(userVO);
 	}
 }
