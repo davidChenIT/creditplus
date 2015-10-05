@@ -1,22 +1,14 @@
 package com.creditplus.p2p.dao;
 
-import java.util.List;
-
-import com.creditplus.p2p.model.UserVO;
+import com.creditplus.p2p.model.CustomerVO;
 
 public interface CustomerDao {
+
+	void insertUserInfo(CustomerVO vo);
 	
-	void insertUser(UserVO userVO);
+	void deleteUserInfoById(Integer userId);
 	
-	void deleteUserById(int userId);
+	void updateUserInfo(CustomerVO vo);
 	
-	void updateUser(UserVO userVO);
-	
-	UserVO getUserById(int userId);
-	
-	UserVO findByName(String username);
-	
-	int getUserCount(UserVO userVO);	
-	
-	List<UserVO> getUserListWithPage(UserVO userVO);
+	CustomerVO getUserInfoById(Integer userid);
 }

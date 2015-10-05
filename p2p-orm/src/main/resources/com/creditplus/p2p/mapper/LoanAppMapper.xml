@@ -2,29 +2,68 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
+
 <mapper namespace="com.creditplus.p2p.dao.LoanAppDao">
-    
-    <resultMap type="LoanAppVO" id="loanAppVOMap">
-    	<id column="id" property="loan_id"/>
-		<result column="user_id" property="user_id"/>    	
-		<result column="loan_money" property="loan_money"/>    	
-		<result column="loan_day" property="loan_day"/>    	
-		<result column="expire_date" property="expire_date"/>    	
-		<result column="count" property="count"/>    	
-		<result column="pay_fee" property="pay_fee"/>    	
-		<result column="act_money" property="act_money"/>    	
-		<result column="overdue_fee" property="overdue_fee"/>    	
-		<result column="first_trial_user" property="first_trial_user"/>    	
-		<result column="review_user" property="review_user"/>    	
-		<result column="created_by" property="created_by"/>    	
-		<result column="creted_date" property="creted_date"/>    	
-		<result column="last_updated_by" property="last_updated_by"/>    	
-		<result column="last_created_date" property="last_created_date"/>    	
-    </resultMap>
-    <select id="getLoappVoById" parameterType="String" resultMap="loanAppVOMap">
-    	select t.id,t.user_id,t.loan_money,t.loan_day,t.expire_day,t.count,t.pay_fee,t.act_money,t.overdue_fee,t.state,t.first_trial_user,t.review_user,t.created_by,t.created_date,t.last_updated_by,t.last_updated_date 
-    	from loan_app_t t where t.id = #{id}
-    </select>
-    
+
+	<resultMap type="LoanAppVO" id="loanAppVOMap">
+		<id column="id" property="loan_id" />
+		<result column="user_id" property="user_id" />
+		<result column="loan_money" property="loan_money" />
+		<result column="loan_day" property="loan_day" />
+		<result column="expire_date" property="expire_date" />
+		<result column="count" property="count" />
+		<result column="pay_fee" property="pay_fee" />
+		<result column="act_money" property="act_money" />
+		<result column="overdue_fee" property="overdue_fee" />
+		<result column="first_trial_user" property="first_trial_user" />
+		<result column="review_user" property="review_user" />
+		<result column="created_by" property="created_by" />
+		<result column="creted_date" property="creted_date" />
+		<result column="last_updated_by" property="last_updated_by" />
+		<result column="last_created_date" property="last_created_date" />
+	</resultMap>
+
+	<select id="getLoappVoById" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		u.user_id,
+		u.login_type,
+		u.login_key,
+		u.name,
+		u.mobile,
+		u.id_num,
+		u.province,
+		u.city,
+		u.address,
+		u.card_bank,
+		u.card_no,
+		u.card_tel,
+		u.company,
+		u.income,
+		u.company_address,
+		u.work_province,
+		u.work_city,
+		u.work_tel,
+		u.degree,
+		u.school,
+		u.seasame_score,
+		u.mobile_ser_code,
+		t.loan_id,
+		t.loan_full_id,
+		t.loan_money,
+		t.loan_day,
+		t.expire_day,
+		t.pay_fee,
+		t.act_money,
+		t.Interest,
+		t.overdue_fee,
+		t.bank_type,
+		t.bank_card,
+		t.state
+		FROM
+		loan_list t
+		LEFT JOIN
+		user_info u ON t.user_id = u.user_id
+		where t.state=1 and t.loan_id=#{loan_id}
+	</select>
+
 </mapper>

@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.creditplus.p2p.dao.CustomerDao;
+import com.creditplus.p2p.dao.UserDao;
 import com.creditplus.p2p.model.ResourceVO;
 import com.creditplus.p2p.model.RoleVO;
 import com.creditplus.p2p.model.UserVO;
@@ -29,7 +29,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	public static final Logger logger = LogManager.getLogger(UserDetailServiceImpl.class);
 
 	@Autowired
-	private CustomerDao userDao;
+	private UserDao userDao;
 
 	//登录验证
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
