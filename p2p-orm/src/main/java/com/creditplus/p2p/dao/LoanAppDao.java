@@ -6,7 +6,5 @@ import com.creditplus.p2p.model.LoanAppVO;
 
 public interface LoanAppDao {
 
-	LoanAppVO getLoappVoById(Integer id);
-	
-	List<LoanAppVO> getLoappVoList();
+	List<LoanAppVO> getLoappVoList(Integer id);
 }

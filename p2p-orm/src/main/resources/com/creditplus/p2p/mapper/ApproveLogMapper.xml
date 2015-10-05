@@ -18,7 +18,7 @@
 		<result column="last_updated_by" property="last_updated_by"/>    	
 		<result column="last_created_date" property="last_created_date"/>    	
     </resultMap>
-    <select id="getAppLogByLoanId" parameterType="Integer" resultMap="ApproveLogVO">
+    <select id="getAppLogByLoanId" parameterType="Integer" resultMap="approveLogVOMap">
     	select t.id,t.user_id,t.loan_money,t.loan_day,t.expire_day,t.count,t.pay_fee,t.act_money,t.overdue_fee,t.state,t.first_trial_user,t.review_user,t.created_by,t.created_date,t.last_updated_by,t.last_updated_date 
     	from loan_app_t t where t.id = #{id}
     </select>
@@ -27,7 +27,7 @@
       insert into approve_log_t(loan_id,first_approve,two_approve,three_approve,approve_content,state,created_by,created_date,last_updated_by,last_updated_date)values(#{loan_id},#{first_approve},#{two_approve},#{three_approve},#{approve_content},#{state},#{created_by},#{created_date},#{last_updated_by},#{last_updated_date})
     </insert>
     
-    <delete id="insertApproveLog" parameterType="Integer">
+    <delete id="deleteAppLogByLoanId" parameterType="Integer">
        delete from approve_log_t  where loan_id = #{loan_id}
     </delete>
     

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.creditplus.p2p.model.UserVO;
 
-public interface UserDao {
+public interface CustomerDao {
 	
 	void insertUser(UserVO userVO);
 	

@@ -37,5 +37,6 @@
     <tx:annotation-driven transaction-manager="transactionManager" /> -->              
     <bean id="userService" class=" com.creditplus.p2p.service.impl.UserServiceImpl" />
     <bean id="loanAppServices" class="com.creditplus.p2p.service.impl.LoanAppServiceImpl" />
+    <bean id="approveLogService" class="com.creditplus.p2p.service.impl.ApproveLogServiceImpl" />
      
 </beans>

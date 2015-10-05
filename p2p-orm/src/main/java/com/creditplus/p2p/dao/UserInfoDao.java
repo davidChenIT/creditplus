@@ -1,14 +1,14 @@
 package com.creditplus.p2p.dao;
 
-import com.creditplus.p2p.model.UserInfoVO;
+import com.creditplus.p2p.model.CustomerVO;
 
 public interface UserInfoDao {
 
-	void insertUserInfo(UserInfoVO vo);
+	void insertUserInfo(CustomerVO vo);
 	
 	void deleteUserInfoById(Integer userId);
 	
-	void updateUserInfo(UserInfoVO vo);
+	void updateUserInfo(CustomerVO vo);
 	
-	UserInfoVO getUserInfoById(Integer userid);
+	CustomerVO getUserInfoById(Integer userid);
 }
