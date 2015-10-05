@@ -18,6 +18,8 @@ $(function(){
 			rowNum:10,
 			rowList:[10,20,30],
 			viewrecords: true,
+			sortable:false,
+			emptyrecords:"没有数据！",
 			jsonReader : {  
 
 		         root:"griddata",  
