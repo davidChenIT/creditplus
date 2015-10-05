@@ -3,14 +3,15 @@ $(function(){
 	debugger;
 	//构造grid
     $("#userListGrid").jqGrid({
-			/**url:'example.php',
-			datatype: 'xml',
-			mtype: 'GET',*/
+			url:'services/process',
+			datatype: 'json',
+			data:{"module":"userService","method":"getUserListWithPage","request_data":{}},
+			mtype: 'psot',
 			autowidth:true,
 			colNames:['操作','用户名称'],
 			colModel :[
-				{name:'operate_col', index:'operate_col',align:'center'},
-				{name:'username', index:'username',align:'center'}
+				{name:'operate_col', index:'operate_col',align:'center',width:"20%"},
+				{name:'username', index:'username',align:'center',width:"80%"}
 			],
 			pager: '#userListPager',
 			rowNum:10,

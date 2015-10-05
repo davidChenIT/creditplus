@@ -54,14 +54,14 @@
 										<div class="row">
 											<div class="credit-spacecontrol col-xs-12 col-sm-4">
 												<div class="row">
-													<label class="col-xs-12 col-sm-2">
+													<label class="col-xs-12 col-sm-3">
 														<div class="credit-label">
 															用户名称
 														</div>
 													</label>
-													<div class="col-xs-12 col-sm-10">
+													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="" >
+															<input type="text" name="username" >
 														</div>
 													</div>
 												</div>
