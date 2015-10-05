@@ -1,38 +1,45 @@
 package com.creditplus.p2p.webapp.common.rest;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.creditplus.p2p.common.annotation.MethodDesc;
-import com.creditplus.p2p.common.annotation.ParamDesc;
+import com.creditplus.p2p.common.annotation.ParamName;
 import com.creditplus.p2p.common.json.JSONTools;
+import com.creditplus.p2p.model.BaseVO;
 
-@Path(value="/")
+@Path(value="/process")
 @Produces(MediaType.APPLICATION_JSON)
 public class RequestProcess{
+	
+	public final static String PACKAGE_NAME = "com.creditplus.p2p";
+	
+	@Context
+	private HttpServletRequest request;
 
 	@POST
-	@Path("/{module}/{method}/{request_data}")
-	@Produces(MediaType.APPLICATION_JSON)	
-	@Consumes(MediaType.APPLICATION_XML)
-	public Object execute(@PathParam("module")String module,
-			@PathParam("method")String method, 
-			@PathParam("request_data")String request_data,@Context HttpServletRequest request) throws Exception {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Object execute(@FormParam("module")String module,
+			@FormParam("method")String method, 
+			@FormParam("request_data")String request_data) throws Exception {
 		if(StringUtils.isBlank(module)){
 			throw new Exception("module is error,please check it exist!");
 		}
@@ -64,9 +71,20 @@ public class RequestProcess{
 	}
 	
 	private Method getMethod(Object object,String methodName){
-		Method[] classMethods = object.getClass().getMethods();
+		Class<?> clazz = object.getClass();
+		if(!clazz.getName().startsWith(PACKAGE_NAME)){		
+			Class<?>[] classInterfaces = clazz.getInterfaces();
+			for(Class<?> classInterface :classInterfaces){
+				if(classInterface.getName().startsWith(PACKAGE_NAME)){
+					clazz = classInterface;
+					break;
+				}
+			}
+		}
+
+		Method[] classMethods = clazz.getMethods();
 		for(Method classMethod : classMethods){
-			if(methodName.equals(classMethod.getName()) && Modifier.isPublic(classMethod.getModifiers())){
+			if(methodName.equals(classMethod.getName())){
 				return classMethod;
 			}
 		}
@@ -74,25 +92,66 @@ public class RequestProcess{
 		return null;
 	}
 	
-	private Object[] getArgs(Method classMethod,String requestData)throws Exception{
-        MethodDesc methodDesc = classMethod.getAnnotation(MethodDesc.class);
-        if(null == methodDesc){
+	private static Object[] getArgs(Method classMethod,String requestData)throws Exception{	
+		Annotation[][] annotations = classMethod.getParameterAnnotations();
+        if(null == annotations || annotations.length == 0){
         	return null;
         }
-        
-        ParamDesc[] paramDescs = methodDesc.Desc();
-        if(null == paramDescs || paramDescs.length <=  0){
-        	return null;
+   
+        List<Object> argsList = new ArrayList<Object>();
+        Class<?>[] clazz = classMethod.getParameterTypes();        
+        for(int i = 0; i < annotations.length;i++){
+        	Annotation[] paramAnnotations = annotations[i];
+        	if(paramAnnotations.length == 0){
+    			Object obj = JSONTools.JSON2Object(requestData,clazz[i]);
+        		argsList.add(obj);
+        	}else{
+        		for(int j = 0;j < paramAnnotations.length;j++){
+        			ParamName  paramName = (ParamName)annotations[i][j];
+        			Object obj = JSONTools.JSON2Object(requestData, paramName.value(),clazz[i]);
+        			argsList.add(obj);
+        		}
+        	}
         }
         
-        Object[] args = new Object[paramDescs.length];
-        for(int i = 0;i < paramDescs.length;i++){
-        	ParamDesc paramDesc = paramDescs[i];
-        	String paramName = paramDesc.paramName();
-        	Class<?> paramClass = paramDesc.paramType();
-        	args[i] = JSONTools.JSON2Object(requestData, paramName, paramClass);
+        Object[] args = argsList.toArray();
+        if( null != args && args.length > 0){
+        	String currentUser = "System";
+        	User user = ((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());        	
+        	if(null != user){
+        		currentUser = user.getUsername();
+        	}
+
+        	for(Object arg : args){
+        		if(arg instanceof BaseVO){
+        			BaseVO baseVO = (BaseVO)arg;
+        			baseVO.setLastUpdatedBy(currentUser);        			
+        			String createdBy = baseVO.getCreatedBy();
+        			if(StringUtils.isBlank(createdBy)){
+        				baseVO.setCreatedBy(currentUser);
+        			}
+        			
+        			Date createdDate = baseVO.getCreatedDate();
+        			if(null == createdDate){
+        				baseVO.setCreatedDate(new Date());
+        			}
+        		}        		
+        	}
         }
         
         return args;
 	}	
+	
+	public static void main(String[] args) {
+		try {
+			Object obj = JSONTools.JSON2Object("",BaseVO.class);
+			System.out.println("===" + obj);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+   
+
+		
+	}
 }

@@ -27,11 +27,20 @@
     	<jaxrs:languageMappings>
            <entry key="en" value="en-gb"/>  
     	</jaxrs:languageMappings>      
-    	<jaxrs:providers>
-    	   <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider"/>
+    	<jaxrs:providers >
+    	   <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider">
+    	   		<constructor-arg name="mapper" ref="mapper" />  
+    	   </bean>    	   
     	</jaxrs:providers>  
     </jaxrs:server>
     
+    <bean id="mapper" class="com.fasterxml.jackson.databind.ObjectMapper">  
+    	<property name="dateFormat" ref="simpleDataformat" />
+	</bean>
+    
+  	<bean id="simpleDataformat" class="java.text.SimpleDateFormat">  
+		<constructor-arg value="yyyy-MM-dd HH:mm:ss" />  
+	</bean> 
 	<bean id="messageSource"
 	    class="org.springframework.context.support.ResourceBundleMessageSource">
 	    <property name="basenames">
