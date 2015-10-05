@@ -6,9 +6,7 @@
 <title>信用复审列表</title>
 </head>
 
-
 <body>
-
 <div id="credit_Top">
   <!-- 引入头部 -->
   <jsp:include page="header.jsp"></jsp:include>

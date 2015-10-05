@@ -5,8 +5,6 @@
 <meta charset="utf-8">
 <title>信用初审列表</title>
 </head>
-
-
 <body>
 
 <div id="credit_Top">

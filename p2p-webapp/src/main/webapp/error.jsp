@@ -8,7 +8,6 @@
 </head>
 
 <body>
-
 <div id="credit_Top">
   <!-- 引入底部 -->
   <jsp:include page="page/header.jsp"></jsp:include>

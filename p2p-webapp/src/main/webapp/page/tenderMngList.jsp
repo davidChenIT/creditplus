@@ -5,8 +5,6 @@
 <meta charset="utf-8">
 <title>标的管理</title>
 </head>
-
-
 <body>
 
 <div id="credit_Top">
