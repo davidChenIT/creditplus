@@ -1659,29 +1659,6 @@ input[type="text"]:focus + .input-btn .credit-icon {
  .tabs-head li.tabs-selected {
     border-color: #ef8600 #d8d8d8 transparent #d8d8d8;
 }
-
-#productContentDiv {
-    background: url(/creditsmp/unicom/images/phone-bg.png) no-repeat;
-}
-#customerContentDiv .credit-label, #productContentDiv .credit-label {
-    text-align: left;
-}
-.unicom-view-name {
-    font-size: 20px;
-    color: #f35c26;
-    margin-top: 15px;
-    display: block;
-}
-.append-colon:after {
-    content:"：";
-}
-.customer-nodata {
-    font-size: 18px;
-    text-align: center;
-    height: 100%;
-    line-height: 240px;
-    margin-left: -20px;
-}
 /*进度条*/
  .credit-flow .flow-node-process {
     width:14px;
@@ -1740,16 +1717,6 @@ input[type="text"]:focus + .input-btn .credit-icon {
 }
 .credit-footer .pull-right li a {
     color: #666;
-}
-
-
-/*数据复制任务设计 按钮样式*/
- .creditRendered span.icon-search::before {
-    content:"";
-    display: inline-block;
-    background: url(../images/icon.png) -229px -109px no-repeat;
-    width: 14px;
-    height: 14px;
 }
 
 .tabs-head li:hover a, .tabs-head li.tabs-selected a {
@@ -1989,6 +1956,3 @@ h3{
 	border-bottom: 1px solid #F3F7F8;
 	color:#1aa0e1
 }
-
-
-
