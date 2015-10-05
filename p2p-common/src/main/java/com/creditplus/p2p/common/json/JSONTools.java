@@ -31,7 +31,12 @@ public class JSONTools {
 		
 		try {
 			final JsonNode node = mapper.readTree(json);
-			return mapper.readValue(node.get(key).traverse(), clazz);
+			JsonNode jsonNode = node.get(key);
+			if(null != jsonNode){			
+				return mapper.readValue(node.get(key).traverse(), clazz);
+			}else{
+				return null;
+			}
 		} catch (JsonParseException e) {
 			throw new Exception(e);
 		} catch (JsonMappingException e) {

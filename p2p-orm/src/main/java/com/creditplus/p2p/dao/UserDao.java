@@ -16,6 +16,7 @@ public interface UserDao {
 	
 	UserVO findByName(String username);
 	
+	int getUserCount(UserVO userVO);	
+	
 	List<UserVO> getUserListWithPage(UserVO userVO);
-
 }

@@ -3,6 +3,7 @@ package com.creditplus.p2p.service;
 import java.util.List;
 
 import com.creditplus.p2p.common.annotation.ParamName;
+import com.creditplus.p2p.model.PageVO;
 import com.creditplus.p2p.model.UserVO;
 
 public interface UserService {
@@ -37,6 +38,6 @@ public interface UserService {
 	 * @param userVO
 	 * @return
 	 */
-	List<UserVO> getUserListWithPage(UserVO userVO);
+	PageVO getUserListWithPage(PageVO pageVO,@ParamName("griddata") UserVO userVO);
 
 }
