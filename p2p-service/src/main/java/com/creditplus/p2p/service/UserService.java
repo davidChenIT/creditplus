@@ -38,6 +38,6 @@ public interface UserService {
 	 * @param userVO
 	 * @return
 	 */
-	PageVO getUserListWithPage(PageVO pageVO,@ParamName("userVO") UserVO userVO);
+	PageVO getUserListWithPage(PageVO pageVO,UserVO userVO);
 
 }

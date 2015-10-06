@@ -17,6 +17,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -30,6 +32,9 @@ import com.creditplus.p2p.model.BaseVO;
 @Produces(MediaType.APPLICATION_JSON)
 public class RequestProcess{
 	
+	public static final Logger logger = LogManager.getLogger(RequestProcess.class);
+
+	
 	public final static String PACKAGE_NAME = "com.creditplus.p2p";
 	
 	@Context
@@ -40,6 +45,10 @@ public class RequestProcess{
 	public Object execute(@FormParam("module")String module,
 			@FormParam("method")String method, 
 			@FormParam("request_data")String request_data) throws Exception {
+		logger.info("module==" + module);
+		logger.info("method==" + method);
+		logger.info("request_data==" + request_data);
+		
 		if(StringUtils.isBlank(module)){
 			throw new Exception("module is error,please check it exist!");
 		}
@@ -47,7 +56,7 @@ public class RequestProcess{
 		if(StringUtils.isBlank(method)){
 			throw new Exception("method is error,please check it exist!");
 		}
-		
+				
 		ApplicationContext appContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
 		String beans[]=appContext.getBeanDefinitionNames();
 		for(int i=0;i<beans.length;i++)
