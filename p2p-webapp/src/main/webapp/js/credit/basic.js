@@ -66,7 +66,7 @@ $(function(){
 							success: function(data){
 								debugger;	
 								if(data && data.length>0){
-								  var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->"),data.indexOf("<!--credit_Main_end-->")+19);
+								  var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->")+24,data.indexOf("<!--credit_Main_end-->"));
 								  $("#credit_MainPanel").find("#credit_Main").remove();
 								  $("#credit_MainPanel").append(creditMainHtml);
 								  if(treeNode.isloadjs=="true"){
@@ -136,7 +136,7 @@ $(function(){
 
 
 	//展开或隐藏左侧栏目区域
-	$("#credit_Menu").on("click",".toggle-icon",function(){
+	$("#credit_LeftPanel").on("click",".toggle-icon",function(){
 		
 		var thisClss=$(this).attr("class");
 		if(thisClss.indexOf("icon-chevron-left")!=-1){
@@ -155,7 +155,7 @@ $(function(){
 
 
 	//tab页面点击事件
-	$("#credit_Main").on("click",".tabs-head li",function(){
+	$("#credit_MainPanel").on("click",".tabs-head li",function(){
 			var tabId=$(this).attr("tabid");
 			var liClass=$(this).attr("class");
 			if("tabs-selected"!=liClass){
