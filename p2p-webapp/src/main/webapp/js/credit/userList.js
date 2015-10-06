@@ -6,14 +6,14 @@ $(function(){
     $("#userListGrid").jqGrid({
 			url:serviceAddress,
 			datatype: 'json',
-			postData:{"module":"userService","method":"getUserListWithPage","request_data":{}},
+			postData:{"module":"userService","method":"getUserListWithPage"},
 			mtype: 'POST',
 			autowidth:true,
 			colNames:["操作","用户名称","是否可用","创建人","创建时间","最后修改人","最后修改时间","备注"],
 			colModel :[
 				{name:'operate_col', index:'operate_col',align:'center',"sortable":false},
 				{name:'username', index:'username',align:'center',"sortable":false},
-				{name:'enable', index:'enable',align:'center',"sortable":false},
+				{name:'enable', index:'enable',align:'center',"sortable":false,formatter:"select", editoptions:{value:"0:不可用;1:可用"}},
 				{name:'createdBy', index:'createdBy',align:'center',"sortable":false},
 				{name:'createdDate', index:'createdDate',align:'center',"sortable":false},
 				{name:'lastUpdatedBy', index:'lastUpdatedBy',align:'center',"sortable":false},
@@ -38,4 +38,20 @@ $(function(){
 
 		     }
 	});
+
+    //输入用户名称，点击按钮进行过滤
+    $("#serrchUserListBtn").click(function(){
+        var username = $("input[name='username']").val();
+        var request_data={};
+        if(username){
+        	request_data.username=username;
+        }
+        $("#userListGrid").jqGrid('setGridParam',{  
+            datatype:'json',  
+            postData:{'request_data':request_data}, //发送数据
+            page:1,
+            rowNum:10
+        }).trigger("reloadGrid"); //重新载入
+    	
+    });
 })

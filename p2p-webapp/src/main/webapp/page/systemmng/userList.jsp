@@ -67,7 +67,7 @@
 												</div>
 											</div>
 											<div class="search-y-btn creditRendered" style="display: inline-block;">
-												<button class="credit-btn" type="button">查询</button>
+												<button class="credit-btn" id="serrchUserListBtn" type="button">查询</button>
 											</div>	
 										</div>	
 									
