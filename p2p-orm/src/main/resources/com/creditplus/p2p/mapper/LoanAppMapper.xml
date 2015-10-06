@@ -3,22 +3,131 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.creditplus.p2p.dao.LoanAppDao">
+<mapper namespace="com.creditplus.p2p.dao.LoanOrderDao">
 
-	<!-- <resultMap type="LoanAppVO" id="loanAppVOMap"> <id column="id" property="loan_id" 
-		/> <result column="user_id" property="user_id" /> <result column="loan_money" 
-		property="loan_money" /> <result column="loan_day" property="loan_day" /> 
-		<result column="expire_date" property="expire_date" /> <result column="count" 
-		property="count" /> <result column="pay_fee" property="pay_fee" /> <result 
-		column="act_money" property="act_money" /> <result column="overdue_fee" property="overdue_fee" 
-		/> <result column="first_trial_user" property="first_trial_user" /> <result 
-		column="review_user" property="review_user" /> <result column="created_by" 
-		property="created_by" /> <result column="creted_date" property="creted_date" 
-		/> <result column="last_updated_by" property="last_updated_by" /> <result 
-		column="last_created_date" property="last_created_date" /> </resultMap> -->
+	<resultMap type="com.creditplus.p2p.model.LoanOrderVO" id="loanListMap">
+		<id column="loan_id" property="loan_id" />
+		<result column="user_id" property="user_id" />
+		<result column="loan_full_id" property="loan_full_id" />
+		<result column="loan_money" property="loan_money" />
+		<result column="start_day" property="start_day" />
+		<result column="loan_day" property="loan_day" />
+		<result column="expire_day" property="expire_day" />
+		<result column="pay_fee" property="pay_fee" />
+		<result column="interest" property="interest" />
+		<result column="act_money" property="act_money" />
+		<result column="overdue_fee" property="overdue_fee" />
+		<result column="first_trial_user" property="first_trial_user" />
+		<result column="bank_type" property="bank_type" />
+		<result column="bank_card" property="bank_card" />
+		<result column="state" property="state" />
+		<result column="modifytime" property="modifytime" />
+		<association property="customerInfo" javaType="com.creditplus.p2p.model.CustomerVO">
+			<id column="user_id" property="user_id" />
+			<result column="login_type" property="login_type" />
+			<result column="loging_key" property="loging_key" />
+			<result column="name" property="name" />
+			<result column="mobile" property="mobile" />
+			<result column="id_num" property="id_num" />
+			<result column="province" property="province" />
+			<result column="city" property="city" />
+			<result column="address" property="address" />
+			<result column="card_bank" property="card_bank" />
+			<result column="card_no" property="card_no" />
+			<result column="card_tel" property="card_tel" />
+			<result column="company" property="company" />
+			<result column="income" property="income" />
+			<result column="company_address" property="company_address" />
+			<result column="work_province" property="work_province" />
+			<result column="work_city" property="work_city" />
+			<result column="work_tel" property="work_tel" />
+			<result column="seasame_scope" property="seasame_scope" />
+			<result column="mobile_ser_code" property="mobile_ser_code" />
+			<result column="state" property="state" />
+			<result column="is_done" property="is_done" />
+			<result column="modifytime" property="modifytime" />
+		</association>
+		<collection property="appLogList" ofType="com.creditplus.p2p.model.ApproveLogVO" column="loan_id">
+			<id column="approve_id" property="approve_id" />
+			<result column="first_approve" property="first_approve" />
+			<result column="two_approve" property="two_approve" />
+			<result column="three_approve" property="three_approve" />
+			<result column="approve_content" property="approve_content" />
+		</collection>
+	</resultMap>
 
-	<select id="getLoappVoList" parameterType="java.util.Map"
-		resultType="java.util.Map">
+
+	<select id="getLoanOrderByLoanId" parameterType="java.util.Map"
+		resultMap="loanListMap">
+		SELECT
+		u.user_id,
+		u.login_type,
+		u.login_key,
+		u.name,
+		u.mobile,
+		u.id_num,
+		u.province,
+		u.city,
+		u.address,
+		u.card_bank,
+		u.card_no,
+		u.card_tel,
+		u.company,
+		u.income,
+		u.company_address,
+		u.work_province,
+		u.work_city,
+		u.work_tel,
+		u.degree,
+		u.school,
+		u.seasame_score,
+		u.mobile_ser_code,
+		t.loan_id,
+		t.loan_full_id,
+		t.loan_money,
+		t.loan_day,
+		t.expire_day,
+		t.pay_fee,
+		t.act_money,
+		t.Interest,
+		t.overdue_fee,
+		t.bank_type,
+		t.bank_card,
+		t.state,
+		t.modifytime,
+		a.first_approve,
+		a.two_approve,
+		a.three_approve,
+		a.approve_content
+		FROM
+		loan_list t
+		LEFT JOIN user_info u
+		ON t.user_id = u.user_id
+		left join approve_log_t a on
+		t.loan_id=a.loan_id
+		<where>
+			<if test="loan_id!= null">
+				AND t.loan_id = #{loan_id}
+			</if>
+			<if test="state!= null">
+				AND t.state = #{state,jdbcType=INTEGER}
+			</if>
+			<if test="loan_money!= null">
+				AND t.loan_money = #{loan_money}
+			</if>
+			<if test="modifytime != null">
+				AND t.modifytime = #{modifytime}
+			</if>
+			<if test="name != null">
+				AND t.name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="id_num != null">
+				AND t.loan_money = #{id_num}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getLoanOrderList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 		u.user_id,
 		u.login_type,
@@ -57,12 +166,10 @@
 		t.modifytime
 		FROM
 		loan_list t
-		LEFT JOIN
-		user_info u ON
-		t.user_id = u.user_id
+		LEFT JOIN user_info u ON t.user_id = u.user_id
 		<where>
 			<if test="loan_id!= null">
-				AND t.loan_id = #{loan_id,jdbcType=INTEGER}
+				AND t.loan_id = #{loan_id}
 			</if>
 			<if test="state!= null">
 				AND t.state = #{state,jdbcType=INTEGER}

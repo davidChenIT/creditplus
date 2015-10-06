@@ -1,73 +1,49 @@
 package com.creditplus.p2p.model;
 
 import java.util.Date;
-import java.util.List;
 
 public class CustomerVO {
 
-	private Integer id;
+	private Integer user_id;
+	private Integer login_type;
+	private String loging_key;
 	private String name;
-	private String sex;
-	private Integer age;
-	private String ethnic;
+	private String mobile;
+	private String id_num;
 	private String province;
 	private String city;
-	private String phone;
-	private String phone_place;
-	private String id_card;
+	private String address;
 	private String card_bank;
 	private String card_no;
 	private String card_tel;
+	private String company;       
+	private String income;
+	private String company_address;
 	private String work_province;
 	private String work_city;
 	private String work_tel;
 	private Integer seasame_scope;
 	private String mobile_ser_code;
-	private String created_by;
-	private Date creted_date;
-	private String last_updated_by;
-	
-	public String getCreated_by() {
-		return created_by;
+	private Integer state;
+	private String is_done;
+	private Date modifytime;
+	public Integer getUser_id() {
+		return user_id;
 	}
-	public void setCreated_by(String created_by) {
-		this.created_by = created_by;
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
-	public Date getCreted_date() {
-		return creted_date;
+	public Integer getLogin_type() {
+		return login_type;
 	}
-	public void setCreted_date(Date creted_date) {
-		this.creted_date = creted_date;
+	public void setLogin_type(Integer login_type) {
+		this.login_type = login_type;
 	}
-	public String getLast_updated_by() {
-		return last_updated_by;
+	public String getLoging_key() {
+		return loging_key;
 	}
-	public void setLast_updated_by(String last_updated_by) {
-		this.last_updated_by = last_updated_by;
-	}
-	public Date getLast_created_date() {
-		return last_created_date;
-	}
-	public void setLast_created_date(Date last_created_date) {
-		this.last_created_date = last_created_date;
-	}
-	public List<LoanAppVO> getLoanAppList() {
-		return loanAppList;
-	}
-	public void setLoanAppList(List<LoanAppVO> loanAppList) {
-		this.loanAppList = loanAppList;
-	}
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-	private Date last_created_date;
-	private List<LoanAppVO> loanAppList;
-	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setLoging_key(String loging_key) {
+		this.loging_key = loging_key;
 	}
 	public String getName() {
 		return name;
@@ -75,23 +51,17 @@ public class CustomerVO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getSex() {
-		return sex;
+	public String getMobile() {
+		return mobile;
 	}
-	public void setSex(String sex) {
-		this.sex = sex;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
-	public int getAge() {
-		return age;
+	public String getId_num() {
+		return id_num;
 	}
-	public void setAge(int age) {
-		this.age = age;
-	}
-	public String getEthnic() {
-		return ethnic;
-	}
-	public void setEthnic(String ethnic) {
-		this.ethnic = ethnic;
+	public void setId_num(String id_num) {
+		this.id_num = id_num;
 	}
 	public String getProvince() {
 		return province;
@@ -105,23 +75,11 @@ public class CustomerVO {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public String getPhone() {
-		return phone;
+	public String getAddress() {
+		return address;
 	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public String getPhone_place() {
-		return phone_place;
-	}
-	public void setPhone_place(String phone_place) {
-		this.phone_place = phone_place;
-	}
-	public String getId_card() {
-		return id_card;
-	}
-	public void setId_card(String id_card) {
-		this.id_card = id_card;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public String getCard_bank() {
 		return card_bank;
@@ -140,6 +98,24 @@ public class CustomerVO {
 	}
 	public void setCard_tel(String card_tel) {
 		this.card_tel = card_tel;
+	}
+	public String getCompany() {
+		return company;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public String getIncome() {
+		return income;
+	}
+	public void setIncome(String income) {
+		this.income = income;
+	}
+	public String getCompany_address() {
+		return company_address;
+	}
+	public void setCompany_address(String company_address) {
+		this.company_address = company_address;
 	}
 	public String getWork_province() {
 		return work_province;
@@ -171,8 +147,24 @@ public class CustomerVO {
 	public void setMobile_ser_code(String mobile_ser_code) {
 		this.mobile_ser_code = mobile_ser_code;
 	}
-	
-	
+	public Integer getState() {
+		return state;
+	}
+	public void setState(Integer state) {
+		this.state = state;
+	}
+	public String getIs_done() {
+		return is_done;
+	}
+	public void setIs_done(String is_done) {
+		this.is_done = is_done;
+	}
+	public Date getModifytime() {
+		return modifytime;
+	}
+	public void setModifytime(Date modifytime) {
+		this.modifytime = modifytime;
+	}
 	
 	
 }

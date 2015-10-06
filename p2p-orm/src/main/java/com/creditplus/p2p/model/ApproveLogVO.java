@@ -1,19 +1,16 @@
 package com.creditplus.p2p.model;
 
-import java.util.Date;
 
-public class ApproveLogVO {
-//	id,loan_id,first_approve,two_approve,three_approve,approve_content,state,created_by,created_date,last_updated_by,last_updated_date
+public class ApproveLogVO  extends BaseVO{
+
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Integer loan_id;
 	private String first_approve;
 	private String two_approve;
 	private String three_approve;
 	private String approve_content;
-	private String created_by;
-	private Date created_date;
-	private String last_updated_by;
-	private Date last_updated_date;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -49,30 +46,6 @@ public class ApproveLogVO {
 	}
 	public void setApprove_content(String approve_content) {
 		this.approve_content = approve_content;
-	}
-	public String getCreated_by() {
-		return created_by;
-	}
-	public void setCreated_by(String created_by) {
-		this.created_by = created_by;
-	}
-	public Date getCreated_date() {
-		return created_date;
-	}
-	public void setCreated_date(Date created_date) {
-		this.created_date = created_date;
-	}
-	public String getLast_updated_by() {
-		return last_updated_by;
-	}
-	public void setLast_updated_by(String last_updated_by) {
-		this.last_updated_by = last_updated_by;
-	}
-	public Date getLast_updated_date() {
-		return last_updated_date;
-	}
-	public void setLast_updated_date(Date last_updated_date) {
-		this.last_updated_date = last_updated_date;
 	}
 	
 	
