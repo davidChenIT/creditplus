@@ -86,6 +86,7 @@
 		t.loan_full_id,
 		t.loan_money,
 		t.loan_day,
+		t.start_day,
 		t.expire_day,
 		t.pay_fee,
 		t.act_money,
