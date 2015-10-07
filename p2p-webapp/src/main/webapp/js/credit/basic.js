@@ -222,5 +222,19 @@ $(function(){
 		
 		
 	});
+	
+	//点击tab的关闭x图标
+	$("#credit_MainPanel").on("click",".credit-tab-close",function(){
+		debugger;
+		var closeLi=$(this).parent();
+		var tabId=closeLi.attr("tabid");
+		var firstLi=$(closeLi.siblings()[0]);
+		var firstTabId=firstLi.attr("tabid");
+		closeLi.remove();
+		$("div[tabid='"+tabId+"']").remove();
+		firstLi.attr("class","tabs-selected");
+		$("div[tabid='"+firstTabId+"']").attr("class","tabs-body-item creditPageContext credit-validator");
+	});
+	
 
 })
