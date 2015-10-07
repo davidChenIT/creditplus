@@ -2,10 +2,21 @@
 $(function(){
 	
 	//注册window的onpopstate事件
-	window.onpopstate = function(event) {  
+	window.onpopstate = function(e) {  
 		  debugger;
-		  window.location.href=window.location.href;
+		  //点击浏览器的前进后退按钮处理
+          if (e.state) {
+              window.location.href=e.state.url;
+          }
 	}; 
+	
+	//处理点浏览器返回时候最后一个不刷新页面内容问题
+    var state = {
+        title: document.title,
+        url: document.location.href,
+        otherkey: null
+    };
+    window.history.replaceState(state, document.title, document.location.href);
 	//设置栏目菜单
 	var zTreeObj,
 	setting = {
@@ -58,7 +69,8 @@ $(function(){
 					if(fileUrlstr){
 						var jsFileUrl="/p2p-webapp/js/credit/"+fileUrlstr.substring(fileUrlstr.lastIndexOf("/")+1,fileUrlstr.lastIndexOf("."))+".js";
 						var requestUrl="http://"+window.location.host+"/p2p-webapp/"+fileUrlstr;
-						window.history.pushState({},treeNode.name, requestUrl+"?"+(new Date()).getTime());
+						
+						
 						$("title").text(treeNode.name);
 						$.ajax({ 
 							url: requestUrl,
@@ -73,6 +85,13 @@ $(function(){
 									  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
 								  }
 								}
+								//加入到历史状态里面
+		                        var state = {
+		                            title:treeNode.name,
+		                            url: requestUrl,
+		                            isloadjs:treeNode.isloadjs
+		                        };
+								window.history.pushState(state,data,requestUrl);
 							},error:function(error){
 							  debugger;
 							  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>城立信金融</p></div>');
