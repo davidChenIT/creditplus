@@ -11,7 +11,12 @@ $(function(){
 			autowidth:true,
 			colNames:["操作","用户名称","是否可用","创建人","创建时间","最后修改人","最后修改时间","备注"],
 			colModel :[
-				{name:'operate_col', index:'operate_col',align:'center',"sortable":false},
+				{name:'operate_col', index:'operate_col',align:'center',"sortable":false,width:"100px",
+					formatter:function(cellvalue, options, rowObject){
+					   debugger;
+					   return "<span class='ui-icon-edit'></span>";
+					}
+				},
 				{name:'username', index:'username',align:'center',"sortable":false},
 				{name:'enable', index:'enable',align:'center',"sortable":false,formatter:"select", editoptions:{value:"0:不可用;1:可用"}},
 				{name:'createdBy', index:'createdBy',align:'center',"sortable":false},
@@ -21,6 +26,7 @@ $(function(){
 				{name:'remark', index:'remark',align:'center',"sortable":false}
 			],
 			pager: '#userListPager',
+			multiselect: true,
 			rowNum:10,
 			rowList:[10,20,30],
 			viewrecords: true,

@@ -1959,3 +1959,31 @@ h3{
 	border-bottom: 1px solid #F3F7F8;
 	color:#1aa0e1
 }
+
+
+/**按钮样式**/
+/**添加按钮*/
+.ui-icon-add{
+    background-position: -20px -128px;
+    background-image: url("/p2p-webapp/css/jqueryui/images/ui-icons_ef8c08_256x240.png");
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+
+/**编辑按钮*/
+.ui-icon-edit{
+    background-position: -65px -113px;
+    background-image: url("/p2p-webapp/css/jqueryui/images/ui-icons_ef8c08_256x240.png");
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+/**删除按钮*/
+.ui-icon-add{
+    background-position: -180px -98px;
+    background-image: url("/p2p-webapp/css/jqueryui/images/ui-icons_ef8c08_256x240.png");
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
