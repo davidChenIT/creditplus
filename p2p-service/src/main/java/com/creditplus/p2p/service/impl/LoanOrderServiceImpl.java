@@ -22,7 +22,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 
 	public PageVO getLoanOrderListWithPage(Map<?, ?> paramMap) {
 		int currentPage=1,pageSize=20;
-		if(paramMap.get(PageConstant.CURRPAGE)!=null || paramMap.get(PageConstant.ROWNUM)!=null){
+		if(null != paramMap && paramMap.get(PageConstant.CURRPAGE)!=null && paramMap.get(PageConstant.ROWNUM)!=null){
 			currentPage=Integer.valueOf(paramMap.get(PageConstant.CURRPAGE)+"");
 			pageSize=Integer.valueOf(paramMap.get(PageConstant.ROWNUM)+"");
 		}
