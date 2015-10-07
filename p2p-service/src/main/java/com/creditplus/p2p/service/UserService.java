@@ -26,6 +26,12 @@ public interface UserService {
 	 */
 	void updateUser(UserVO userVO);
 	
+	/**
+	 * change password
+	 * @param userVO
+	 */
+	void changePassword(UserVO userVO); 
+	
 	/***
 	 * get user by id
 	 * @param id user id
