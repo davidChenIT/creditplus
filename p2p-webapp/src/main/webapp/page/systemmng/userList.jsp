@@ -71,8 +71,14 @@
 											</div>	
 										</div>	
 									
+									    <!-- grid按钮区域 -->
+									    <div style="display: inline-block;">
+											<button class="grid-toobar-btn add-btn" name="addUserBtn" type="button">新增</button>
+											<button class="grid-toobar-btn del-btn" name="delUserBtn" type="button">删除</button>
+										</div>
 									
 										<!-- grid区域开始 -->
+										
 										<div class="row">
 											<table id="userListGrid"></table> 
 

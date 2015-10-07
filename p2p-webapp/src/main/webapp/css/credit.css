@@ -1202,7 +1202,7 @@ label {
   background-color: #3e89d4;
 }
 .credit-footer {
-  background: #ffffff;
+  background: #f3f7f8;
   border-top: solid 1px #d1d1d1;
   margin: 5px;
   padding: 5px 10px;
@@ -1986,4 +1986,50 @@ h3{
     width: 16px;
     height: 16px;
     display: inline-block;
+}
+
+
+
+
+
+
+/**grid头上的按钮**/
+.grid-toobar-btn{
+	background: #fff;
+	color: #666;
+	border: 1px solid #e5e5e5;
+	height: 32px;
+	padding: 0 15px;
+	line-height: 27px;
+	margin-right: 7px;
+	min-width: 80px;
+	font-size: 1em;
+	margin-bottom: 5px;
+	font-weight: bold;
+	border-radius: 4px;
+}
+.add-btn{
+    margin-left: -5px;
+}
+.add-btn:before{
+	content:"";
+	background-position: -20px -128px;
+    background-image: url("/p2p-webapp/css/jqueryui/images/ui-icons_ef8c08_256x240.png");
+    width: 16px;
+    height: 16px;
+	position: relative;
+	right: -3px;
+	top: 2px;
+	display: inline-block;
+}
+.del-btn:before{
+	content:"";
+	background-position: -180px -95px;
+    background-image: url("/p2p-webapp/css/jqueryui/images/ui-icons_ef8c08_256x240.png");
+    width: 16px;
+    height: 16px;
+	position: relative;
+	right: -3px;
+	top: 2px;
+	display: inline-block;
 }
