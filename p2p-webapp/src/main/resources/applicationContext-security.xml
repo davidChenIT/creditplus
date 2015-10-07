@@ -33,7 +33,7 @@
 	</beans:bean-->
 	      
     <!-- 登录验证器 -->
-    <beans:bean id="loginFilter" class="com.creditplus.p2p.security.UsernamePasswordAuthFilter">
+    <beans:bean id="loginFilter" class="com.creditplus.p2p.security.UsernamePasswordAuthFilter" >
 		<!-- 处理登录 -->
 		<beans:property name="filterProcessesUrl" value="/j_spring_security_check"/>
 		<beans:property name="authenticationSuccessHandler" ref="loginLogAuthenticationSuccessHandler"/>

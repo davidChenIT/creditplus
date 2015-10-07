@@ -10,7 +10,7 @@
 <link href="<%=request.getContextPath()%>/css/credit.css" rel="stylesheet" type="text/css">
 <script src="<%=request.getContextPath()%>/js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
 </head>
-<script>
+<script>  
   //页面初始化加载函数
   function validateForm(form){
 	    var  username=$("input[name='username']").val();

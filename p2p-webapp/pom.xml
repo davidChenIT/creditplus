@@ -96,6 +96,17 @@
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>		
+		<dependency>
 			<groupId>com.creditplus.p2p</groupId>
 			<artifactId>p2p-service</artifactId>
 			<version>${project.version}</version>
