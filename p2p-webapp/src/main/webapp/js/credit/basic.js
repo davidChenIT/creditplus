@@ -94,7 +94,7 @@ $(function(){
 								window.history.pushState(state,data,requestUrl);
 							},error:function(error){
 							  debugger;
-							  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>城立信金融</p></div>');
+							  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
 							}
 						});
 					}
@@ -203,12 +203,12 @@ $(function(){
 							  
 							  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
 							}else{
-								$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>城立信金融</p></div>');
+								$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
 							}
 							
 						},error:function(error){
 						  debugger;
-						  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>城立信金融</p></div>');
+						  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
 						}
 					});
 					

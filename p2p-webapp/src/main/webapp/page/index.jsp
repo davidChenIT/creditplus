@@ -34,7 +34,7 @@
 					    <p>Welcome</p>
 					    <div></div>
 					    <p></p>
-						<p>城立信金融</p>
+						<p>诚立信金融</p>
 					</div>
 				</div>
 				<!--credit_Main_end-->
