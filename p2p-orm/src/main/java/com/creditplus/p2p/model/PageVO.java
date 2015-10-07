@@ -18,8 +18,25 @@ public class PageVO {
 	private int totalrecords;
 	
 	private int rowNum = 20;
+	
+	private int startRow;
+	
+	private int endRow;
 
 	private List griddata;
+
+	
+	public PageVO(int currpage, int rowNum) {
+		super();
+		this.currpage = currpage;
+		this.rowNum = rowNum;
+	    this.startRow = currpage > 0 ? (currpage - 1) * rowNum : 0;
+        this.endRow = currpage * rowNum;
+	}
+	
+	public PageVO() {
+		super();
+	}
 
 	public int getTotalpages() {
 		totalpages = totalrecords/rowNum;
@@ -65,4 +82,21 @@ public class PageVO {
 		this.griddata = griddata;
 	}
 
+	public int getStartRow() {
+		return startRow;
+	}
+
+	public void setStartRow(int startRow) {
+		this.startRow = startRow;
+	}
+
+	public int getEndRow() {
+		return endRow;
+	}
+
+	public void setEndRow(int endRow) {
+		this.endRow = endRow;
+	}
+
+	
 }

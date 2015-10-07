@@ -9,5 +9,5 @@ public interface LoanOrderDao {
 
 	 LoanOrderVO getLoanOrderByLoanId(Map<?, ?> paramMap);
 	 
-	 List<?> getLoanOrderList(Map<?, ?> paramMap);
+	 List<?> getLoanOrderListWithPage(Map<?, ?> paramMap);
 }

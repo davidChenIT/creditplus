@@ -128,7 +128,7 @@
 		</where>
 	</select>
 	
-	<select id="getLoanOrderList" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="getLoanOrderListWithPage" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 		u.user_id,
 		u.login_type,
