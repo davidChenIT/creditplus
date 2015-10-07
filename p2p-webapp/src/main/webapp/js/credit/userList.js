@@ -48,7 +48,7 @@ $(function(){
         }
         $("#userListGrid").jqGrid('setGridParam',{  
             datatype:'json',  
-            postData:{'request_data':request_data}, //发送数据
+            postData:{'request_data':JSON.stringify(request_data)}, //发送数据
             page:1,
             rowNum:10
         }).trigger("reloadGrid"); //重新载入
