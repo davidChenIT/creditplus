@@ -297,7 +297,7 @@ CREATE TABLE urgent_contactor_p (
   PRIMARY KEY (id)
 )  COMMENT='紧急联系人';
 
-insert into user_t values(1,1,'test','test','test remark','system',now(),'system',now());
+insert into user_t values(1,1,'test','$2a$10$G5O/PkXx8LD5YV7jnujF7OokBiqKYCKQeitYMcNGbLWumV.RXR3hq','test remark','system',now(),'system',now());
 insert into role_t values(1,1,'admin','administrator','system',now(),'system',now());
 insert into role_t values(2,1,'RC-Assistant','RC-Assistant','system',now(),'system',now());
 insert into resource_t values(1,'index','/page/index.html',1,1,'index page','system',now(),'system',now());

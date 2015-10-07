@@ -67,13 +67,16 @@
 	<beans:bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">  
 	    <beans:property name="hideUserNotFoundExceptions" value="true" />  
 	    <beans:property name="userDetailsService" ref="userDetailServiceImpl" />  
+	    <beans:property name="passwordEncoder" ref="passwordEncoder" />
+	    
 	    <!--<beans:property name="userCache" ref="userCache" />  
 	    <beans:property name="messageSource" ref="messageSource" />  
 	    <beans:property name="passwordEncoder" ref="passwordEncode" />  
 	    <beans:property name="saltSource" ref="saltSource" />
 	     -->  
 	</beans:bean>
-	 
+	
+	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/> 
     <beans:bean id="accessDecisionManager" class="com.creditplus.p2p.security.AccessDecisionManagerImpl"/>
 	<beans:bean id="userDetailServiceImpl" class="com.creditplus.p2p.security.UserDetailServiceImpl" />
 	<beans:bean id="securityMetadataSource" class="com.creditplus.p2p.security.SecurityMetadataSource">
