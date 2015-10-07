@@ -28,7 +28,13 @@
        <property name="typeAliasesPackage" value="com.creditplus.p2p.model" />
         <property name="plugins">
        		<array>
-       			<bean class="com.creditplus.p2p.plus.PagingInterceptor"></bean>
+       			<bean class="com.creditplus.p2p.plus.PagingInterceptor">
+       			<property name="properties">
+       				<value>
+       					rule=.+WithPage$
+       				</value>
+       			</property>
+       			</bean>
        		</array>
        </property>    
     </bean>

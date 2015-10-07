@@ -19,14 +19,15 @@ import java.util.Properties;
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }),
 		@Signature(type = ResultSetHandler.class, method = "handleResultSets", args = { Statement.class }) })
 public class PagingInterceptor implements Interceptor {
+	
+	String rule="";
+	
 	public Object intercept(Invocation invocation) throws Throwable {
 		PageVO page = PageUtil.getPageInfo();
 		if (page == null) {
 			return invocation.proceed();
 		}
-		System.out.println("start interceptor");
 		if (invocation.getTarget() instanceof StatementHandler) {
-			System.out.println("start interceptor");
 			StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
 			MetaObject metaStatementHandler = SystemMetaObject.forObject(statementHandler);
 			// 分离代理对象链(由于目标类可能被多个拦截器拦截，从而形成多次代理，通过下面的两次循环
@@ -40,31 +41,35 @@ public class PagingInterceptor implements Interceptor {
 				Object object = metaStatementHandler.getValue("target");
 				metaStatementHandler = SystemMetaObject.forObject(object);
 			}
-			MappedStatement mappedStatement = (MappedStatement) metaStatementHandler
-					.getValue("delegate.mappedStatement");
-			// 分页信息if (localPage.get() != null) {
-			BoundSql boundSql = (BoundSql) metaStatementHandler.getValue("delegate.boundSql");
-			// 分页参数作为参数对象parameterObject的一个属性
-			String sql = boundSql.getSql();
-			// 重写sql
-			String pageSql = buildPageSql(sql, page);
-			String countSql = buildCountSql(sql);
-			// 重写分页sql
-			metaStatementHandler.setValue("delegate.boundSql.sql", pageSql);
-			Connection connection = (Connection) invocation.getArgs()[0];
-
-			ParameterHandler parameterHandler = (ParameterHandler) metaStatementHandler
-					.getValue("delegate.parameterHandler");
-			PreparedStatement ps = connection.prepareStatement(countSql);
-			parameterHandler.setParameters(ps);
-			ResultSet resultSet = ps.executeQuery();
-			int total_record = 0;
-			if (resultSet.next()) {
-				total_record = resultSet.getInt(1);
+			MappedStatement mappedStatement = (MappedStatement) metaStatementHandler.getValue("delegate.mappedStatement");
+			String sqlid=mappedStatement.getId();
+			System.out.println("sqlid====>"+sqlid);
+			if(sqlid.matches(rule)){
+				System.out.println("start interceptor");
+				// 分页信息if (localPage.get() != null) {
+				BoundSql boundSql = (BoundSql) metaStatementHandler.getValue("delegate.boundSql");
+				// 分页参数作为参数对象parameterObject的一个属性
+				String sql = boundSql.getSql();
+				// 重写sql
+				String pageSql = buildPageSql(sql, page);
+				String countSql = buildCountSql(sql);
+				// 重写分页sql
+				metaStatementHandler.setValue("delegate.boundSql.sql", pageSql);
+				Connection connection = (Connection) invocation.getArgs()[0];
+	
+				ParameterHandler parameterHandler = (ParameterHandler) metaStatementHandler
+						.getValue("delegate.parameterHandler");
+				PreparedStatement ps = connection.prepareStatement(countSql);
+				parameterHandler.setParameters(ps);
+				ResultSet resultSet = ps.executeQuery();
+				int total_record = 0;
+				if (resultSet.next()) {
+					total_record = resultSet.getInt(1);
+				}
+				page.setTotalrecords(total_record);
+				int totalPage = total_record / page.getRowNum() + ((total_record % page.getRowNum() == 0) ? 0 : 1);
+				page.setTotalpages(totalPage);
 			}
-			page.setTotalrecords(total_record);
-			int totalPage = total_record / page.getRowNum() + ((total_record % page.getRowNum() == 0) ? 0 : 1);
-			page.setTotalpages(totalPage);
 			// 将执行权交给下一个拦截器
 			return invocation.proceed();
 		} else if (invocation.getTarget() instanceof ResultSetHandler) {
@@ -92,7 +97,8 @@ public class PagingInterceptor implements Interceptor {
 	}
 
 	public void setProperties(Properties properties) {
-
+		rule=properties.getProperty("rule");
+		System.out.println("rule=====>"+rule);
 	}
 
 	/**
