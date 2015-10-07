@@ -12,6 +12,8 @@ public interface UserDao {
 	
 	void updateUser(UserVO userVO);
 	
+	void changePassword(UserVO userVO);
+	
 	UserVO getUserById(int userId);
 	
 	UserVO findByName(String username);

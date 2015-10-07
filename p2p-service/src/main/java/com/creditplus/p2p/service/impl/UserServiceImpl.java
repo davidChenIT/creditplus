@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 		String password = userVO.getPassword();
 		password = SecurityUtil.encode(password);
 		userVO.setPassword(password);		
-		userDao.updateUser(userVO);
+		userDao.changePassword(userVO);
 	}	
 	
 	public UserVO getUserById(int userId) {
