@@ -12,6 +12,10 @@
   		<artifactId>jackson-jaxrs-json-provider</artifactId>
   	</dependency>
     <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+    </dependency>  	
+    <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
     </dependency>  	

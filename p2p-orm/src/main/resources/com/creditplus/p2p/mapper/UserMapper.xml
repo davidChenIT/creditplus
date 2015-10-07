@@ -67,8 +67,23 @@
     </delete>    
    
     <update id="updateUser" parameterType="UserVO">
-       update user_t set username=#{username}, password=#{password} where user_id=#{userId}
+       update user_t set username=#{username}, 
+        		<if test="password !=null ">  
+                         password=#{password},
+                </if>         
+                         enable=#{enable},
+                         remark=#{remark},
+                         last_updated_by=#{lastUpdatedBy},
+                         last_updated_date=now() 
+                   where user_id=#{userId}
     </update>
+    
+    <update id="changePassword" parameterType="UserVO">
+       update user_t set password=#{password},
+                         last_updated_by=#{lastUpdatedBy},
+                         last_updated_date=now() 
+                   where user_id=#{userId}
+    </update>    
    
     <select id="getUserById" parameterType="Integer" resultMap="userDetailMap">
        		   select u.*,

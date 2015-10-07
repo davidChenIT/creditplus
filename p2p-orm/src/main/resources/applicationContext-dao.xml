@@ -26,9 +26,14 @@
        <property name="dataSource" ref="dataSource" />
        <property name="mapperLocations" value="classpath:com/creditplus/p2p/mapper/*.xml" />
        <property name="typeAliasesPackage" value="com.creditplus.p2p.model" />
+        <property name="plugins">
+       		<array>
+       			<bean class="com.creditplus.p2p.plus.PagingInterceptor"></bean>
+       		</array>
+       </property>    
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
        <property name="basePackage" value="com.creditplus.p2p.dao" />
-       <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>         
+       <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>  
     </bean>    
 </beans>
