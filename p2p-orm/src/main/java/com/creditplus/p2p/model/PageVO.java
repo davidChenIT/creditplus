@@ -17,7 +17,7 @@ public class PageVO {
 
 	private int totalrecords;
 	
-	private int rowNum = 20;
+	private int rowNum = 10;
 	
 	private int startRow;
 	

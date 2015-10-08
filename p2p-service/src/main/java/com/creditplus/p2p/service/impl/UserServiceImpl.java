@@ -8,6 +8,7 @@ import com.creditplus.p2p.common.tools.SecurityUtil;
 import com.creditplus.p2p.dao.UserDao;
 import com.creditplus.p2p.model.PageVO;
 import com.creditplus.p2p.model.UserVO;
+import com.creditplus.p2p.page.PageUtil;
 import com.creditplus.p2p.service.UserService;
 
 public class UserServiceImpl implements UserService {
@@ -53,13 +54,9 @@ public class UserServiceImpl implements UserService {
 			userVO = new UserVO();
 		}
 		
-		userVO.setStartNum((pageVO.getCurrpage() - 1)* pageVO.getRowNum());
-		userVO.setPageSize(pageVO.getRowNum());		
-		int count = userDao.getUserCount(userVO);
-		pageVO.setTotalrecords(count);
-		
+		//初始化分页信息
+		PageUtil.initPageInfo(pageVO.getCurrpage(), pageVO.getRowNum());
 		List<UserVO> userVOList = userDao.getUserListWithPage(userVO);
-		pageVO.setGriddata(userVOList);				
-		return pageVO;
+		return PageUtil.getPageVO();
 	}
 }
