@@ -137,15 +137,15 @@ public class RequestProcess{
         	for(Object arg : args){
         		if(arg instanceof BaseVO){
         			BaseVO baseVO = (BaseVO)arg;
-        			baseVO.setLastUpdatedBy(currentUser);        			
-        			String createdBy = baseVO.getCreatedBy();
+        			baseVO.setLast_updated_by(currentUser);        			
+        			String createdBy = baseVO.getCreated_by();
         			if(StringUtils.isBlank(createdBy)){
-        				baseVO.setCreatedBy(currentUser);
+        				baseVO.setCreated_by(currentUser);
         			}
         			
-        			Date createdDate = baseVO.getCreatedDate();
+        			Date createdDate = baseVO.getCreated_date();
         			if(null == createdDate){
-        				baseVO.setCreatedDate(new Date());
+        				baseVO.setCreated_date(new Date());
         			}
         		}        		
         	}

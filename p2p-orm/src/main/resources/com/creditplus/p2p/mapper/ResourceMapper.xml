@@ -11,10 +11,10 @@
         <result column="priority" property="priority"/>
         <result column="resource_type" property="resourceType"/>
         <result column="remark"   property="remark"/>        
-        <result column="created_by" property="createdBy"/>          
-        <result column="created_date" property="createdDate"/>          
-        <result column="last_updated_by" property="lastUpdatedBy"/>          
-        <result column="last_updated_date" property="lastUpdatedDate"/>
+        <result column="created_by" property="created_by"/>          
+        <result column="created_date" property="created_date"/>          
+        <result column="last_updated_by" property="last_updated_by"/>          
+        <result column="last_updated_date" property="last_updated_date"/>
     </resultMap>
 
     <select id="findAll" resultMap="resourceVOMap">
