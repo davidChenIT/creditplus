@@ -10,10 +10,10 @@
         <result column="username" property="username"/> 
         <result column="password" property="password"/>
         <result column="remark"   property="remark"/>        
-        <result column="created_by" property="createdBy"/>          
-        <result column="created_date" property="createdDate"/>          
-        <result column="last_updated_by" property="lastUpdatedBy"/>          
-        <result column="last_updated_date" property="lastUpdatedDate"/>
+        <result column="created_by" property="created_by"/>          
+        <result column="created_date" property="created_date"/>          
+        <result column="last_updated_by" property="last_updated_by"/>          
+        <result column="last_updated_date" property="last_updated_date"/>
         <collection property="roles" ofType="RoleVO" column="user_id">  
             <id column="role_id" property="roleId"/>  
             <result column="role_name" property="roleName"/>
@@ -33,15 +33,15 @@
         <result column="username" property="username"/> 
         <result column="password" property="password"/>
         <result column="remark"   property="remark"/>        
-        <result column="created_by" property="createdBy"/>          
-        <result column="created_date" property="createdDate"/>          
-        <result column="last_updated_by" property="lastUpdatedBy"/>          
-        <result column="last_updated_date" property="lastUpdatedDate"/>
+        <result column="created_by" property="created_by"/>          
+        <result column="created_date" property="created_date"/>          
+        <result column="last_updated_by" property="last_updated_by"/>          
+        <result column="last_updated_date" property="last_updated_date"/>
         <collection property="roles" ofType="RoleVO" column="user_id">  
             <id column="role_id" property="roleId"/>  
             <result column="role_name" property="roleName"/>
-	        <result column="created_by" property="createdBy"/>          
-	        <result column="created_date" property="createdDate"/>            
+	        <result column="created_by" property="created_by"/>          
+	        <result column="created_date" property="created_date"/>            
         </collection>
     </resultMap>    
     
@@ -51,15 +51,15 @@
         <result column="username" property="username"/> 
         <result column="password" property="password"/>
         <result column="remark"   property="remark"/>        
-        <result column="created_by" property="createdBy"/>          
-        <result column="created_date" property="createdDate"/>          
-        <result column="last_updated_by" property="lastUpdatedBy"/>          
-        <result column="last_updated_date" property="lastUpdatedDate"/>
+        <result column="created_by" property="created_by"/>          
+        <result column="created_date" property="created_date"/>          
+        <result column="last_updated_by" property="last_updated_by"/>          
+        <result column="last_updated_date" property="last_updated_date"/>
     </resultMap>
           
     <insert id="insertUser" parameterType="UserVO">
        insert into user_t(user_id,enable,username, password,remark,created_by,created_date,last_updated_by,last_updated_date) 
-             values(#{userId},#{enable},#{username},#{password},#{remark},#{createdBy},#{createdDate},#{lastUpdatedBy},now())
+             values(#{userId},#{enable},#{username},#{password},#{remark},#{created_by},#{created_date},#{last_updated_by},now())
     </insert>
     
     <delete id="deleteUserById" parameterType="String">
@@ -73,14 +73,14 @@
                 </if>         
                          enable=#{enable},
                          remark=#{remark},
-                         last_updated_by=#{lastUpdatedBy},
+                         last_updated_by=#{last_updated_by},
                          last_updated_date=now() 
                    where user_id=#{userId}
     </update>
     
     <update id="changePassword" parameterType="UserVO">
        update user_t set password=#{password},
-                         last_updated_by=#{lastUpdatedBy},
+                         last_updated_by=#{last_updated_by},
                          last_updated_date=now() 
                    where user_id=#{userId}
     </update>    

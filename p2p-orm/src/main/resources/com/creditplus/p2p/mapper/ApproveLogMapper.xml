@@ -8,9 +8,7 @@
     <resultMap type="ApproveLogVO" id="approveLogVOMap">
     	<id column="id" property="loan_id"/>
 		<result column="loan_id" property="loan_id"/>    	
-		<result column="first_approve" property="first_approve"/>    	
-		<result column="two_approve" property="two_approve"/>    	
-		<result column="three_approve" property="three_approve"/>    	
+		<result column="assign_user" property="assign_user"/>    	
 		<result column="approve_content" property="approve_content"/>    	
 		<result column="state" property="state"/>    	
 		<result column="created_by" property="created_by"/>    	
@@ -24,7 +22,7 @@
     </select>
     
     <insert id="insertApproveLog" parameterType="ApproveLogVO" useGeneratedKeys="true" keyProperty="id">
-      insert into approve_log_t(loan_id,first_approve,two_approve,three_approve,approve_content,state,created_by,created_date,last_updated_by,last_updated_date)values(#{loan_id},#{first_approve},#{two_approve},#{three_approve},#{approve_content},#{state},#{created_by},#{created_date},#{last_updated_by},#{last_updated_date})
+     insert into approve_log_t(id,loan_id,assign_user,approve_content,state,created_by,created_date,last_updated_by,last_updated_date)values(#{id},#{loan_id},#{last_updated_by},#{approve_content},#{state},#{created_by},sysdate(),#{last_updated_by},sysdate())
     </insert>
     
     <delete id="deleteAppLogByLoanId" parameterType="Integer">

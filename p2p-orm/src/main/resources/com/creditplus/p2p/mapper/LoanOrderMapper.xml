@@ -48,17 +48,19 @@
 			<result column="modifytime" property="modifytime" />
 		</association>
 		<collection property="appLogList" ofType="com.creditplus.p2p.model.ApproveLogVO" column="loan_id">
-			<id column="approve_id" property="approve_id" />
-			<result column="first_approve" property="first_approve" />
-			<result column="two_approve" property="two_approve" />
-			<result column="three_approve" property="three_approve" />
+			<id column="id" property="id" />
+			<result column="assign_user" property="assign_user" />
 			<result column="approve_content" property="approve_content" />
+			<result column="state" property="state" />
+			<result column="created_date" property="created_date" />
+			<result column="created_by" property="created_by" />
+			<result column="last_updated_by" property="last_updated_by" />
+			<result column="last_updated_date" property="last_updated_date" />
 		</collection>
 	</resultMap>
 
 
-	<select id="getLoanOrderByLoanId" parameterType="java.util.Map"
-		resultMap="loanListMap">
+	<select id="getLoanOrderByLoanId" parameterType="java.util.Map" resultMap="loanListMap">
 		SELECT
 		u.user_id,
 		u.login_type,
@@ -96,16 +98,15 @@
 		t.bank_card,
 		t.state,
 		t.modifytime,
-		a.first_approve,
-		a.two_approve,
-		a.three_approve,
-		a.approve_content
+		a.assign_user,
+		a.state,
+		a.approve_content,
+		a.created_date
 		FROM
 		loan_list t
-		LEFT JOIN user_info u
-		ON t.user_id = u.user_id
-		left join approve_log_t a on
-		t.loan_id=a.loan_id
+		LEFT
+		JOIN user_info u ON t.user_id = u.user_id
+		left join approve_log_t a on t.loan_id=a.loan_id
 		<where>
 			<if test="loan_id!= null">
 				AND t.loan_id = #{loan_id}
@@ -127,8 +128,9 @@
 			</if>
 		</where>
 	</select>
-	
+
 	<select id="getLoanOrderListWithPage" parameterType="java.util.Map" resultType="java.util.Map">
+	select * from (
 		SELECT
 		u.user_id,
 		u.login_type,
@@ -164,30 +166,55 @@
 		t.bank_type,
 		t.bank_card,
 		t.state,
-		t.modifytime
+		t.modifytime,
+		(select assign_user from approve_log_t where loan_id=11 and state=1 group by state) as first_assign_user,
+	    (select assign_user from approve_log_t where loan_id=11 and state=2 group by state) as two_assign_user
 		FROM
 		loan_list t
-		LEFT JOIN user_info u ON t.user_id = u.user_id
+		LEFT JOIN user_info u
+		ON t.user_id = u.user_id
+		) a
 		<where>
 			<if test="loan_id!= null">
-				AND t.loan_id = #{loan_id}
+				AND loan_id = #{loan_id}
 			</if>
 			<if test="state!= null">
-				AND t.state = #{state,jdbcType=INTEGER}
+				AND state = #{state,jdbcType=INTEGER}
 			</if>
 			<if test="loan_money!= null">
-				AND t.loan_money = #{loan_money}
+				AND loan_money = #{loan_money}
 			</if>
 			<if test="modifytime != null">
-				AND t.modifytime = #{modifytime}
+				AND modifytime = #{modifytime}
 			</if>
 			<if test="name != null">
-				AND t.name = #{name,jdbcType=VARCHAR}
+				AND name = #{name,jdbcType=VARCHAR}
 			</if>
 			<if test="id_num != null">
-				AND t.loan_money = #{id_num}
+				AND loan_money = #{id_num}
+			</if>
+			<if test="first_assign_user != null">
+				AND first_assign_user = #{first_assign_user}
+			</if>
+			<if test="two_assign_user != null">
+				AND two_assign_user = #{two_assign_user}
 			</if>
 		</where>
 	</select>
+
+	<update id="updateLoanOrder" parameterType="LoanOrderVO">
+		update loan_list t 
+		<set>
+		  modifytime=sysdate() 
+		  <if test="state != null">
+		  	state=#{loan_id}
+		  </if>
+		</set>
+		where loan_id = #{loan_id}
+	</update>
+
+	<delete id="deleteByLoanId" parameterType="Integer">
+		delete from loan_list t where t.loan_id = #{loan_id}
+	</delete>
 
 </mapper>
