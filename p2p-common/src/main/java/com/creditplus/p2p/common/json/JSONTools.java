@@ -6,10 +6,9 @@ package com.creditplus.p2p.common.json;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import org.apache.commons.lang3.StringUtils;
-
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -68,4 +67,17 @@ public class JSONTools {
 			throw new Exception(e);
 		}
 	}	
+	
+	public static String Object2Json(Object obj) throws Exception{
+		ObjectMapper mapper = new ObjectMapper();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		mapper.setDateFormat(dateFormat);
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+		try {
+			return mapper.writeValueAsString(obj);
+		} catch (JsonProcessingException e) {
+			throw new Exception(e);
+		}
+	}
+	
 }
