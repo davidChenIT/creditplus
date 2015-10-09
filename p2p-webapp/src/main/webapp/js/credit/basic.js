@@ -238,3 +238,15 @@ $(function(){
 	
 
 })
+
+//移除tab控件的也签
+function removeTabItem(tabId){
+	debugger;
+	var closeLi=$("li[tabid='"+tabId+"']");
+	var firstLi=$(closeLi.siblings()[0]);
+	var firstTabId=firstLi.attr("tabid");
+	closeLi.remove();
+	$("div[tabid='"+tabId+"']").remove();
+	firstLi.attr("class","tabs-selected");
+	$("div[tabid='"+firstTabId+"']").attr("class","tabs-body-item creditPageContext credit-validator");
+}
