@@ -1,21 +1,33 @@
 //页面初始化加载函数
 $(function(){
 	debugger;
-	var  myelem=function(value, options) {
+//	var  myelem=function(value, options) {
+//		debugger;
+//		var colId=options
+//		var el = document.createElement("input");
+//		el.type="text";
+//		el.value = value;
+//		el.id=options.id;
+//		$("#"+options.id).datepicker({
+//			inline: true,
+//			dateFormat:'yy-mm-dd'
+//		});
+//		return el;
+//	};
+//	var myvalue=function (elem) {
+//		debugger;
+//		return $(elem).val();
+//	};
+	var pickdates=function (id) {
 		debugger;
-		var el = document.createElement("input");
-		el.type="text";
-		el.value = value;
-		$(el).datepicker({
-			inline: true,
-			dateFormat:'yy-mm-dd'
-		});
-		return el;
-	};
-	var myvalue=function (elem) {
-		debugger;
-		return $(elem).val();
-	};
+	    $("#" + id + "_start_date", "#roleList4CreateGrid").datepicker({
+	      dateFormat : "yy-mm-dd"
+	    });
+	    $("#" + id + "_end_date", "#roleList4CreateGrid").datepicker({
+		      dateFormat : "yy-mm-dd"
+		    });
+	  }
+	var lastsel3;
 	//构造grid
     $("#roleList4CreateGrid").jqGrid({
 			autowidth:true,
@@ -34,21 +46,35 @@ $(function(){
 				{name:'start_date', 
 					index:'start_date',
 					align:'center',
-					"sortable":false,
-					editable:true,
-					edittype:'custom',
-					editoptions:{custom_element:myelem, custom_value:myvalue} 
+					"sortable":false
+					,
+					editable:true
 				},
 				{name:'end_date', index:'end_date',
 					align:'center',"sortable":false,
-					editable:true,edittype:'custom',
-					editoptions:{custom_element:myelem, custom_value:myvalue}
+					editable:true
+					/**,edittype:'custom',
+					editoptions:{custom_element:myelem, custom_value:myvalue}*/
 				}
 			],
-			multiselect: true,
+			multiselect: false,
 			cellEdit: true,
 			cellsubmit:"clientArray",
-			sortable:false
+			sortable:false,
+			afterEditCell:function (id,name,val,iRow,iCol){
+				debugger;
+		        if(name=='start_date' || name=='end_date') {
+		          $("#"+iRow+"_"+name,"#roleList4CreateGrid").datepicker({dateFormat:"yy-mm-dd"});
+		        }
+		    }
+			/**,
+			onSelectRow:function(id){
+				if (id && id !== lastsel3) {
+		            $('#roleList4CreateGrid').jqGrid('restoreRow', lastsel3);
+		            $('#roleList4CreateGrid').jqGrid('editRow', id, true, pickdates);
+		            lastsel3 = id;
+		        }
+			}*/
 	});
     
     //角色新增行
