@@ -16,10 +16,24 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	@Autowired 
 	private LoanOrderDao loanAppDao;
 
-	public LoanOrderVO getLoanOrderByLoanId(Map<?, ?> paramMap) {
-		return loanAppDao.getLoanOrderByLoanId(paramMap);
+	/**
+	 * 信用初审
+	 * @param paramMa
+	 * @return
+	 */
+	public LoanOrderVO creditFirstTrial(Integer loan_id){
+		return loanAppDao.getLoanOrderByLoanId(loan_id);
 	}
-
+	
+	/**
+	 * 信用复审
+	 * @param paramMap
+	 * @return
+	 */
+	public LoanOrderVO CreditReview(Integer loan_id){
+		return loanAppDao.getLoanOrderByLoanId(loan_id);
+	}
+	
 	public PageVO getLoanOrderListWithPage(Map<?, ?> paramMap) {
 		int currentPage=1,pageSize=20;
 		if(paramMap!=null && (paramMap.get(PageConstant.CURRPAGE)!=null || paramMap.get(PageConstant.ROWNUM)!=null)){

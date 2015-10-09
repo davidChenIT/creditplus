@@ -102,31 +102,10 @@
 		a.state,
 		a.approve_content,
 		a.created_date
-		FROM
-		loan_list t
-		LEFT
-		JOIN user_info u ON t.user_id = u.user_id
+		from loan_list t
+		left join user_info u on t.user_id = u.user_id
 		left join approve_log_t a on t.loan_id=a.loan_id
-		<where>
-			<if test="loan_id!= null">
-				AND t.loan_id = #{loan_id}
-			</if>
-			<if test="state!= null">
-				AND t.state = #{state,jdbcType=INTEGER}
-			</if>
-			<if test="loan_money!= null">
-				AND t.loan_money = #{loan_money}
-			</if>
-			<if test="modifytime != null">
-				AND t.modifytime = #{modifytime}
-			</if>
-			<if test="name != null">
-				AND t.name = #{name,jdbcType=VARCHAR}
-			</if>
-			<if test="id_num != null">
-				AND t.loan_money = #{id_num}
-			</if>
-		</where>
+		where t.loan_id=#{loan_id}
 	</select>
 
 	<select id="getLoanOrderListWithPage" parameterType="java.util.Map" resultType="java.util.Map">
@@ -169,12 +148,11 @@
 		t.modifytime,
 		(select assign_user from approve_log_t where loan_id=11 and state=1 group by state) as first_assign_user,
 	    (select assign_user from approve_log_t where loan_id=11 and state=2 group by state) as two_assign_user
-		FROM
-		loan_list t
-		LEFT JOIN user_info u
-		ON t.user_id = u.user_id
+		FROM loan_list t
+		LEFT JOIN user_info u	ON t.user_id = u.user_id
 		) a
 		<where>
+			and state=1
 			<if test="loan_id!= null">
 				AND loan_id = #{loan_id}
 			</if>
@@ -200,6 +178,7 @@
 				AND two_assign_user = #{two_assign_user}
 			</if>
 		</where>
+		order by modifytime desc
 	</select>
 
 	<update id="updateLoanOrder" parameterType="LoanOrderVO">

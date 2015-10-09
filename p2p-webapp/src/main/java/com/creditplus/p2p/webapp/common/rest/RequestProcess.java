@@ -71,7 +71,8 @@ public class RequestProcess{
 			throw new Exception("method is error,please check it exist!");        	
         }
 		
-        Object[] args = getArgs(classMethod,request_data);        
+        Object[] args = getArgs(classMethod,request_data);     
+        logger.info("method parameter:"+JSONTools.Object2Json(args));
         Object object = classMethod.invoke(service, args);
         if((classMethod.getReturnType()) == void.class) {
         	Map<String, Boolean> rsMap = new HashMap<String, Boolean>();
