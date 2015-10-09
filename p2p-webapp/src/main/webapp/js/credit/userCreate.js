@@ -31,13 +31,25 @@ $(function(){
 	//构造grid
     $("#roleList4CreateGrid").jqGrid({
 			autowidth:true,
-			colNames:["角色","开始时间","结束时间"],
+			colNames:['<input type="checkbox" class="role-create-selall-cbox">',"角色","开始时间","结束时间"],
 			colModel :[
+			    {
+			    	name:'role_sel_create',
+					index:'role_sel_create',
+					align:'center',
+					width:"7%",
+					sortable:false,
+			    	formatter:function(cellvalue, options, rowObject){
+						   debugger;
+						   return '<input type="checkbox" class="role-create-sel-cbox">';
+						}
+			    },
 				{name:'rolename',
 					index:'rolename',
 					align:'center',
 					sortable:false,
 					editable:true,
+					width:"31%",
 					edittype:'select',
 					editrules:{required:true},
 					editoptions:{value:"admin:admin;anyone:andone"}
@@ -46,18 +58,21 @@ $(function(){
 				{name:'start_date', 
 					index:'start_date',
 					align:'center',
-					"sortable":false
-					,
+					"sortable":false,
+					width:"31%",
 					editable:true
 				},
 				{name:'end_date', index:'end_date',
-					align:'center',"sortable":false,
+					align:'center',
+					"sortable":false,
+					width:"31%",
 					editable:true
 					/**,edittype:'custom',
 					editoptions:{custom_element:myelem, custom_value:myvalue}*/
 				}
 			],
-			multiselect: false,
+//			multiselect: true,
+//			multiboxonly: true,
 			cellEdit: true,
 			cellsubmit:"clientArray",
 			sortable:false,
@@ -66,8 +81,19 @@ $(function(){
 		        if(name=='start_date' || name=='end_date') {
 		          $("#"+iRow+"_"+name,"#roleList4CreateGrid").datepicker({dateFormat:"yy-mm-dd"});
 		        }
+		    },gridComplete:function(){
+		    	debugger;
+		    	$("div[name='userTab']").find(".role-create-selall-cbox").parent("div").attr("class","");
 		    }
-			/**,
+    		/**,
+		    beforeSelectRow: function (rowid, e) { 
+		    	debugger;
+		        var $myGrid = $(this),  
+		            i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),  
+		            cm = $myGrid.jqGrid('getGridParam', 'colModel');  
+		        return (cm[i].name === 'cb');  
+		    } 
+			,
 			onSelectRow:function(id){
 				if (id && id !== lastsel3) {
 		            $('#roleList4CreateGrid').jqGrid('restoreRow', lastsel3);
@@ -99,17 +125,51 @@ $(function(){
         $("#roleList4CreateGrid").jqGrid("addRowData", newrowid, dataRow, "first");
     });
     
+    //grid里面的复选框
+    $("div[name='userTab']").on("click",".role-create-sel-cbox",function(){
+    	debugger;
+    	var isSelAll=true;
+    	$("div[name='userTab']").find(".role-create-sel-cbox").each(function(i,cbox){
+    		var ischecked=$(cbox)[0].checked;
+    		if(!ischecked){
+    			isSelAll=false;
+    			return false;
+    		}
+    	});
+    	if(isSelAll){
+    		$("div[name='userTab']").find(".role-create-selall-cbox")[0].checked=true;
+    	}else{
+    		$("div[name='userTab']").find(".role-create-selall-cbox")[0].checked=false;
+    	}
+    	
+    });
+    
+    //全选按钮
+    $("div[name='userTab']").on("click",".role-create-selall-cbox",function(){
+    	debugger;
+    	var  isChecked=$(this)[0].checked;
+    	if(isChecked){
+    		$("div[name='userTab']").find(".role-create-sel-cbox").each(function(i,cbox){
+    			$(cbox)[0].checked=true;
+    		});
+    	}else{
+    		$("div[name='userTab']").find(".role-create-sel-cbox").each(function(i,cbox){
+    			$(cbox)[0].checked=false;
+    		});
+    	}
+    });
+    
+    
     //角色删除行
     $("[name='delRole4CreateBtn']").click(function(){
     	debugger;
-    	//获得选中行的ID数组
-    	var ids = $("#roleList4CreateGrid").jqGrid('getGridParam','selarrrow');
-    	var selRowIds =[]; 
-    	if(ids && ids.length>0){
-    		for(var i=0;i<ids.length;i++){
-    			selRowIds.push(ids[i]);
-    		}
-    	}
+    	var selRowIds=[];
+    	$("div[name='userTab']").find(".role-create-sel-cbox").each(function(i,cbox){
+			var ischecked=$(cbox)[0].checked;
+			if(ischecked){
+				selRowIds.push($(cbox).parents("tr:first").attr("id"));
+			}
+		});
     	for(var i = 0;i <selRowIds.length;i ++) {  
     		$("#roleList4CreateGrid").jqGrid("delRowData", selRowIds[i]);  
     	}  
