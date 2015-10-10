@@ -79,6 +79,7 @@ $(function(){
 			afterEditCell:function (id,name,val,iRow,iCol){
 				debugger;
 		        if(name=='start_date' || name=='end_date') {
+		          $("#"+iRow+"_"+name,"#roleList4CreateGrid").attr("style","width:100%");
 		          $("#"+iRow+"_"+name,"#roleList4CreateGrid").datepicker({dateFormat:"yy-mm-dd"});
 		        }
 		    },gridComplete:function(){
