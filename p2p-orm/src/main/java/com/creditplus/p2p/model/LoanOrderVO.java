@@ -20,8 +20,15 @@ public class LoanOrderVO {
 	private Integer state;
 	private Date modifytime;
 	
+	
+	private Double version;
+	private Integer apply_state;
+	private String first_assign_user; //初审人
+	private String two_assign_user;   //复审人
+	
 	private CustomerVO customerInfo;
 	private List<ApproveLogVO> appLogList;
+	private List<UrgentContactorVO> urgentList;
 	
 	public Integer getLoan_id() {
 		return loan_id;
@@ -124,6 +131,36 @@ public class LoanOrderVO {
 	}
 	public void setCustomerInfo(CustomerVO customerInfo) {
 		this.customerInfo = customerInfo;
+	}
+	public List<UrgentContactorVO> getUrgentList() {
+		return urgentList;
+	}
+	public void setUrgentList(List<UrgentContactorVO> urgentList) {
+		this.urgentList = urgentList;
+	}
+	public Double getVersion() {
+		return version;
+	}
+	public void setVersion(Double version) {
+		this.version = version;
+	}
+	public Integer getApply_state() {
+		return apply_state;
+	}
+	public void setApply_state(Integer apply_state) {
+		this.apply_state = apply_state;
+	}
+	public String getFirst_assign_user() {
+		return first_assign_user;
+	}
+	public void setFirst_assign_user(String first_assign_user) {
+		this.first_assign_user = first_assign_user;
+	}
+	public String getTwo_assign_user() {
+		return two_assign_user;
+	}
+	public void setTwo_assign_user(String two_assign_user) {
+		this.two_assign_user = two_assign_user;
 	}
 	
 	

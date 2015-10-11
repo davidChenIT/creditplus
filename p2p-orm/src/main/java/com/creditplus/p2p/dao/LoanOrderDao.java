@@ -9,7 +9,11 @@ public interface LoanOrderDao {
 
 	 LoanOrderVO getLoanOrderByLoanId(Integer loan_id);
 	 
-	 List<?> getLoanOrderListWithPage(Map<?, ?> paramMap);
+	 //初审列表
+	 List<?> getCreditFirstTrialListWithPage(Map<?, ?> paramMap);
+	 
+	 //复审列表
+	 List<?> getCreditReviewListWithPage(Map<?, ?> paramMap);
 	 
 	 void updateLoanOrder(LoanOrderVO loanOrder);
 	 

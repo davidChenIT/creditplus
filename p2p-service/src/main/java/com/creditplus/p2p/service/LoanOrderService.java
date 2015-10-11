@@ -10,7 +10,9 @@ public interface LoanOrderService {
 
 //	 LoanOrderVO getLoanOrderByLoanId(Map<?, ?> paramMap);
 	 
-	 PageVO getLoanOrderListWithPage(Map<?, ?> paramMap);
+	 PageVO getCreditFirstTrialListWithPage(Map<?, ?> paramMap);
+	 
+	 PageVO getCreditReviewListWithPage(Map<?, ?> paramMap);
 	 
 	 LoanOrderVO creditFirstTrial(@ParamName("loan_id")Integer loan_id);
 	 

@@ -34,7 +34,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		return loanAppDao.getLoanOrderByLoanId(loan_id);
 	}
 	
-	public PageVO getLoanOrderListWithPage(Map<?, ?> paramMap) {
+	public PageVO getCreditFirstTrialListWithPage(Map<?, ?> paramMap) {
 		int currentPage=1,pageSize=20;
 		if(paramMap!=null && (paramMap.get(PageConstant.CURRPAGE)!=null || paramMap.get(PageConstant.ROWNUM)!=null)){
 			currentPage=Integer.valueOf(paramMap.get(PageConstant.CURRPAGE)+"");
@@ -42,7 +42,23 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		}
 		//初始化分页信息
 		PageUtil.initPageInfo(currentPage, pageSize);
-		List list= loanAppDao.getLoanOrderListWithPage(paramMap);
+		List list= loanAppDao.getCreditFirstTrialListWithPage(paramMap);
+		//得到分页VO
+		PageVO pageVo=PageUtil.getPageVO();
+		System.out.println("=====>"+pageVo);
+		System.out.println("=====>"+pageVo.getGriddata());
+		return pageVo;
+	}
+
+	public PageVO getCreditReviewListWithPage(Map<?, ?> paramMap) {
+		int currentPage=1,pageSize=20;
+		if(paramMap!=null && (paramMap.get(PageConstant.CURRPAGE)!=null || paramMap.get(PageConstant.ROWNUM)!=null)){
+			currentPage=Integer.valueOf(paramMap.get(PageConstant.CURRPAGE)+"");
+			pageSize=Integer.valueOf(paramMap.get(PageConstant.ROWNUM)+"");
+		}
+		//初始化分页信息
+		PageUtil.initPageInfo(currentPage, pageSize);
+		List list= loanAppDao.getCreditReviewListWithPage(paramMap);
 		//得到分页VO
 		PageVO pageVo=PageUtil.getPageVO();
 		System.out.println("=====>"+pageVo);
