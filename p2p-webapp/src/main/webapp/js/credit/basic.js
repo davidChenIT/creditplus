@@ -269,6 +269,7 @@ function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
     	$("div[name='"+tabId+"']").find(".tabs-head li").attr("class","");
     	var newLiHtml='<li tabid="'+itemId+'" class="tabs-selected"><span>'+title+'</span><div class="credit-tab-close"><span>x</span></div></li>';
     	$("div[name='"+tabId+"']").find(".tabs-head ul").append(newLiHtml);
+    	$("div[name='"+tabId+"']").find("li[tabid='"+itemId+"']").data(paramsObj);
     	$("div[name='"+tabId+"']").find(".tabs-body").children("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
 		var requestUrl="http://"+window.location.host+pageUrl;
 		$.ajax({ 
@@ -290,3 +291,40 @@ function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
 	}
 	
 }
+
+
+//公共赋值函数
+function setValues(divId,dataObj,isAppendHtml){
+	debugger;
+	//判断传入的div是否存在
+	if(divId && $("#"+divId) && $("#"+divId).length>0){
+		if(isAppendHtml || isAppendHtml=="true"){
+			$("#"+divId).append(isAppendHtml);
+		}else{
+			//设置span的值
+			$("#"+divId).find(".credit-input").find("span").each(function(i,dom){
+				var name=$(dom).attr("name");
+				var textValue=dataObj[name] || "";
+				$(dom).text(textValue);
+			});
+			
+			//设置input的值
+			$("#"+divId).find(".credit-input").find("input").each(function(i,dom){
+				var name=$(dom).attr("name");
+				var inputValue=dataObj[name] || "";
+				$(dom).val(inputValue);
+			});
+			
+			//设置textarea的值
+			$("#"+divId).find(".credit-input").find("textarea").each(function(i,dom){
+				var name=$(dom).attr("name");
+				var textareaValue=dataObj[name] || "";
+				$(dom).text(textareaValue);
+			});
+			
+		}
+	}
+}
+
+
+
