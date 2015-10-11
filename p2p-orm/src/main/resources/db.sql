@@ -1,44 +1,31 @@
-/**user_info   用户表
-loan_list  借款申请表
-cheat_intercept_t  欺诈拦截
-urgent_contact_p 紧急联系人
+drop table if exists user_info;
+drop table if exists loan_list;
+DROP TABLE IF EXISTS customer_info_t;
+DROP TABLE IF EXISTS loan_apply_t;
 
-attach_pic_t     附件照片
-province_city  省份城市配置表
-origin_place_t  籍贯配置表
-tel_area_code_t  区号配置表
-high_school_t  学校配置表
-bank_data_t  银行配置表
-data_dict_code_t  数据字典编码配置表
-data_dict_item_t  数据字典项配置
-resource_t   资源
-role_t       角色
-role_resource_t 资源角色关系表
-user_t  登录表
-user_role_t   用户角色关系表**/
-
-DROP TABLE IF EXISTS user_info;
-DROP TABLE IF EXISTS loan_list;
-DROP TABLE IF EXISTS cheat_intercept_t;
-DROP TABLE IF EXISTS approve_log_t;
-
-DROP TABLE IF EXISTS dict_code_t;
-DROP TABLE IF EXISTS dict_item_t;
-DROP TABLE IF EXISTS high_school_t;
-DROP TABLE IF EXISTS origin_place_t;
-DROP TABLE IF EXISTS province_city_t;
-DROP TABLE IF EXISTS attach_pic_t;
-DROP TABLE IF EXISTS tel_area_code_t;
-DROP TABLE IF EXISTS bank_data_t;
+drop table if exists loan_state_list;
+drop table if exists origin_place;
+drop table if exists province_city;
+drop table if exists step_time;
+drop table if exists tel_area_code;
+drop table if exists tel_code;
+drop table if exists attach_pic;
+drop table if exists bank_data;
+drop table if exists config_data;
+drop table if exists feed_back;
+drop table if exists high_school;
+drop table if exists high_school_map;
+drop table if exists urgent_list;
 DROP TABLE IF EXISTS urgent_contactor_p;
+drop table if exists approve_log_t;
 
 DROP TABLE IF EXISTS resource_t;
 DROP TABLE IF EXISTS role_resource_t;
 DROP TABLE IF EXISTS role_t;
 DROP TABLE IF EXISTS user_t;
 DROP TABLE IF EXISTS user_role_t;
-
-
+DROP TABLE IF EXISTS dict_t;
+DROP TABLE IF EXISTS catalog_t;
 
 
 create table user_info
@@ -66,30 +53,11 @@ create table user_info
    seasame_score        int comment '芝麻评分',
    mobile_ser_code      varchar(50) comment '服务密码',
    state                int,
-   modifytime           timestamp,
    is_done 				enum('Y','N'),
+   modifytime           timestamp,
    primary key (user_id)
 );
-
-create table loan_list
-(
-   loan_id              int not null,
-   user_id              int,
-   loan_full_id         varchar(50) comment '外部id',
-   loan_money           float comment '借款金额',
-   start_day			varchar(100) DEFAULT NULL,
-   loan_day             int comment '借款天数',
-   expire_day           varchar(100) comment '到期时间',
-   pay_fee              float comment '借款手续费',
-   act_money            float comment '实际到账',
-   Interest             float comment '利息',
-   overdue_fee          float comment '逾期费用',
-   bank_type            varchar(50) comment '银行类型',
-   bank_card            char(20) comment '银行卡号',
-   state                int comment '状态',
-   modifytime           timestamp,
-   primary key (loan_id)
-);
+alter table user_info comment '用户资料信息';
 
 CREATE TABLE approve_log_t (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -104,122 +72,280 @@ CREATE TABLE approve_log_t (
    primary key (id)
   )COMMENT='审批日志';
 
-CREATE TABLE cheat_intercept_t (
+  
+ create table loan_apply_t(
+  loan_id int(11) 		NOT NULL,
+  version varchar(20)   not null comment '版本',
+  apply_state int       not null comment '借款单状态',
+  first_assign_user  varchar(200)    comment '初审人',
+  two_assign_user    varchar(200)	 comment '复审人',
+  modifytime  timestamp not null,
+  primary key (loan_id)
+ )COMMENT='借款申请后台表';
+
+ 
+ 
+create table customer_info_t(
+   user_id				int not null    ,
+   thnic				varchar(50)  	COMMENT '名族',
+   address_phone     	varchar(20)   	comment '住址电话',
+   address_phone_v		varchar(20)  	comment '住址验证电话',
+   current_city_v		varchar(50) 	comment '当前居住城市',
+   current_address_v	varchar(200)    comment '当前居住详址',
+   id_card_name_v       varchar(100) 	comment '身份证验证姓名',
+   id_num_v 			char(20) 		comment '身份证验证号码',
+   mobile_place_v		varchar(200)    comment '电话属地',
+   company_name_v		varchar(200)    comment '工作验证全称',
+   work_tel_v			varchar(200)    comment '工作验证电弧',
+   work_name_v			varchar(200)    comment '工作验证姓名',
+   work_Position_v      varchar(200)    comment '工作职位验证',
+   income_v				varchar(100)    comment '收入验证',
+   income_name_v		varchar(200)    comment '收入验证姓名',
+   seasame_score_v      int 			comment '芝麻评分',
+   tencent_credit_v		int 			comment '腾讯征信',
+   certificate_type_v   int 			comment '证书类型',
+   certificate_name_v	varchar(200)    comment '证书验证姓名',
+   profession_grade_v	varchar(200)    comment '证书等级',
+   mobile_name_v		varchar(200)	comment '手机验证姓名',
+   mobile_online_time_v float			comment '手机在网时长',
+   profession_code      varchar(200)	comment '证书编号',
+   degree_name_v		varchar(200)    comment '学历验证姓名',
+   school_name_v		varchar(200)    comment '学校验证全程',
+   highest_degree_v     int				comment '最高学历',
+   primary key (user_id)
+)COMMENT='客户表审批补全字段';
+
+/*==============================================================*/
+/* Table: attach_pic                                            */
+/*==============================================================*/
+create table attach_pic
+(
+   pic_id               int not null auto_increment,
+   user_id              int,
+   type                 int comment '照片类型',
+   url                  varchar(1000) comment '照片地址',
+   modifytime           timestamp,
+   primary key (pic_id)
+);
+
+alter table attach_pic comment '用户上传图片资料';
+
+/*==============================================================*/
+/* Table: bank_data                                             */
+/*==============================================================*/
+create table bank_data
+(
+   sn                   int not null auto_increment,
+   bank_name            varchar(64) comment '银行名称',
+   auth                 varchar(16) comment '修改用户',
+   modifty_reason       varchar(256) comment '修改原因',
+   modifytime           timestamp comment '修改时间',
+   primary key (sn)
+);
+
+/*==============================================================*/
+/* Table: config_data                                           */
+/*==============================================================*/
+create table config_data
+(
+   sn                   int not null auto_increment,
+   c_desc               varchar(200) comment '枚举说明',
+   c_type               int comment '枚举类型',
+   c_text               varchar(100) comment '显示文本',
+   c_value              varchar(100) comment '值',
+   seq                  int,
+   primary key (sn)
+);
+
+/*==============================================================*/
+/* Table: feed_back                                             */
+/*==============================================================*/
+create table feed_back
+(
+   sn                   int not null auto_increment,
+   user_id              int,
+   context              varchar(500) comment '反馈内容',
+   modifytime           timestamp,
+   primary key (sn)
+);
+
+/*==============================================================*/
+/* Table: high_school                                           */
+/*==============================================================*/
+create table high_school
+(
+   sn                   int not null auto_increment,
+   full_name            varchar(64) comment '全称',
+   is_985               int comment '是否是985',
+   is_211               int comment '是否是211',
+   level                varchar(16) comment '等级',
+   auth                 varchar(16) comment '修改用户',
+   modifty_reason       varchar(256) comment '修改原因',
+   modifytime           timestamp comment '修改时间',
+   primary key (sn)
+);
+
+/*==============================================================*/
+/* Table: high_school_map                                       */
+/*==============================================================*/
+create table high_school_map
+(
+   sn                   int not null auto_increment,
+   alias_name           varchar(64) comment '别名',
+   map_id               int comment '映射ID',
+   auth                 varchar(16) comment '修改用户',
+   modifty_reason       varchar(256) comment '修改原因',
+   modifytime           timestamp comment '修改时间',
+   primary key (sn)
+);
+
+/*==============================================================*/
+/* Table: loan_list                                             */
+/*==============================================================*/
+create table loan_list
+(
+   loan_id              int not null,
+   user_id              int,
+   loan_full_id         varchar(50) comment '外部id',
+   loan_money           float comment '借款金额',
+   start_day			 varchar(100) DEFAULT NULL,
+   loan_day             int comment '借款天数',
+   expire_day           varchar(100) comment '到期时间',
+   pay_fee              float comment '借款手续费',
+   act_money            float comment '实际到账',
+   Interest             float comment '利息',
+   overdue_fee          float comment '逾期费用',
+   bank_type            varchar(50) comment '银行类型',
+   bank_card            char(20) comment '银行卡号',
+   state                int comment '状态',
+   modifytime           timestamp,
+   primary key (loan_id)
+);
+
+/*==============================================================*/
+/* Table: loan_state_list                                       */
+/*==============================================================*/
+create table loan_state_list
+(
+   sn                   int not null,
+   loan_id              int,
+   loan_state           int comment '状态',
+   state_time           varchar(50) comment '时间',
+   error_msg            varchar(200) comment '错误信息',
+   modifytime           timestamp,
+   primary key (sn)
+);
+
+/*==============================================================*/
+/* Table: origin_place                                          */
+/*==============================================================*/
+create table origin_place
+(
+   sn                   int not null auto_increment,
+   id_last_num          varchar(16) comment '身份证后六位',
+   province             varchar(16) comment '籍贯省份',
+   city                 varchar(16) comment '籍贯城市',
+   district             varchar(16) comment '籍贯区县',
+   auth                 varchar(16) comment '修改用户',
+   modifty_reason       varchar(256) comment '修改原因',
+   modifytime           timestamp comment '修改时间',
+   primary key (sn)
+);
+
+/*==============================================================*/
+/* Table: province_city                                         */
+/*==============================================================*/
+create table province_city
+(
+   sn                   int not null auto_increment,
+   province             varchar(16) comment '省份',
+   city                 varchar(16) comment '城市',
+   city_level           varchar(16) comment '城市级别',
+   city_att1            varchar(16) comment '城市属性一',
+   city_att2            varchar(16) comment '城市属性二',
+   auth                 varchar(16) comment '修改人',
+   modifty_reason       varchar(256) comment '修改原因',
+   modifytime           timestamp comment '修改时间',
+   primary key (sn)
+);
+
+/*==============================================================*/
+/* Table: step_time                                             */
+/*==============================================================*/
+create table step_time
+(
+   sn                   int not null auto_increment,
+   user_id              int,
+   step                 char(50) comment '步骤ID',
+   in_time              char(20) comment '进入页面时间',
+   out_time             char(20) comment '离开页面时间',
+   time_cost            int comment '耗时',
+   primary key (sn)
+);
+
+alter table step_time comment '用户每个步骤耗时';
+
+/*==============================================================*/
+/* Table: tel_area_code                                         */
+/*==============================================================*/
+create table tel_area_code
+(
+   sn                   int not null auto_increment,
+   area                 varchar(16) comment '区号',
+   province             varchar(16) comment '籍贯省份',
+   city                 varchar(16) comment '籍贯城市',
+   auth                 varchar(16) comment '修改用户',
+   modifty_reason       varchar(256) comment '修改原因',
+   modifytime           timestamp comment '修改时间',
+   primary key (sn)
+);
+
+/*==============================================================*/
+/* Table: tel_code                                              */
+/*==============================================================*/
+create table tel_code
+(
+   sn                   int not null auto_increment,
+   user_id              int,
+   tel                  char(12) comment '电话',
+   code                 char(10) comment '验证码',
+   type                 int comment '验证码类型 0 注册 1 借款',
+   expire               char(10) comment '过期时间',
+   modifytime           timestamp,
+   primary key (sn)
+);
+
+/*==============================================================*/
+/* Table: urgent_list                                           */
+/*==============================================================*/
+create table urgent_list
+(
+   sn                   int not null auto_increment,
+   user_id              int,
+   name                 varchar(100) comment '姓名',
+   relation             char(50) comment '关系',
+   mobile               char(12) comment '电话',
+   modifytime           timestamp,
+   primary key (sn)
+);
+
+alter table urgent_list comment '紧急联系人列表';
+
+
+CREATE TABLE urgent_contactor_p (
   id int(11) NOT NULL AUTO_INCREMENT,
-  loan_id varchar(50)  COMMENT '申请单编号',
-  state int(11) NOT NULL COMMENT '状态',
-  intercept_source varchar(200)  COMMENT '拦截来源',
-  check_item varchar(200)  COMMENT '检查项',
-  intercept_cause varchar(200)  COMMENT '拦截原因',
-  created_by varchar(200)  NOT NULL COMMENT '创建人',
-  created_date timestamp NOT NULL COMMENT '创建时间',
-  last_updated_by  varchar(200)  NOT NULL,
-  last_updated_date timestamp NOT NULL ,  
+  user_id int(11) NOT NULL COMMENT '用户id',
+  name varchar(200)  NOT NULL COMMENT '姓名',
+  relation varchar(200)  NOT NULL COMMENT '关系',
+  mobile varchar(20)  NOT NULL COMMENT '电话',
+  mobile_address   varchar(200)  comment '联系人电话归属地',
+  created_by varchar(200) NOT NULL,
+  created_date datetime NOT NULL,
+  last_updated_by varchar(200) NOT NULL,
+  last_updated_date datetime NOT NULL,
   PRIMARY KEY (id)
-)  COMMENT='欺诈用户表';
+)  COMMENT='紧急联系人';
 
-
-CREATE TABLE dict_code_t (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  code varchar(200)  NOT NULL COMMENT '字典编码',
-  name varchar(200)  NOT NULL COMMENT '名称',
-  type varchar(200)  NOT NULL COMMENT '类型',
-  state int(11) COMMENT '状态  1有效 0 无效',
-  created_by varchar(200)  NOT NULL COMMENT '创建人',
-  created_date timestamp NOT NULL COMMENT '创建时间',
-  last_updated_by  varchar(200)  NOT NULL,
-  last_updated_date timestamp NOT NULL ,
-  descript varchar(1024)  COMMENT '字典描述',
-  PRIMARY KEY (id)
-)  COMMENT='数据字典code表';
-
-CREATE TABLE dict_item_t (
-  id int(11)  NOT NULL AUTO_INCREMENT,
-  code_id int(11)  NOT NULL COMMENT 'dict_code_t id',
-  item_code varchar(100)  NOT NULL COMMENT '项编码',
-  item_name varchar(200)  NOT NULL COMMENT '项名称',
-  created_by varchar(200)  NOT NULL COMMENT '创建人',
-  created_date timestamp NOT NULL COMMENT  '创建时间',
-  last_updated_by  varchar(200)  NOT NULL,
-  last_updated_date timestamp NOT NULL ,
-  PRIMARY KEY (id)
-)  COMMENT='数据字典item表';
-
-CREATE TABLE high_school_t (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  full_name varchar(200)  NOT NULL COMMENT '学习全程',
-  is_985 int(11)  COMMENT '是否是985',
-  is_211 int(11)  COMMENT '是否是211',
-  level varchar(50)  COMMENT '等级',
-  created_by varchar(200)   COMMENT '创建人',
-  created_date timestamp  COMMENT  '创建时间',
-  last_updated_by  varchar(200) ,
-  last_updated_date timestamp  ,
-  PRIMARY KEY (id)
-)  COMMENT='学校基础数据配置表';
-
-CREATE TABLE origin_place_t (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  id_last_num char(6)  NOT NULL COMMENT '身份证前六位',
-  province varchar(200)  NOT NULL COMMENT '籍贯省份',
-  city varchar(200)  NOT NULL COMMENT '籍贯城市',
-  district varchar(200)  NOT NULL COMMENT '籍贯区县',
-  created_by varchar(200)  NOT NULL COMMENT '创建人',
-  created_date timestamp NOT NULL COMMENT  '创建时间',
-  last_updated_by  varchar(200)  NOT NULL,
-  last_updated_date timestamp NOT NULL ,
-  PRIMARY KEY (id)
-)  COMMENT='籍贯基础数据配置表';
-
-
-CREATE TABLE province_city_t (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  province varchar(200)  NOT NULL COMMENT '省份',
-  city varchar(200)  NOT NULL COMMENT '城市',
-  city_level varchar(50)  COMMENT '城市级别',
-  city_att1 varchar(200)  COMMENT '城市属性一',
-  city_att2 varchar(200)  COMMENT '城市属性二',
-   created_by varchar(200)  NOT NULL COMMENT '创建人',
-  created_date timestamp NOT NULL COMMENT  '创建时间',
-  last_updated_by  varchar(200)  NOT NULL,
-  last_updated_date timestamp NOT NULL ,
-  PRIMARY KEY (id)
-)  COMMENT='身份城市基础数据表';
-
-CREATE TABLE attach_pic_t (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  type int(11) COMMENT '附件类型',
-  url varchar(1000)  NOT NULL COMMENT 'url',
-  user_id int(11)  NOT NULL COMMENT '用户id',
-  created_by varchar(200)  NOT NULL COMMENT '创建人',
-  created_date timestamp NOT NULL COMMENT  '创建时间',
-  last_updated_by  varchar(200)  NOT NULL,
-  last_updated_date timestamp NOT NULL ,
-  PRIMARY KEY (id)
-)  COMMENT='附件照片';
-
-
-CREATE TABLE tel_area_code_t (
-  id int(11) NOT NULL  AUTO_INCREMENT,
-  area varchar(20)  NOT NULL COMMENT '区号',
-  province varchar(200)  NOT NULL COMMENT '区号省份',
-  city varchar(200)  NOT NULL COMMENT '区号城市',
-  created_by varchar(200)  NOT NULL COMMENT '创建人',
-  created_date timestamp NOT NULL COMMENT  '创建时间',
-  last_updated_by  varchar(200)  NOT NULL,
-  last_updated_date timestamp NOT NULL ,
-  PRIMARY KEY (id)
-)  COMMENT='区号基础数据表';
-
-CREATE TABLE bank_data_t (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  bank_name varchar(200)  NOT NULL,
-  created_by varchar(200)  NOT NULL COMMENT '创建人',
-  created_date timestamp NOT NULL COMMENT  '创建时间',
-  last_updated_by  varchar(200)  NOT NULL,
-  last_updated_date timestamp NOT NULL,
-  PRIMARY KEY (id)
-)  COMMENT='银行配置表';
 
 CREATE TABLE resource_t (
   resource_id int(11) NOT NULL AUTO_INCREMENT,
@@ -249,7 +375,7 @@ CREATE TABLE role_resource_t (
 CREATE TABLE role_t (
   role_id int(11) NOT NULL AUTO_INCREMENT,
   enable int(11) NOT NULL DEFAULT '1',
-  role_name varchar(128) NOT NULL,
+  role_name varchar(128) NOT NULL unique,
   remark varchar(1024) DEFAULT NULL,
   created_by varchar(200) NOT NULL,
   created_date datetime NOT NULL,
@@ -261,7 +387,7 @@ CREATE TABLE role_t (
 CREATE TABLE user_t (
   user_id int(11) NOT NULL AUTO_INCREMENT,
   enable int(11) NOT NULL DEFAULT '1',
-  username varchar(128) NOT NULL,
+  username varchar(128) NOT NULL unique,
   password varchar(128) NOT NULL,
   remark varchar(1024) DEFAULT NULL,
   created_by varchar(200) NOT NULL,
@@ -282,18 +408,69 @@ CREATE TABLE user_role_t (
   PRIMARY KEY (ur_id)
 ) ;
 
-CREATE TABLE urgent_contactor_p (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  user_id int(11) NOT NULL COMMENT '用户id',
-  name varchar(200)  NOT NULL COMMENT '姓名',
-  relation varchar(200)  NOT NULL COMMENT '关系',
-  phone varchar(20)  NOT NULL COMMENT '电话',
-  created_by varchar(200) NOT NULL,
-  created_date datetime NOT NULL,
-  last_updated_by varchar(200) NOT NULL,
-  last_updated_date datetime NOT NULL,
-  PRIMARY KEY (id)
-)  COMMENT='紧急联系人';
+CREATE TABLE dict_t (
+  dict_id int(11) NOT NULL AUTO_INCREMENT,
+  code varchar(200)  NOT NULL COMMENT '字典编码',
+  name varchar(200)  NOT NULL COMMENT '名称',
+  type varchar(200)  NOT NULL COMMENT '类型',
+  state int(11) COMMENT '状态  1有效 0 无效',
+  parent_id int(11) NOT NULL,
+  order_number int(11) NOT NULL,       
+  created_by varchar(200)  NOT NULL COMMENT '创建人',
+  created_date timestamp NOT NULL COMMENT '创建时间',
+  last_updated_by  varchar(200)  NOT NULL,
+  last_updated_date timestamp NOT NULL ,
+  descript varchar(1024)  COMMENT '字典描述',
+  PRIMARY KEY (dict_id)
+)  COMMENT='数据字典code表';
+
+CREATE TABLE catalog_t (
+  catalog_id int(11)  NOT NULL AUTO_INCREMENT,
+  catalog_name varchar(200)  NOT NULL COMMENT '栏目名称',
+  parent_id int(11) NOT NULL,
+  url varchar(512),
+  order_number int(11) NOT NULL, 
+  remark varchar(512),
+  created_by varchar(200)  NOT NULL COMMENT '创建人',
+  created_date timestamp NOT NULL COMMENT  '创建时间',
+  last_updated_by  varchar(200)  NOT NULL,
+  last_updated_date timestamp NOT NULL ,
+  PRIMARY KEY (catalog_id)
+)  COMMENT='数据字典item表';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 insert into user_t values(1,1,'test','$2a$10$G5O/PkXx8LD5YV7jnujF7OokBiqKYCKQeitYMcNGbLWumV.RXR3hq','test remark','system',now(),'system',now());
 insert into role_t values(1,1,'admin','administrator','system',now(),'system',now());
@@ -306,18 +483,17 @@ insert into role_resource_t values(2,1,2,'system',now(),'system',now());
 insert into role_resource_t values(3,2,1,'system',now(),'system',now());
 
 
-INSERT INTO user_info VALUES (4,1,'o8EeQw_voTztu6J-jPttrk7LBGSA','朱胜','18923880749',NULL,NULL,NULL,NULL,'中国工商银行','1234','18923880749','1234','10000以上','Qwer','北京','北京','18923880749','博士','1234',NULL,NULL,7,'2015-10-04 10:34:02','Y');
+INSERT INTO user_info VALUES (4,1,'o8EeQw_voTztu6J-jPttrk7LBGSA','朱胜','18923880749',NULL,NULL,NULL,NULL,'中国工商银行','1234','18923880749','1234','10000以上','Qwer','北京','北京','18923880749','博士','1234',NULL,NULL,7,'Y','2015-10-04 10:34:02');
 
-INSERT INTO urgent_contactor_p VALUES (5,4,'1','配偶','18923880749','sysdate','2015-10-04 09:33:20','sysdate','2015-10-04 09:33:20');
-INSERT INTO urgent_contactor_p VALUES (6,4,'18923880749','姐妹','18923880749','sysdate','2015-10-04 09:33:20','sysdate','2015-10-04 09:33:20');
-INSERT INTO urgent_contactor_p VALUES (7,4,'1','配偶','18923880749','sysdate','2015-10-04 09:33:20','sysdate','2015-10-04 09:33:20');
-INSERT INTO urgent_contactor_p VALUES (8,4,'2','情侣','18923880749','sysdate','2015-10-04 09:33:20','sysdate','2015-10-04 09:33:20');
+INSERT INTO urgent_list VALUES (5,4,'xxxx','配偶','18923880749',sysdate());
+INSERT INTO urgent_list VALUES (6,4,'yyyy','姐妹','18923880749',sysdate());
+INSERT INTO urgent_list VALUES (8,4,'aaaa','情侣','18923880749',sysdate());
 
 INSERT INTO `loan_list` VALUES (11,4,NULL,5000,'2015-10-04 17:53:55',90,'2016-01-02',0,5000,0,0,NULL,'1234',1,'2015-10-04 09:53:55');
 
-INSERT INTO `p2p`.`approve_log_t` (`id`, `loan_id`, `assign_user`, `approve_content`, `state`, `created_by`, `last_updated_by`) VALUES ('1', '11', '张三', '开始审批', '1', '张三', '张三');
-INSERT INTO `p2p`.`approve_log_t` (`id`, `loan_id`, `assign_user`, `approve_content`, `state`, `created_by`, `last_updated_by`) VALUES ('2', '11', '张三', '审批完毕', '1', '张三', '张三');
-INSERT INTO `p2p`.`approve_log_t` (`id`, `loan_id`, `assign_user`, `approve_content`, `state`, `created_by`, `last_updated_by`) VALUES ('3', '11', '李四', '开始审批', '2', '李四', '李四');
+INSERT INTO `p2p`.`approve_log_t` (`loan_id`, `assign_user`, `approve_content`, `state`, `created_by`, `last_updated_by`) VALUES ( '11', '张三', '开始审批', '1', '张三', '张三');
+INSERT INTO `p2p`.`approve_log_t` ( `loan_id`, `assign_user`, `approve_content`, `state`, `created_by`, `last_updated_by`) VALUES ( '11', '张三', '审批完毕', '1', '张三', '张三');
+INSERT INTO `p2p`.`approve_log_t` ( `loan_id`, `assign_user`, `approve_content`, `state`, `created_by`, `last_updated_by`) VALUES ( '11', '李四', '开始审批', '2', '李四', '李四');
 
 
 
