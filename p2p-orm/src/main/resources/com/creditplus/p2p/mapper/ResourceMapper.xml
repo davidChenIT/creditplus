@@ -16,7 +16,20 @@
         <result column="last_updated_by" property="last_updated_by"/>          
         <result column="last_updated_date" property="last_updated_date"/>
     </resultMap>
-
+    
+    <insert id="insertResource" parameterType="ResourceVO">
+       insert into resource_t(resource_id,resource_name,url, priority,resource_type,remark,created_by,created_date,last_updated_by,last_updated_date) 
+             values(#{resourceId},#{resourceName},#{url},#{priority},#{resourceType},#{remark},#{created_by},#{created_date},#{last_updated_by},now())    	
+    </insert>
+    
+    <select id="getResourceListWithPage" parameterType="ResourceVO" resultMap="resourceVOMap">
+       		   select res.*
+                 from resource_t res
+ 		<if test="name !=null " >  
+                where lower(res.resource_name) LIKE CONCAT(CONCAT('%', lower(#{resourceName,jdbcType=VARCHAR})),'%')  
+    	</if>       
+     </select>
+     
     <select id="findAll" resultMap="resourceVOMap">
        select * from resource_t
     </select>

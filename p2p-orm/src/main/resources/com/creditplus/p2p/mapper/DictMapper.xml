@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.creditplus.p2p.dao.DictDao">
+	<resultMap type="DictVO" id="dictVOMap">  
+        <id column="dict_id"  property="dictId"/>  
+        <result column="code" property="code"/>
+        <result column="name" property="name"/> 
+        <result column="type" property="type"/>
+        <result column="state" property="state"/>
+        <result column="order_number" property="orderNumber"/>        
+        <result column="remark"   property="remark"/>        
+        <result column="created_by" property="created_by"/>          
+        <result column="created_date" property="created_date"/>          
+        <result column="last_updated_by" property="last_updated_by"/>          
+        <result column="last_updated_date" property="last_updated_date"/>
+    </resultMap>
+    
+    <insert id="insertDict" parameterType="DictVO">
+       insert into dict_t(dict_id,code,name, type,state,order_number,remark,created_by,created_date,last_updated_by,last_updated_date) 
+             values(#{dictId},#{code},#{name},#{type},#{state},#{orderNumber},#{remark},#{created_by},#{created_date},#{last_updated_by},now())    	
+    </insert>
+    
+    <select id="getDictListWithPage" parameterType="DictVO" resultMap="dictVOMap">
+       		   select d.*
+                 from dict_t d
+ 		<if test="name !=null " >  
+                where lower(d.name) LIKE CONCAT(CONCAT('%', lower(#{name,jdbcType=VARCHAR})),'%')  
+    	</if>       
+     </select>
+</mapper>
