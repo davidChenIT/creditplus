@@ -52,7 +52,7 @@ $(function(){
 
 
     //输入用户名称，点击按钮进行过滤
-    $("#serrchUserListBtn").click(function(){
+    $("#searchUserListBtn").click(function(){
         var username = $("input[name='username']").val();
         var request_data={};
         if(username){

@@ -245,7 +245,7 @@ $(function(){
 			data:{"module":"userService","method":"addUser","request_data":JSON.stringify(request_data)},			
 			success: function(data){
 				removeTabItem("userTab","userCreate");
-				$("#serrchUserListBtn").click();
+				$("#searchUserListBtn").click();
 			},error:function(error){
 				alert(error);
 			}
