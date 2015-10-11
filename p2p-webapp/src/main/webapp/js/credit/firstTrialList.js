@@ -6,7 +6,7 @@ $(function(){
 	$("#firstTrialListGrid").jqGrid({
 			url:serviceAddress,
 			datatype: 'json',
-			postData:{"module":"loanOrderService","method":"getLoanOrderListWithPage","request_data":{}},
+			postData:{"module":"loanOrderService","method":"getCreditFirstTrialListWithPage","request_data":{}},
 			mtype: 'POST',
 			autowidth:true,
 			colNames:["申请编号","申请人姓名","申请人身份证号","金额","期次","时长","申请时间","申请单状态","初审人","复审人"],
@@ -19,7 +19,7 @@ $(function(){
 						   if(paramsStr){
 							   paramsStr=paramsStr.replace(/"/g,"@#_@#");
 						   }
-						   return "<a style='color:blue;' onclick=\"addTabItem('firstTrialTab','firstTrial','初审','/p2p-webapp/page/firstTrial.html','false','/p2p-webapp/js/credit/firstTrial.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+						   return "<a style='color:blue;' onclick=\"addTabItem('firstTrialTab','firstTrial','复审','/p2p-webapp/page/firstTrial.html','true','/p2p-webapp/js/credit/firstTrial.js','"+paramsStr+"');\">"+cellvalue+"</a>";
 					}
 				},
 				{name:'name', index:'name',align:'center',"sortable":false},

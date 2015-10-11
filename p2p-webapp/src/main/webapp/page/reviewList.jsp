@@ -31,7 +31,7 @@
 				<div id="credit_Main" class="credit-page creditPageContext" creditpagecontextid="main">
 					<div>
 						<!-- 整个tab控件区域 -->
-						<div hw_id="_hw_8117" name="firstTrialTab" widget="tab" class="creditRendered credit-tabs" id="Tab_47892031">
+						<div hw_id="_hw_8117" name="reviewTab" widget="tab" class="creditRendered credit-tabs" id="Tab_47892031">
 							<!-- 标题区域 -->
 							<div class="tabs-head">
 									<div class="credit-slider slider-tabs credit-hide">
@@ -40,7 +40,7 @@
 									</div>
 									
 									<ul>
-										<li tabid="firstTrialList" class="tabs-selected"><span>信用复审列表</span></li>
+										<li tabid="reviewList" class="tabs-selected"><span>信用复审列表</span></li>
 									</ul>
 							</div>
 							<!-- 标题区域end -->
@@ -48,7 +48,7 @@
 							<!-- 内容区域start -->
 							<div class="tabs-body">
 								<!-- 页签1开始 -->
-								<div tabid="firstTrialList" class="tabs-body-item creditPageContext credit-validator">
+								<div tabid="reviewList" class="tabs-body-item creditPageContext credit-validator">
 									<div>
 										<!-- 条件区域开始 -->
 										<div class="row">
