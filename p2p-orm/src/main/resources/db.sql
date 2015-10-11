@@ -306,7 +306,7 @@ insert into role_resource_t values(2,1,2,'system',now(),'system',now());
 insert into role_resource_t values(3,2,1,'system',now(),'system',now());
 
 
-INSERT INTO user_info VALUES (4,1,'o8EeQw_voTztu6J-jPttrk7LBGSA','朱胜','18923880749',NULL,NULL,NULL,NULL,'中国工商银行','1234','18923880749','1234','10000以上','Qwer','北京','北京','18923880749','博士','1234',NULL,NULL,7,'Y','2015-10-04 10:34:02');
+INSERT INTO user_info VALUES (4,1,'o8EeQw_voTztu6J-jPttrk7LBGSA','朱胜','18923880749',NULL,NULL,NULL,NULL,'中国工商银行','1234','18923880749','1234','10000以上','Qwer','北京','北京','18923880749','博士','1234',NULL,NULL,7,'2015-10-04 10:34:02','Y');
 
 INSERT INTO urgent_contactor_p VALUES (5,4,'1','配偶','18923880749','sysdate','2015-10-04 09:33:20','sysdate','2015-10-04 09:33:20');
 INSERT INTO urgent_contactor_p VALUES (6,4,'18923880749','姐妹','18923880749','sysdate','2015-10-04 09:33:20','sysdate','2015-10-04 09:33:20');
