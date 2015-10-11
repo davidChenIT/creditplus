@@ -13,7 +13,8 @@ public class RoleVO extends BaseVO{
 	// Fields
 	private Integer roleId;
 	private Integer enable;
-	private String  roleName;
+	private String roleName;
+	private String remark;
 	private Set<ResourceVO> resources = new HashSet<ResourceVO>(0);
 	public Integer getRoleId() {
 		return roleId;
@@ -32,6 +33,12 @@ public class RoleVO extends BaseVO{
 	}
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 	public Set<ResourceVO> getResources() {
 		return resources;
