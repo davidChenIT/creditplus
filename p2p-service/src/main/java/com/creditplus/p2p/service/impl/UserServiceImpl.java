@@ -32,9 +32,20 @@ public class UserServiceImpl implements UserService {
 		userDao.updateUser(userVO);
 	}
 	
-	public void changePassword(UserVO userVO) {
+	public void changePassword(UserVO userVO)throws Exception{
+		String currentUsername = userVO.getLast_updated_by();
+		UserVO currentUserVO = userDao.findByName(currentUsername);
+		String oldPassword = userVO.getOldPassword();
+		oldPassword = SecurityUtil.encode(oldPassword);
+		if(null == currentUserVO || null == oldPassword 
+				|| !oldPassword.equals(currentUserVO.getPassword())){
+			throw new Exception("新旧密码不一致！");
+		}
+		
 		String password = userVO.getPassword();
 		password = SecurityUtil.encode(password);
+		
+		userVO.setUserId(currentUserVO.getUserId());
 		userVO.setPassword(password);		
 		userDao.changePassword(userVO);
 	}	

@@ -16,6 +16,8 @@ public class UserVO extends BaseVO{
 	
 	private String username;
 	
+	private String oldPassword;
+	
 	private String password;	
 	
 	private String remark;
@@ -44,6 +46,14 @@ public class UserVO extends BaseVO{
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
 	}
 
 	public String getPassword() {

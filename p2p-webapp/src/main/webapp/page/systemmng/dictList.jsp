@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>角色管理</title>
+<title>数据字典管理</title>
 </head>
 <body>
 <div id="credit_Top">
@@ -13,7 +13,7 @@
        <section class="row">
             <!-- 引入左侧菜单区域 -->
             <jsp:include page="../leftMenu.jsp"></jsp:include>
-            <script src="<%=request.getContextPath()%>/js/credit/roleList.js" type="text/javascript"></script>
+            <script src="<%=request.getContextPath()%>/js/credit/dictList.js" type="text/javascript"></script>
             <!--  主区域start -->
 			<div id="credit_MainPanel" class="equalheight-item render content-credit-mainPanel creditRendered credit-fullscreen" widget="fullScreen">
 				<!-- 面包屑区域 -->
@@ -27,7 +27,7 @@
 				<div id="credit_Main" class="credit-page creditPageContext" creditpagecontextid="main">
 				    <div>
 						<!-- 整个tab控件区域 -->
-						<div hw_id="_hw_8117" name="roleTab" widget="tab" class="creditRendered credit-tabs" id="Tab_47892031">
+						<div hw_id="_hw_8117" name="dictTab" widget="tab" class="creditRendered credit-tabs" id="Tab_47892031">
 							<!-- 标题区域 -->
 							<div class="tabs-head">
 									<div class="credit-slider slider-tabs credit-hide">
@@ -36,14 +36,14 @@
 									</div>
 									
 									<ul>
-										<li tabid="roleList" class="tabs-selected"><span>角色列表</span></li>
+										<li tabid="dictList" class="tabs-selected"><span>数据字典列表</span></li>
 									</ul>
 							</div>
 							<!-- 标题区域end -->
 							<!-- 内容区域start -->
 							<div class="tabs-body">
 								<!-- 页签1 -->
-								<div tabid="roleList" class="tabs-body-item creditPageContext credit-validator" creditpagecontextid="page_85823101">
+								<div tabid="dictList" class="tabs-body-item creditPageContext credit-validator" creditpagecontextid="page_85823101">
 									<div>
 									    <!-- 条件区域开始 -->
 										<div class="row">
@@ -51,33 +51,33 @@
 												<div class="row">
 													<label class="col-xs-12 col-sm-3">
 														<div class="credit-label">
-															角色名称
+															数据字典名称
 														</div>
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="roleName" >
+															<input type="text" name="dictName" >
 														</div>
 													</div>
 												</div>
 											</div>
 											<div class="search-y-btn creditRendered" style="display: inline-block;">
-												<button class="credit-btn" id="searchRoleListBtn" type="button">查询</button>
+												<button class="credit-btn" id="searchDictListBtn" type="button">查询</button>
 											</div>	
 										</div>	
 									
 									    <!-- grid按钮区域 -->
 									    <div style="display: inline-block;">
-											<button class="grid-toobar-btn add-btn" name="addRoleBtn" type="button">新增</button>
-											<button class="grid-toobar-btn del-btn" name="delRoleBtn" type="button">删除</button>
+											<button class="grid-toobar-btn add-btn" name="addDictBtn" type="button">新增</button>
+											<button class="grid-toobar-btn del-btn" name="delDictBtn" type="button">删除</button>
 										</div>
 									
 										<!-- grid区域开始 -->
 										
 										<div class="row">
-											<table id="roleListGrid"></table> 
+											<table id="dictListGrid"></table> 
 
-											<div id="roleListPager"></div>
+											<div id="dictListPager"></div>
 										</div>
 										<!-- grid区域结束 -->
 									</div>
@@ -96,6 +96,6 @@
   
   <!-- 引入底部 -->
   <jsp:include page="../footer.jsp"></jsp:include>
-  </div>
+</div>
 </body>
 </html>

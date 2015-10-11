@@ -28,7 +28,7 @@ public class ResourceServiceImpl implements ResourceService{
 		
 		//初始化分页信息
 		PageUtil.initPageInfo(pageVO.getCurrpage(), pageVO.getRowNum());
-		resourceDao.insertResource(resourceVO);
+		resourceDao.getResourceListWithPage(resourceVO);
 		
 		return PageUtil.getPageVO();
 	}

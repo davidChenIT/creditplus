@@ -20,6 +20,8 @@ public class CatalogVO extends BaseVO {
 	
 	private int parentId;
 	
+	private String parentName;
+	
 	private String url;
 	
 	private int orderNumber;
@@ -48,6 +50,14 @@ public class CatalogVO extends BaseVO {
 
 	public void setParentId(int parentId) {
 		this.parentId = parentId;
+	}
+	
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 
 	public String getUrl() {

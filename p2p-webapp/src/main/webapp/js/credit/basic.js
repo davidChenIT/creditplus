@@ -113,11 +113,12 @@ $(function(){
 		{"id":6,"pId":2,"name":"标的管理","urlstr":"page/tenderMngList.jsp",isloadjs:"true"},
 		{"id":7,"pId":2,"name":"投标","urlstr":"page/makeTenderList.jsp",isloadjs:"true"},
 		
-		
-		{"id":8,"pId":3,"name":"栏目管理","urlstr":"page/hh.html",isloadjs:"true"},
-		{"id":9,"pId":3,"name":"角色管理","urlstr":"page/systemmng/roleList.jsp",isloadjs:"true"},
-		{"id":10,"pId":3,"name":"用户管理","urlstr":"page/systemmng/userList.jsp",isloadjs:"true"}
-		
+		{"id":8,"pId":3,"name":"字典管理","urlstr":"page/systemmng/dictList.jsp",isloadjs:"true"},
+		{"id":9,"pId":3,"name":"栏目管理","urlstr":"page/systemmng/catalogList.jsp",isloadjs:"true"},
+		{"id":10,"pId":3,"name":"用户管理","urlstr":"page/systemmng/userList.jsp",isloadjs:"true"},
+		{"id":11,"pId":3,"name":"角色管理","urlstr":"page/systemmng/roleList.jsp",isloadjs:"true"},
+		{"id":12,"pId":3,"name":"资源管理","urlstr":"page/systemmng/resourceList.jsp",isloadjs:"true"},
+		{"id":13,"pId":3,"name":"修改密码","urlstr":"page/systemmng/changePassword.jsp",isloadjs:"false"}		
 	];
 	
 	//获取当前访问的路径
