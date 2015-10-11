@@ -39,4 +39,5 @@
     <bean id="roleService" class=" com.creditplus.p2p.service.impl.RoleServiceImpl" />    
     <bean id="loanOrderService" class="com.creditplus.p2p.service.impl.LoanOrderServiceImpl" />
     <bean id="approveLogService" class="com.creditplus.p2p.service.impl.ApproveLogServiceImpl" />     
+    <bean id="urgentContactorService" class="com.creditplus.p2p.service.impl.UrgentContactorServiceImpl" />     
 </beans>

@@ -23,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
  * 通过模得到对应的校验码 Y: 0 1 2 3 4 5 6 7 8 9 10 校验码: 1 0 X 9 8 7 6 5 4 3 2 
  */
 public class IDCardUtil {
+	private static Map<String,Object> card_map=new HashMap<String,Object>();
     final static Map<Integer, String> zoneNum = new HashMap<Integer, String>();
     static {
         zoneNum.put(11, "北京");
@@ -62,8 +63,7 @@ public class IDCardUtil {
     }
      
     final static int[] PARITYBIT = {'1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'};
-    final static int[] POWER_LIST = { 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 
-        5, 8, 4, 2};
+    final static int[] POWER_LIST = { 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2};
      
     /**
      * 身份证验证
@@ -116,7 +116,13 @@ public class IDCardUtil {
         //校验"校验码"
         if(certNo.length() == 15)
             return true;
-        return cs[cs.length -1 ] == PARITYBIT[power % 11];
+        boolean flag= cs[cs.length -1 ] == PARITYBIT[power % 11];
+        card_map.put("card_state", flag);
+        
+        if(flag){
+        	card_map.put("card_year", year);
+        }
+		return flag;
     }
      
     private static int getIdcardCalendar() {        

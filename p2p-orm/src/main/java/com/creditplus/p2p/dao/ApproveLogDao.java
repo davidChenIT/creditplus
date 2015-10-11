@@ -6,9 +6,7 @@ import com.creditplus.p2p.model.ApproveLogVO;
 
 public interface ApproveLogDao {
 
-	List<ApproveLogVO> getAppLogByLoanId(Integer loan_id);
-	
-	void deleteAppLogByLoanId(Integer loan_id);
+	List<?> getAppLogByLoanId(Integer loan_id);
 	
 	void insertApproveLog(ApproveLogVO approveLogVo);
 }
