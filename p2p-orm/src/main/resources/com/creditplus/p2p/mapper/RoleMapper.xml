@@ -5,9 +5,9 @@
  
 <mapper namespace="com.creditplus.p2p.dao.RoleDao">
 	<resultMap type="RoleVO" id="roleDetailMap">  
-        <id column="role_id"    property="userId"/>  
+        <id column="role_id"    property="roleId"/>  
         <result column="enable" property="enable"/>
-        <result column="role_name" property="username"/> 
+        <result column="role_name" property="roleName"/> 
         <result column="remark"   property="remark"/>        
         <result column="created_by" property="created_by"/>          
         <result column="created_date" property="created_date"/>          
@@ -23,9 +23,9 @@
     </resultMap>
     
 	<resultMap type="RoleVO" id="roleVOMap">  
-        <id column="role_id"    property="userId"/>  
+        <id column="role_id"    property="roleId"/>  
         <result column="enable" property="enable"/>
-        <result column="role_name" property="username"/> 
+        <result column="role_name" property="roleName"/> 
         <result column="remark"   property="remark"/>        
         <result column="created_by" property="created_by"/>          
         <result column="created_date" property="created_date"/>          
@@ -36,7 +36,7 @@
        insert into role_t(role_id,enable,role_name,remark,created_by,created_date,last_updated_by,last_updated_date) 
              values(#{roleId},#{enable},#{roleName},#{remark},#{created_by},#{created_date},#{last_updated_by},now())
     </insert>
-    <delete id="deleteRoleById" parameterType="String">
+    <delete id="deleteRoleById" parameterType="Integer">
        delete from role_t where role_id=#{roleId}
     </delete>       
     <update id="updateUser" parameterType="RoleVO">
@@ -49,10 +49,13 @@
     </update> 
     
    <select id="getRoleListWithPage" parameterType="String" resultMap="roleVOMap">
-       select * from role_t where role_name = #{rolename} 
+       select * from role_t
+ 		<if test="roleName !=null ">          
+               where role_name = #{roleName}
+       </if> 
     </select>    
-   <select id="getRoleDetail" parameterType="String" resultMap="roleDetailMap">
-    select r.*
+   <select id="getRoleDetail" parameterType="Integer" resultMap="roleDetailMap">
+    select r.*,
            res.resource_id as resource_id,
            res.resource_name as resource_name,
            res.url as url,
@@ -61,6 +64,6 @@
            from role_t r
       left join role_resource_t rr on r.role_id = rr.role_id  
       left join resource_t res on rr.resource_id = rr.resource_id 
-       where role_id=#{roleId} 
+       where r.role_id=#{roleId} 
     </select>
 </mapper>

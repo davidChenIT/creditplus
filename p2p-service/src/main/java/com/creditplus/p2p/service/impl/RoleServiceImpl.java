@@ -38,8 +38,8 @@ public class RoleServiceImpl implements RoleService {
 			roleVO = new RoleVO();
 		}
 		
-		roleDao.getRoleListWithPage(roleVO);
 		PageUtil.initPageInfo(pageVO.getCurrpage(), pageVO.getRowNum());		
+		roleDao.getRoleListWithPage(roleVO);
 		return PageUtil.getPageVO();
 	}
 }
