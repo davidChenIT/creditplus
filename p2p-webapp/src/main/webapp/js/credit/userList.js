@@ -14,7 +14,11 @@ $(function(){
 				{name:'operate_col', index:'operate_col',align:'center',"sortable":false,width:"100px",
 					formatter:function(cellvalue, options, rowObject){
 					   debugger;
-					   return "<span name='userEditSpan' class='ui-icon-edit' data-val='"+rowObject.userId+"'></span>";
+					   var paramsStr=JSON.stringify(rowObject);
+					   if(paramsStr){
+						   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+					   }
+					   return "<span class='ui-icon-edit' onclick=\"addTabItem('userTab','userUpdate','用户修改','/p2p-webapp/page/systemmng/userUpdate.html','true','/p2p-webapp/js/credit/userUpdate.js','"+paramsStr+"');\"></span>";
 					}
 				},
 				{name:'username', index:'username',align:'center',"sortable":false},
@@ -45,37 +49,7 @@ $(function(){
 		     }
 	});
     
-    
-    //给grid列中的修改图标添加点击事件
-    $("div[name='userTab']").on("click",".ui-icon-edit",function(){
-    	debugger;
-    	var userId=$(this).attr("data-val");
-    	var userUpdate=$("div[name='userTab']").find("li[tabid='userUpdate']");
-    	if(userUpdate && userUpdate.length>0){
-    		$("div[name='userTab']").find("li[tabid='userUpdate']").remove();
-    		$("div[name='userTab']").find("div[tabid='userUpdate']").remove();
-    	}
-    	$("div[name='userTab']").find(".tabs-head li").attr("class","");
-    	var userUpdateLi='<li tabid="userUpdate" class="tabs-selected"><span>修改用户</span><div class="credit-tab-close"><span>x</span></div></li>';
-    	$("div[name='userTab']").find(".tabs-head ul").append(userUpdateLi);
-    	$(".tabs-body").children("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
-    	
-    	var jsFileUrl="/p2p-webapp/js/credit/userUpdate.js";
-    	$("script[src='"+jsFileUrl+"']").remove();
-		var requestUrl="http://"+window.location.host+"/p2p-webapp/page/systemmng/userUpdate.html";
-		$.ajax({ 
-			url: requestUrl,
-			success: function(data){
-				debugger;	
-				if(data && data.length>0){
-					$("div[name='userTab']").find(".tabs-body").append(data);
-					$("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
-				}
-			},error:function(error){
-				$("div[name='userTab']").find(".tabs-body").append('<div tabid="userUpdate" class="tabs-body-item creditPageContext credit-validator"><div><div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div></div>');
-			}
-		});
-    });
+
 
     //输入用户名称，点击按钮进行过滤
     $("#serrchUserListBtn").click(function(){
@@ -96,32 +70,7 @@ $(function(){
     
     //点击用户列表中的新增按钮
     $("[name='addUserBtn']").click(function(){
-    	var userCreate=$("div[name='userTab']").find("li[tabid='userCreate']");
-    	if(userCreate && userCreate.length>0){
-    		$("div[name='userTab']").find("li[tabid='userCreate']").remove();
-    		$("div[name='userTab']").find("div[tabid='userCreate']").remove();
-    	}
-    	$("div[name='userTab']").find(".tabs-head li").attr("class","");
-    	var userCreateLi='<li tabid="userCreate" class="tabs-selected"><span>新增用户</span><div class="credit-tab-close"><span>x</span></div></li>';
-    	$("div[name='userTab']").find(".tabs-head ul").append(userCreateLi);
-    	$(".tabs-body").children("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
-    	
-    	var jsFileUrl="/p2p-webapp/js/credit/userCreate.js";
-    	$("script[src='"+jsFileUrl+"']").remove();
-		var requestUrl="http://"+window.location.host+"/p2p-webapp/page/systemmng/userCreate.html";
-		$.ajax({ 
-			url: requestUrl,
-			success: function(data){
-				debugger;	
-				if(data && data.length>0){
-					$("div[name='userTab']").find(".tabs-body").append(data);
-					$("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
-				}
-			},error:function(error){
-				$("div[name='userTab']").find(".tabs-body").append('<div tabid="userCreate" class="tabs-body-item creditPageContext credit-validator"><div><div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div></div>');
-			}
-		});
-    	
+    	addTabItem("userTab","userCreate","用户新增","/p2p-webapp/page/systemmng/userCreate.html",true,"/p2p-webapp/js/credit/userCreate.js");
     });
     
     //点击用户列表中的删除按钮

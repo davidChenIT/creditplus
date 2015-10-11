@@ -244,11 +244,8 @@ $(function(){
 			method:"post",
 			data:{"module":"userService","method":"addUser","request_data":JSON.stringify(request_data)},			
 			success: function(data){
-	    		$("div[name='userTab']").find("li[tabid='userCreate']").remove();
-	    		$("div[name='userTab']").find("div[tabid='userCreate']").remove();
-	    		$("div[name='userTab']").find("li[tabid='userList']").attr("class","tabs-selected");
-	    		$("div[name='userTab']").find("div[tabid='userList']").attr("class","tabs-body-item creditPageContext credit-validator");
-	    		$("#serrchUserListBtn").click();
+				removeTabItem("userTab","userCreate");
+				$("#serrchUserListBtn").click();
 			},error:function(error){
 				alert(error);
 			}

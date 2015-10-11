@@ -8,8 +8,7 @@ $(function(){
           if (e.state) {
               window.location.href=e.state.url;
           }
-	}; 
-	
+	};
 	//处理点浏览器返回时候最后一个不刷新页面内容问题
     var state = {
         title: document.title,
@@ -240,13 +239,53 @@ $(function(){
 })
 
 //移除tab控件的也签
-function removeTabItem(tabId){
+function removeTabItem(tabId,itemId){
 	debugger;
-	var closeLi=$("li[tabid='"+tabId+"']");
-	var firstLi=$(closeLi.siblings()[0]);
-	var firstTabId=firstLi.attr("tabid");
-	closeLi.remove();
-	$("div[tabid='"+tabId+"']").remove();
+	var currentItemLi=$("div[name='"+tabId+"']").find("li[tabid='"+itemId+"']");
+	var firstLi=$(currentItemLi.siblings()[0]);
+	var firstItemId=firstLi.attr("tabid");
+	currentItemLi.remove();
+	$("div[name='"+tabId+"']").find("div[tabid='"+itemId+"']").remove();
 	firstLi.attr("class","tabs-selected");
-	$("div[tabid='"+firstTabId+"']").attr("class","tabs-body-item creditPageContext credit-validator");
+	$("div[name='"+tabId+"']").find("div[tabid='"+firstItemId+"']").attr("class","tabs-body-item creditPageContext credit-validator");
+}
+
+//移除tab控件的也签
+function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
+	debugger;
+	if(tabId && itemId && pageUrl){
+		var paramsObj;
+		if(paramsStr){
+			paramsObj=JSON.parse(paramsStr.replace(/@#_@#/g,"\""));
+		}else{
+			paramsObj={};
+		}
+    	var itemLi=$("div[name='"+tabId+"']").find("li[tabid='"+itemId+"']");
+    	if(itemLi && itemLi.length>0){
+    		$("div[name='"+tabId+"']").find("li[tabid='"+itemId+"']").remove();
+    		$("div[name='"+tabId+"']").find("div[tabid='"+itemId+"']").remove();
+    	}
+    	$("div[name='"+tabId+"']").find(".tabs-head li").attr("class","");
+    	var newLiHtml='<li tabid="'+itemId+'" class="tabs-selected"><span>'+title+'</span><div class="credit-tab-close"><span>x</span></div></li>';
+    	$("div[name='"+tabId+"']").find(".tabs-head ul").append(newLiHtml);
+    	$("div[name='"+tabId+"']").find(".tabs-body").children("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
+		var requestUrl="http://"+window.location.host+pageUrl;
+		$.ajax({ 
+			url: requestUrl,
+			success: function(data){
+				debugger;	
+				if(data && data.length>0){
+					$("div[name='"+tabId+"']").find(".tabs-body").append(data);
+					if(isLoadJs || isLoadJs=="true"){
+						$("script[src='"+jsFileUrl+"']").remove();
+						$("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
+					}
+				}
+			},error:function(error){
+				$("div[name='"+tabId+"']").find(".tabs-body").append('<div tabid="'+itemId+'" class="tabs-body-item creditPageContext credit-validator"><div><div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div></div>');
+			}
+		});
+		
+	}
+	
 }
