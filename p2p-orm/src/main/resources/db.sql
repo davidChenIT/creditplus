@@ -16,7 +16,7 @@ drop table if exists feed_back;
 drop table if exists high_school;
 drop table if exists high_school_map;
 drop table if exists urgent_list;
-DROP TABLE IF EXISTS urgent_contactor_p;
+DROP TABLE IF EXISTS urgent_contactor_t;
 drop table if exists approve_log_t;
 
 DROP TABLE IF EXISTS resource_t;
@@ -24,8 +24,8 @@ DROP TABLE IF EXISTS role_resource_t;
 DROP TABLE IF EXISTS role_t;
 DROP TABLE IF EXISTS user_t;
 DROP TABLE IF EXISTS user_role_t;
-DROP TABLE IF EXISTS dict_t;
-DROP TABLE IF EXISTS catalog_t;
+DROP TABLE IF EXISTS dict_code_t;
+DROP TABLE IF EXISTS dict_item_t;
 
 
 create table user_info
@@ -78,7 +78,7 @@ CREATE TABLE approve_log_t (
   version varchar(20)   not null comment '版本',
   apply_state int       not null comment '借款单状态',
   first_assign_user  varchar(200)    comment '初审人',
-  two_assign_user    varchar(200)	 comment '复审人',
+  review_assign_user varchar(200)	 comment '复审人',
   modifytime  timestamp not null,
   primary key (loan_id)
  )COMMENT='借款申请后台表';
@@ -86,19 +86,21 @@ CREATE TABLE approve_log_t (
  
  
 create table customer_info_t(
-   user_id				int not null    ,
-   thnic				varchar(50)  	COMMENT '名族',
+   user_id				int not null,
+   thnic_v				varchar(50)  	COMMENT '名族',
+   registered_place_v   varchar(200)	comment '户口所在地',
    address_phone     	varchar(20)   	comment '住址电话',
-   address_phone_v		varchar(20)  	comment '住址验证电话',
+   address_phone_v		varchar(20) 	comment '住址验证电话',
    current_city_v		varchar(50) 	comment '当前居住城市',
    current_address_v	varchar(200)    comment '当前居住详址',
-   id_card_name_v       varchar(100) 	comment '身份证验证姓名',
+   id_num_name_v       varchar(100) 	comment '身份证验证姓名',
    id_num_v 			char(20) 		comment '身份证验证号码',
    mobile_place_v		varchar(200)    comment '电话属地',
    company_name_v		varchar(200)    comment '工作验证全称',
-   work_tel_v			varchar(200)    comment '工作验证电弧',
+   work_tel_v			varchar(200)    comment '工作验证电话',
+   work_tel_place_v   	varchar(200)	comment '公司电话属地',
    work_name_v			varchar(200)    comment '工作验证姓名',
-   work_Position_v      varchar(200)    comment '工作职位验证',
+   work_position_v      varchar(200)    comment '工作职位验证',
    income_v				varchar(100)    comment '收入验证',
    income_name_v		varchar(200)    comment '收入验证姓名',
    seasame_score_v      int 			comment '芝麻评分',
@@ -332,7 +334,7 @@ create table urgent_list
 alter table urgent_list comment '紧急联系人列表';
 
 
-CREATE TABLE urgent_contactor_p (
+CREATE TABLE urgent_contactor_t (
   id int(11) NOT NULL AUTO_INCREMENT,
   user_id int(11) NOT NULL COMMENT '用户id',
   name varchar(200)  NOT NULL COMMENT '姓名',
@@ -375,7 +377,7 @@ CREATE TABLE role_resource_t (
 CREATE TABLE role_t (
   role_id int(11) NOT NULL AUTO_INCREMENT,
   enable int(11) NOT NULL DEFAULT '1',
-  role_name varchar(128) NOT NULL unique,
+  role_name varchar(128) NOT NULL,
   remark varchar(1024) DEFAULT NULL,
   created_by varchar(200) NOT NULL,
   created_date datetime NOT NULL,
@@ -387,7 +389,7 @@ CREATE TABLE role_t (
 CREATE TABLE user_t (
   user_id int(11) NOT NULL AUTO_INCREMENT,
   enable int(11) NOT NULL DEFAULT '1',
-  username varchar(128) NOT NULL unique,
+  username varchar(128) NOT NULL,
   password varchar(128) NOT NULL,
   remark varchar(1024) DEFAULT NULL,
   created_by varchar(200) NOT NULL,
@@ -408,34 +410,32 @@ CREATE TABLE user_role_t (
   PRIMARY KEY (ur_id)
 ) ;
 
-CREATE TABLE dict_t (
-  dict_id int(11) NOT NULL AUTO_INCREMENT,
+
+
+CREATE TABLE dict_code_t (
+  id int(11) NOT NULL AUTO_INCREMENT,
   code varchar(200)  NOT NULL COMMENT '字典编码',
   name varchar(200)  NOT NULL COMMENT '名称',
   type varchar(200)  NOT NULL COMMENT '类型',
-  state int(11) COMMENT '状态  1有效 0 无效' default 1,
-  parent_id int(11) NOT NULL,
-  order_number int(11) NOT NULL,       
+  state int(11) COMMENT '状态  1有效 0 无效',
   created_by varchar(200)  NOT NULL COMMENT '创建人',
   created_date timestamp NOT NULL COMMENT '创建时间',
   last_updated_by  varchar(200)  NOT NULL,
   last_updated_date timestamp NOT NULL ,
-  remark varchar(1024)  COMMENT '字典描述',
-  PRIMARY KEY (dict_id)
+  descript varchar(1024)  COMMENT '字典描述',
+  PRIMARY KEY (id)
 )  COMMENT='数据字典code表';
 
-CREATE TABLE catalog_t (
-  catalog_id int(11)  NOT NULL AUTO_INCREMENT,
-  catalog_name varchar(200)  NOT NULL COMMENT '栏目名称',
-  parent_id int(11) NOT NULL,
-  url varchar(512),
-  order_number int(11) NOT NULL, 
-  remark varchar(512),
+CREATE TABLE dict_item_t (
+  id int(11)  NOT NULL AUTO_INCREMENT,
+  code_id int(11)  NOT NULL COMMENT 'dict_code_t id',
+  item_code varchar(100)  NOT NULL COMMENT '项编码',
+  item_name varchar(200)  NOT NULL COMMENT '项名称',
   created_by varchar(200)  NOT NULL COMMENT '创建人',
   created_date timestamp NOT NULL COMMENT  '创建时间',
   last_updated_by  varchar(200)  NOT NULL,
   last_updated_date timestamp NOT NULL ,
-  PRIMARY KEY (catalog_id)
+  PRIMARY KEY (id)
 )  COMMENT='数据字典item表';
 
 

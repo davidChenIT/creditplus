@@ -8,13 +8,17 @@ import com.creditplus.p2p.model.PageVO;
 
 public interface LoanOrderService {
 
-//	 LoanOrderVO getLoanOrderByLoanId(Map<?, ?> paramMap);
-	 
+	 //初审列表
 	 PageVO getCreditFirstTrialListWithPage(Map<?, ?> paramMap);
 	 
+	 //复审列表
 	 PageVO getCreditReviewListWithPage(Map<?, ?> paramMap);
 	 
-	 LoanOrderVO creditFirstTrial(@ParamName("loan_id")Integer loan_id);
+	 //初审详情
+	 Map<?, ?> creditFirstTrial(@ParamName("loan_id")Integer loan_id);
 	 
-	 LoanOrderVO CreditReview(@ParamName("loan_id")Integer loan_id);
+	 //复审详情
+	 Map<?, ?> creditReview(@ParamName("loan_id")Integer loan_id);
+	 
+//	 void setHandlerBy(@ParamName(""));
 }

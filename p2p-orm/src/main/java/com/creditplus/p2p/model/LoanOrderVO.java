@@ -7,7 +7,7 @@ public class LoanOrderVO {
 	private Integer loan_id;
 	private Integer user_id;
 	private String loan_full_id;
-	private  Double loan_money;
+	private Double loan_money;
 	private String start_day;
 	private Integer loan_day;
 	private String expire_day;
@@ -23,8 +23,8 @@ public class LoanOrderVO {
 	
 	private Double version;
 	private Integer apply_state;
-	private String first_assign_user; //初审人
-	private String two_assign_user;   //复审人
+	private String first_assign_user; 	 //初审人
+	private String review_assign_user;   //复审人
 	
 	private CustomerVO customerInfo;
 	private List<ApproveLogVO> appLogList;
@@ -156,11 +156,11 @@ public class LoanOrderVO {
 	public void setFirst_assign_user(String first_assign_user) {
 		this.first_assign_user = first_assign_user;
 	}
-	public String getTwo_assign_user() {
-		return two_assign_user;
+	public String getReview_assign_user() {
+		return review_assign_user;
 	}
-	public void setTwo_assign_user(String two_assign_user) {
-		this.two_assign_user = two_assign_user;
+	public void setReview_assign_user(String review_assign_user) {
+		this.review_assign_user = review_assign_user;
 	}
 	
 	
