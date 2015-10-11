@@ -1,10 +1,9 @@
-package com.creditplus.p2p.dao;
+package com.creditplus.p2p.service;
 
-import java.util.List;
-
+import com.creditplus.p2p.model.PageVO;
 import com.creditplus.p2p.model.RoleVO;
 
-public interface RoleDao{
+public interface RoleService {
 	
     void insertRole(RoleVO roleVO);
 	
@@ -14,5 +13,5 @@ public interface RoleDao{
 	
 	RoleVO getRoleDetail(int roleId);
 	
-	List<RoleVO> getRoleListWithPage(RoleVO roleVO);
+	PageVO getRoleListWithPage(PageVO pageVO,RoleVO roleVO);
 }

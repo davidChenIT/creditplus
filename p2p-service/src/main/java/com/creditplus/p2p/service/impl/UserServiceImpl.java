@@ -1,7 +1,5 @@
 package com.creditplus.p2p.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.creditplus.p2p.common.tools.SecurityUtil;
@@ -56,7 +54,7 @@ public class UserServiceImpl implements UserService {
 		
 		//初始化分页信息
 		PageUtil.initPageInfo(pageVO.getCurrpage(), pageVO.getRowNum());
-		List<UserVO> userVOList = userDao.getUserListWithPage(userVO);
+		userDao.getUserListWithPage(userVO);
 		return PageUtil.getPageVO();
 	}
 }
