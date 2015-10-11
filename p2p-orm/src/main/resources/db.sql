@@ -37,7 +37,7 @@ DROP TABLE IF EXISTS role_resource_t;
 DROP TABLE IF EXISTS role_t;
 DROP TABLE IF EXISTS user_t;
 DROP TABLE IF EXISTS user_role_t;
-
+DROP TABLE IF EXISTS catalog_t;
 
 
 
@@ -249,7 +249,7 @@ CREATE TABLE role_resource_t (
 CREATE TABLE role_t (
   role_id int(11) NOT NULL AUTO_INCREMENT,
   enable int(11) NOT NULL DEFAULT '1',
-  role_name varchar(128) NOT NULL,
+  role_name varchar(128) NOT NULL unique,
   remark varchar(1024) DEFAULT NULL,
   created_by varchar(200) NOT NULL,
   created_date datetime NOT NULL,
@@ -261,7 +261,7 @@ CREATE TABLE role_t (
 CREATE TABLE user_t (
   user_id int(11) NOT NULL AUTO_INCREMENT,
   enable int(11) NOT NULL DEFAULT '1',
-  username varchar(128) NOT NULL,
+  username varchar(128) NOT NULL unique,
   password varchar(128) NOT NULL,
   remark varchar(1024) DEFAULT NULL,
   created_by varchar(200) NOT NULL,
@@ -280,7 +280,20 @@ CREATE TABLE user_role_t (
   last_updated_by varchar(200) NOT NULL,
   last_updated_date datetime NOT NULL,
   PRIMARY KEY (ur_id)
-) ;
+);
+
+CREATE TABLE catalog_t(
+  catalog_id int(11) NOT NULL AUTO_INCREMENT,
+  catalog_name varchar(200), 
+  parent_id int(11),
+  url varchar(512),
+  remark varchar(1024),
+  created_by varchar(200) NOT NULL,
+  created_date datetime NOT NULL,
+  last_updated_by varchar(200) NOT NULL,
+  last_updated_date datetime NOT NULL,
+  PRIMARY KEY (ur_id)
+);
 
 CREATE TABLE urgent_contactor_p (
   id int(11) NOT NULL AUTO_INCREMENT,
