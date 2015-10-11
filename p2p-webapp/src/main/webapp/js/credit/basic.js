@@ -81,7 +81,8 @@ $(function(){
 								  $("#credit_MainPanel").find("#credit_Main").remove();
 								  $("#credit_MainPanel").append(creditMainHtml);
 								  if(treeNode.isloadjs=="true"){
-									  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
+									  $("head").find("script[src='"+jsFileUrl+"']").remove();
+									  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>');
 								  }
 								}
 								//加入到历史状态里面
@@ -198,9 +199,9 @@ $(function(){
 							debugger;	
 							if(data && data.length>0){
 							  //var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->"),data.indexOf("<!--credit_Main_end-->")+19);
-							  $(".tabs-body").append(data);
-							  
-							  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
+								$(".tabs-body").append(data);
+							    $("head").find("script[src='"+jsFileUrl+"']").remove();
+							    $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>');
 							}else{
 								$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
 							}
@@ -277,8 +278,8 @@ function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
 				if(data && data.length>0){
 					$("div[name='"+tabId+"']").find(".tabs-body").append(data);
 					if(isLoadJs || isLoadJs=="true"){
-						$("script[src='"+jsFileUrl+"']").remove();
-						$("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
+						$("head").find("script[src='"+jsFileUrl+"']").remove();
+						$("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>');
 					}
 				}
 			},error:function(error){
