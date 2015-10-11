@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.creditplus.p2p.dao.CatalogDao">
+	<resultMap type="CatalogVO" id="catalogVOMap">  
+        <id column="catalog_id"    property="catalogId"/>  
+        <result column="catalog_name" property="catalogName"/>
+        <result column="parent_id" property="parentId"/> 
+        <result column="url" property="url"/>
+        <result column="order_number" property="orderNumber"/>        
+        <result column="remark"   property="remark"/>        
+        <result column="created_by" property="created_by"/>          
+        <result column="created_date" property="created_date"/>          
+        <result column="last_updated_by" property="last_updated_by"/>          
+        <result column="last_updated_date" property="last_updated_date"/>
+    </resultMap>
+    <insert id="insertCatalog" parameterType="CatalogVO">
+       insert into catalog_t(catalog_id,catalog_name,parent_id, url,order_number,remark,created_by,created_date,last_updated_by,last_updated_date) 
+             values(#{catalogId},#{catalogName},#{parentId},#{url},#{orderNumber},#{remark},#{created_by},#{created_date},#{last_updated_by},now())    	
+    </insert>
+    
+    <select id="getCatalogListWithPage" parameterType="CatalogVO" resultMap="catalogVOMap">
+       		   select c.*
+                 from catalog_t c
+ 		<if test="name !=null " >  
+                where lower(c.catalog_name) LIKE CONCAT(CONCAT('%', lower(#{catalogName,jdbcType=VARCHAR})),'%')  
+    	</if>       
+     </select>
+</mapper>
