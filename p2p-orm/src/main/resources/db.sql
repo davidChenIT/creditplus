@@ -413,14 +413,14 @@ CREATE TABLE dict_t (
   code varchar(200)  NOT NULL COMMENT '字典编码',
   name varchar(200)  NOT NULL COMMENT '名称',
   type varchar(200)  NOT NULL COMMENT '类型',
-  state int(11) COMMENT '状态  1有效 0 无效',
+  state int(11) COMMENT '状态  1有效 0 无效' default 1,
   parent_id int(11) NOT NULL,
   order_number int(11) NOT NULL,       
   created_by varchar(200)  NOT NULL COMMENT '创建人',
   created_date timestamp NOT NULL COMMENT '创建时间',
   last_updated_by  varchar(200)  NOT NULL,
   last_updated_date timestamp NOT NULL ,
-  descript varchar(1024)  COMMENT '字典描述',
+  remark varchar(1024)  COMMENT '字典描述',
   PRIMARY KEY (dict_id)
 )  COMMENT='数据字典code表';
 
