@@ -7,7 +7,7 @@ import com.creditplus.p2p.model.LoanOrderVO;
 
 public interface LoanOrderDao {
 
-	 LoanOrderVO getLoanOrderByLoanId(Integer loan_id);
+	 Map<?, ?> getLoanOrderByLoanId(Integer loan_id);
 	 
 	 //初审列表
 	 List<?> getCreditFirstTrialListWithPage(Map<?, ?> paramMap);

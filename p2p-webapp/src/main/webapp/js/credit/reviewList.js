@@ -27,10 +27,10 @@ $(function(){
 				{name:'loan_money', index:'loan_money',align:'center',"sortable":false},
 				{name:'dateCount', index:'dateCount',align:'center',"sortable":false},
 				{name:'loan_day', index:'loan_day',align:'center',"sortable":false},
-				{name:'start_day', index:'start_day',align:'center',"sortable":false},
-				{name:'state', index:'state',align:'center',"sortable":false},
-				{name:'first_approver', index:'first_approver',align:'center',"sortable":false},
-				{name:'review_approver', index:'review_approver',align:'center',"sortable":false}
+				{name:'modifytime', index:'modifytime',align:'center',"sortable":false},
+				{name:'apply_state', index:'apply_state',align:'center',"sortable":false},
+				{name:'first_assign_user', index:'first_assign_user',align:'center',"sortable":false},
+				{name:'review_assign_user', index:'review_assign_user',align:'center',"sortable":false}
 			],
 			pager: '#reviewlistPager',
 			rowNum:10,

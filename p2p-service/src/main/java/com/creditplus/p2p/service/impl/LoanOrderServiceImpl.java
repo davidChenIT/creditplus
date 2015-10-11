@@ -21,7 +21,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 * @param paramMa
 	 * @return
 	 */
-	public LoanOrderVO creditFirstTrial(Integer loan_id){
+	public Map<?, ?> creditFirstTrial(Integer loan_id){
+		Map map=loanAppDao.getLoanOrderByLoanId(loan_id);
+		System.out.println("=====>creditFirstTrial:"+map);
 		return loanAppDao.getLoanOrderByLoanId(loan_id);
 	}
 	
@@ -30,7 +32,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 * @param paramMap
 	 * @return
 	 */
-	public LoanOrderVO CreditReview(Integer loan_id){
+	public Map<?, ?> creditReview(Integer loan_id){
 		return loanAppDao.getLoanOrderByLoanId(loan_id);
 	}
 	

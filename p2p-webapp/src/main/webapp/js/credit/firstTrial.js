@@ -31,4 +31,27 @@ $(function(){
 		
 		    }
 	});
+	
+	
+	//获取tab页传入的参数，并调用服务
+	debugger;
+	var paramsObj=$("div[name='firstTrialTab']").find("li[tabid='firstTrial']").data();
+	var loan_id=paramsObj.loan_id || "";
+	var request_data={"loan_id":loan_id};
+	var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
+	$.ajax({ 
+		url: serviceAddress,
+		datatype:'json',
+		method:"post",
+		data:{"module":"loanOrderService","method":"creditFirstTrial","request_data":JSON.stringify(request_data)},			
+		success: function(data){
+			debugger;
+			setValues("creditApplayInfoDiv",data,false);
+		},error:function(error){
+			alert(error);
+		}
+	});
+	
+	
+	
 });
