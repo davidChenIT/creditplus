@@ -19,7 +19,7 @@ $(function(){
 						   if(paramsStr){
 							   paramsStr=paramsStr.replace(/"/g,"@#_@#");
 						   }
-						   return "<a style='color:blue;' onclick=\"addTabItem('firstTrialTab','firstTrial','复审','/p2p-webapp/page/firstTrial.html','true','/p2p-webapp/js/credit/firstTrial.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+						   return "<a style='color:blue;' onclick=\"addTabItem('firstTrialTab','firstTrial','初审','/p2p-webapp/page/firstTrial.html','true','/p2p-webapp/js/credit/firstTrial.js','"+paramsStr+"');\">"+cellvalue+"</a>";
 					}
 				},
 				{name:'name', index:'name',align:'center',"sortable":false},
