@@ -472,33 +472,30 @@ CREATE TABLE dict_item_t (
 
 
 
-insert into user_t values(1,1,'test','$2a$10$G5O/PkXx8LD5YV7jnujF7OokBiqKYCKQeitYMcNGbLWumV.RXR3hq','test remark','system',now(),'system',now());
-insert into role_t values(1,1,'admin','administrator','system',now(),'system',now());
-insert into role_t values(2,1,'RC-Assistant','RC-Assistant','system',now(),'system',now());
-insert into resource_t values(1,'index','/page/index.html',1,1,'index page','system',now(),'system',now());
-insert into resource_t values(2,'firstTrial','/page/firstTrial.html',1,1,'first trial page','system',now(),'system',now());	
-insert into user_role_t values(1,1,1,'system',now(),'system',now());
-insert into role_resource_t values(1,1,1,'system',now(),'system',now());
-insert into role_resource_t values(2,1,2,'system',now(),'system',now());
-insert into role_resource_t values(3,2,1,'system',now(),'system',now());
+insert into p2p.user_t values(1,1,'test','$2a$10$G5O/PkXx8LD5YV7jnujF7OokBiqKYCKQeitYMcNGbLWumV.RXR3hq','test remark','system',now(),'system',now());
+insert into p2p.role_t values(1,1,'admin','administrator','system',now(),'system',now());
+insert into p2p.role_t values(2,1,'RC-Assistant','RC-Assistant','system',now(),'system',now());
+insert into p2p.resource_t values(1,'index','/page/index.html',1,1,'index page','system',now(),'system',now());
+insert into p2p.resource_t values(2,'firstTrial','/page/firstTrial.html',1,1,'first trial page','system',now(),'system',now());	
+insert into p2p.user_role_t values(1,1,1,'system',now(),'system',now());
+insert into p2p.role_resource_t values(1,1,1,'system',now(),'system',now());
+insert into p2p.role_resource_t values(2,1,2,'system',now(),'system',now());
+insert into p2p.role_resource_t values(3,2,1,'system',now(),'system',now());
 
 
-INSERT INTO user_info VALUES (4,1,'o8EeQw_voTztu6J-jPttrk7LBGSA','朱胜','18923880749',NULL,NULL,NULL,NULL,'中国工商银行','1234','18923880749','1234','10000以上','Qwer','北京','北京','18923880749','博士','1234',NULL,NULL,7,'Y','2015-10-04 10:34:02');
+INSERT INTO p2p.user_info VALUES (4,1,'o8EeQw_voTztu6J-jPttrk7LBGSA','朱胜','18923880749',NULL,NULL,NULL,NULL,'中国工商银行','1234','18923880749','1234','10000以上','Qwer','北京','北京','18923880749','博士','1234',NULL,NULL,7,'Y','2015-10-04 10:34:02');
 
-INSERT INTO urgent_list VALUES (5,4,'xxxx','配偶','18923880749',sysdate());
-INSERT INTO urgent_list VALUES (6,4,'yyyy','姐妹','18923880749',sysdate());
-INSERT INTO urgent_list VALUES (8,4,'aaaa','情侣','18923880749',sysdate());
+INSERT INTO p2p.urgent_list VALUES (5,4,'xxxx','配偶','18923880749',sysdate());
+INSERT INTO p2p.urgent_list VALUES (6,4,'yyyy','姐妹','18923880749',sysdate());
+INSERT INTO p2p.urgent_list VALUES (8,4,'aaaa','情侣','18923880749',sysdate());
 
-INSERT INTO `loan_list` VALUES (11,4,NULL,5000,'2015-10-04 17:53:55',90,'2016-01-02',0,5000,0,0,NULL,'1234',1,'2015-10-04 09:53:55');
+INSERT INTO p2p.loan_list VALUES (11,4,NULL,5000,'2015-10-04 17:53:55',90,'2016-01-02',0,5000,0,0,NULL,'1234',1,'2015-10-04 09:53:55');
+INSERT INTO p2p.`loan_list VALUES ('13', '4', '10000', '2015-10-12 17:53:55', '30', '2015-11-12 17:53:55', '0', '10000', '0', '0', '2342343242342', '1');
+INSERT INTO p2p.`loan_list VALUES ('14', '4', '50000', '2015-10-12 17:53:55', '30', '2015-11-12 17:53:55', '0', '50000', '0', '0', '2342342345343', '1');
 
-INSERT INTO `p2p`.`approve_log_t` (`loan_id`, `assign_user`, `approve_content`, `state`, `created_by`, `last_updated_by`) VALUES ( '11', '张三', '开始审批', '1', '张三', '张三');
-INSERT INTO `p2p`.`approve_log_t` ( `loan_id`, `assign_user`, `approve_content`, `state`, `created_by`, `last_updated_by`) VALUES ( '11', '张三', '审批完毕', '1', '张三', '张三');
-INSERT INTO `p2p`.`approve_log_t` ( `loan_id`, `assign_user`, `approve_content`, `state`, `created_by`, `last_updated_by`) VALUES ( '11', '李四', '开始审批', '2', '李四', '李四');
-
-
-
-
-
+INSERT INTO p2p.approve_log_t (`loan_id`, assign_user`, approve_content`, state`, created_by`, last_updated_by`) VALUES ( '11', '张三', '开始审批', '1', '张三', '张三');
+INSERT INTO p2p.approve_log_t ( loan_id`, assign_user`, approve_content`, state`, created_by`, last_updated_by`) VALUES ( '11', '张三', '审批完毕', '1', '张三', '张三');
+INSERT INTO p2p.approve_log_t ( loan_id`, assign_user`, approve_content`, state`, created_by`, last_updated_by`) VALUES ( '11', '李四', '开始审批', '2', '李四', '李四');
 
 
 
@@ -520,7 +517,12 @@ INSERT INTO `p2p`.`approve_log_t` ( `loan_id`, `assign_user`, `approve_content`,
 
 
 
-insert into high_school_t(full_name,is_985,is_211,level) values
+
+
+
+
+
+insert into p2p.high_school_t(full_name,is_985,is_211,level) values
 ('北京大学',1,1,'一本'),
 ('北京航空航天大学',1,1,'一本'),
 ('北京理工大学',1,1,'一本'),
