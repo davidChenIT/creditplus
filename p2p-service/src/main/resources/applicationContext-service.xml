@@ -38,7 +38,7 @@
     <bean id="userService" class=" com.creditplus.p2p.service.impl.UserServiceImpl" />
     <bean id="roleService" class=" com.creditplus.p2p.service.impl.RoleServiceImpl" />
     <bean id="resourceService" class=" com.creditplus.p2p.service.impl.ResourceServiceImpl" />    
-    <bean id="CatalogService"  class=" com.creditplus.p2p.service.impl.CatalogServiceImpl" />    
+    <bean id="catalogService"  class=" com.creditplus.p2p.service.impl.CatalogServiceImpl" />    
     <bean id="dictService"     class=" com.creditplus.p2p.service.impl.DictServiceImpl" />  
     <bean id="loanOrderService" class="com.creditplus.p2p.service.impl.LoanOrderServiceImpl" />
     <bean id="approveLogService" class="com.creditplus.p2p.service.impl.ApproveLogServiceImpl" />     
