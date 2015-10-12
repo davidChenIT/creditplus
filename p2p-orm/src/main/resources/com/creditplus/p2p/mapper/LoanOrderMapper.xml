@@ -5,7 +5,7 @@
 
 <mapper namespace="com.creditplus.p2p.dao.LoanOrderDao">
 
-	<resultMap type="com.creditplus.p2p.model.LoanOrderVO" id="loanListMap">
+	<!-- <resultMap type="com.creditplus.p2p.model.LoanOrderVO" id="loanListMap">
 		<id column="loan_id" property="loan_id" />
 		<result column="user_id" property="user_id" />
 		<result column="loan_full_id" property="loan_full_id" />
@@ -68,113 +68,186 @@
 			<result column="ur_mobile" property="mobile" />
 			<result column="mobild_address" property="mobild_address" />
 		</collection>
-	</resultMap>
+	</resultMap> -->
 
+	<select id="getCreditReviewDetailByLoanId" parameterType="Integer" resultType="java.util.Map">
+		select 		
+		    t.user_id,
+		    t.loan_id,
+		    u.login_type,
+		    u.login_key,
+		    u.name,
+		    u.mobile,
+		    u.id_num,
+		    u.province,
+		    u.city,
+		    u.address,
+		    u.card_bank,
+		    u.card_no,
+		    u.card_tel,
+		    u.company,
+		    u.income,
+		    u.company_address,
+		    u.work_province,
+		    u.work_city,
+		    u.work_tel,
+		    u.degree,
+		    u.school,
+		    u.seasame_score,
+		    u.mobile_ser_code,
+		    u.is_done,
+            c.thnic_v,
+			c.registered_place_v,
+			c.address_phone,
+			c.address_phone_v,
+			c.current_city_v,
+			c.current_address_v,
+			c.id_num_name_v,
+			c.id_num_v,
+			c.mobile_place_v,
+			c.company_name_v,
+			c.work_tel_v,
+			c.work_tel_place_v,
+			c.work_name_v,
+			c.work_position_v,
+			c.income_v,
+			c.income_name_v,
+			c.seasame_score_v,
+			c.tencent_credit_v,
+			c.certificate_type_v,
+			c.certificate_name_v,
+			c.profession_grade_v,
+			c.mobile_name_v,
+			c.mobile_online_time_v,
+			c.profession_code,
+			c.degree_name_v,
+			c.school_name_v,
+			c.highest_degree_v,
+			t.loan_full_id,
+			t.loan_money,
+			t.loan_day,
+			t.start_day,
+			t.expire_day,
+			t.pay_fee,
+			t.act_money,
+			t.Interest,
+			t.overdue_fee,
+			t.bank_type,
+			t.bank_card,
+			t.modifytime,
+		    ifnull(a.apply_state,t.state) as apply_state,
+			a.first_assign_user,
+			a.review_assign_user,
+		    a.version
+	    from p2p.loan_list t
+		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
+		left join p2p.user_info u on t.user_id=u.user_id
+        left join p2p.customer_info_t c on t.user_id=c.user_id
+       	where t.loan_id=#{loan_id}
+		
+	</select>
 
-	<select id="getLoanOrderByLoanId" parameterType="java.util.Map"	resultType="java.util.Map">
-		select 
-		c.*,
-		u.user_id,
-		u.login_type,
-		u.login_key,
-		u.name,
-		u.mobile,
-		u.id_num,
-		u.province,
-		u.city,
-		u.address,
-		u.card_bank,
-		u.card_no,
-		u.card_tel,
-		u.company,
-		u.income,
-		u.company_address,
-		u.work_province,
-		u.work_city,
-		u.work_tel,
-		u.degree,
-		u.school,
-		u.seasame_score,
-		u.mobile_ser_code,
-		u.mobile_ser_code from (
-						select 
-						t.user_id as loan_user_id,
-						t.loan_id,
-						t.loan_full_id,
-						t.loan_money,
-						t.loan_day,
-						t.start_day,
-						t.expire_day,
-						t.pay_fee,
-						t.act_money,
-						t.Interest,
-						t.overdue_fee,
-						t.bank_type,
-						t.bank_card,
-						t.state as apply_state,
-						t.modifytime,
-						a.version,
-						a.first_assign_user,
-						a.review_assign_user
-						from p2p.loan_list t
-						left join p2p.loan_apply_t a on t.loan_id=a.loan_id
-					)c
-		left join user_info u on c.loan_user_id = u.user_id
-		where c.loan_id=#{loan_id}
+	<select id="getCreditFirstTrialDetailByLoanId" parameterType="Integer"	resultType="java.util.Map">
+		select 		
+		    t.user_id,
+		    t.loan_id,
+		    u.login_type,
+		    u.login_key,
+		    u.name,
+		    u.mobile,
+		    u.id_num,
+		    u.province,
+		    u.city,
+		    u.address,
+		    u.card_bank,
+		    u.card_no,
+		    u.card_tel,
+		    u.company,
+		    u.income,
+		    u.company_address,
+		    u.work_province,
+		    u.work_city,
+		    u.work_tel,
+		    u.degree,
+		    u.school,
+		    u.seasame_score,
+		    u.mobile_ser_code,
+		    u.is_done,
+			t.loan_full_id,
+			t.loan_money,
+			t.loan_day,
+			t.start_day,
+			t.expire_day,
+			t.pay_fee,
+			t.act_money,
+			t.Interest,
+			t.overdue_fee,
+			t.bank_type,
+			t.bank_card,
+			t.modifytime,
+		    ifnull(a.apply_state,t.state) as apply_state,
+			a.first_assign_user,
+			a.review_assign_user,
+		    a.version
+	    from p2p.loan_list t
+		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
+		left join p2p.user_info u on t.user_id=u.user_id
+		where t.loan_id=#{loan_id}
 	</select>
 
 	<select id="getCreditFirstTrialListWithPage" parameterType="java.util.Map"	resultType="java.util.Map">
-		select  c.*,
-				u.user_id,
-				u.login_type,
-				u.login_key,
-				u.name,
-				u.mobile,
-				u.id_num,
-				u.province,
-				u.city,
-				u.address,
-				u.card_bank,
-				u.card_no,
-				u.card_tel,
-				u.company,
-				u.income,
-				u.company_address,
-				u.work_province,
-				u.work_city,
-				u.work_tel,
-				u.degree,
-				u.school,
-				u.seasame_score,
-				u.mobile_ser_code from (
-						select t.user_id as loan_user_id,
-						t.loan_id,
-						t.loan_full_id,
-						t.loan_money,
-						t.loan_day,
-						t.start_day,
-						t.expire_day,
-						t.pay_fee,
-						t.act_money,
-						t.Interest,
-						t.overdue_fee,
-						t.bank_type,
-						t.bank_card,
-						t.state as apply_state,
-						t.modifytime,
-						a.version,
-						a.first_assign_user,
-						a.review_assign_user
-						from p2p.loan_list t
-						left join p2p.loan_apply_t a on t.loan_id=a.loan_id
-				)c 	LEFT JOIN user_info u ON c.loan_user_id = u.user_id
+	select * from (
+		select 		
+		    t.user_id,
+		    t.loan_id,
+		    u.login_type,
+		    u.login_key,
+		    u.name,
+		    u.mobile,
+		    u.id_num,
+		    u.province,
+		    u.city,
+		    u.address,
+		    u.card_bank,
+		    u.card_no,
+		    u.card_tel,
+		    u.company,
+		    u.income,
+		    u.company_address,
+		    u.work_province,
+		    u.work_city,
+		    u.work_tel,
+		    u.degree,
+		    u.school,
+		    u.seasame_score,
+		    u.mobile_ser_code,
+		    u.is_done,
+			t.loan_full_id,
+			t.loan_money,
+			t.loan_day,
+			t.start_day,
+			t.expire_day,
+			t.pay_fee,
+			t.act_money,
+			t.Interest,
+			t.overdue_fee,
+			t.bank_type,
+			t.bank_card,
+			t.modifytime,
+		    ifnull(apply_state,t.state) as apply_state,
+			a.first_assign_user,
+			a.review_assign_user,
+		    a.version
+	    from (select * from p2p.loan_list where loan_id not in( select loan_id from p2p.loan_apply_t where apply_state!=2 or (apply_state=2 and first_assign_user!=#{last_updated_by}))) t
+		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
+		left join p2p.user_info u on t.user_id=u.user_id) s
+
 		<where>
-			and 1=1
 			<if test="loan_id!= null">
 				AND loan_id = #{loan_id}
 			</if>
-			<if test="state!= null">
-				AND state = #{state,jdbcType=INTEGER}
+			<if test="apply_state!= null">
+				AND apply_state = #{state,jdbcType=INTEGER}
 			</if>
 			<if test="loan_money!= null">
 				AND loan_money = #{loan_money}
@@ -200,57 +273,57 @@
 
 
 	<select id="getCreditReviewListWithPage" parameterType="java.util.Map"	resultType="java.util.Map">
-			select  c.*,
-				u.user_id,
-				u.login_type,
-				u.login_key,
-				u.name,
-				u.mobile,
-				u.id_num,
-				u.province,
-				u.city,
-				u.address,
-				u.card_bank,
-				u.card_no,
-				u.card_tel,
-				u.company,
-				u.income,
-				u.company_address,
-				u.work_province,
-				u.work_city,
-				u.work_tel,
-				u.degree,
-				u.school,
-				u.seasame_score,
-				u.mobile_ser_code from (
-						select t.user_id as loan_user_id,
-						t.loan_id,
-						t.loan_full_id,
-						t.loan_money,
-						t.loan_day,
-						t.start_day,
-						t.expire_day,
-						t.pay_fee,
-						t.act_money,
-						t.Interest,
-						t.overdue_fee,
-						t.bank_type,
-						t.bank_card,
-						t.state as apply_state,
-						t.modifytime,
-						a.version,
-						a.first_assign_user,
-						a.review_assign_user
-						from p2p.loan_list t
-						left join p2p.loan_apply_t a on t.loan_id=a.loan_id
-				)c 	LEFT JOIN user_info u ON c.loan_user_id = u.user_id
+		select * from (
+			select 		
+		    t.user_id,
+		    t.loan_id,
+		    u.login_type,
+		    u.login_key,
+		    u.name,
+		    u.mobile,
+		    u.id_num,
+		    u.province,
+		    u.city,
+		    u.address,
+		    u.card_bank,
+		    u.card_no,
+		    u.card_tel,
+		    u.company,
+		    u.income,
+		    u.company_address,
+		    u.work_province,
+		    u.work_city,
+		    u.work_tel,
+		    u.degree,
+		    u.school,
+		    u.seasame_score,
+		    u.mobile_ser_code,
+		    u.is_done,
+			t.loan_full_id,
+			t.loan_money,
+			t.loan_day,
+			t.start_day,
+			t.expire_day,
+			t.pay_fee,
+			t.act_money,
+			t.Interest,
+			t.overdue_fee,
+			t.bank_type,
+			t.bank_card,
+			t.modifytime,
+		    ifnull(apply_state,t.state) as apply_state,
+			a.first_assign_user,
+			a.review_assign_user,
+		    a.version
+	    from (select * from p2p.loan_list where loan_id not in( select loan_id from p2p.loan_apply_t where apply_state!=3 or (apply_state=3 and first_assign_user!=#{last_updated_by}))) t
+		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
+		left join p2p.user_info u on t.user_id=u.user_id) s
 		<where>
-			and 1=1
 			<if test="loan_id!= null">
 				AND loan_id = #{loan_id}
 			</if>
-			<if test="state!= null">
-				AND state = #{state,jdbcType=INTEGER}
+			<if test="apply_state!= null">
+				AND apply_state = #{apply_state,jdbcType=INTEGER}
 			</if>
 			<if test="loan_money!= null">
 				AND loan_money = #{loan_money}
@@ -298,4 +371,28 @@
 		loan_apply_t t where t.loan_id = #{loan_id}
 	</delete>
 
+
+	<insert id="insertLoanApply" parameterType="java.util.Map">
+		insert into loan_apply_t(loan_id,version,apply_state,first_assign_user,review_assign_user,modifytime)values(#{loan_id},#{version},#{apply_state},#{first_assign_user},#{review_assign_user},sysdate())
+	</insert>
+	
+	
+	<select id="selectLoanApplyList" parameterType="java.util.Map" resultType="java.util.Map">
+		select loan_id,version,apply_state,first_assign_user,review_assign_user,modifytime from loan_apply_t t 
+		where loan_id = #{loan_id} and apply_state = #{apply_state} 
+		<where>
+			<if test="loan_id!= null">
+				AND loan_id = #{loan_id}
+			</if>
+			<if test="apply_state!= null">
+				AND apply_state = #{apply_state}
+			</if>
+		</where>
+	</select>
+	
 </mapper>
+
+
+
+
+
