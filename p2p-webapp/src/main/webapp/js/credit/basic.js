@@ -329,21 +329,52 @@ function setValues(divId,dataObj,isAppendHtml){
 
 
 //公共校验函数
-function validateRequire(elemName,tip){
-	var elemVal = $("input[name='"+ elemName +"']").val();
+function validateRequire(elemName,tip,parantsDivId){
+	var elementDom;
+	if(parantsDivId){
+		elementDom=$("#"+parantsDivId).find("[name='"+elemName+"']");
+	}else{
+		elementDom=$("[name='"+ elemName +"']");
+	}
+	var elemVal = elementDom.val();
     if(!elemVal || !$.trim(elemVal)){
 		  var elemNameTipLength=$("span[name='" + elemName + "Tip']").length;
 		  if(elemNameTipLength==0){
-		  	$("input[name='"+ elemName +"']").parent().after("<span name='" + elemName + "Tip' style='color:red;'>" + tip + "</span>");
+			  elementDom.parent().after("<span name='" + elemName + "Tip' style='color:red;'>" + tip + "</span>");
 		  }
-		  
-		  $("input[name='"+ elemName +"']").focus(function(e){
+		  elementDom.focus(function(e){
 			  $("span[name='" + elemName + "Tip']").remove();
 			  $(this).unbind(e);
 		  });
 		  return;
 	}
-    
     return elemVal;
 }
+
+
+//公共清除函数
+function clearDomVal(areaDivId){
+	$("#"+areaDivId).find("input").each(function(i,input){
+		$(input).val("");
+	});
+	
+	$("#"+areaDivId).find("textarea").each(function(i,textarea){
+		$(textarea).text("");
+	});
+}
+
+
+/**var elemVal = $("input[name='"+ elemName +"']").val();
+if(!elemVal || !$.trim(elemVal)){
+	  var elemNameTipLength=$("span[name='" + elemName + "Tip']").length;
+	  if(elemNameTipLength==0){
+	  	$("input[name='"+ elemName +"']").parent().after("<span name='" + elemName + "Tip' style='color:red;'>" + tip + "</span>");
+	  }
+	  
+	  $("input[name='"+ elemName +"']").focus(function(e){
+		  $("span[name='" + elemName + "Tip']").remove();
+		  $(this).unbind(e);
+	  });
+	  return;
+}*/
 
