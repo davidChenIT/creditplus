@@ -74,13 +74,14 @@ CREATE TABLE approve_log_t (
 
   
  create table loan_apply_t(
+  id                   int not null auto_increment,
   loan_id int(11) 		NOT NULL,
-  version varchar(20)   not null comment '版本',
+  version double(3,1)   not null comment '版本',
   apply_state int       not null comment '借款单状态',
   first_assign_user  varchar(200)    comment '初审人',
   review_assign_user varchar(200)	 comment '复审人',
   modifytime  timestamp not null,
-  primary key (loan_id)
+  primary key (id)
  )COMMENT='借款申请后台表';
 
  
@@ -490,12 +491,10 @@ INSERT INTO p2p.urgent_list VALUES (6,4,'yyyy','姐妹','18923880749',sysdate())
 INSERT INTO p2p.urgent_list VALUES (8,4,'aaaa','情侣','18923880749',sysdate());
 
 INSERT INTO p2p.loan_list VALUES (11,4,NULL,5000,'2015-10-04 17:53:55',90,'2016-01-02',0,5000,0,0,NULL,'1234',1,'2015-10-04 09:53:55');
-INSERT INTO p2p.`loan_list VALUES ('13', '4', '10000', '2015-10-12 17:53:55', '30', '2015-11-12 17:53:55', '0', '10000', '0', '0', '2342343242342', '1');
-INSERT INTO p2p.`loan_list VALUES ('14', '4', '50000', '2015-10-12 17:53:55', '30', '2015-11-12 17:53:55', '0', '50000', '0', '0', '2342342345343', '1');
+INSERT INTO p2p.loan_list VALUES ('13', '4', null,'10000', '2015-10-12 17:53:55', '30', '2015-11-12 17:53:55', '0', '10000', '0', '0', null,'2342343242342', '1','2015-10-04 09:53:55');
+INSERT INTO p2p.loan_list VALUES ('14', '4',null, '50000', '2015-10-12 17:53:55', '30', '2015-11-12 17:53:55', '0', '50000', '0', '0', null,'2342343242342', '1','2015-10-04 09:53:55');
 
-INSERT INTO p2p.approve_log_t (`loan_id`, assign_user`, approve_content`, state`, created_by`, last_updated_by`) VALUES ( '11', '张三', '开始审批', '1', '张三', '张三');
-INSERT INTO p2p.approve_log_t ( loan_id`, assign_user`, approve_content`, state`, created_by`, last_updated_by`) VALUES ( '11', '张三', '审批完毕', '1', '张三', '张三');
-INSERT INTO p2p.approve_log_t ( loan_id`, assign_user`, approve_content`, state`, created_by`, last_updated_by`) VALUES ( '11', '李四', '开始审批', '2', '李四', '李四');
+INSERT INTO `p2p`.`loan_apply_t`  VALUES (1,'11', 2.0, '2', 'test',null,'2015-11-12 17:53:55');
 
 
 

@@ -2,7 +2,7 @@ package com.creditplus.p2p.common.util;
 
 import java.util.Map;
 
-public class CheckParameterUtil {
+public class CheckParamUtil {
 
 	public static void checkKey(Map<String,Object> paramMap,String...key) throws Exception{
 		if(paramMap!=null && key!=null)

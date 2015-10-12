@@ -347,19 +347,19 @@
 		order by modifytime desc
 	</select>
 
-	<update id="updateLoanOrder" parameterType="LoanOrderVO">
+	<update id="updateLoanOrder" parameterType="java.util.Map">
 		update loan_apply_t
 		<set>
-			<if test="1=1">
-				modifytime=sysdate()
+			<if test="1==1">
+				modifytime=sysdate(),
 			</if>
-			<if test="state != null">
-				state=#{state}
+			<if test="apply_state != null">
+				apply_state=#{apply_state},
 			</if>
-			<if test="first_assign_user != null &amp;&amp; state==1">
-				first_assign_user=#{first_assign_user}
+			<if test="first_assign_user != null &amp;&amp; apply_state==1">
+				first_assign_user=#{first_assign_user},
 			</if>
-			<if test="two_assign_user != null &amp;&amp; state==2">
+			<if test="two_assign_user != null &amp;&amp; apply_state==2">
 				two_assign_user=#{two_assign_user}
 			</if>
 		</set>
@@ -378,16 +378,7 @@
 	
 	
 	<select id="selectLoanApplyList" parameterType="java.util.Map" resultType="java.util.Map">
-		select loan_id,version,apply_state,first_assign_user,review_assign_user,modifytime from loan_apply_t t 
-		where loan_id = #{loan_id} and apply_state = #{apply_state} 
-		<where>
-			<if test="loan_id!= null">
-				AND loan_id = #{loan_id}
-			</if>
-			<if test="apply_state!= null">
-				AND apply_state = #{apply_state}
-			</if>
-		</where>
+		select loan_id,version,apply_state,first_assign_user,review_assign_user,modifytime from loan_apply_t t where loan_id = #{loan_id} 
 	</select>
 	
 </mapper>

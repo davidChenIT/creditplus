@@ -29,7 +29,7 @@
     </select>
     
     <insert id="insertApproveLog" parameterType="java.util.Map">
-     	insert into approve_log_t(id,loan_id,assign_user,approve_content,state,created_by,created_date,last_updated_by,last_updated_date)values(#{id},#{loan_id},#{last_updated_by},#{approve_content},#{state},#{last_updated_by},sysdate(),#{last_updated_by},sysdate())
+     	insert into approve_log_t(id,loan_id,assign_user,approve_content,state,created_by,created_date,last_updated_by,last_updated_date)values(#{id},#{loan_id},#{last_updated_by},#{approve_content},#{apply_state},#{last_updated_by},sysdate(),#{last_updated_by},sysdate())
     </insert>
     
     <delete id="deleteAppLogByLoanId" parameterType="Integer">
