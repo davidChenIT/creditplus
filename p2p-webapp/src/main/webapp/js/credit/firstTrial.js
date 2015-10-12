@@ -1,10 +1,68 @@
 $(function(){
+//	 getCreditFirstTrialDetailByLoanId  初审详情
+//	 getCreditReviewDetailByLoanId    复审详情
+//	 creditFirstTrial   初审提交
+//	 creditReview     复审提交
+//
+//	 urgentContactorService   getListByUserId 查询紧急连接人{user_id=“”}
+	
+	
 	var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";
-	//构造grid
+	//获取tab页传入的参数，并调用服务
+	debugger;
+	var paramsObj=$("div[name='firstTrialTab']").find("li[tabid='firstTrial']").data();
+	var loan_id=paramsObj.loan_id || "";
+	//查询详细信息，并赋值
+	$.ajax({ 
+		url: serviceAddress,
+		datatype:'json',
+		method:"post",
+		data:{"module":"loanOrderService",
+			"method":"getCreditFirstTrialDetailByLoanId",
+			"request_data":JSON.stringify({"loan_id":loan_id,"approve_content":"开始初审","apply_state":2})
+		},			
+		success: function(data){
+			debugger;
+			setValues("loanApplyInfoDiv",data,false);
+			setValues("applyUserInfoDiv",data,false);
+			setValues("applyUserAddressInfoDiv",data,false);
+			setValues("applyUserWorkInfoDiv",data,false);
+			setValues("applyUserIncomeInfoDiv",data,false);
+			//setValues("applyUserUrgentConnectionUserInfoDiv",data,false);
+			setValues("externaltCreditInfoDiv",data,false);
+			setValues("vocationalCertificateInfoDiv",data,false);
+			setValues("dealWithUserInfoDiv",data,false);
+		},error:function(error){
+			alert(error);
+		}
+	});
+	
+	//查询用户紧急联系人
+	var user_id=paramsObj.user_id || "";
+	$.ajax({ 
+		url: serviceAddress,
+		datatype:'json',
+		method:"post",
+		data:{"module":"urgentContactorService",   
+			"method":"getListByUserId",
+			"request_data":JSON.stringify({"user_id":user_id})
+		},			
+		success: function(data){
+			debugger;
+			
+			//setValues("applyUserUrgentConnectionUserInfoDiv",data,false);
+		},error:function(error){
+			alert(error);
+		}
+	});
+	
+	
+	
+	//加载审批日志grid
 	$("#firstTrialLogGrid").jqGrid({
 		 url:serviceAddress,
 		 datatype: 'json',
-		 postData:{"module":"approveLogService","method":"getAppLogByLoanId","request_data":{}},
+		 postData:{"module":"approveLogService","method":"getAppLogByLoanId","request_data":JSON.stringify({"loan_id":loan_id})},
 		 mtype: 'POST',
 		 autowidth:true,
 		 colNames:['处理时间','处理人','备注'],
@@ -33,38 +91,12 @@ $(function(){
 	});
 	
 	
-	//获取tab页传入的参数，并调用服务
-	debugger;
-	var paramsObj=$("div[name='firstTrialTab']").find("li[tabid='firstTrial']").data();
-	var loan_id=paramsObj.loan_id || "";
-	var request_data={"loan_id":loan_id};
-	var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
-	$.ajax({ 
-		url: serviceAddress,
-		datatype:'json',
-		method:"post",
-		data:{"module":"loanOrderService","method":"creditFirstTrial","request_data":JSON.stringify(request_data)},			
-		success: function(data){
-			debugger;
-			setValues("loanApplyInfoDiv",data,false);
-			setValues("applyUserInfoDiv",data,false);
-			setValues("applyUserAddressInfoDiv",data,false);
-			setValues("applyUserWorkInfoDiv",data,false);
-			setValues("applyUserIncomeInfoDiv",data,false);
-			//setValues("applyUserUrgentConnectionUserInfoDiv",data,false);
-			setValues("externaltCreditInfoDiv",data,false);
-			setValues("vocationalCertificateInfoDiv",data,false);
-			setValues("dealWithUserInfoDiv",data,false);
-		},error:function(error){
-			alert(error);
-		}
-	});
 	
-	
+	//提交初审按钮
 	$("[name='firstTrialBtn']").click(function(){
 		debugger;
+		var request_data={"loan_id":$("#firstTrial").find("span[name='loan_id']").text(),"approve_content":"初审完毕","apply_state":2};
 		var checkPass = true;
-        var request_data={};
         var thnic_v = validateRequire("thnic_v","请输入名族！","firstTrial");
 		if(thnic_v){			
         	request_data.thnic_v=thnic_v;
@@ -101,22 +133,32 @@ $(function(){
 		}else{
 			checkPass = false;
 		}
-		alert("提交成功！");
 		
-		/**var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
-		$.ajax({ 
-			url: serviceAddress,
-			datatype:'json',
-			method:"post",
-			data:{"module":"loanOrderService","method":"creditFirstTrial","request_data":JSON.stringify(request_data)},			
-			success: function(data){
-				debugger;
-				removeTabItem("firstTrialTab","firstTrial");
-				$("[name='firstTrialSearhBtn']").click();
-			},error:function(error){
-				alert(error);
-			}
-		});*/
+		if(checkPass){
+			$("div[name='firstTrial']").find("input").each(function(i,input){
+				var inputName=$(input).attr("name");
+				var inputValue=$(input).val();
+				request_data[inputName]=inputValue;
+			});
+			debugger;
+			//提交
+			var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
+			$.ajax({ 
+				url: serviceAddress,
+				datatype:'json',
+				method:"post",
+				data:{"module":"loanOrderService","method":"creditFirstTrial","request_data":JSON.stringify(request_data)},			
+				success: function(data){
+					debugger;
+					removeTabItem("firstTrialTab","firstTrial");
+					$("[name='firstTrialSearhBtn']").click();
+				},error:function(error){
+					alert(error);
+				}
+			});
+		}else{
+			alert("校验失败！");
+		}
 		
 	});
 	
