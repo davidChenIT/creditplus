@@ -30,8 +30,10 @@
     	<jaxrs:providers >
     	   <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider">
     	   		<constructor-arg name="mapper" ref="mapper" />  
-    	   </bean>    	   
-    	</jaxrs:providers>  
+    	   </bean>
+    	   <bean class="com.creditplus.p2p.webapp.common.rest.FaultExceptionMapper"/>    	   
+    	</jaxrs:providers>
+    	<jaxrs:outFaultInterceptors></jaxrs:outFaultInterceptors>  
     </jaxrs:server>
     
     <bean id="mapper" class="com.fasterxml.jackson.databind.ObjectMapper">  

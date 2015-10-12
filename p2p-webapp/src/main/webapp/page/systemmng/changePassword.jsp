@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>数据字典管理</title>
+<title>修改密码</title>
 </head>
 <body>
 <div id="credit_Top">
@@ -35,7 +35,9 @@
 									</div>
 									
 									<ul>
-										<li tabid="dictList" class="tabs-selected"><span>修改密码</span></li>
+										<li tabid="dictList" class="tabs-selected"> 
+										<span>修改密码</span>									
+										</li>
 									</ul>
 							</div>
 							<!-- 标题区域end -->
@@ -50,7 +52,7 @@
 												<div class="row">
 													<label class="col-xs-12 col-sm-3">
 														<div class="credit-label">
-															旧密码
+														    <span style="color:red;">*</span>旧密码			
 														</div>
 													</label>
 													<div class="col-xs-12 col-sm-9">
@@ -66,7 +68,7 @@
 												<div class="row">
 													<label class="col-xs-12 col-sm-3">
 														<div class="credit-label">
-															新密码
+															<span style="color:red;">*</span>新密码
 														</div>
 													</label>
 													<div class="col-xs-12 col-sm-9">
@@ -82,7 +84,7 @@
 												<div class="row">
 													<label class="col-xs-12 col-sm-3">
 														<div class="credit-label">
-															确认密码
+															<span style="color:red;">*</span>确认密码
 														</div>
 													</label>
 													<div class="col-xs-12 col-sm-9">
@@ -119,7 +121,6 @@
 			<!--  主区域end -->
        </section>
   </section>
-  
   <!-- 引入底部 -->
   <jsp:include page="../footer.jsp"></jsp:include>
 </div>

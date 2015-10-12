@@ -36,10 +36,9 @@ public class UserServiceImpl implements UserService {
 		String currentUsername = userVO.getLast_updated_by();
 		UserVO currentUserVO = userDao.findByName(currentUsername);
 		String oldPassword = userVO.getOldPassword();
-		oldPassword = SecurityUtil.encode(oldPassword);
 		if(null == currentUserVO || null == oldPassword 
-				|| !oldPassword.equals(currentUserVO.getPassword())){
-			throw new Exception("新旧密码不一致！");
+				|| !SecurityUtil.checkPassword(oldPassword,currentUserVO.getPassword())){
+			throw new Exception("旧密码输入错误！");
 		}
 		
 		String password = userVO.getPassword();
