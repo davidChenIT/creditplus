@@ -1,12 +1,11 @@
 package com.creditplus.p2p.dao;
 
 import java.util.List;
-
-import com.creditplus.p2p.model.ApproveLogVO;
+import java.util.Map;
 
 public interface ApproveLogDao {
 
-	List<?> getAppLogByLoanId(Integer loan_id);
+	List<?> getAppLogByLoanId(Map<?, ?> paramMap);
 	
-	void insertApproveLog(ApproveLogVO approveLogVo);
+	void insertApproveLog(Map<?, ?> paramMap);
 }

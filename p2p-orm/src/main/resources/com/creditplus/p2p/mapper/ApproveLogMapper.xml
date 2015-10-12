@@ -17,11 +17,19 @@
 		<result column="last_created_date" property="last_created_date"/>    	
     </resultMap>
     <select id="getAppLogByLoanId" parameterType="Integer" resultType="java.util.Map">
-    	select t.id,t.loan_id,t.assign_user,t.approve_content,t.state,t.created_by,t.created_date,t.last_updated_by,t.last_updated_date from approve_log_t t where t.loan_id = #{loan_id}
+    	select id,loan_id,assign_user,approve_content,state,created_by,created_date,last_updated_by,last_updated_date from approve_log_t 
+    	<where>
+			<if test="loan_id!= null">
+				AND loan_id = #{loan_id}
+			</if>
+			<if test="state!= null">
+				AND state = #{state}
+			</if>
+		</where>
     </select>
     
-    <insert id="insertApproveLog" parameterType="ApproveLogVO">
-     insert into approve_log_t(id,loan_id,assign_user,approve_content,state,created_by,created_date,last_updated_by,last_updated_date)values(#{id},#{loan_id},#{last_updated_by},#{approve_content},#{state},#{created_by},sysdate(),#{last_updated_by},sysdate())
+    <insert id="insertApproveLog" parameterType="java.util.Map">
+     	insert into approve_log_t(id,loan_id,assign_user,approve_content,state,created_by,created_date,last_updated_by,last_updated_date)values(#{id},#{loan_id},#{last_updated_by},#{approve_content},#{state},#{last_updated_by},sysdate(),#{last_updated_by},sysdate())
     </insert>
     
     <delete id="deleteAppLogByLoanId" parameterType="Integer">

@@ -7,7 +7,9 @@ import com.creditplus.p2p.model.LoanOrderVO;
 
 public interface LoanOrderDao {
 
-	 Map<?, ?> getLoanOrderByLoanId(Integer loan_id);
+	 Map<?, ?> getCreditFirstTrialDetailByLoanId(Integer loan_id);
+	 
+	 Map<?, ?> getCreditReviewDetailByLoanId(Integer loan_id);
 	 
 	 //初审列表
 	 List<?> getCreditFirstTrialListWithPage(Map<?, ?> paramMap);
@@ -18,4 +20,9 @@ public interface LoanOrderDao {
 	 void updateLoanOrder(LoanOrderVO loanOrder);
 	 
 	 void deleteByLoanId(Integer loan_id);
+	 
+	 void insertLoanApply(Map<?, ?> paramMap);
+	 
+	 List<?> selectLoanApplyList(Map<?, ?> paramMap);
+	 
 }
