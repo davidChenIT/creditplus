@@ -1,6 +1,8 @@
 package com.creditplus.p2p.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,7 +19,9 @@ public class UrgentContactorServiceImpl implements UrgentContactorService {
 	}
 
 	public void insertBatch(List<?> urgentList) {
-		urgentDao.insertBatch(urgentList);
+		Map urgentMap=new HashMap();
+		urgentMap.put("list", urgentList);
+		urgentDao.insertBatch(urgentMap);
 	}
 
 	public void deleteByUserId(Integer user_id) {

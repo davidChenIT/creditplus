@@ -6,18 +6,15 @@
 <mapper namespace="com.creditplus.p2p.dao.UrgentContactorDao">
     
 	<select id="getListByUserId" parameterType="Integer" resultType="java.util.Map">
-		select t.id,t.user_id,t.name,t.relation,t.mobile,t.mobile_address,t.created_by,t.created_date,t.last_updated_by,t.last_updated_date from urgent_contactor_p t where t.user_id = #{user_id}
+		select t.id,t.user_id,t.name,t.relation,t.mobile,t.mobile_address,t.created_by,t.created_date,t.last_updated_by,t.last_updated_date from urgent_contactor_t t where t.user_id = #{user_id}
 	</select>    
 	
-	<insert id="insertBatch" parameterType="java.util.List">
-		insert into urgent_contactor_p(id,user_id,name,relation,mobile,mobile_address,created_by,created_date,last_updated_by,last_updated_date)
+	<insert id="insertBatch" parameterType="java.util.Map">
+		insert into urgent_contactor_t(user_id,name,relation,mobile,mobile_address,created_by,created_date,last_updated_by,last_updated_date)
 		values
 		<foreach collection="list" item="item" index="index" separator=",">
-			(#{item.id},#{item.user_id},#{item.name},#{item.relation},#{item.mobile},#{item.mobile_address},#{item.last_updated_by},ifnull(#{item.sysdate},sysdate()),#{item.last_updated_by},ifnull(#{item.sysdate},sysdate()))
+			(#{item.user_id},#{item.name},#{item.relation},#{item.mobile},#{item.mobile_address},#{item.last_updated_by},ifnull(#{item.sysdate},sysdate()),#{item.last_updated_by},ifnull(#{item.sysdate},sysdate()))
 		</foreach>
-		 <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">  
-            select LAST_INSERT_ID();  
-       </selectKey>   
 	</insert>
 	
 	<delete id="deleteByUserId" parameterType="Integer">

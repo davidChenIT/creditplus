@@ -139,10 +139,17 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	}
 	
 	//更新紧急联系人
-	public void updateUrgentContactor(List insertList,int user_id){
+	public void updateUrgentContactor(List<Map> insertList,int user_id){
 		System.out.println("updateUrgentContactor===insertList:"+insertList);
+		if(insertList!=null)
+			for(Map map:insertList){
+				map.putAll(getCurrentUserMap());
+				map.put("user_id", user_id);
+			}
 		urgentContactorDao.deleteByUserId(user_id);
-		urgentContactorDao.insertBatch(insertList);
+		Map urgentMap=new HashMap();
+		urgentMap.put("list",insertList);
+		urgentContactorDao.insertBatch(urgentMap);
 	}
 	
 	

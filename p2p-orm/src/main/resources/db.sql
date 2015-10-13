@@ -24,8 +24,8 @@ DROP TABLE IF EXISTS role_resource_t;
 DROP TABLE IF EXISTS role_t;
 DROP TABLE IF EXISTS user_t;
 DROP TABLE IF EXISTS user_role_t;
-DROP TABLE IF EXISTS dict_t;
-DROP TABLE IF EXISTS catalog_t;
+DROP TABLE IF EXISTS dict_code_t;
+DROP TABLE IF EXISTS dict_item_t;
 
 
 create table user_info
@@ -417,35 +417,33 @@ CREATE TABLE user_role_t (
 ) ;
 
 
-CREATE TABLE dict_t (
-  dict_id int(11) NOT NULL AUTO_INCREMENT,
+
+CREATE TABLE dict_code_t (
+  id int(11) NOT NULL AUTO_INCREMENT,
   code varchar(200)  NOT NULL COMMENT '字典编码',
   name varchar(200)  NOT NULL COMMENT '名称',
   type varchar(200)  NOT NULL COMMENT '类型',
   state int(11) COMMENT '状态  1有效 0 无效',
-  parent_id int(11) NOT NULL,
-  order_number int(11) NOT NULL,       
   created_by varchar(200)  NOT NULL COMMENT '创建人',
   created_date timestamp NOT NULL COMMENT '创建时间',
   last_updated_by  varchar(200)  NOT NULL,
   last_updated_date timestamp NOT NULL ,
   descript varchar(1024)  COMMENT '字典描述',
-  PRIMARY KEY (dict_id)
+  PRIMARY KEY (id)
 )  COMMENT='数据字典code表';
 
-CREATE TABLE catalog_t (
-  catalog_id int(11)  NOT NULL AUTO_INCREMENT,
-  catalog_name varchar(200)  NOT NULL COMMENT '栏目名称',
-  parent_id int(11) NOT NULL,
-  url varchar(512),
-  order_number int(11) NOT NULL, 
-  remark varchar(512),
+CREATE TABLE dict_item_t (
+  id int(11)  NOT NULL AUTO_INCREMENT,
+  code_id int(11)  NOT NULL COMMENT 'dict_code_t id',
+  item_code varchar(100)  NOT NULL COMMENT '项编码',
+  item_name varchar(200)  NOT NULL COMMENT '项名称',
   created_by varchar(200)  NOT NULL COMMENT '创建人',
   created_date timestamp NOT NULL COMMENT  '创建时间',
   last_updated_by  varchar(200)  NOT NULL,
   last_updated_date timestamp NOT NULL ,
-  PRIMARY KEY (catalog_id)
-)  COMMENT='栏目表';
+  PRIMARY KEY (id)
+)  COMMENT='数据字典item表';
+
 
 
 
@@ -528,7 +526,7 @@ INSERT INTO `p2p`.`loan_apply_t`  VALUES (1,'11', 2.0, '2', 'test',null,'2015-11
 
 
 
-insert into p2p.high_school_t(full_name,is_985,is_211,level) values
+insert into high_school(full_name,is_985,is_211,level) values
 ('北京大学',1,1,'一本'),
 ('北京航空航天大学',1,1,'一本'),
 ('北京理工大学',1,1,'一本'),
@@ -2512,3 +2510,5 @@ insert into p2p.high_school_t(full_name,is_985,is_211,level) values
 ('南京特殊教育职业技术学院',0,0,'专科'),
 ('无锡南洋职业技术学院',0,0,'专科'),
 ('硅湖职业技术学院',0,0,'专科');
+
+
