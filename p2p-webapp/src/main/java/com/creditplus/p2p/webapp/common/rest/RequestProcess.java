@@ -20,12 +20,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.creditplus.p2p.common.annotation.ParamName;
 import com.creditplus.p2p.common.json.JSONTools;
+import com.creditplus.p2p.common.util.CommonUtil;
 import com.creditplus.p2p.model.BaseVO;
 
 @Path(value="/process")
@@ -129,12 +128,7 @@ public class RequestProcess{
         
         Object[] args = argsList.toArray();
         if( null != args && args.length > 0){
-        	String currentUser = "System";
-        	User user = ((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());        	
-        	if(null != user){
-        		currentUser = user.getUsername();
-        	}
-
+        	String currentUser = CommonUtil.getCurrentUser();
         	for(Object arg : args){
         		if(arg instanceof BaseVO){
         			BaseVO baseVO = (BaseVO)arg;
