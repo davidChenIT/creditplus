@@ -362,19 +362,3 @@ function clearDomVal(areaDivId){
 		$(textarea).text("");
 	});
 }
-
-
-/**var elemVal = $("input[name='"+ elemName +"']").val();
-if(!elemVal || !$.trim(elemVal)){
-	  var elemNameTipLength=$("span[name='" + elemName + "Tip']").length;
-	  if(elemNameTipLength==0){
-	  	$("input[name='"+ elemName +"']").parent().after("<span name='" + elemName + "Tip' style='color:red;'>" + tip + "</span>");
-	  }
-	  
-	  $("input[name='"+ elemName +"']").focus(function(e){
-		  $("span[name='" + elemName + "Tip']").remove();
-		  $(this).unbind(e);
-	  });
-	  return;
-}*/
-

@@ -51,7 +51,7 @@
 								<div tabid="reviewList" class="tabs-body-item creditPageContext credit-validator">
 									<div>
 										<!-- 条件区域开始 -->
-										<div class="row">
+										<div class="row" id="conditionDiv">
 											<div class="credit-spacecontrol col-xs-12 col-sm-4">
 												<div class="row">
 													<label class="col-xs-12 col-sm-3">
@@ -170,10 +170,10 @@
 										<!--按钮区域开始-->
 										<div class="creditRendered center credit-toolbar">
 											<div class="search-y-btn creditRendered" style="display: inline-block;">
-												<button class="credit-btn" type="button">查询</button>
+												<button class="credit-btn" name="reviewSearchBtn" type="button">查询</button>
 											</div>
 											<div class="clear-y-btn creditRendered" style="display: inline-block;">
-												<button class="credit-btn" type="button">清除</button>
+												<button class="credit-btn" type="reviewClearBtn">清除</button>
 											</div>
 										</div>
 										<!--按钮区域结束-->
