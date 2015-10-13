@@ -24,9 +24,9 @@
     
     <select id="getCatalogListWithPage" parameterType="CatalogVO" resultMap="catalogVOMap">
        		   select c.*,p.catalog_name as parent_name
-                 from catalog_t c,catalog p 
+                 from catalog_t c,catalog_t p 
                 where c.parent_id = p.catalog_id
- 		<if test="name !=null " >  
+ 		<if test="catalogName !=null " >  
                 and lower(c.catalog_name) LIKE CONCAT(CONCAT('%', lower(#{catalogName,jdbcType=VARCHAR})),'%')  
     	</if>       
      </select>
