@@ -26,6 +26,7 @@ public interface LoanOrderService {
 	 @SuppressWarnings("rawtypes")
 	 Map getCreditReviewDetailByLoanId(Map paramMap) throws Exception;
 	 
-	 
+	 @SuppressWarnings("rawtypes")
+	 void creditReviewReject(Map paramMap) throws Exception;
 	 
 }

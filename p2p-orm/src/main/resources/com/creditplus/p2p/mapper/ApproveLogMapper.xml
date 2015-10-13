@@ -5,7 +5,7 @@
  
 <mapper namespace="com.creditplus.p2p.dao.ApproveLogDao">
     
-    <resultMap type="ApproveLogVO" id="approveLogVOMap">
+<!--     <resultMap type="ApproveLogVO" id="approveLogVOMap">
     	<id column="id" property="loan_id"/>
 		<result column="loan_id" property="loan_id"/>    	
 		<result column="assign_user" property="assign_user"/>    	
@@ -15,7 +15,8 @@
 		<result column="creted_date" property="creted_date"/>    	
 		<result column="last_updated_by" property="last_updated_by"/>    	
 		<result column="last_created_date" property="last_created_date"/>    	
-    </resultMap>
+    </resultMap> -->
+    
     <select id="getAppLogByLoanId" parameterType="Integer" resultType="java.util.Map">
     	select id,loan_id,assign_user,approve_content,state,created_by,created_date,last_updated_by,last_updated_date from approve_log_t 
     	<where>

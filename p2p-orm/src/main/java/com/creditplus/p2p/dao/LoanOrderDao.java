@@ -16,7 +16,10 @@ public interface LoanOrderDao {
 	 //复审列表
 	 List<?> getCreditReviewListWithPage(Map<?, ?> paramMap);
 	 
-	 void updateLoanOrder(Map paramMap);
+	 void updateLoanOrderByLoanId(Map paramMap);
+	 
+	 //复审驳回更新
+	 void creditReviewRejectUpdate(Map paramMap);
 	 
 	 void deleteByLoanId(Integer loan_id);
 	 

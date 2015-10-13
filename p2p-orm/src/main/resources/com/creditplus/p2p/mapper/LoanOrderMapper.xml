@@ -238,7 +238,7 @@
 			a.first_assign_user,
 			a.review_assign_user,
 		    a.version
-	    from (select * from p2p.loan_list where loan_id not in( select loan_id from p2p.loan_apply_t where apply_state!=2 or (apply_state=2 and first_assign_user!=#{last_updated_by}))) t
+	    from (select * from p2p.loan_list where loan_id not in( select loan_id from p2p.loan_apply_t where (apply_state!=2 or apply_state!=3) and first_assign_user!=#{last_updated_by})) t
 		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
 		left join p2p.user_info u on t.user_id=u.user_id) s
 
@@ -315,7 +315,7 @@
 			a.first_assign_user,
 			a.review_assign_user,
 		    a.version
-	    from (select * from p2p.loan_list where loan_id in( select loan_id from p2p.loan_apply_t where apply_state=2 or (apply_state=3 and first_assign_user=#{last_updated_by}))) t
+	    from (select * from p2p.loan_list where loan_id in( select loan_id from p2p.loan_apply_t where apply_state=3 or ((apply_state=4 or apply_state=5) and review_assign_user=#{last_updated_by}))) t
 		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
 		left join p2p.user_info u on t.user_id=u.user_id) s
 		<where>
@@ -347,7 +347,7 @@
 		order by modifytime desc
 	</select>
 
-	<update id="updateLoanOrder" parameterType="java.util.Map">
+	<update id="updateLoanOrderByLoanId" parameterType="java.util.Map">
 		update loan_apply_t
 		<set>
 			<if test="1==1">
@@ -356,19 +356,26 @@
 			<if test="apply_state != null">
 				apply_state=#{apply_state},
 			</if>
-			<if test="first_assign_user != null &amp;&amp; apply_state==2">
+			<if test="first_assign_user != null">
 				first_assign_user=#{first_assign_user},
 			</if>
-			<if test="review_assign_user != null &amp;&amp; apply_state==3">
-				review_assign_user=#{review_assign_user}
+			<if test="review_assign_user != null">
+				review_assign_user=#{review_assign_user},
+			</if>
+			<if test="version != null">
+				version=#{version}
 			</if>
 		</set>
 		where loan_id = #{loan_id}
 	</update>
+	
+	<!-- 复审驳回更新服务 -->
+	<update id="creditReviewRejectUpdate" parameterType="java.util.Map">
+		update loan_apply_t set modifytime=sysdate(),apply_state=2,review_assign_user='' where loan_id = #{loan_id}
+	</update>
 
 	<delete id="deleteByLoanId" parameterType="Integer">
-		delete from
-		loan_apply_t t where t.loan_id = #{loan_id}
+		delete from	loan_apply_t t where t.loan_id = #{loan_id}
 	</delete>
 
 

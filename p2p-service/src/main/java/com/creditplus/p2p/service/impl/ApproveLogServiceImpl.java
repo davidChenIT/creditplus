@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.creditplus.p2p.common.util.CheckParamUtil;
 import com.creditplus.p2p.dao.ApproveLogDao;
 import com.creditplus.p2p.service.ApproveLogService;
@@ -22,12 +21,13 @@ public class ApproveLogServiceImpl  implements ApproveLogService{
 		return gridMap;
 	}
 	
+	
 	/**
-	 * 
+	 * 日志插入
 	 */
 	public void insertApproveLog(Map paramMap,boolean flag) throws Exception {
 		//判断是否已插入日志
-//		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","state");
+//		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state");
 		System.out.println("paramMap:"+paramMap);
 		if(flag){
 			List logList=approveLogDao.getAppLogByLoanId(paramMap);
@@ -38,5 +38,5 @@ public class ApproveLogServiceImpl  implements ApproveLogService{
 		}
 	}
 	
-
+	
 }
