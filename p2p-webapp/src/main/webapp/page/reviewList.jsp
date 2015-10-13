@@ -173,7 +173,7 @@
 												<button class="credit-btn" name="reviewSearchBtn" type="button">查询</button>
 											</div>
 											<div class="clear-y-btn creditRendered" style="display: inline-block;">
-												<button class="credit-btn" type="reviewClearBtn">清除</button>
+												<button class="credit-btn" name="reviewClearBtn" type="button">清除</button>
 											</div>
 										</div>
 										<!--按钮区域结束-->

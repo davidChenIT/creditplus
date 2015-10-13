@@ -11,7 +11,7 @@ $(function(){
 		method:"post",
 		data:{"module":"loanOrderService",
 			"method":"getCreditReviewDetailByLoanId",
-			"request_data":JSON.stringify({"loan_id":loan_id,"approve_content":"开始复审","apply_state":3})
+			"request_data":JSON.stringify({"loan_id":loan_id,"approve_content":"开始复审","apply_state":4})
 		},			
 		success: function(data){
 			debugger;
@@ -55,13 +55,13 @@ $(function(){
 		 postData:{"module":"approveLogService","method":"getAppLogByLoanId","request_data":JSON.stringify({"loan_id":loan_id})},
 		 mtype: 'POST',
 		 autowidth:true,
-		 colNames:['处理时间','处理人','备注'],
+		 colNames:['处理时间','处理人','处理描述'],
 		 colModel :[
-				{name:'applay_date', index:'applay_date',align:'center'},
-				{name:'applay_user', index:'applay_user',align:'center'},
-				{name:'remark', index:'remark',align:'center'}
+				{name:'created_date', index:'created_date',align:'center'},
+				{name:'assign_user', index:'assign_user',align:'center'},
+				{name:'approve_content', index:'approve_content',align:'center'}
 			],
-			pager: '#reviewLogPager',
+//			pager: '#reviewLogPager',
 			rowNum:10,
 			rowList:[10,20,30],
 			viewrecords: true,
@@ -78,6 +78,42 @@ $(function(){
 		         records: "totalrecords"
 		
 		    }
+	});
+	
+	
+	
+	//提交初审按钮
+	$("[name='reviewBtn']").click(function(){
+		debugger;
+		var request_data={"loan_id":$("#firstTrial").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"复审完毕","apply_state":5};
+		var checkPass = true;
+		if(checkPass){
+			$("div[name='firstTrial']").find("input").each(function(i,input){
+				var inputName=$(input).attr("name");
+				var inputValue=$(input).val();
+				request_data[inputName]=inputValue;
+			});
+			debugger;
+			//提交
+			var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
+			$.ajax({ 
+				url: serviceAddress,
+				datatype:'json',
+				method:"post",
+				data:{"module":"loanOrderService","method":"creditReview","request_data":JSON.stringify(request_data)},			
+				success: function(data){
+					debugger;
+					removeTabItem("reviewTab","review");
+					$("[name='reviewSearchBtn']").click();
+				},error:function(error){
+					alert(error);
+				}
+			});
+		}else{
+			alert("校验失败！");
+			return false;
+		}
+		
 	});
 	
 	

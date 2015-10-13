@@ -65,13 +65,13 @@ $(function(){
 		 postData:{"module":"approveLogService","method":"getAppLogByLoanId","request_data":JSON.stringify({"loan_id":loan_id})},
 		 mtype: 'POST',
 		 autowidth:true,
-		 colNames:['处理时间','处理人','备注'],
+		 colNames:['处理时间','处理人','处理描述'],
 		 colModel :[
-				{name:'applay_date', index:'applay_date',align:'center'},
-				{name:'applay_user', index:'applay_user',align:'center'},
-				{name:'remark', index:'remark',align:'center'}
+				{name:'created_date', index:'created_date',align:'center'},
+				{name:'assign_user', index:'assign_user',align:'center'},
+				{name:'approve_content', index:'approve_content',align:'center'}
 			],
-			pager: '#firstTrialLogPager',
+			//pager: '#firstTrialLogPager',
 			rowNum:10,
 			rowList:[10,20,30],
 			viewrecords: true,
@@ -95,7 +95,7 @@ $(function(){
 	//提交初审按钮
 	$("[name='firstTrialBtn']").click(function(){
 		debugger;
-		var request_data={"loan_id":$("#firstTrial").find("span[name='loan_id']").text(),"approve_content":"初审完毕","apply_state":2};
+		var request_data={"loan_id":$("#firstTrial").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"初审完毕","apply_state":3};
 		var checkPass = true;
         var thnic_v = validateRequire("thnic_v","请输入名族！","firstTrial");
 		if(thnic_v){			
