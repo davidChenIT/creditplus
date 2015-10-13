@@ -14,11 +14,11 @@ public interface LoanOrderService {
 	 
 	 //初审详情
 	 @SuppressWarnings("rawtypes")
-	 Map creditFirstTrial( Map paramMap) throws Exception;
+	 void creditFirstTrial( Map paramMap) throws Exception;
 	 
 	//复审详情
 	 @SuppressWarnings("rawtypes")
-	 Map creditReview(Map paramMap) throws Exception;
+	 void creditReview(Map paramMap) throws Exception;
 	 
 	 @SuppressWarnings("rawtypes")
 	 Map getCreditFirstTrialDetailByLoanId(Map paramMap) throws Exception;

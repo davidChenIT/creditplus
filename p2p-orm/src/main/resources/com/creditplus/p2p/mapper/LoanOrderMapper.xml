@@ -315,7 +315,7 @@
 			a.first_assign_user,
 			a.review_assign_user,
 		    a.version
-	    from (select * from p2p.loan_list where loan_id not in( select loan_id from p2p.loan_apply_t where apply_state!=3 or (apply_state=3 and first_assign_user!=#{last_updated_by}))) t
+	    from (select * from p2p.loan_list where loan_id in( select loan_id from p2p.loan_apply_t where apply_state=2 or (apply_state=3 and first_assign_user=#{last_updated_by}))) t
 		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
 		left join p2p.user_info u on t.user_id=u.user_id) s
 		<where>
@@ -356,11 +356,11 @@
 			<if test="apply_state != null">
 				apply_state=#{apply_state},
 			</if>
-			<if test="first_assign_user != null &amp;&amp; apply_state==1">
+			<if test="first_assign_user != null &amp;&amp; apply_state==2">
 				first_assign_user=#{first_assign_user},
 			</if>
-			<if test="two_assign_user != null &amp;&amp; apply_state==2">
-				two_assign_user=#{two_assign_user}
+			<if test="review_assign_user != null &amp;&amp; apply_state==3">
+				review_assign_user=#{review_assign_user}
 			</if>
 		</set>
 		where loan_id = #{loan_id}

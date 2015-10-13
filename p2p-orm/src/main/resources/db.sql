@@ -87,6 +87,7 @@ CREATE TABLE approve_log_t (
  
  
 create table customer_info_t(
+   id                   int not null auto_increment,
    user_id				int not null,
    thnic_v				varchar(50)  	COMMENT '名族',
    registered_place_v   varchar(200)	comment '户口所在地',
@@ -115,7 +116,11 @@ create table customer_info_t(
    degree_name_v		varchar(200)    comment '学历验证姓名',
    school_name_v		varchar(200)    comment '学校验证全程',
    highest_degree_v     int				comment '最高学历',
-   primary key (user_id)
+  created_by 			varchar(200)  NOT NULL COMMENT '创建人',
+  created_date 			timestamp NOT NULL COMMENT  '创建时间',
+  last_updated_by  		varchar(200)  NOT NULL,
+  last_updated_date 	timestamp NOT NULL ,
+   primary key (id)
 )COMMENT='客户表审批补全字段';
 
 /*==============================================================*/
