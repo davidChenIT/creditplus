@@ -315,7 +315,7 @@
 			a.first_assign_user,
 			a.review_assign_user,
 		    a.version
-	    from (select * from p2p.loan_list where loan_id not in( select loan_id from p2p.loan_apply_t where apply_state not in(3,4,5) or review_assign_user!=#{last_updated_by})) t
+	    from (select * from p2p.loan_list where loan_id in( select loan_id from p2p.loan_apply_t where apply_state=3 or review_assign_user=#{last_updated_by})) t
 		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
 		left join p2p.user_info u on t.user_id=u.user_id) s
 		<where>

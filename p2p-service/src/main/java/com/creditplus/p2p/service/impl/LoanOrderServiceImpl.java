@@ -114,7 +114,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 */
 	public void creditReviewReject(Map paramMap) throws Exception {
 		paramMap=initParamMap(paramMap);
-		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state","user_id");
+		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state");
 		loanOrderDao.creditReviewRejectUpdate(paramMap);
 		approveLogService.insertApproveLog(paramMap, false);
 	}
