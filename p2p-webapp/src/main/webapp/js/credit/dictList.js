@@ -203,13 +203,32 @@ $(function(){
     });
     
     $("[name='saveDictBtn']").click(function(){
+//    	var rowids = $("#dictListGrid").jqGrid('getDataIDs');
+//    	for(var i=0;i<rowids.length;i++){
+//    	  $("#dictListGrid").restoreRow(rowids[i]);
+//    	}
+//    	
+//    	var request_data =$("#dictListGrid").jqGrid("getRowData");
+    	var checkFlag = true;
+    	debugger;
     	var rowids = $("#dictListGrid").jqGrid('getDataIDs');
+    	var request_data=[];
     	for(var i=0;i<rowids.length;i++){
-    	  $("#dictListGrid").restoreRow(rowids[i]);
+    	  $("#dictListGrid").jqGrid('restoreRow', rowids[i]);
+    	  var rowData=$("#dictListGrid").jqGrid("getRowData",rowids[i]);
+    	  $("#dictListGrid").find("tr[id='"+rowids[i]+"']").find("input[type='text']").each(function(i,input){
+    	    var inputName=$(input).attr("name");
+    		var inputVal=$(input).val();
+    		rowData[inputName]=inputVal;
+    	  });
+    	  $("#dictListGrid").find("tr[id='"+rowids[i]+"']").find("textarea").each(function(i,textarea){
+    	    var textareaName=$(textarea).attr("name");
+    		var textareaVal=$(textarea).val();
+    		rowData[textareaName]=textareaVal;
+    	  });
+    	  request_data.push(rowData);
     	}
     	
-    	var checkFlag = true;
-    	var request_data =$("#dictListGrid").jqGrid("getRowData");
     	$.each(request_data,function(i,item){
     		var dictId = $(item.dictId).attr("data-val");
     		if(!dictId || !$.trim(dictId)){
