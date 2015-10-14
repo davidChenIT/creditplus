@@ -2,11 +2,16 @@
 $(function(){
 	debugger;
 	var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";
+	var parentId = $("#parentArea").find("a:last").attr("href").replace("#","");
+	parentId = parentId==""?0:parentId;
+    var request_data={};
+    request_data.parentId = parentId;
+    
 	//构造grid
     $("#dictListGrid").jqGrid({
 			url:serviceAddress,
 			datatype: 'json',
-			postData:{"module":"dictService","method":"getDictListWithPage"},
+			postData:{"module":"dictService","method":"getDictListWithPage","request_data":JSON.stringify(request_data)},
 			mtype: 'POST',
 			autowidth:true,
 			colNames:['<input type="checkbox" class="dict-create-selall-cbox">',
@@ -32,9 +37,9 @@ $(function(){
 					formatter:function(cellvalue, options, rowObject){
 					   debugger;
 					   if(!rowObject.dictId){
-						   return "<span name='dictEditSpan' class='ui-icon-edit' data-val=''></span>";
+						   return "<span name='dictEditSpan' class='ui-icon-edit' data-val='' data-name=''></span>";
 					   }else{
-						   return "<span name='dictEditSpan' class='ui-icon-edit' data-val='"+rowObject.dictId+"'></span>";
+						   return "<span name='dictEditSpan' class='ui-icon-edit' data-val='"+rowObject.dictId+ "' data-name='" + rowObject.name +"'></span>";
 					   }
 					}
 				},
@@ -144,40 +149,43 @@ $(function(){
     //给grid列中的修改图标添加点击事件
     $("div[name='dictTab']").on("click",".ui-icon-edit",function(){
     	debugger;
+    	var dictName=$(this).attr("data-name");
     	var dictId=$(this).attr("data-val");
-    	var dictUpdate=$("div[name='dictTab']").find("li[tabid='dictUpdate']");
-    	if(dictUpdate && dictUpdate.length>0){
-    		$("div[name='dictTab']").find("li[tabid='dictUpdate']").remove();
-    		$("div[name='dictTab']").find("div[tabid='dictUpdate']").remove();
-    	}
-    	$("div[name='dictTab']").find(".tabs-head li").attr("class","");
-    	var dictUpdateLi='<li tabid="dictUpdate" class="tabs-selected"><span>修改用户</span><div class="credit-tab-close"><span>x</span></div></li>';
-    	$("div[name='dictTab']").find(".tabs-head ul").append(dictUpdateLi);
-    	$(".tabs-body").children("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
-    	
-    	var jsFileUrl="/p2p-webapp/js/credit/dictUpdate.js";
-    	$("script[src='"+jsFileUrl+"']").remove();
-		var requestUrl="http://"+window.location.host+"/p2p-webapp/page/systemmng/dictUpdate.html";
-		$.ajax({ 
-			url: requestUrl,
-			success: function(data){
-				debugger;	
-				if(data && data.length>0){
-					$("div[name='dictTab']").find(".tabs-body").append(data);
-					$("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
-				}
-			},error:function(error){
-				$("div[name='dictTab']").find(".tabs-body").append('<div tabid="dictUpdate" class="tabs-body-item creditPageContext credit-validator"><div><div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div></div>');
-			}
-		});
+        var request_data={};
+        if(dictId && dictName){
+        	request_data.parentId=dictId;            
+        	$("#parentArea").append("<a href='#" + dictId + "'>." +dictName+ "</a>");
+        	$("#parentArea").find("a").unbind("click");
+        	$("#parentArea").find("a").bind("click",function(){
+        		var parentId = $(this).attr("href");
+        		parentId = parentId.replace("#","");
+    			request_data.parentId=parentId==""? 0:parentId; 
+                $("#dictListGrid").jqGrid('setGridParam',{  
+                    datatype:'json',  
+                    postData:{'request_data':JSON.stringify(request_data)}, //发送数据
+                    page:1,
+                    rowNum:10
+                }).trigger("reloadGrid"); //重新载入 
+                $(this).nextAll().remove();
+        	}); 
+            $("#dictListGrid").jqGrid('setGridParam',{  
+                datatype:'json',  
+                postData:{'request_data':JSON.stringify(request_data)}, //发送数据
+                page:1,
+                rowNum:10
+            }).trigger("reloadGrid"); //重新载入        	
+        }    	
     });
 
     //输入用户名称，点击按钮进行过滤
     $("#searchDictListBtn").click(function(){
-        var dictname = $("input[name='dictName']").val();
+        var dictName = $("input[name='dictName']").val();
+    	var parentId = $("#parentArea").find("a:last").attr("href").replace("#","");
+    	parentId = parentId==""?0:parentId;
         var request_data={};
-        if(dictname){
-        	request_data.dictname=dictname;
+        request_data.parentId = parentId;
+        if(dictName){
+        	request_data.name=dictName;
         }
         $("#dictListGrid").jqGrid('setGridParam',{  
             datatype:'json',  
@@ -212,7 +220,9 @@ $(function(){
     	var checkFlag = true;
     	debugger;
     	var rowids = $("#dictListGrid").jqGrid('getDataIDs');
-    	var request_data=[];
+    	var grid_data=[];
+    	var parentId = $("#parentArea").find("a:last").attr("href").replace("#","");
+    	parentId = parentId==""?0:parentId;
     	for(var i=0;i<rowids.length;i++){
     	  var rowData=$("#dictListGrid").jqGrid("getRowData",rowids[i]);
     	  $("#dictListGrid").find("tr[id='"+rowids[i]+"']").find("input[type='text']").each(function(i,input){
@@ -225,10 +235,11 @@ $(function(){
     		var textareaVal=$(textarea).val();
     		rowData[textareaName]=textareaVal;
     	  });
-    	  request_data.push(rowData);
+    	  rowData.parent_id = parentId;
+    	  grid_data.push(rowData);
     	}
     	
-    	$.each(request_data,function(i,item){
+    	$.each(grid_data,function(i,item){
     		var dictId = $(item.dictId).attr("data-val");
     		if(!dictId || !$.trim(dictId)){
     			item.dictId = null;
@@ -246,6 +257,9 @@ $(function(){
     		return;
     	}
     	
+    	var request_data={};
+    	request_data.parentId = parentId;
+    	request_data.gridData = grid_data;
 		var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
 		$.ajax({ 
 			url: serviceAddress,

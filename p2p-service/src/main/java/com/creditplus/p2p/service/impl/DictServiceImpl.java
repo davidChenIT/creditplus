@@ -1,5 +1,6 @@
 package com.creditplus.p2p.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -24,28 +25,81 @@ public class DictServiceImpl implements DictService {
 	@Autowired
 	private DictDao dictDao;
 
-	public void insertDict(List<Map<String,Object>> dataList) {
-		if(null == dataList || dataList.isEmpty()){
-			return;
+	public void insertDict(int parentId,List<Map<String,Object>> dataList) {
+		DictVO dictVO = new DictVO();
+		dictVO.setParentId(parentId);
+		List<DictVO> paramList = new ArrayList<DictVO>();
+		paramList.add(dictVO);
+		List<DictVO> rsList = this.getDictListByParentId(paramList);
+		if(null != rsList && !rsList.isEmpty()){
+			List<DictVO>  deleteList = new ArrayList<DictVO>();
+			if(null != dataList && !dataList.isEmpty()){
+				for(DictVO rDictVO : rsList){
+					boolean deleteFlag = true;
+					int dictId = rDictVO.getDictId();
+					for(Map<String,Object> map : dataList){
+						Object pDictId = map.get("dict_id");
+						if(null != pDictId && dictId == (Integer)pDictId){
+							deleteFlag = false;
+							break;
+						}
+					}
+					
+					if(deleteFlag){
+						deleteList.add(rDictVO);
+					}
+				}
+			}else{
+				deleteList.addAll(rsList);
+			}
+			
+			dictDao.deleteDict(deleteList);
+			deleteChildrenCascade(deleteList);
 		}
 		
     	String currentUser = CommonUtil.getCurrentUser();
-		for(Map<String,Object> map : dataList){
-			map.put("last_updated_by",currentUser);        			
-			String createdBy = (String)map.get("created_by");
-			if(StringUtils.isBlank(createdBy)){
-				map.put("created_by",currentUser);        			
+    	if(null != dataList && !dataList.isEmpty()){
+    		List<DictVO>  updateList = new ArrayList<DictVO>();
+			for(Map<String,Object> map : dataList){
+				Object dictId =map.get("dict_id");
+				if(null != dictId){
+					DictVO pDictVO = new DictVO();
+					pDictVO.setDictId((Integer)dictId);
+					updateList.add(pDictVO);
+				}
+				
+				map.put("last_updated_by",currentUser);        			
+				String createdBy = (String)map.get("created_by");
+				if(StringUtils.isBlank(createdBy)){
+					map.put("created_by",currentUser);        			
+				}
+				
+				String createdDate = (String)map.get("created_date");
+				if(StringUtils.isBlank(createdDate)){
+					map.put("created_date",(new Date()));   
+				}
 			}
 			
-			String createdDate = (String)map.get("created_date");
-			if(StringUtils.isBlank(createdDate)){
-				map.put("created_date",(new Date()));   
-			}	
+			if(!updateList.isEmpty()){
+				dictDao.deleteDict(updateList);
+			}
 			
-			logger.info("map===" + map);
+			if(null != dataList && !dataList.isEmpty()){
+				dictDao.insertDict(dataList);
+			}
+    	}
+	}
+	
+	private void deleteChildrenCascade(List<DictVO> dataList){		
+		List<DictVO>  deleteList = getDictListByParentId(dataList);
+		if(!deleteList.isEmpty()){
+			dictDao.deleteDict(deleteList);
+			deleteChildrenCascade(deleteList);
 		}
-		
-		dictDao.insertDict(dataList);
+	}
+	
+	public List<DictVO> getDictListByParentId(List<DictVO> dataList){
+		return dictDao.getDictListByParentId(dataList);
 	}
 
 	public PageVO getDictListWithPage(PageVO pageVO,DictVO dictVO) {

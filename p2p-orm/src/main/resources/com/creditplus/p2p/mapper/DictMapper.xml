@@ -10,7 +10,8 @@
         <result column="name" property="name"/> 
         <result column="type" property="type"/>
         <result column="state" property="state"/>
-        <result column="order_number" property="orderNumber"/>        
+        <result column="order_number" property="orderNumber"/>
+        <result column="parent_id" property="parentId"/>
         <result column="remark"   property="remark"/>        
         <result column="created_by" property="created_by"/>          
         <result column="created_date" property="created_date"/>          
@@ -19,18 +20,40 @@
     </resultMap>
     
     <insert id="insertDict" parameterType="java.util.List">
-       insert into dict_t(dict_id,code,name, type,state,order_number,remark,created_by,created_date,last_updated_by,last_updated_date) 
+       insert into dict_t(dict_id,code,name, type,state,order_number,parent_id,remark,created_by,created_date,last_updated_by,last_updated_date) 
              values
 	    <foreach collection="list" item="item" index="index" separator="," >  
-	        (#{item.dictId},#{item.code},#{item.name},#{item.type},#{item.state},#{item.orderNumber},#{item.remark},#{item.created_by},#{item.created_date},#{item.last_updated_by},now())  
+	        (#{item.dictId},#{item.code},#{item.name},#{item.type},#{item.state},#{item.orderNumber},#{item.parent_id},#{item.remark},#{item.created_by},#{item.created_date},#{item.last_updated_by},now())  
 	    </foreach>
     </insert>
+    
+    <delete id="deleteDict" parameterType="java.util.List">
+    	delete from dict_t where dict_id in
+ 		<foreach collection="list" item="dictVO" index="index"
+            open="(" close=")" separator=",">        
+         	#{dictVO.dictId} 
+ 		</foreach>     	
+    </delete>
     
     <select id="getDictListWithPage" parameterType="DictVO" resultMap="dictVOMap">
        		   select d.*
                  from dict_t d
+                 where 1=1
+ 		<if test="parentId !=null " >  
+                 and parent_id = #{parentId} 
+    	</if>                  
  		<if test="name !=null " >  
-                where lower(d.name) LIKE CONCAT(CONCAT('%', lower(#{name,jdbcType=VARCHAR})),'%')  
-    	</if>       
+                 and lower(d.name) LIKE CONCAT(CONCAT('%', lower(#{name,jdbcType=VARCHAR})),'%')  
+    	</if>        
+     </select>
+     
+    <select id="getDictListByParentId" parameterType="java.util.List" resultMap="dictVOMap">
+	   select d.*
+         from dict_t d
+         where d.parent_id in 
+ 		<foreach collection="list" item="dictVO" index="index"
+            open="(" close=")" separator=",">        
+         	#{dictVO.parentId} 
+ 		</foreach>             
      </select>
 </mapper>

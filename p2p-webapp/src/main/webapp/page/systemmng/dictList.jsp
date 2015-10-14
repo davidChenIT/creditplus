@@ -74,7 +74,9 @@
 										</div>
 									
 										<!-- grid区域开始 -->
-										
+										<span id="parentArea" data_val="Root">
+											<a href="#">Root</a>
+										</span>
 										<div class="row">
 											<table id="dictListGrid"></table> 
 

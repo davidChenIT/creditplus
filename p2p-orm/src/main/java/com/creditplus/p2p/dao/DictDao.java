@@ -9,6 +9,10 @@ public interface DictDao {
 	
 	void insertDict(List<Map<String,Object>> dataList);
 	
+	void deleteDict(List<DictVO> dataList);
+	
 	List<DictVO> getDictListWithPage(DictVO dictVO);
+	
+	List<DictVO> getDictListByParentId(List<DictVO> dataList);
 
 }
