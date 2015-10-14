@@ -24,8 +24,9 @@ DROP TABLE IF EXISTS role_resource_t;
 DROP TABLE IF EXISTS role_t;
 DROP TABLE IF EXISTS user_t;
 DROP TABLE IF EXISTS user_role_t;
+DROP TABLE IF EXISTS dict_code_t;
+DROP TABLE IF EXISTS dict_item_t;
 DROP TABLE IF EXISTS dict_t;
-DROP TABLE IF EXISTS catalog_t;
 
 
 create table user_info
@@ -60,11 +61,11 @@ create table user_info
 alter table user_info comment '用户资料信息';
 
 CREATE TABLE approve_log_t (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  loan_id int(11) NOT NULL,
+  id int NOT NULL AUTO_INCREMENT,
+  loan_id int NOT NULL,
   assign_user  varchar(200) not null  comment '审批人名称',
   approve_content varchar(200) not null COMMENT '审核内容',
-  state int(11)  not null COMMENT '1 开始初审 2 开始复审 3 发标审核',
+  state int  not null COMMENT '1 开始初审 2 开始复审 3 发标审核',
   created_by varchar(200)  NOT NULL COMMENT '创建人',
   created_date timestamp NOT NULL COMMENT '创建时间',
   last_updated_by  varchar(200)  NOT NULL,
@@ -75,7 +76,7 @@ CREATE TABLE approve_log_t (
   
  create table loan_apply_t(
   id                   int not null auto_increment,
-  loan_id int(11) 		NOT NULL,
+  loan_id int 		NOT NULL,
   version double(3,1)   not null comment '版本',
   apply_state int       not null comment '借款单状态',
   first_assign_user  varchar(200)    comment '初审人',
@@ -341,8 +342,8 @@ alter table urgent_list comment '紧急联系人列表';
 
 
 CREATE TABLE urgent_contactor_t (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  user_id int(11) NOT NULL COMMENT '用户id',
+  id int NOT NULL AUTO_INCREMENT,
+  user_id int NOT NULL COMMENT '用户id',
   name varchar(200)  NOT NULL COMMENT '姓名',
   relation varchar(200)  NOT NULL COMMENT '关系',
   mobile varchar(20)  NOT NULL COMMENT '电话',
@@ -356,11 +357,11 @@ CREATE TABLE urgent_contactor_t (
 
 
 CREATE TABLE resource_t (
-  resource_id int(11) NOT NULL AUTO_INCREMENT,
+  resource_id int NOT NULL AUTO_INCREMENT,
   resource_name varchar(128) NOT NULL,
   url varchar(512) NOT NULL,
-  priority int(11) DEFAULT NULL,
-  resource_type int(11) DEFAULT NULL,
+  priority int DEFAULT NULL,
+  resource_type int DEFAULT NULL,
   remark varchar(1024) DEFAULT NULL,
   created_by varchar(200) NOT NULL,
   created_date datetime NOT NULL,
@@ -370,9 +371,9 @@ CREATE TABLE resource_t (
 );
 
 CREATE TABLE role_resource_t (
-  rr_id int(11) NOT NULL AUTO_INCREMENT,
-  role_id int(11) NOT NULL,
-  resource_id int(11) NOT NULL,
+  rr_id int NOT NULL AUTO_INCREMENT,
+  role_id int NOT NULL,
+  resource_id int NOT NULL,
   created_by varchar(200) NOT NULL,
   created_date datetime NOT NULL,
   last_updated_by varchar(200) NOT NULL,
@@ -381,8 +382,8 @@ CREATE TABLE role_resource_t (
 );
 
 CREATE TABLE role_t (
-  role_id int(11) NOT NULL AUTO_INCREMENT,
-  enable int(11) NOT NULL DEFAULT '1',
+  role_id int NOT NULL AUTO_INCREMENT,
+  enable int NOT NULL DEFAULT '1',
   role_name varchar(128) NOT NULL,
   remark varchar(1024) DEFAULT NULL,
   created_by varchar(200) NOT NULL,
@@ -393,8 +394,8 @@ CREATE TABLE role_t (
 ) ;
 
 CREATE TABLE user_t (
-  user_id int(11) NOT NULL AUTO_INCREMENT,
-  enable int(11) NOT NULL DEFAULT '1',
+  user_id int NOT NULL AUTO_INCREMENT,
+  enable int NOT NULL DEFAULT '1',
   username varchar(128) NOT NULL,
   password varchar(128) NOT NULL,
   remark varchar(1024) DEFAULT NULL,
@@ -406,16 +407,15 @@ CREATE TABLE user_t (
 );
 
 CREATE TABLE user_role_t (
-  ur_id int(11) NOT NULL AUTO_INCREMENT,
-  user_id int(11) NOT NULL,
-  role_id int(11) NOT NULL,
+  ur_id int NOT NULL AUTO_INCREMENT,
+  user_id int NOT NULL,
+  role_id int NOT NULL,
   created_by varchar(200) NOT NULL,
   created_date datetime NOT NULL,
   last_updated_by varchar(200) NOT NULL,
   last_updated_date datetime NOT NULL,
   PRIMARY KEY (ur_id)
 ) ;
-
 
 
 CREATE TABLE dict_t (
@@ -434,19 +434,6 @@ CREATE TABLE dict_t (
   PRIMARY KEY (dict_id)
 )  COMMENT='数据字典code表';
 
-CREATE TABLE catalog_t (
-  catalog_id int(11)  NOT NULL AUTO_INCREMENT,
-  catalog_name varchar(200)  NOT NULL COMMENT '栏目名称',
-  parent_id int(11) NOT NULL,
-  url varchar(512),
-  order_number int(11) NOT NULL, 
-  remark varchar(512),
-  created_by varchar(200)  NOT NULL COMMENT '创建人',
-  created_date timestamp NOT NULL COMMENT  '创建时间',
-  last_updated_by  varchar(200)  NOT NULL,
-  last_updated_date timestamp NOT NULL ,
-  PRIMARY KEY (catalog_id)
-)  COMMENT='栏目表';
 
 
 
@@ -502,9 +489,6 @@ INSERT INTO p2p.urgent_list VALUES (8,4,'aaaa','情侣','18923880749',sysdate())
 INSERT INTO p2p.loan_list VALUES (11,4,NULL,5000,'2015-10-04 17:53:55',90,'2016-01-02',0,5000,0,0,NULL,'1234',1,'2015-10-04 09:53:55');
 INSERT INTO p2p.loan_list VALUES ('13', '4', null,'10000', '2015-10-12 17:53:55', '30', '2015-11-12 17:53:55', '0', '10000', '0', '0', null,'2342343242342', '1','2015-10-04 09:53:55');
 INSERT INTO p2p.loan_list VALUES ('14', '4',null, '50000', '2015-10-12 17:53:55', '30', '2015-11-12 17:53:55', '0', '50000', '0', '0', null,'2342343242342', '1','2015-10-04 09:53:55');
-
-INSERT INTO `p2p`.`loan_apply_t`  VALUES (1,'11', 2.0, '2', 'test',null,'2015-11-12 17:53:55');
-
 
 
 
