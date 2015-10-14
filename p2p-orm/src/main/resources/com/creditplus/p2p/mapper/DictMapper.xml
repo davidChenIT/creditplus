@@ -18,9 +18,12 @@
         <result column="last_updated_date" property="last_updated_date"/>
     </resultMap>
     
-    <insert id="insertDict" parameterType="DictVO">
+    <insert id="insertDict" parameterType="java.util.List">
        insert into dict_t(dict_id,code,name, type,state,order_number,remark,created_by,created_date,last_updated_by,last_updated_date) 
-             values(#{dictId},#{code},#{name},#{type},#{state},#{orderNumber},#{remark},#{created_by},#{created_date},#{last_updated_by},now())    	
+             values
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.dictId},#{item.code},#{item.name},#{item.type},#{item.state},#{item.orderNumber},#{item.remark},#{item.created_by},#{item.created_date},#{item.last_updated_by},now())  
+	    </foreach>
     </insert>
     
     <select id="getDictListWithPage" parameterType="DictVO" resultMap="dictVOMap">
