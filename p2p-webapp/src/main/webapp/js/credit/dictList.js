@@ -214,7 +214,6 @@ $(function(){
     	var rowids = $("#dictListGrid").jqGrid('getDataIDs');
     	var request_data=[];
     	for(var i=0;i<rowids.length;i++){
-    	  $("#dictListGrid").jqGrid('restoreRow', rowids[i]);
     	  var rowData=$("#dictListGrid").jqGrid("getRowData",rowids[i]);
     	  $("#dictListGrid").find("tr[id='"+rowids[i]+"']").find("input[type='text']").each(function(i,input){
     	    var inputName=$(input).attr("name");
