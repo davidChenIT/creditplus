@@ -20,7 +20,7 @@ $(function(){
 				   if(paramsStr){
 					   paramsStr=paramsStr.replace(/"/g,"@#_@#");
 				   }
-				   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','rankPoolDetail','防欺诈详细','/p2p-webapp/page/rankPoolDetail.html','false','/p2p-webapp/js/credit/review.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+				   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','rankPool','排名池详细信息','/p2p-webapp/page/rankPoolDetail.html','false','/p2p-webapp/js/credit/review.js','"+paramsStr+"');\">"+cellvalue+"</a>";
 			}
 		},
 		{name:'name', index:'name',align:'center',"sortable":false},

@@ -13,14 +13,14 @@ $(function(){
 	colModel :[
 		{
 			name:'loan_id', index:'loan_id',align:'center',"sortable":false,
-			formatter:function(cellvalue, options, rowObject){
-				   debugger;
-				   var paramsStr=JSON.stringify(rowObject);
-				   if(paramsStr){
-					   paramsStr=paramsStr.replace(/"/g,"@#_@#");
-				   }
-				   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','rankPoolDetail','防欺诈详细','/p2p-webapp/page/rankPoolDetail.html','false','/p2p-webapp/js/credit/review.js','"+paramsStr+"');\">"+cellvalue+"</a>";
-			}
+//			formatter:function(cellvalue, options, rowObject){
+//				   debugger;
+//				   var paramsStr=JSON.stringify(rowObject);
+//				   if(paramsStr){
+//					   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+//				   }
+//				   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','tenderPublished','已发标详细信息','/p2p-webapp/page/tenderPublishedDetail.html','false','/p2p-webapp/js/credit/review.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+//			}
 		},
 		{name:'name', index:'name',align:'center',"sortable":false},
 		{name:'id_num', index:'id_num',align:'center',"sortable":false},
