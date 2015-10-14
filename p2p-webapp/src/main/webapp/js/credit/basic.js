@@ -162,11 +162,13 @@ $(function(){
 		if(thisClss.indexOf("icon-chevron-left")!=-1){
 			 $(this).attr("class",thisClss.replace("icon-chevron-left","icon-chevron-right"));
 			 $(this).text(">");
+			 $(this).parent("div").width("29");
 			 $("#credit_LeftPanel").width("30");
 			 $("#menu_ztree").hide()
 		}else{
 			 $(this).attr("class",thisClss.replace("icon-chevron-right","icon-chevron-left"));
 			 $(this).text("<");
+			 $(this).parent("div").width("215");
 			 $("#credit_LeftPanel").width("216");
 			 $("#menu_ztree").show()
 		}

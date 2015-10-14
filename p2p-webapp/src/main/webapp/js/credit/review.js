@@ -1,3 +1,4 @@
+
 $(function(){
 	var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";
 	
@@ -116,5 +117,37 @@ $(function(){
 		
 	});
 	
+	$("[name='rejectBtn']").click(function(){
+		debugger;
+		var request_data={"loan_id":$("#review").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"驳回，用户身份证不正确","apply_state":2};
+		var checkPass = true;
+		if(checkPass){
+			$("div[name='firstTrial']").find("input").each(function(i,input){
+				var inputName=$(input).attr("name");
+				var inputValue=$(input).val();
+				request_data[inputName]=inputValue;
+			});
+			debugger;
+			//提交
+			var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
+			$.ajax({ 
+				url: serviceAddress,
+				datatype:'json',
+				method:"post",
+				data:{"module":"loanOrderService","method":"creditReviewReject","request_data":JSON.stringify(request_data)},			
+				success: function(data){
+					debugger;
+					removeTabItem("reviewTab","review");
+					$("[name='reviewSearchBtn']").click();
+				},error:function(error){
+					alert(error);
+				}
+			});
+		}else{
+			alert("校验失败！");
+			return false;
+		}
+		
+	});
 	
 });

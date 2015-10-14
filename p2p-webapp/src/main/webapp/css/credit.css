@@ -1089,12 +1089,12 @@ label {
 .credit-tree.tree-togglemenu .credit-menu-toggle {
   height: 40px;
   font-size: 1.66666667em;
-  padding-right: 8px;
-  width:216px;
+  width:214px;
+  text-align: right;
 }
 .credit-tree.tree-togglemenu .credit-menu-toggle a.credit-icon {
-  float: right;
   margin-top: 10px;
+  margin-right: 8px;
 }
 .credit-tabs .credit-tabs {
   margin: 0 10px;
@@ -1432,8 +1432,8 @@ input[type="text"]:focus + .input-btn .credit-icon {
 }
 
 /**左侧菜单区域不滚动**/
-.equalheight-item .content-equalheight-item{
-	position: fixed;
+.heightfixed-left{
+	position: fixed !important;
 }
 /*布局类*/
  .layout-equalheight.adapt-heightfixed .heightfixed-left {
