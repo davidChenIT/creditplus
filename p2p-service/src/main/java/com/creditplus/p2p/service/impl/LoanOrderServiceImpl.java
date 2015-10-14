@@ -144,7 +144,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		if(loanAppList.size()==0){
 			loanOrderDao.insertLoanApply(loanMap);
 		}else{
-			loanOrderDao.updateLoanOrderByLoanId(loanMap);
+			if(apply_state!=2 && apply_state!=4){ //这两个状态只做插入动作
+				loanOrderDao.updateLoanOrderByLoanId(loanMap);
+			}
 		}
 	}
 	
