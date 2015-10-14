@@ -85,7 +85,7 @@ $(function(){
 	//提交初审按钮
 	$("[name='reviewBtn']").click(function(){
 		debugger;
-		var request_data={"loan_id":$("#firstTrial").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"复审完毕","apply_state":5};
+		var request_data={"loan_id":$("#review").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"复审完毕","apply_state":5};
 		var checkPass = true;
 		if(checkPass){
 			$("div[name='firstTrial']").find("input").each(function(i,input){

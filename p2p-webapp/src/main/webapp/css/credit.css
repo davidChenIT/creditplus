@@ -1090,6 +1090,7 @@ label {
   height: 40px;
   font-size: 1.66666667em;
   padding-right: 8px;
+  width:216px;
 }
 .credit-tree.tree-togglemenu .credit-menu-toggle a.credit-icon {
   float: right;
@@ -1430,9 +1431,13 @@ input[type="text"]:focus + .input-btn .credit-icon {
     background: #666;
 }
 
-
+/**左侧菜单区域不滚动**/
+.equalheight-item .content-equalheight-item{
+	position: fixed;
+}
 /*布局类*/
  .layout-equalheight.adapt-heightfixed .heightfixed-left {
+    
     margin-top: 74px;
 }
 /*快速链接*/

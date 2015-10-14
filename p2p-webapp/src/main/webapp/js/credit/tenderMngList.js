@@ -7,7 +7,7 @@ $(function(){
  $("#rankPoolGrid").jqGrid({
 	url:serviceAddress,
 	datatype: 'json',
-	postData:{"module":"loanOrderService","method":"getCreditReviewListWithPage","request_data":{}},
+	postData:{"module":"loanOrderService","method":"getCreditFirstTrialDetailByLoanId","request_data":{}},
 	mtype: 'POST',
 	autowidth:true,
 	colNames:['申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','申请单状态','初审人','复审人'],
@@ -34,6 +34,7 @@ $(function(){
 		{name:'review_assign_user', index:'review_assign_user',align:'center',"sortable":false}
 	],
 	pager: '#rankPoolPager',
+	multiselect: true,
 	rowNum:10,
 	rowList:[10,20,30],
 	sortable:true,
