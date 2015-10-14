@@ -58,8 +58,8 @@ public class RequestProcess{
 				
 		ApplicationContext appContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
 		String beans[]=appContext.getBeanDefinitionNames();
-		for(int i=0;i<beans.length;i++)
-			System.out.println("beanName:"+beans[i]);
+//		for(int i=0;i<beans.length;i++)
+//			System.out.println("beanName:"+beans[i]);
 		Object service = appContext.getBean(module);
 		if(null == service){
 			throw new Exception("module is error,please check it exist!");
