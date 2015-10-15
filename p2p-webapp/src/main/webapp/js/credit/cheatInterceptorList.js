@@ -50,6 +50,36 @@ $(function(){
          records: "totalrecords"
 
     }
-	//caption: 'My first grid'
 	});
+ 
+    //加入黑名单
+	 $("[name='joinBlacklistBtn']").click(function(){
+		  var grid=$("#cheatInterceptorGrid");
+		  var selectedIds = grid.jqGrid('getGridParam','selarrrow');
+		  if(selectedIds && selectedIds.length>0){
+			  var selectRowDataArray=[];
+			  for(var i=0;i<selectedIds.length;i++){
+				  selectRowDataArray.push(grid.jqGrid('getRowData',selectedIds[i]));
+			  }
+			  //调用发标服务
+			  var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
+			 /** $.ajax({ 
+					url: serviceAddress,
+					datatype: 'json',
+					method:"post",
+					data:{"module":"userService","method":"addUser","request_data":JSON.stringify(request_data)},			
+					success: function(data){
+						removeTabItem("userTab","userCreate");
+						$("#searchUserListBtn").click();
+					},error:function(error){
+						alert(error);
+					}
+			  });*/
+			  alert("加入黑名单！");
+			  
+		  }else{
+			  alert("请至少选择一条数据加入黑名单！");
+		  }
+		  
+	 });
 })

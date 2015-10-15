@@ -183,8 +183,8 @@
 								
 										<!-- 排名池grid区域开始 -->
 										<div style="display: inline-block;">
-											<button class="grid-toobar-btn" name="publishTenderBtn" type="button">发标</button>
-											<span style="margin-left: 20px;">标的金额：</span><span name="publishTenderMoney">10000</span>
+											<button class="grid-toobar-btn" name="publishTenderBtn" type="button" style="margin-left: -5px;">发 标</button>
+											<span style="margin-left: 20px;">标的金额：</span><span name="publishTenderMoney">0</span>
 										</div>
 										<div class="row">
 											 <table id="rankPoolGrid"></table> 

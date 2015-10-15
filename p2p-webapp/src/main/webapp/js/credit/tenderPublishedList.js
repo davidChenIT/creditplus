@@ -48,7 +48,73 @@ $(function(){
 
          records: "totalrecords"
 
-    }
-	//caption: 'My first grid'
+    },
+    onSelectRow:function(rowId,isSelected){
+		debugger;
+		var grid=$("#tenderPublishedGrid");
+		var loan_money=grid.jqGrid('getRowData',rowId).loan_money;
+		var ofWithdrawalMoneySpan=$("div[tabid='tenderPublished']").find("span[name='ofWithdrawalMoney']");
+		var totalMoney=parseInt((ofWithdrawalMoneySpan.text() || 0));
+		if(isSelected){
+			totalMoney+=parseInt(loan_money);
+		}else{
+			totalMoney-=parseInt(loan_money);
+		}
+		ofWithdrawalMoneySpan.text(totalMoney);
+	}
 	});
+    
+//点击grid的全选按钮
+ $("div[tabid='tenderPublished']").find("#cb_tenderPublishedGrid").click(function(){
+ 	debugger;
+ 	var isChecked=$(this)[0].checked;
+ 	var ofWithdrawalMoneySpan=$("div[tabid='tenderPublished']").find("span[name='ofWithdrawalMoney']");
+ 	if(isChecked){
+ 		var grid=$("#tenderPublishedGrid");
+ 		var totalMoney=0;
+ 		var selectedIds = grid.jqGrid('getGridParam','selarrrow');
+ 		if(selectedIds && selectedIds.length>0){
+ 			for(var i=0;i<selectedIds.length;i++){
+ 				var loan_money=grid.jqGrid('getRowData',selectedIds[i]).loan_money;
+ 				totalMoney+=parseInt(loan_money);
+ 			}
+ 		}
+ 		ofWithdrawalMoneySpan.text(totalMoney);
+ 	}else{
+ 		ofWithdrawalMoneySpan.text(0);
+ 	}
+ });
+ 
+
+//发标按钮
+$("[name='ofWithdrawalBtn']").click(function(){
+	  var grid=$("#tenderPublishedGrid");
+	  var selectedIds = grid.jqGrid('getGridParam','selarrrow');
+	  if(selectedIds && selectedIds.length>0){
+		  var selectRowDataArray=[];
+		  for(var i=0;i<selectedIds.length;i++){
+			  selectRowDataArray.push(grid.jqGrid('getRowData',selectedIds[i]));
+		  }
+		  //调用发标服务
+		  var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
+		 /** $.ajax({ 
+				url: serviceAddress,
+				datatype: 'json',
+				method:"post",
+				data:{"module":"userService","method":"addUser","request_data":JSON.stringify(request_data)},			
+				success: function(data){
+					removeTabItem("userTab","userCreate");
+					$("#searchUserListBtn").click();
+				},error:function(error){
+					alert(error);
+				}
+		  });*/
+		  alert("撤标");
+		  
+	  }else{
+		  alert("请至少选择一条数据进行撤标！");
+	  }
+	  
+});
+    
 })
