@@ -229,14 +229,22 @@ $(function(){
 	//点击tab的关闭x图标
 	$("#credit_MainPanel").on("click",".credit-tab-close",function(){
 		debugger;
-		var closeLi=$(this).parent();
-		var tabId=closeLi.attr("tabid");
-		var firstLi=$(closeLi.siblings()[0]);
-		var firstTabId=firstLi.attr("tabid");
-		closeLi.remove();
-		$("div[tabid='"+tabId+"']").remove();
-		firstLi.attr("class","tabs-selected");
-		$("div[tabid='"+firstTabId+"']").attr("class","tabs-body-item creditPageContext credit-validator");
+		var removeLi=$(this).parent();
+		var siblingsLi=removeLi.siblings();
+		$(siblingsLi).each(function(i,li){
+			var tabid=$(li).attr("tabid");
+			if(i==0){
+				$(li).attr("class","tabs-selected");
+				$("div[tabid='"+tabid+"']").attr("class","tabs-body-item creditPageContext credit-validator");
+			}else{
+				$(li).attr("class","");
+				$("div[tabid='"+tabid+"']").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
+			}
+		});
+		var removeTabId=removeLi.attr("tabid");
+		removeLi.remove();
+		$("div[tabid='"+removeTabId+"']").remove();
+		
 	});
 	
 
@@ -281,7 +289,7 @@ function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
 				debugger;	
 				if(data && data.length>0){
 					$("div[name='"+tabId+"']").find(".tabs-body").append(data);
-					if(isLoadJs || isLoadJs=="true"){
+					if(isLoadJs==true || isLoadJs=="true"){
 						$("head").find("script[src='"+jsFileUrl+"']").remove();
 						$("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>');
 					}
