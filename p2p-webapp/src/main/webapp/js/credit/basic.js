@@ -383,7 +383,7 @@ function clearDomVal(areaDivId){
 function gridResize(domId){
 	$("div[class='ui-jqgrid ui-widget ui-widget-content ui-corner-all']").each(function(i,dom){
 	   var gridId=$(dom).attr("id").substring(5);
-	   var newWidth=$("#"+domId).width()*0.95;
-	   $("#"+gridId).jqGrid().setGridWidth();
+	   var newWidth=$("#"+domId).width()*0.97;
+	   $("#"+gridId).jqGrid().setGridWidth(newWidth);
 	});
 }
