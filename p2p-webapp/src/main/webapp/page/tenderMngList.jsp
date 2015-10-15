@@ -53,7 +53,7 @@
 								<div tabid="rankPool" class="tabs-body-item creditPageContext credit-validator">
 									<div>
 										<!--排名池查询条件开始-->
-										<div class="row">
+										<div class="row" id="rankPollConditionDiv">
 											<div class="credit-spacecontrol col-xs-12 col-sm-4">
 												<div class="row">
 													<label class="col-xs-12 col-sm-3">
@@ -173,10 +173,10 @@
 										<!--排名池按钮区域开始-->
 										<div hw_id="_hw_8138" widget="toolbar" class="creditRendered center credit-toolbar" id="Toolbar_65545051">
 											<div hw_id="_hw_8139" widget="button" class="search-y-btn creditRendered" id="Button_84127684" style="display: inline-block;">
-												<button class=" credit-btn " type="button">查询</button>
+												<button class=" credit-btn " name="rankPollSeachBtn" type="button">查询</button>
 											</div>
 											<div id="restBtn" hw_id="_hw_8140" widget="button" class="clear-y-btn creditRendered" style="display: inline-block;">
-												<button class=" credit-btn " type="button">清除</button>
+												<button class=" credit-btn " name="clearRankPollConditionBtn" type="button">清除</button>
 											</div>
 										</div>
 										<!--排名池按钮区域开始-->

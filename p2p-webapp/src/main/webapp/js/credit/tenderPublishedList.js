@@ -116,5 +116,23 @@ $("[name='ofWithdrawalBtn']").click(function(){
 	  }
 	  
 });
+
+//查询按钮
+$("[name='tenderPublishedSearchBtn']").click(function(){
+    var request_data={};
+    $("#tenderPublishedGrid").jqGrid('setGridParam',{  
+        datatype:'json',  
+        postData:{'request_data':JSON.stringify(request_data)}, //发送数据
+        page:1,
+        rowNum:10
+    }).trigger("reloadGrid"); //重新载入
+	
+});
+	
+	//清除按钮
+$("[name='clearTenderPublishedConditionBtn']").click(function(){
+    //调用清除函数
+	clearDomVal("tenderPublishedConditionDiv");
+});
     
 })
