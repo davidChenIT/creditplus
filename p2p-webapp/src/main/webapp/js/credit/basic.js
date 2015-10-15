@@ -1,6 +1,9 @@
 //页面初始化加载函数
 $(function(){
-	
+	$(window).resize(function(){
+		debugger;
+		gridResize("credit_Main");
+	});
 	//注册window的onpopstate事件
 	window.onpopstate = function(e) {  
 		  debugger;
@@ -172,6 +175,9 @@ $(function(){
 			 $("#credit_LeftPanel").width("216");
 			 $("#menu_ztree").show()
 		}
+		
+		//放大或缩小grid
+		gridResize("credit_Main");
 		
 	});
 
@@ -370,5 +376,14 @@ function clearDomVal(areaDivId){
 	
 	$("#"+areaDivId).find("textarea").each(function(i,textarea){
 		$(textarea).text("");
+	});
+}
+
+//重新设置grid的大小
+function gridResize(domId){
+	$("div[class='ui-jqgrid ui-widget ui-widget-content ui-corner-all']").each(function(i,dom){
+	   var gridId=$(dom).attr("id").substring(5);
+	   var newWidth=$("#"+domId).width()*0.95;
+	   $("#"+gridId).jqGrid().setGridWidth();
 	});
 }
