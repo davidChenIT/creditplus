@@ -1,5 +1,7 @@
 package com.creditplus.p2p.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.creditplus.p2p.dao.RoleDao;
@@ -27,6 +29,10 @@ public class RoleServiceImpl implements RoleService {
 
 	public RoleVO getRoleDetail(int roleId) {
 		return roleDao.getRoleDetail(roleId);
+	}
+	
+	public List<RoleVO> getRoleList(){
+		return roleDao.getRoleList();
 	}
 
 	public PageVO getRoleListWithPage(PageVO pageVO,RoleVO roleVO) {

@@ -28,6 +28,30 @@ $(function(){
 		    });
 	  }
 	var lastsel3;
+	
+	var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";			
+	var roleData = "";
+	var roleJson = {};
+	$.ajax({ 
+		url: serviceAddress,
+		datatype:'json',
+		method:"post",
+	    async:false,
+		data:{"module":"roleService",
+			  "method":"getRoleList",
+			  "request_data":""
+		},			
+		success: function(data){
+			roleJson = data;
+			$.each(data,function(i,item){
+				roleData += item.roleId + ":" + item.roleName + ";";
+			});
+			roleData = roleData.substring(0,roleData.length -1);
+		},error:function(error){
+			alert(jQuery.parseJSON(error.responseText).cause.message);
+		}
+	});
+	
 	//构造grid
     $("#roleList4CreateGrid").jqGrid({
 			autowidth:true,
@@ -44,15 +68,15 @@ $(function(){
 						   return '<input type="checkbox" class="role-create-sel-cbox">';
 						}
 			    },
-				{name:'rolename',
-					index:'rolename',
+				{name:'roleName',
+					index:'roleName',
 					align:'center',
 					sortable:false,
 					editable:true,
 					width:"31%",
 					edittype:'select',
 					editrules:{required:true},
-					editoptions:{value:"admin:admin;anyone:andone"}
+					editoptions:{value:roleData}
 					
 				},
 				{name:'start_date', 
@@ -188,13 +212,7 @@ $(function(){
         	checkPass = false;
         }
 		
-        var enable = validateRequire("enable","请选择是否可用！");
-		if(enable){			
-        	request_data.enable=enable;
-        }else{
-        	checkPass = false;
-        }
-		
+    	request_data.enable=$("select[name='enable']").val();
         var password = validateRequire("password","请输入密码！");
 		if(password){			
         	request_data.password=password;
@@ -218,8 +236,33 @@ $(function(){
 		if(!checkPass){
 			return;
 		}
-
-		var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
+		
+    	var rowids = $("#roleList4CreateGrid").jqGrid('getDataIDs');
+    	var grid_data=[];
+    	for(var i=0;i<rowids.length;i++){
+      	  var rowData=$("#roleList4CreateGrid").jqGrid("getRowData",rowids[i]);
+      	  $("#roleList4CreateGrid").find("tr[id='"+rowids[i]+"']").find("input[type='text']").each(function(i,input){
+      	    var inputName=$(input).attr("name");
+      		var inputVal=$(input).val();
+      		rowData[inputName]=inputVal;
+      	  });
+      	  $("#roleList4CreateGrid").find("tr[id='"+rowids[i]+"']").find("textarea").each(function(i,textarea){
+      	    var textareaName=$(textarea).attr("name");
+      		var textareaVal=$(textarea).val();
+      		rowData[textareaName]=textareaVal;
+      	  });
+      	  
+		  $.each(roleJson,function(i,item){
+			  if(item.roleName == rowData.roleName){
+				  rowData.roleId = item.roleId;
+				  return true;
+			  }
+		  });
+      	  rowData.ur_id = null;
+      	  grid_data.push(rowData);
+      	}    	
+		
+    	request_data.griddata = grid_data;
 		$.ajax({ 
 			url: serviceAddress,
 			datatype: 'json',
@@ -229,7 +272,7 @@ $(function(){
 				removeTabItem("userTab","userCreate");
 				$("#searchUserListBtn").click();
 			},error:function(error){
-				alert(error);
+				alert(jQuery.parseJSON(error.responseText).cause.message);
 			}
 		});
     	

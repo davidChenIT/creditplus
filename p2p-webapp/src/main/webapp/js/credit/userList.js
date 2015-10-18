@@ -11,14 +11,14 @@ $(function(){
 			autowidth:true,
 			colNames:["操作","用户名称","是否可用","创建人","创建时间","最后修改人","最后修改时间","备注"],
 			colModel :[
-				{name:'operate_col', index:'operate_col',align:'center',"sortable":false,width:"100px",
+				{name:'userId', index:'userId',align:'center',"sortable":false,width:"100px",
 					formatter:function(cellvalue, options, rowObject){
 					   debugger;
 					   var paramsStr=JSON.stringify(rowObject);
 					   if(paramsStr){
 						   paramsStr=paramsStr.replace(/"/g,"@#_@#");
 					   }
-					   return "<span class='ui-icon-edit' onclick=\"addTabItem('userTab','userUpdate','用户修改','/p2p-webapp/page/systemmng/userUpdate.html','true','/p2p-webapp/js/credit/userUpdate.js','"+paramsStr+"');\"></span>";
+					   return "<span data-val='" + rowObject.userId + "' class='ui-icon-edit' onclick=\"addTabItem('userTab','userUpdate','用户修改','/p2p-webapp/page/systemmng/userUpdate.html','true','/p2p-webapp/js/credit/userUpdate.js','"+paramsStr+"');\"></span>";
 					}
 				},
 				{name:'username', index:'username',align:'center',"sortable":false},
@@ -49,8 +49,6 @@ $(function(){
 		     }
 	});
     
-
-
     //输入用户名称，点击按钮进行过滤
     $("#searchUserListBtn").click(function(){
         var username = $("input[name='username']").val();
@@ -66,8 +64,7 @@ $(function(){
         }).trigger("reloadGrid"); //重新载入
     	
     });
-    
-    
+       
     //点击用户列表中的新增按钮
     $("[name='addUserBtn']").click(function(){
     	addTabItem("userTab","userCreate","用户新增","/p2p-webapp/page/systemmng/userCreate.html",true,"/p2p-webapp/js/credit/userCreate.js");
@@ -75,7 +72,32 @@ $(function(){
     
     //点击用户列表中的删除按钮
     $("[name='delUserBtn']").click(function(){
+    	debugger;
+        var request_data=[];
+    	var rowids = $("#userListGrid").jqGrid('getDataIDs');
+    	for(var i=0;i<rowids.length;i++){
+    		var isChecked = $("#userListGrid").find("tr[id='"+rowids[i]+"']").find("input[type='checkbox']").is(':checked');
+    		if(isChecked){
+          	    var dataVal = $("#userListGrid").find("tr[id='"+rowids[i]+"']").find("span").attr("data-val");
+          	    request_data.push(dataVal*1);    			
+    		}
+      	}
     	
+    	if(request_data.length <=0){
+    		return;
+    	}
     	
+		$.ajax({ 
+			url: serviceAddress,
+			datatype: 'json',
+			method:"post",
+			data:{"module":"userService","method":"deleteUserById","request_data":JSON.stringify(request_data)},			
+			success: function(data){
+				removeTabItem("userTab","userCreate");
+				$("#searchUserListBtn").click();
+			},error:function(error){
+				alert(jQuery.parseJSON(error.responseText).cause.message);
+			}
+		});        
     });
 })

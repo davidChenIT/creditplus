@@ -408,6 +408,8 @@ CREATE TABLE user_role_t (
   ur_id int NOT NULL AUTO_INCREMENT,
   user_id int NOT NULL,
   role_id int NOT NULL,
+  start_date date Not NULL,
+  end_date   date Not NULL,
   created_by varchar(200) NOT NULL,
   created_date datetime NOT NULL,
   last_updated_by varchar(200) NOT NULL,
@@ -484,7 +486,7 @@ insert into p2p.role_t values(1,1,'admin','administrator','system',now(),'system
 insert into p2p.role_t values(2,1,'RC-Assistant','RC-Assistant','system',now(),'system',now());
 insert into p2p.resource_t values(1,'index','/page/index.html',1,1,'index page','system',now(),'system',now());
 insert into p2p.resource_t values(2,'firstTrial','/page/firstTrial.html',1,1,'first trial page','system',now(),'system',now());	
-insert into p2p.user_role_t values(1,1,1,'system',now(),'system',now());
+insert into p2p.user_role_t values(1,1,1,now(),date_add(now(), interval 1 year),'system',now(),'system',now());
 insert into p2p.role_resource_t values(1,1,1,'system',now(),'system',now());
 insert into p2p.role_resource_t values(2,1,2,'system',now(),'system',now());
 insert into p2p.role_resource_t values(3,2,1,'system',now(),'system',now());

@@ -53,7 +53,10 @@
  		<if test="roleName !=null ">          
                where role_name = #{roleName}
        </if> 
-    </select>    
+    </select>
+   <select id="getRoleList" resultMap="roleVOMap">
+       select * from role_t
+    </select>
    <select id="getRoleDetail" parameterType="Integer" resultMap="roleDetailMap">
     select r.*,
            res.resource_id as resource_id,

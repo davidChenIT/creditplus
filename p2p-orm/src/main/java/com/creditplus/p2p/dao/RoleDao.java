@@ -15,4 +15,6 @@ public interface RoleDao{
 	RoleVO getRoleDetail(int roleId);
 	
 	List<RoleVO> getRoleListWithPage(RoleVO roleVO);
+	
+	List<RoleVO> getRoleList();
 }

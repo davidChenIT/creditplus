@@ -62,9 +62,13 @@
              values(#{userId},#{enable},#{username},#{password},#{remark},#{created_by},#{created_date},#{last_updated_by},now())
     </insert>
     
-    <delete id="deleteUserById" parameterType="String">
-       delete from user_t where user_id=#{userId}
-    </delete>    
+    <delete id="deleteUserById" parameterType="java.util.List">
+       delete from user_t where user_id in
+ 		<foreach collection="list" item="userId" index="index"
+            open="(" close=")" separator=",">        
+         	#{userId} 
+ 		</foreach>     	
+    </delete>   
    
     <update id="updateUser" parameterType="UserVO">
        update user_t set username=#{username}, 
@@ -112,13 +116,31 @@
             left join role_resource_t rr on r.role_id = rr.role_id  
             left join resource_t res on rr.resource_id = rr.resource_id             
                 where username=#{username}
-    </select>    
+    </select>
    <select id="getUserListWithPage" parameterType="UserVO" resultMap="userVOMap">
        		   select u.*
                  from user_t u
  		<if test="username !=null ">  
                 where lower(u.username) LIKE CONCAT(CONCAT('%', lower(#{username, jdbcType=VARCHAR})),'%')  
     	</if>       
-    </select>    
-  
+    </select>
+    
+    <select id="getUserRoleListByUserID" parameterType="Integer" resultType="java.util.Map" >
+      		   select r.role_name as role_name,
+      		          ur.start_date as start_date,
+      		          ur.end_date   as end_date
+                 from user_role_t ur,role_t r
+		         where ur.role_id = r.role_id and ur.user_id=#{userId}
+    </select>
+    
+    <delete id="deleteUserRoleByUserId" parameterType="Integer">
+       delete from user_role_t  where user_id=#{userId}
+    </delete>
+    <insert id="insertUserRole" parameterType="java.util.List">
+       insert into user_role_t(ur_id,user_id,role_id,start_date,end_date,created_by,created_date,last_updated_by,last_updated_date) 
+             values
+	    <foreach collection="list" item="item" index="index" separator="," >  
+             (#{item.ur_id},#{item.userId},#{item.roleId},#{item.start_date},#{item.end_date},#{item.created_by},#{item.created_date},#{item.last_updated_by},now())
+        </foreach>
+    </insert>
 </mapper>
