@@ -172,7 +172,7 @@
 												<button class="credit-btn" name="firstTrialSearhBtn" type="button">查询</button>
 											</div>
 											<div class="clear-y-btn creditRendered" style="display: inline-block;">
-												<button class="credit-btn" name="firstTrialClearBtn" type="button">清除</button>
+												<button class="credit-btn" name="firstTrialClearBtn" type="button">重置</button>
 											</div>
 										</div>
 										<!--按钮区域结束-->

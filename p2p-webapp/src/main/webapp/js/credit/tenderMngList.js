@@ -10,7 +10,7 @@ $(function(){
 			postData:{"module":"loanOrderService","method":"getCreditFirstTrialListWithPage","request_data":{}},
 			mtype: 'POST',
 			autowidth:true,
-			colNames:['申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','申请单状态','初审人','复审人'],
+			colNames:['申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','信用分1','信用分2','排名'],
 			colModel :[
 				{
 					name:'loan_id', index:'loan_id',align:'center',"sortable":false,
@@ -29,9 +29,9 @@ $(function(){
 				{name:'dateCount', index:'dateCount',align:'center',"sortable":false},
 				{name:'loan_day', index:'loan_day',align:'center',"sortable":false},
 				{name:'modifytime', index:'modifytime',align:'center',"sortable":false},
-				{name:'apply_state', index:'apply_state',align:'center',"sortable":false},
-				{name:'first_assign_user', index:'first_assign_user',align:'center',"sortable":false},
-				{name:'review_assign_user', index:'review_assign_user',align:'center',"sortable":false}
+				{name:'creditFraction1', index:'creditFraction1',align:'center',"sortable":false},
+				{name:'creditFraction2', index:'creditFraction2',align:'center',"sortable":false},
+				{name:'rank', index:'rank',align:'center',"sortable":false}
 			],
 			pager: '#rankPoolPager',
 			multiselect: true,
@@ -132,9 +132,9 @@ $(function(){
   	
   });
 	
-	//清除按钮
+	//重置按钮
   $("[name='clearRankPollConditionBtn']").click(function(){
-      //调用清除函数
+      //调用重置函数
   	clearDomVal("rankPollConditionDiv");
   });
 })

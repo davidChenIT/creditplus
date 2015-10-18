@@ -368,7 +368,7 @@ function validateRequire(elemName,tip,parantsDivId){
 }
 
 
-//公共清除函数
+//公共重置函数
 function clearDomVal(areaDivId){
 	$("#"+areaDivId).find("input").each(function(i,input){
 		$(input).val("");
