@@ -15,7 +15,7 @@ $(function(){
 			formatter:function(cellvalue, options, rowObject){
 				   debugger;
 				   var loan_id=rowObject.loan_id;
-				   return "<a name='a_makeTender' data-val='"+loan_id+"'>投标</a>";
+				   return "<a name='a_makeTender' style='color:blue;' data-val='"+loan_id+"'>投标</a>";
 			}
 			
 		},   
