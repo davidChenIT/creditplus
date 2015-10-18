@@ -176,7 +176,7 @@
 												<button class=" credit-btn " name="rankPollSeachBtn" type="button">查询</button>
 											</div>
 											<div id="restBtn" hw_id="_hw_8140" widget="button" class="clear-y-btn creditRendered" style="display: inline-block;">
-												<button class=" credit-btn " name="clearRankPollConditionBtn" type="button">清除</button>
+												<button class=" credit-btn " name="clearRankPollConditionBtn" type="button">重置</button>
 											</div>
 										</div>
 										<!--排名池按钮区域开始-->

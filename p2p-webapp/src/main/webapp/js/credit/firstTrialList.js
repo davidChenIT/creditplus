@@ -63,9 +63,9 @@ $(function(){
     	
     });
     
-	//清除按钮
+	//重置按钮
     $("[name='firstTrialClearBtn']").click(function(){
-        //调用清除函数
+        //调用重置函数
     	clearDomVal("conditionDiv");
     });
     

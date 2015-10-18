@@ -50,6 +50,135 @@
 								<!-- 页签1 -->
 								<div tabid="makeTenderList" class="tabs-body-item creditPageContext credit-validator" creditpagecontextid="page_85823101">
 									<div>
+									    <!--投标查询条件开始-->
+										<div class="row" id="makeTenderConditionDiv">					
+											<div class="credit-spacecontrol col-xs-12 col-sm-4">
+												<div class="row">
+													<label class="col-xs-12 col-sm-3">
+														<div class="credit-label">
+															申请金额
+														</div>
+													</label>
+													<div class="col-xs-12 col-sm-9">
+														<div class="credit-input">
+															<input type="text" name="apply_monney" >
+														</div>
+											
+													</div>
+												</div>
+											</div>	
+											<div class="credit-spacecontrol col-xs-12 col-sm-4">
+												<div class="row">
+													<label class="col-xs-12 col-sm-3">
+														<div class="credit-label">
+															申请时间
+														</div>
+													</label>
+													<div class="col-xs-12 col-sm-9">
+														<div class="credit-input">
+															<input type="text" name="apply_date" >
+														</div>
+													</div>
+												</div>
+											</div>								
+											<div class="credit-spacecontrol col-xs-12 col-sm-4">
+												<div class="row">
+													<label class="col-xs-12 col-sm-3">
+														<div class="credit-label">
+															审批单状态
+														</div>
+													</label>
+													<div class="col-xs-12 col-sm-9">
+														<div class="credit-input">
+															<input type="text" name="apply_status" >
+														</div>
+													</div>
+												</div>
+											</div>								
+											<div class="credit-spacecontrol col-xs-12 col-sm-4">
+												<div class="row">
+													<label class="col-xs-12 col-sm-3">
+														<div class="credit-label">
+															申请单编号
+														</div>
+													</label>
+													<div class="col-xs-12 col-sm-9">
+														<div class="credit-input">
+															<input type="text" name="apply_code" >
+														</div>
+													</div>
+												</div>
+											</div>								
+											<div class="credit-spacecontrol col-xs-12 col-sm-4">
+												<div class="row">
+													<label class="col-xs-12 col-sm-3">
+														<div class="credit-label">
+															申请人姓名
+														</div>
+													</label>
+													<div class="col-xs-12 col-sm-9">
+														<div class="credit-input">
+															<input type="text" name="apply_username" >
+														</div>
+													</div>
+												</div>
+											</div>		
+											<div class="credit-spacecontrol col-xs-12 col-sm-4">
+												<div class="row">
+													<label class="col-xs-12 col-sm-3">
+														<div class="credit-label">
+															申请人身份证号
+														</div>
+													</label>
+													<div class="col-xs-12 col-sm-9">
+														<div class="credit-input">
+															<input type="text" name="apply_user_card" >
+														</div>
+													</div>
+												</div>
+											</div>	
+											<div class="credit-spacecontrol col-xs-12 col-sm-4">
+												<div class="row">
+													<label class="col-xs-12 col-sm-3">
+														<div class="credit-label">
+															初审人
+														</div>
+													</label>
+													<div class="col-xs-12 col-sm-9">
+														<div class="credit-input">
+															<input type="text" name="approve_first_user" >
+														</div>
+													</div>
+												</div>
+											</div>		
+											<div class="credit-spacecontrol col-xs-12 col-sm-4">
+												<div class="row">
+													<label class="col-xs-12 col-sm-3">
+														<div class="credit-label">
+															复审人
+														</div>
+													</label>
+													<div class="col-xs-12 col-sm-9">
+														<div class="credit-input">
+															<input type="text" name="approve_last_user" >
+														</div>
+													</div>
+												</div>
+											</div>										
+										</div>
+								        <!--投标查询条件结束-->
+									    
+									    <!--投标按钮区域开始-->
+										<div hw_id="_hw_8138" widget="toolbar" class="creditRendered center credit-toolbar" id="Toolbar_65545051">
+											<div hw_id="_hw_8139" widget="button" class="search-y-btn creditRendered" id="Button_84127684" style="display: inline-block;">
+												<button class=" credit-btn " name="makeTenderSearchBtn" type="button" >查询</button>
+											</div>
+											<div id="restBtn" hw_id="_hw_8140" widget="button" class="clear-y-btn creditRendered" style="display: inline-block;">
+												<button class=" credit-btn " name="clearMakeTenderConditionBtn" type="button">重置</button>
+											</div>
+										</div>
+							            <!--投标按钮区域结束-->
+									
 										<!-- grid区域开始 -->
 										<div class="row">
 											<table id="tenderMngListGrid"></table> 
