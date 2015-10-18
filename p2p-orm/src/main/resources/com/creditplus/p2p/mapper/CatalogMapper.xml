@@ -17,17 +17,41 @@
         <result column="last_updated_by" property="last_updated_by"/>          
         <result column="last_updated_date" property="last_updated_date"/>
     </resultMap>
-    <insert id="insertCatalog" parameterType="CatalogVO">
+    <insert id="insertCatalog" parameterType="java.util.List">
        insert into catalog_t(catalog_id,catalog_name,parent_id, url,order_number,remark,created_by,created_date,last_updated_by,last_updated_date) 
-             values(#{catalogId},#{catalogName},#{parentId},#{url},#{orderNumber},#{remark},#{created_by},#{created_date},#{last_updated_by},now())    	
+             values
+	    <foreach collection="list" item="item" index="index" separator="," >  
+             (#{item.catalogId},#{item.catalogName},#{item.parent_id},#{item.url},#{item.orderNumber},#{item.remark},#{item.created_by},#{item.created_date},#{item.last_updated_by},now())
+        </foreach>
     </insert>
+
+    <delete id="deleteCatalog" parameterType="java.util.List">
+    	delete from catalog_t where catalog_id in
+ 		<foreach collection="list" item="catalogVO" index="index"
+            open="(" close=")" separator=",">        
+         	#{catalogVO.catalogId} 
+ 		</foreach>     	
+    </delete>
     
     <select id="getCatalogListWithPage" parameterType="CatalogVO" resultMap="catalogVOMap">
-       		   select c.*,p.catalog_name as parent_name
-                 from catalog_t c,catalog_t p 
-                where c.parent_id = p.catalog_id
- 		<if test="catalogName !=null " >  
-                and lower(c.catalog_name) LIKE CONCAT(CONCAT('%', lower(#{catalogName,jdbcType=VARCHAR})),'%')  
-    	</if>       
+     	   select c.*
+             from catalog_t c
+			where 1=1
+		<if test="parentId !=null " >  
+               and parent_id = #{parentId} 
+  		</if>  		
+  		<if test="catalogName !=null " >  
+              and lower(c.catalog_name) LIKE CONCAT(CONCAT('%', lower(#{catalogName,jdbcType=VARCHAR})),'%')  
+  		</if>
+  		order by order_number asc       
      </select>
+    <select id="getCatalogListByParentId" parameterType="java.util.List" resultMap="catalogVOMap">
+     	select c.*
+          from catalog_t c
+         where c.parent_id in 
+ 		<foreach collection="list" item="catalogVO" index="index"
+            open="(" close=")" separator=",">        
+         	#{catalogVO.parentId} 
+ 		</foreach>             
+     </select>     
 </mapper>

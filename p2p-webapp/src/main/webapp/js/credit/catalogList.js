@@ -9,26 +9,45 @@ $(function(){
 			postData:{"module":"catalogService","method":"getCatalogListWithPage"},
 			mtype: 'POST',
 			autowidth:true,
-			colNames:["操作","栏目名称","父栏目名称","URL","顺序","创建人","创建时间","最后修改人","最后修改时间","备注"],
+			colNames:['<input type="checkbox" class="catalog-create-selall-cbox">',
+			           "操作",
+			           "<span style='color:red;'>*</span>栏目名称",
+			           "URL",
+			           "<span style='color:red;'>*</span>顺序","备注","创建人","创建时间","最后修改人","最后修改时间"],
 			colModel :[
-				{name:'operate_col', index:'operate_col',align:'center',"sortable":false,width:"100px",
+			    {
+			    	name:'catalog_sel_create',
+					index:'catalog_sel_create',
+					align:'center',
+					sortable:false,
+			    	formatter:function(cellvalue, options, rowObject){
+						   debugger;
+						   return '<input type="checkbox" class="catalog-create-sel-cbox">';
+						}
+			    },				           
+				{name:'catalogId', index:'operate_col',align:'center',"sortable":false,width:"100px",
 					formatter:function(cellvalue, options, rowObject){
 					   debugger;
-					   return "<span name='catalogEditSpan' class='ui-icon-edit' data-val='"+rowObject.catalogId+"'></span>";
+					   if(!rowObject.catalogId){
+						   return "<span name='catalogEditSpan' class='ui-icon-edit' data-val='' data-name=''></span>";
+					   }else{
+						   return "<span name='catalogEditSpan' class='ui-icon-edit' data-val='"+rowObject.catalogId+ "' data-name='" + rowObject.catalogName +"'></span>";
+					   }
 					}
 				},
-				{name:'catalogName', index:'catalogName',align:'center',"sortable":false},
-				{name:'parentName', index:'parentName',align:'center',"sortable":false},
-				{name:'url', index:'url',align:'center',"sortable":false},
-				{name:'orderNumber', index:'orderNumber',align:'center',"sortable":false},
+				{name:'catalogName', index:'catalogName',align:'center',"sortable":false,editable:true},
+				{name:'url', index:'url',align:'center',"sortable":false,editable:true},
+				{name:'orderNumber', index:'orderNumber',align:'center',"sortable":false,editable:true},
+				{name:'remark', index:'remark',align:'center',"sortable":false,editable:true},
 				{name:'created_by', index:'created_by',align:'center',"sortable":false},
 				{name:'created_date', index:'created_date',align:'center',"sortable":false},
 				{name:'last_updated_by', index:'last_updated_by',align:'center',"sortable":false},
-				{name:'last_updated_date', index:'last_updated_date',align:'center',"sortable":false},
-				{name:'remark', index:'remark',align:'center',"sortable":false}
+				{name:'last_updated_date', index:'last_updated_date',align:'center',"sortable":false}
 			],
+			cellEdit: true,
+			cellsubmit:"clientArray",			
 			pager: '#catalogListPager',
-			multiselect: true,
+//			multiselect: true,
 			rowNum:10,
 			rowList:[10,20,30],
 			viewrecords: true,
@@ -44,47 +63,120 @@ $(function(){
 
 		         records: "totalrecords"
 
-		     }
+		     },
+		     afterEditCell:function (id,name,val,iRow,iCol){
+			      $("#"+iRow+"_"+name,"#roleList4CreateGrid").attr("style","width:100%");
+			 },		     
+		     gridComplete:function(){
+			    	debugger;
+			    	$("div[name='catalogTab']").find(".catalog-create-selall-cbox").parent("div").attr("class","");
+			 }		     
 	});
     
+    //grid里面的复选框
+    $("div[name='catalogTab']").on("click",".catalog-create-sel-cbox",function(){
+    	debugger;
+    	var isSelAll=true;
+    	$("div[name='catalogTab']").find(".catalog-create-sel-cbox").each(function(i,cbox){
+    		var ischecked=$(cbox)[0].checked;
+    		if(!ischecked){
+    			isSelAll=false;
+    			return false;
+    		}
+    	});
+    	if(isSelAll){
+    		$("div[name='catalogTab']").find(".catalog-create-selall-cbox")[0].checked=true;
+    	}else{
+    		$("div[name='catalogTab']").find(".catalog-create-selall-cbox")[0].checked=false;
+    	}
+    	
+    });    
+    
+    //全选按钮
+    $("div[name='catalogTab']").on("click",".catalog-create-selall-cbox",function(){
+    	debugger;
+    	var  isChecked=$(this)[0].checked;
+    	if(isChecked){
+    		$("div[name='catalogTab']").find(".catalog-create-sel-cbox").each(function(i,cbox){
+    			$(cbox)[0].checked=true;
+    		});
+    	}else{
+    		$("div[name='catalogTab']").find(".catalog-create-sel-cbox").each(function(i,cbox){
+    			$(cbox)[0].checked=false;
+    		});
+    	}
+    });   
+    
+    //角色新增行
+    $("[name='addCatalogBtn']").click(function(){
+    	debugger;
+    	var ids = $("#catalogListGrid").jqGrid('getDataIDs');
+    	
+    	//获得当前最大行号（数据编号）  
+        var rowid =0;
+        if(ids && ids.length>0){
+        	rowid=Math.max.apply(Math,ids);
+        }
+        //获得新添加行的行号（数据编号）  
+        var newrowid = rowid+1;  
+        var dataRow = { 
+        		catalogId:"",
+        		name: "",  
+        		code:"",  
+        		type:'',
+        		state:'',
+        		orderNumber:'',
+        		remark:'',
+        		created_by:'',
+        		created_date:'',
+        		last_updated_by:'',
+        		last_updated_date:'',          		
+        };      
+          
+        //将新添加的行插入到第一列  
+        $("#catalogListGrid").jqGrid("addRowData", newrowid, dataRow, "first");
+    });    
     
     //给grid列中的修改图标添加点击事件
     $("div[name='catalogTab']").on("click",".ui-icon-edit",function(){
     	debugger;
+    	var catalogName=$(this).attr("data-name");
     	var catalogId=$(this).attr("data-val");
-    	var catalogUpdate=$("div[name='catalogTab']").find("li[tabid='catalogUpdate']");
-    	if(catalogUpdate && catalogUpdate.length>0){
-    		$("div[name='catalogTab']").find("li[tabid='catalogUpdate']").remove();
-    		$("div[name='catalogTab']").find("div[tabid='catalogUpdate']").remove();
-    	}
-    	$("div[name='catalogTab']").find(".tabs-head li").attr("class","");
-    	var catalogUpdateLi='<li tabid="catalogUpdate" class="tabs-selected"><span>修改用户</span><div class="credit-tab-close"><span>x</span></div></li>';
-    	$("div[name='catalogTab']").find(".tabs-head ul").append(catalogUpdateLi);
-    	$(".tabs-body").children("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
-    	
-    	var jsFileUrl="/p2p-webapp/js/credit/catalogUpdate.js";
-    	$("script[src='"+jsFileUrl+"']").remove();
-		var requestUrl="http://"+window.location.host+"/p2p-webapp/page/systemmng/catalogUpdate.html";
-		$.ajax({ 
-			url: requestUrl,
-			success: function(data){
-				debugger;	
-				if(data && data.length>0){
-					$("div[name='catalogTab']").find(".tabs-body").append(data);
-					$("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
-				}
-			},error:function(error){
-				$("div[name='catalogTab']").find(".tabs-body").append('<div tabid="catalogUpdate" class="tabs-body-item creditPageContext credit-validator"><div><div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div></div>');
-			}
-		});
+        var request_data={};
+        if(catalogId && catalogName){
+        	request_data.parentId=catalogId;            
+        	$("#parentArea").append("<a href='#" + catalogId + "'>." +catalogName+ "</a>");
+        	$("#parentArea").find("a").unbind("click");
+        	$("#parentArea").find("a").bind("click",function(){
+        		var parentId = $(this).attr("href");
+        		parentId = parentId.replace("#","");
+    			request_data.parentId=parentId==""? 0:parentId; 
+                $("#catalogListGrid").jqGrid('setGridParam',{  
+                    datatype:'json',  
+                    postData:{'request_data':JSON.stringify(request_data)}, //发送数据
+                    page:1,
+                    rowNum:10
+                }).trigger("reloadGrid"); //重新载入 
+                $(this).nextAll().remove();
+        	}); 
+            $("#catalogListGrid").jqGrid('setGridParam',{  
+                datatype:'json',  
+                postData:{'request_data':JSON.stringify(request_data)}, //发送数据
+                page:1,
+                rowNum:10
+            }).trigger("reloadGrid"); //重新载入        	
+        }    	
     });
 
     //输入用户名称，点击按钮进行过滤
     $("#searchCatalogListBtn").click(function(){
-        var catalogname = $("input[name='catalogname']").val();
+        var catalogName = $("input[name='catalogName']").val();
+    	var parentId = $("#parentArea").find("a:last").attr("href").replace("#","");
+    	parentId = parentId==""?0:parentId;
         var request_data={};
-        if(catalogname){
-        	request_data.catalogname=catalogname;
+        request_data.parentId = parentId;
+        if(catalogName){
+        	request_data.name=catalogName;
         }
         $("#catalogListGrid").jqGrid('setGridParam',{  
             datatype:'json',  
@@ -95,14 +187,82 @@ $(function(){
     	
     });
     
-    //点击用户列表中的新增按钮
-    $("[name='addCatalogBtn']").click(function(){
-    	addTabItem("catalogTab","catalogCreate","角色新增","/p2p-webapp/page/systemmng/catalogCreate.html",true,"/p2p-webapp/js/credit/catalogCreate.js");   	
-    });
-       
     //点击用户列表中的删除按钮
     $("[name='delCatalogBtn']").click(function(){
-    	
-    	
+    	var selRowIds=[];
+    	$("div[name='catalogTab']").find(".catalog-create-sel-cbox").each(function(i,cbox){
+			var ischecked=$(cbox)[0].checked;
+			if(ischecked){
+				selRowIds.push($(cbox).parents("tr:first").attr("id"));
+			}
+		});
+    	for(var i = 0;i <selRowIds.length;i ++) {  
+    		$("#catalogListGrid").jqGrid("delRowData", selRowIds[i]);  
+    	}  
     });
+    
+    $("[name='saveCatalogBtn']").click(function(){
+//    	var rowids = $("#catalogListGrid").jqGrid('getDataIDs');
+//    	for(var i=0;i<rowids.length;i++){
+//    	  $("#catalogListGrid").restoreRow(rowids[i]);
+//    	}
+//    	
+//    	var request_data =$("#catalogListGrid").jqGrid("getRowData");
+    	var checkFlag = true;
+    	debugger;
+    	var rowids = $("#catalogListGrid").jqGrid('getDataIDs');
+    	var grid_data=[];
+    	var parentId = $("#parentArea").find("a:last").attr("href").replace("#","");
+    	parentId = parentId==""?0:parentId;
+    	for(var i=0;i<rowids.length;i++){
+    	  var rowData=$("#catalogListGrid").jqGrid("getRowData",rowids[i]);
+    	  $("#catalogListGrid").find("tr[id='"+rowids[i]+"']").find("input[type='text']").each(function(i,input){
+    	    var inputName=$(input).attr("name");
+    		var inputVal=$(input).val();
+    		rowData[inputName]=inputVal;
+    	  });
+    	  $("#catalogListGrid").find("tr[id='"+rowids[i]+"']").find("textarea").each(function(i,textarea){
+    	    var textareaName=$(textarea).attr("name");
+    		var textareaVal=$(textarea).val();
+    		rowData[textareaName]=textareaVal;
+    	  });
+    	  rowData.parent_id = parentId;
+    	  grid_data.push(rowData);
+    	}
+    	
+    	$.each(grid_data,function(i,item){
+    		var catalogId = $(item.catalogId).attr("data-val");
+    		if(!catalogId || !$.trim(catalogId)){
+    			item.catalogId = null;
+    		}else{
+    			item.catalogId = catalogId;
+    		}
+    		
+    		if(!item.catalogName || !$.trim(item.catalogName)){
+    			alert("第" + i + "行名称不能为空！");
+    			checkFlag = false;
+    		}
+    	});
+    	
+    	if(!checkFlag){
+    		return;
+    	}
+    	
+    	var request_data={};
+    	request_data.parentId = parentId;
+    	request_data.griddata = grid_data;
+		var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
+		$.ajax({ 
+			url: serviceAddress,
+			datatype: 'json',
+			method:"post",
+			data:{"module":"catalogService","method":"insertCatalog","request_data":JSON.stringify(request_data)},			
+			success: function(data){
+				$("#searchCatalogListBtn").click();
+			},error:function(error){
+				alert(jQuery.parseJSON(error.responseText).cause.message);
+			}
+		});    	
+    	
+    });    
 })

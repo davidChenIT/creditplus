@@ -70,10 +70,13 @@
 									    <div style="display: inline-block;">
 											<button class="grid-toobar-btn add-btn" name="addCatalogBtn" type="button">新增</button>
 											<button class="grid-toobar-btn del-btn" name="delCatalogBtn" type="button">删除</button>
+											<button class="grid-toobar-btn add-btn" name="saveCatalogBtn" type="button">保存</button>
 										</div>
 									
 										<!-- grid区域开始 -->
-										
+										<span id="parentArea" data_val="Root">
+											<a href="#">Root</a>
+										</span>										
 										<div class="row">
 											<table id="catalogListGrid"></table> 
 

@@ -24,10 +24,8 @@ DROP TABLE IF EXISTS role_resource_t;
 DROP TABLE IF EXISTS role_t;
 DROP TABLE IF EXISTS user_t;
 DROP TABLE IF EXISTS user_role_t;
-DROP TABLE IF EXISTS dict_code_t;
-DROP TABLE IF EXISTS dict_item_t;
 DROP TABLE IF EXISTS dict_t;
-
+DROP TABLE IF EXISTS catalog_t;
 
 create table user_info
 (
@@ -417,23 +415,35 @@ CREATE TABLE user_role_t (
   PRIMARY KEY (ur_id)
 ) ;
 
-
 CREATE TABLE dict_t (
   dict_id int(11) NOT NULL AUTO_INCREMENT,
   code varchar(200)  NOT NULL COMMENT '字典编码',
   name varchar(200)  NOT NULL COMMENT '名称',
   type varchar(200)  NOT NULL COMMENT '类型',
   state int(11) COMMENT '状态  1有效 0 无效',
-  parent_id int(11),
+  parent_id int(11) NOT NULL,
   order_number int(11) NOT NULL,       
   created_by varchar(200)  NOT NULL COMMENT '创建人',
   created_date timestamp NOT NULL COMMENT '创建时间',
   last_updated_by  varchar(200)  NOT NULL,
   last_updated_date timestamp NOT NULL ,
-  remark varchar(1024)  COMMENT '字典描述',
+  descript varchar(1024)  COMMENT '字典描述',
   PRIMARY KEY (dict_id)
-)  COMMENT='数据字典code表';
+)  COMMENT='数据字典表';
 
+CREATE TABLE catalog_t (
+  catalog_id int(11)  NOT NULL AUTO_INCREMENT,
+  catalog_name varchar(200)  NOT NULL COMMENT '栏目名称',
+  parent_id int(11) NOT NULL,
+  url varchar(512),
+  order_number int(11) NOT NULL, 
+  remark varchar(512),
+  created_by varchar(200)  NOT NULL COMMENT '创建人',
+  created_date timestamp NOT NULL COMMENT  '创建时间',
+  last_updated_by  varchar(200)  NOT NULL,
+  last_updated_date timestamp NOT NULL ,
+  PRIMARY KEY (catalog_id)
+)  COMMENT='栏目表';
 
 
 
@@ -478,7 +488,7 @@ insert into p2p.user_role_t values(1,1,1,'system',now(),'system',now());
 insert into p2p.role_resource_t values(1,1,1,'system',now(),'system',now());
 insert into p2p.role_resource_t values(2,1,2,'system',now(),'system',now());
 insert into p2p.role_resource_t values(3,2,1,'system',now(),'system',now());
-
+INSERT INTO catalog_t VALUES (1,'首页',0,'/page/index.jsp',0,'首页','test','2015-10-17 21:26:38','test','2015-10-18 13:28:05'),(2,'系统管理',0,'#',2,'系统管理','test','2015-10-18 05:28:02','test','2015-10-18 13:28:05'),(3,'风控管理',0,'#',1,'风控管理','test','2015-10-18 05:28:02','test','2015-10-18 13:28:05'),(5,'投标',3,'/page/makeTenderList.jsp',3,'投标','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(6,'标的管理',3,'/page/tenderMngList.jsp',2,'标的管理','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(7,'信用复审',3,'/page/reviewList.jsp',1,'信用复审','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(8,'信用初审',3,'/page/firstTrialList.jsp',0,'信用初审','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(9,'字典管理',2,'/page/systemmng/dictList.jsp',0,'数据字典','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(10,'栏目管理',2,'/page/systemmng/catalogList.jsp',1,'栏目管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(11,'用户管理',2,'/page/systemmng/userList.jsp',2,'用户管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(12,'角色管理',2,'/page/systemmng/roleList.jsp',3,'角色管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(13,'资源管理',2,'/page/systemmng/resourceList.jsp',4,'资源管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(14,'修改密码',2,'/page/systemmng/changePassword.jsp',5,'修改密码','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09');
 
 INSERT INTO p2p.user_info VALUES (4,1,'o8EeQw_voTztu6J-jPttrk7LBGSA','朱胜','18923880749',NULL,NULL,NULL,NULL,'中国工商银行','1234','18923880749','1234','10000以上','Qwer','北京','北京','18923880749','博士','1234',NULL,NULL,7,'Y','2015-10-04 10:34:02');
 

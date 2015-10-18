@@ -259,7 +259,7 @@ $(function(){
     	
     	var request_data={};
     	request_data.parentId = parentId;
-    	request_data.gridData = grid_data;
+    	request_data.griddata = grid_data;
 		var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
 		$.ajax({ 
 			url: serviceAddress,

@@ -9,7 +9,7 @@ import com.creditplus.p2p.model.PageVO;
 
 public interface DictService {
 	
-	void insertDict(@ParamName("parentId") int parentId,@ParamName("gridData")List<Map<String,Object>> dataList);
+	void insertDict(@ParamName("parentId") int parentId,@ParamName("griddata")List<Map<String,Object>> dataList);
 	
 	PageVO getDictListWithPage(PageVO pageVO,DictVO dictVO);
 }
