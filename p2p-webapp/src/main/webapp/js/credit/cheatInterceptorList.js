@@ -2,7 +2,6 @@
 $(function(){
 	debugger;
 
-	var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";
 	//构造grid
  $("#cheatInterceptorGrid").jqGrid({
 	 url:serviceAddress,
@@ -68,7 +67,6 @@ $(function(){
 				  selectRowDataArray.push(grid.jqGrid('getRowData',selectedIds[i]));
 			  }
 			  //调用发标服务
-			  var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
 			 /** $.ajax({ 
 					url: serviceAddress,
 					datatype: 'json',

@@ -7,7 +7,6 @@ $(function(){
 //	 urgentContactorService   getListByUserId 查询紧急连接人{user_id=“”}
 	
 	
-	var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";
 	//获取tab页传入的参数，并调用服务
 	debugger;
 	var paramsObj=$("div[name='firstTrialTab']").find("li[tabid='firstTrial']").data();
@@ -142,7 +141,6 @@ $(function(){
 			});
 			debugger;
 			//提交
-			var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
 			$.ajax({ 
 				url: serviceAddress,
 				datatype:'json',

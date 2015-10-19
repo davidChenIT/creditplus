@@ -1,7 +1,6 @@
 //页面初始化加载函数
 $(function(){
 	debugger;
-	var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";
 	var parentId = $("#parentArea").find("a:last").attr("href").replace("#","");
 	parentId = parentId==""?0:parentId;
     var request_data={};
@@ -260,7 +259,6 @@ $(function(){
     	var request_data={};
     	request_data.parentId = parentId;
     	request_data.griddata = grid_data;
-		var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
 		$.ajax({ 
 			url: serviceAddress,
 			datatype: 'json',

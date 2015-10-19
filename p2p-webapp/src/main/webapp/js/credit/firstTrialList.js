@@ -1,7 +1,6 @@
 //页面初始化加载函数
 $(function(){
 	debugger;
-	var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";
 	//构造grid
 	$("#firstTrialListGrid").jqGrid({
 			url:serviceAddress,

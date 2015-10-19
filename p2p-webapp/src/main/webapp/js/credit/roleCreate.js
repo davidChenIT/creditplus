@@ -27,7 +27,6 @@ $(function(){
 			return;
 		}
 
-		var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
 		$.ajax({ 
 			url: serviceAddress,
 			datatype: 'json',

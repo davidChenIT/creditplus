@@ -1,3 +1,5 @@
+//rest服务地址
+var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process"; 
 //页面初始化加载函数
 $(function(){
 	$(window).resize(function(){

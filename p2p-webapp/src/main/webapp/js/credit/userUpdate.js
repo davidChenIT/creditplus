@@ -1,6 +1,5 @@
 //页面初始化加载函数
 $(function(){
-	var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";
 	var paramsObj=$("div[name='userTab']").find("li[tabid='userUpdate']").data();
 	var userId=paramsObj.userId || "";
 	var created_by = "";

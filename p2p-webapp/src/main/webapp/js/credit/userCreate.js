@@ -29,7 +29,6 @@ $(function(){
 	  }
 	var lastsel3;
 	
-	var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";			
 	var roleData = "";
 	var roleJson = {};
 	$.ajax({ 

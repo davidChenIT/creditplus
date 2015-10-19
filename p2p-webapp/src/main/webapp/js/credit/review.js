@@ -1,7 +1,5 @@
 
 $(function(){
-	var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";
-	
 	debugger;
 	var paramsObj=$("div[name='reviewTab']").find("li[tabid='review']").data();
 	var loan_id=paramsObj.loan_id || "";
@@ -96,7 +94,6 @@ $(function(){
 			});
 			debugger;
 			//提交
-			var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
 			$.ajax({ 
 				url: serviceAddress,
 				datatype:'json',
@@ -129,7 +126,6 @@ $(function(){
 			});
 			debugger;
 			//提交
-			var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
 			$.ajax({ 
 				url: serviceAddress,
 				datatype:'json',
