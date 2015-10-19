@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS role_t;
 DROP TABLE IF EXISTS user_t;
 DROP TABLE IF EXISTS user_role_t;
 DROP TABLE IF EXISTS dict_t;
+DROP TABLE IF EXISTS catalog_t;
 drop table if exists rule_t;
 drop table if exists dimension_t;
 
@@ -410,6 +411,8 @@ CREATE TABLE user_role_t (
   ur_id int NOT NULL AUTO_INCREMENT,
   user_id int NOT NULL,
   role_id int NOT NULL,
+  start_date date Not NULL,
+  end_date   date Not NULL,
   created_by varchar(200) NOT NULL,
   created_date datetime NOT NULL,
   last_updated_by varchar(200) NOT NULL,
@@ -417,14 +420,13 @@ CREATE TABLE user_role_t (
   PRIMARY KEY (ur_id)
 ) ;
 
-
 CREATE TABLE dict_t (
   dict_id int(11) NOT NULL AUTO_INCREMENT,
   code varchar(200)  NOT NULL COMMENT '字典编码',
   name varchar(200)  NOT NULL COMMENT '名称',
   type varchar(200)  NOT NULL COMMENT '类型',
   state int(11) COMMENT '状态  1有效 0 无效',
-  parent_id int(11),
+  parent_id int(11) NOT NULL,
   order_number int(11) NOT NULL,       
   created_by varchar(200)  NOT NULL COMMENT '创建人',
   created_date timestamp NOT NULL COMMENT '创建时间',
@@ -432,7 +434,21 @@ CREATE TABLE dict_t (
   last_updated_date timestamp NOT NULL ,
   remark varchar(1024)  COMMENT '字典描述',
   PRIMARY KEY (dict_id)
-)  COMMENT='数据字典code表';
+)  COMMENT='数据字典表';
+
+CREATE TABLE catalog_t (
+  catalog_id int(11)  NOT NULL AUTO_INCREMENT,
+  catalog_name varchar(200)  NOT NULL COMMENT '栏目名称',
+  parent_id int(11) NOT NULL,
+  url varchar(512),
+  order_number int(11) NOT NULL, 
+  remark varchar(512),
+  created_by varchar(200)  NOT NULL COMMENT '创建人',
+  created_date timestamp NOT NULL COMMENT  '创建时间',
+  last_updated_by  varchar(200)  NOT NULL,
+  last_updated_date timestamp NOT NULL ,
+  PRIMARY KEY (catalog_id)
+)  COMMENT='栏目表';
 
 
 create table rule_t(
@@ -500,11 +516,11 @@ insert into p2p.role_t values(1,1,'admin','administrator','system',now(),'system
 insert into p2p.role_t values(2,1,'RC-Assistant','RC-Assistant','system',now(),'system',now());
 insert into p2p.resource_t values(1,'index','/page/index.html',1,1,'index page','system',now(),'system',now());
 insert into p2p.resource_t values(2,'firstTrial','/page/firstTrial.html',1,1,'first trial page','system',now(),'system',now());	
-insert into p2p.user_role_t values(1,1,1,'system',now(),'system',now());
+insert into p2p.user_role_t values(1,1,1,now(),date_add(now(), interval 1 year),'system',now(),'system',now());
 insert into p2p.role_resource_t values(1,1,1,'system',now(),'system',now());
 insert into p2p.role_resource_t values(2,1,2,'system',now(),'system',now());
 insert into p2p.role_resource_t values(3,2,1,'system',now(),'system',now());
-
+INSERT INTO catalog_t VALUES (1,'首页',0,'/page/index.jsp',0,'首页','test','2015-10-17 21:26:38','test','2015-10-18 13:28:05'),(2,'系统管理',0,'#',2,'系统管理','test','2015-10-18 05:28:02','test','2015-10-18 13:28:05'),(3,'风控管理',0,'#',1,'风控管理','test','2015-10-18 05:28:02','test','2015-10-18 13:28:05'),(5,'投标',3,'/page/makeTenderList.jsp',3,'投标','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(6,'标的管理',3,'/page/tenderMngList.jsp',2,'标的管理','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(7,'信用复审',3,'/page/reviewList.jsp',1,'信用复审','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(8,'信用初审',3,'/page/firstTrialList.jsp',0,'信用初审','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(9,'字典管理',2,'/page/systemmng/dictList.jsp',0,'数据字典','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(10,'栏目管理',2,'/page/systemmng/catalogList.jsp',1,'栏目管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(11,'用户管理',2,'/page/systemmng/userList.jsp',2,'用户管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(12,'角色管理',2,'/page/systemmng/roleList.jsp',3,'角色管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(13,'资源管理',2,'/page/systemmng/resourceList.jsp',4,'资源管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(14,'修改密码',2,'/page/systemmng/changePassword.jsp',5,'修改密码','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09');
 
 INSERT INTO p2p.user_info VALUES (4,1,'o8EeQw_voTztu6J-jPttrk7LBGSA','朱胜','18923880749',NULL,NULL,NULL,NULL,'中国工商银行','1234','18923880749','1234','10000以上','Qwer','北京','北京','18923880749','博士','1234',NULL,NULL,7,'Y','2015-10-04 10:34:02');
 
@@ -516,9 +532,6 @@ INSERT INTO p2p.loan_list VALUES (11,4,NULL,5000,'2015-10-04 17:53:55',90,'2016-
 INSERT INTO p2p.loan_list VALUES ('13', '4', null,'10000', '2015-10-12 17:53:55', '30', '2015-11-12 17:53:55', '0', '10000', '0', '0', null,'2342343242342', '1','2015-10-04 09:53:55');
 INSERT INTO p2p.loan_list VALUES ('14', '4',null, '50000', '2015-10-12 17:53:55', '30', '2015-11-12 17:53:55', '0', '50000', '0', '0', null,'2342343242342', '1','2015-10-04 09:53:55');
 
-INSERT INTO `p2p`.`rule_t` VALUES ('1', '名族校验', '1', 'system', sysdate(),'system', sysdate(),'名族校验');
-
-INSERT INTO `p2p`.`dimension_t` VALUES ('1', '1', 'customer_info_t', 'thnic_v', '=', '维吾尔族', 'and', 'system',sysdate(), 'system',sysdate(),'名族校验维度');
 
 
 
