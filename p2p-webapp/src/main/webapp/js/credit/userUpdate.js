@@ -240,18 +240,7 @@ $(function(){
       	}    	
 		
     	request_data.griddata = grid_data;
-		$.ajax({ 
-			url: serviceAddress,
-			datatype: 'json',
-			method:"post",
-			data:{"module":"userService","method":"updateUser","request_data":JSON.stringify(request_data)},			
-			success: function(data){
-				removeTabItem("userTab","userUpdate");
-				$("#searchUserListBtn").click();
-			},error:function(error){
-				alert(jQuery.parseJSON(error.responseText).cause.message);
-			}
-		});		
+		publicSaveAjax("userService","updateUser",JSON.stringify(request_data),"userTab","userUpdate","#searchUserListBtn");
     });
     
 })

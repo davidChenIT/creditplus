@@ -27,18 +27,8 @@ $(function(){
 			return;
 		}
 
-		$.ajax({ 
-			url: serviceAddress,
-			datatype: 'json',
-			method:"post",
-			data:{"module":"roleService","method":"insertRole","request_data":JSON.stringify(request_data)},			
-			success: function(data){
-				removeTabItem("roleTab","roleCreate");
-				$("#searchRoleListBtn").click();
-			},error:function(error){
-				alert(error);
-			}
-		});
+		//调用服务
+		publicSaveAjax("roleService","insertRole",JSON.stringify(request_data),"roleTab","roleCreate","#searchRoleListBtn");
     	
     });
 })   

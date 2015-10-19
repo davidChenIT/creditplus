@@ -429,7 +429,7 @@ CREATE TABLE dict_t (
   created_date timestamp NOT NULL COMMENT '创建时间',
   last_updated_by  varchar(200)  NOT NULL,
   last_updated_date timestamp NOT NULL ,
-  descript varchar(1024)  COMMENT '字典描述',
+  remark varchar(1024)  COMMENT '字典描述',
   PRIMARY KEY (dict_id)
 )  COMMENT='数据字典表';
 

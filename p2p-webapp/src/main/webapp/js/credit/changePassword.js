@@ -35,19 +35,9 @@ $(function(){
 		if(!checkPass){
 			return;
 		}
-
-		$.ajax({ 
-			url: serviceAddress,
-			datatype: 'json',
-			method:"post",
-			data:{"module":"userService","method":"changePassword","request_data":JSON.stringify(request_data)},			
-			success: function(data){
-				alert("密码修改成功！");
-				window.location.href = "http://"+window.location.host + "/p2p-webapp";
-			},error:function(error){
-				alert(jQuery.parseJSON(error.responseText).cause.message);
-			}
-		});
+		//调用服务
+		publicSaveAjax("userService","changePassword",JSON.stringify(request_data));
+		window.location.href = "http://"+window.location.host + "/p2p-webapp";
     	
     });    
 })

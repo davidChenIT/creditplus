@@ -93,7 +93,7 @@ $(function(){
  });
  
 
-//发标按钮
+//撤标按钮
 $("[name='ofWithdrawalBtn']").click(function(){
 	  var grid=$("#tenderPublishedGrid");
 	  var selectedIds = grid.jqGrid('getGridParam','selarrrow');
@@ -102,7 +102,7 @@ $("[name='ofWithdrawalBtn']").click(function(){
 		  for(var i=0;i<selectedIds.length;i++){
 			  selectRowDataArray.push(grid.jqGrid('getRowData',selectedIds[i]));
 		  }
-		  //调用发标服务
+		  //调用撤标服务
 		 /** $.ajax({ 
 				url: serviceAddress,
 				datatype: 'json',

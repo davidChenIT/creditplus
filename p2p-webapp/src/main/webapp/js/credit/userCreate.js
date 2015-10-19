@@ -260,20 +260,7 @@ $(function(){
       	  rowData.ur_id = null;
       	  grid_data.push(rowData);
       	}    	
-		
     	request_data.griddata = grid_data;
-		$.ajax({ 
-			url: serviceAddress,
-			datatype: 'json',
-			method:"post",
-			data:{"module":"userService","method":"addUser","request_data":JSON.stringify(request_data)},			
-			success: function(data){
-				removeTabItem("userTab","userCreate");
-				$("#searchUserListBtn").click();
-			},error:function(error){
-				alert(jQuery.parseJSON(error.responseText).cause.message);
-			}
-		});
-    	
+		publicSaveAjax("userService","addUser",JSON.stringify(request_data),"userTab","userCreate","#searchUserListBtn");
     });    
 })

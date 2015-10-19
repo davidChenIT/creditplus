@@ -45,8 +45,8 @@ $(function(){
 	});
     
     
-    //给grid列中的修改图标添加点击事件
-    $("div[name='roleTab']").on("click",".ui-icon-edit",function(){
+    //给grid列中的修改图标添加点击事件  这里调查看下初审的打开tab页签的没事，在列中绑定公共的addTabItem
+    /**$("div[name='roleTab']").on("click",".ui-icon-edit",function(){
     	debugger;
     	var roleId=$(this).attr("data-val");
     	var roleUpdate=$("div[name='roleTab']").find("li[tabid='roleUpdate']");
@@ -74,7 +74,7 @@ $(function(){
 				$("div[name='roleTab']").find(".tabs-body").append('<div tabid="roleUpdate" class="tabs-body-item creditPageContext credit-validator"><div><div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div></div>');
 			}
 		});
-    });
+    });*/
 
     //输入用户名称，点击按钮进行过滤
     $("#searchRoleListBtn").click(function(){

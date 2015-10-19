@@ -250,18 +250,8 @@ $(function(){
     	var request_data={};
     	request_data.parentId = parentId;
     	request_data.griddata = grid_data;
-		var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process";		
-		$.ajax({ 
-			url: serviceAddress,
-			datatype: 'json',
-			method:"post",
-			data:{"module":"catalogService","method":"insertCatalog","request_data":JSON.stringify(request_data)},			
-			success: function(data){
-				$("#searchCatalogListBtn").click();
-			},error:function(error){
-				alert(jQuery.parseJSON(error.responseText).cause.message);
-			}
-		});    	
+		//调用服务
+		publicSaveAjax("catalogService","insertCatalog",JSON.stringify(request_data),"","","#searchCatalogListBtn");
     	
     });    
 })

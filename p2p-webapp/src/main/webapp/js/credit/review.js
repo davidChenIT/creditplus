@@ -4,49 +4,14 @@ $(function(){
 	var paramsObj=$("div[name='reviewTab']").find("li[tabid='review']").data();
 	var loan_id=paramsObj.loan_id || "";
 	//查询详细信息，并赋值
-	$.ajax({ 
-		url: serviceAddress,
-		datatype:'json',
-		method:"post",
-		data:{"module":"loanOrderService",
-			"method":"getCreditReviewDetailByLoanId",
-			"request_data":JSON.stringify({"loan_id":loan_id,"approve_content":"开始复审","apply_state":4})
-		},			
-		success: function(data){
-			debugger;
-			setValues("loanApplyInfoDiv",data,false);
-			setValues("applyUserInfoDiv",data,false);
-			setValues("applyUserAddressInfoDiv",data,false);
-			setValues("applyUserWorkInfoDiv",data,false);
-			setValues("applyUserIncomeInfoDiv",data,false);
-			//setValues("applyUserUrgentConnectionUserInfoDiv",data,false);
-			setValues("externaltCreditInfoDiv",data,false);
-			setValues("vocationalCertificateInfoDiv",data,false);
-			setValues("dealWithUserInfoDiv",data,false);
-		},error:function(error){
-			alert(error);
-		}
-	});
-	
+	var queryReviewDetailParmsStr=JSON.stringify({"loan_id":loan_id,"approve_content":"开始复审","apply_state":4});
+	publicQueryInfoAjax("loanOrderService","getCreditReviewDetailByLoanId",queryReviewDetailParmsStr,"review");
 	//查询用户紧急联系人
 	var user_id=paramsObj.user_id || "";
-	$.ajax({ 
-		url: serviceAddress,
-		datatype:'json',
-		method:"post",
-		data:{"module":"urgentContactorService",   
-			"method":"getListByUserId",
-			"request_data":JSON.stringify({"user_id":user_id})
-		},			
-		success: function(data){
-			debugger;
-			
-			//setValues("applyUserUrgentConnectionUserInfoDiv",data,false);
-		},error:function(error){
-			alert(error);
-		}
-	});
-	
+	var userInfoList=publicQueryInfoAjax("urgentContactorService","getListByUserId",JSON.stringify({"user_id":user_id}));
+	if(userInfoList){
+		//setValues("applyUserUrgentConnectionUserInfoDiv",{},"");
+	}
 	//构造grid
 	$("#reviewLogGrid").jqGrid({
 		 url:serviceAddress,
@@ -94,19 +59,8 @@ $(function(){
 			});
 			debugger;
 			//提交
-			$.ajax({ 
-				url: serviceAddress,
-				datatype:'json',
-				method:"post",
-				data:{"module":"loanOrderService","method":"creditReview","request_data":JSON.stringify(request_data)},			
-				success: function(data){
-					debugger;
-					removeTabItem("reviewTab","review");
-					$("[name='reviewSearchBtn']").click();
-				},error:function(error){
-					alert(error);
-				}
-			});
+			publicSaveAjax("loanOrderService","creditReview",JSON.stringify(request_data),"reviewTab","review","[name='reviewSearchBtn']");
+			
 		}else{
 			alert("校验失败！");
 			return false;
@@ -126,19 +80,7 @@ $(function(){
 			});
 			debugger;
 			//提交
-			$.ajax({ 
-				url: serviceAddress,
-				datatype:'json',
-				method:"post",
-				data:{"module":"loanOrderService","method":"creditReviewReject","request_data":JSON.stringify(request_data)},			
-				success: function(data){
-					debugger;
-					removeTabItem("reviewTab","review");
-					$("[name='reviewSearchBtn']").click();
-				},error:function(error){
-					alert(error);
-				}
-			});
+			publicSaveAjax("loanOrderService","creditReviewReject",JSON.stringify(request_data),"reviewTab","review","[name='reviewSearchBtn']");
 		}else{
 			alert("校验失败！");
 			return false;

@@ -67,18 +67,9 @@ $(function(){
 				  selectRowDataArray.push(grid.jqGrid('getRowData',selectedIds[i]));
 			  }
 			  //调用发标服务
-			 /** $.ajax({ 
-					url: serviceAddress,
-					datatype: 'json',
-					method:"post",
-					data:{"module":"userService","method":"addUser","request_data":JSON.stringify(request_data)},			
-					success: function(data){
-						removeTabItem("userTab","userCreate");
-						$("#searchUserListBtn").click();
-					},error:function(error){
-						alert(error);
-					}
-			  });*/
+			 /**
+			  * publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeItemId,searchBtnId)
+			  *  */
 			  alert("加入黑名单！");
 			  
 		  }else{

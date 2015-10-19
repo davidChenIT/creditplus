@@ -259,17 +259,7 @@ $(function(){
     	var request_data={};
     	request_data.parentId = parentId;
     	request_data.griddata = grid_data;
-		$.ajax({ 
-			url: serviceAddress,
-			datatype: 'json',
-			method:"post",
-			data:{"module":"dictService","method":"insertDict","request_data":JSON.stringify(request_data)},			
-			success: function(data){
-				$("#searchDictListBtn").click();
-			},error:function(error){
-				alert(jQuery.parseJSON(error.responseText).cause.message);
-			}
-		});    	
-    	
+		//调用服务
+		publicSaveAjax("dictService","insertDict",JSON.stringify(request_data),"","","#searchDictListBtn");
     });    
 })

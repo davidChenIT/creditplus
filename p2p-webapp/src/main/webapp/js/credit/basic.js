@@ -313,12 +313,12 @@ function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
 
 
 //公共赋值函数
-function setValues(divId,dataObj,isAppendHtml){
+function setValues(divId,dataObj,appendHtml){
 	debugger;
 	//判断传入的div是否存在
 	if(divId && $("#"+divId) && $("#"+divId).length>0){
-		if(isAppendHtml || isAppendHtml=="true"){
-			$("#"+divId).append(isAppendHtml);
+		if(appendHtml){
+			$("#"+divId).append(appendHtml);
 		}else{
 			//设置span的值
 			$("#"+divId).find(".credit-input").find("span").each(function(i,dom){
@@ -381,11 +381,61 @@ function clearDomVal(areaDivId){
 	});
 }
 
+
 //重新设置grid的大小
 function gridResize(domId){
 	$("div[class='ui-jqgrid ui-widget ui-widget-content ui-corner-all']").each(function(i,dom){
 	   var gridId=$(dom).attr("id").substring(5);
 	   var newWidth=$("#"+domId).width()*0.97;
 	   $("#"+gridId).jqGrid().setGridWidth(newWidth);
+	});
+}
+
+//公共的查询并赋值的方法
+function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
+	debugger;
+	var  resultData={};
+	$.ajax({ 
+		url: serviceAddress,
+		datatype:'json',
+		method:"post",
+		async:false,
+		data:{"module":moduleName,
+			"method":methodName,
+			"request_data":requestDataStr
+		},			
+		success: function(data){
+			resultData=data;
+		},error:function(error){
+			alert("调用服务失败！");
+		}
+	});
+	if(setValueDiv){
+		setValues(setValueDiv,resultData);
+	}
+	return resultData;
+}
+
+//公共的保存或修改表单的方法
+function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeItemId,searchBtn){
+	debugger;
+	$.ajax({ 
+		url: serviceAddress,
+		datatype:'json',
+		method:"post",
+		async:false,
+		data:{"module":moduleName,
+			"method":methodName,
+			"request_data":requestDataStr
+		},			
+		success: function(data){
+			alert("操作成功！");
+			if(removeTabId && removeItemId){
+				removeTabItem(removeTabId,removeItemId);
+			}
+			$(searchBtn).click();
+		},error:function(error){
+			alert("调用服务失败！");
+		}
 	});
 }

@@ -85,18 +85,7 @@ $(function(){
     	if(request_data.length <=0){
     		return;
     	}
-    	
-		$.ajax({ 
-			url: serviceAddress,
-			datatype: 'json',
-			method:"post",
-			data:{"module":"userService","method":"deleteUserById","request_data":JSON.stringify(request_data)},			
-			success: function(data){
-				removeTabItem("userTab","userCreate");
-				$("#searchUserListBtn").click();
-			},error:function(error){
-				alert(jQuery.parseJSON(error.responseText).cause.message);
-			}
-		});        
+		//调用服务
+		publicSaveAjax("userService","deleteUserById",JSON.stringify(request_data),"userTab","userCreate","#searchUserListBtn");
     });
 })
