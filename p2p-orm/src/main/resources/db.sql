@@ -24,9 +24,9 @@ DROP TABLE IF EXISTS role_resource_t;
 DROP TABLE IF EXISTS role_t;
 DROP TABLE IF EXISTS user_t;
 DROP TABLE IF EXISTS user_role_t;
-DROP TABLE IF EXISTS dict_code_t;
-DROP TABLE IF EXISTS dict_item_t;
 DROP TABLE IF EXISTS dict_t;
+drop table if exists rule_t;
+drop table if exists dimension_t;
 
 
 create table user_info
@@ -435,7 +435,33 @@ CREATE TABLE dict_t (
 )  COMMENT='数据字典code表';
 
 
+create table rule_t(
+	rule_id 	int 	 NOT NULL AUTO_INCREMENT,
+	rule_name   varchar(200) not null comment '规则名称',
+	state	    int			 not null DEFAULT 1 comment '规则状态',
+	created_by  varchar(200)  NOT NULL COMMENT '创建人',
+    created_date timestamp NOT NULL COMMENT '创建时间',
+    last_updated_by  varchar(200)  NOT NULL,
+    last_updated_date timestamp NOT NULL ,
+	remark varchar(1024)  COMMENT '规则描述',  
+	PRIMARY KEY (rule_id)    
+)COMMENT='规则配置表';
 
+create table dimension_t(
+   	dis_id 		 	int 	 NOT NULL AUTO_INCREMENT,
+	rule_id			int 	 not null   comment '规则id',
+	table_name   	varchar(200) not null comment '表名',
+	column_name   	varchar(200) not null comment '字段名',
+	semanteme  	 	varchar(200) not null comment '语义',
+	value 		 	varchar(200)  NOT NULL COMMENT '匹配值',
+	arithmetic 	    varchar(200)  NOT NULL COMMENT '运算',
+    created_by 		varchar(200)  NOT NULL COMMENT '创建人',
+    created_date    timestamp NOT NULL COMMENT '创建时间',
+    last_updated_by varchar(200)  NOT NULL,
+    last_updated_date timestamp NOT NULL ,
+	remark varchar(1024)  COMMENT '维度描述',  
+	PRIMARY KEY (dis_id)    
+)COMMENT='维度配置表';
 
 
 
@@ -490,6 +516,9 @@ INSERT INTO p2p.loan_list VALUES (11,4,NULL,5000,'2015-10-04 17:53:55',90,'2016-
 INSERT INTO p2p.loan_list VALUES ('13', '4', null,'10000', '2015-10-12 17:53:55', '30', '2015-11-12 17:53:55', '0', '10000', '0', '0', null,'2342343242342', '1','2015-10-04 09:53:55');
 INSERT INTO p2p.loan_list VALUES ('14', '4',null, '50000', '2015-10-12 17:53:55', '30', '2015-11-12 17:53:55', '0', '50000', '0', '0', null,'2342343242342', '1','2015-10-04 09:53:55');
 
+INSERT INTO `p2p`.`rule_t` VALUES ('1', '名族校验', '1', 'system', sysdate(),'system', sysdate(),'名族校验');
+
+INSERT INTO `p2p`.`dimension_t` VALUES ('1', '1', 'customer_info_t', 'thnic_v', '=', '维吾尔族', 'and', 'system',sysdate(), 'system',sysdate(),'名族校验维度');
 
 
 
