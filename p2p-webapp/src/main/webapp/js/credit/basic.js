@@ -3,7 +3,7 @@ var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process"
 //页面初始化加载函数
 $(function(){
 	$(window).resize(function(){
-		debugger;
+		debugger;  
 		gridResize("credit_Main");  
 	});
 	//注册window的onpopstate事件
