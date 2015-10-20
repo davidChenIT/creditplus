@@ -16,6 +16,7 @@
 <!--  <script src="<%-- <%=request.getContextPath()%>/js/jquery/jquery-migrate-custom.js --%>" type="text/javascript"></script>-->
 <script src="<%=request.getContextPath()%>/js/jquery/jquery-ui.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/jquery/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/jquery/jquery.ztree.excheck-3.5.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/jqgrid/i18n/grid.locale-cn.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/credit/basic.js" type="text/javascript"></script>
