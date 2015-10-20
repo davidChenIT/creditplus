@@ -4,7 +4,7 @@ var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process"
 $(function(){
 	$(window).resize(function(){
 		debugger;
-		gridResize("credit_Main");
+		gridResize("credit_Main");  
 	});
 	//注册window的onpopstate事件
 	window.onpopstate = function(e) {  
