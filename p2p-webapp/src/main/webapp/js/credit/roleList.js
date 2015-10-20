@@ -8,12 +8,17 @@ $(function(){
 			postData:{"module":"roleService","method":"getRoleListWithPage"},
 			mtype: 'POST',
 			autowidth:true,
+			
 			colNames:["操作","角色名称","是否可用","创建人","创建时间","最后修改人","最后修改时间","备注"],
 			colModel :[
-				{name:'operate_col', index:'operate_col',align:'center',"sortable":false,width:"100px",
+				{name:'roleId', index:'roleId',align:'center',"sortable":false,width:"100px",
 					formatter:function(cellvalue, options, rowObject){
-					   debugger;
-					   return "<span name='roleEditSpan' class='ui-icon-edit' data-val='"+rowObject.roleId+"'></span>";
+						   debugger;
+						   var paramsStr=JSON.stringify(rowObject);
+						   if(paramsStr){
+							   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+						   }
+						   return "<a style='color:blue;' onclick=\"addTabItem('roleTab','roleUpdate','角色修改','/p2p-webapp/page/systemmng/roleUpdate.html','true','/p2p-webapp/js/credit/roleUpdate.js','"+paramsStr+"');\">"+cellvalue+"</a>";
 					}
 				},
 				{name:'roleName', index:'roleName',align:'center',"sortable":false},
@@ -44,38 +49,6 @@ $(function(){
 		     }
 	});
     
-    
-    //给grid列中的修改图标添加点击事件  这里调查看下初审的打开tab页签的没事，在列中绑定公共的addTabItem
-    /**$("div[name='roleTab']").on("click",".ui-icon-edit",function(){
-    	debugger;
-    	var roleId=$(this).attr("data-val");
-    	var roleUpdate=$("div[name='roleTab']").find("li[tabid='roleUpdate']");
-    	if(roleUpdate && roleUpdate.length>0){
-    		$("div[name='roleTab']").find("li[tabid='roleUpdate']").remove();
-    		$("div[name='roleTab']").find("div[tabid='roleUpdate']").remove();
-    	}
-    	$("div[name='roleTab']").find(".tabs-head li").attr("class","");
-    	var roleUpdateLi='<li tabid="roleUpdate" class="tabs-selected"><span>修改用户</span><div class="credit-tab-close"><span>x</span></div></li>';
-    	$("div[name='roleTab']").find(".tabs-head ul").append(roleUpdateLi);
-    	$(".tabs-body").children("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
-    	
-    	var jsFileUrl="/p2p-webapp/js/credit/roleUpdate.js";
-    	$("script[src='"+jsFileUrl+"']").remove();
-		var requestUrl="http://"+window.location.host+"/p2p-webapp/page/systemmng/roleUpdate.html";
-		$.ajax({ 
-			url: requestUrl,
-			success: function(data){
-				debugger;	
-				if(data && data.length>0){
-					$("div[name='roleTab']").find(".tabs-body").append(data);
-					$("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>"');
-				}
-			},error:function(error){
-				$("div[name='roleTab']").find(".tabs-body").append('<div tabid="roleUpdate" class="tabs-body-item creditPageContext credit-validator"><div><div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div></div>');
-			}
-		});
-    });*/
-
     //输入用户名称，点击按钮进行过滤
     $("#searchRoleListBtn").click(function(){
         var rolename = $("input[name='rolename']").val();

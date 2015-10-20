@@ -39,8 +39,8 @@
     <delete id="deleteRoleById" parameterType="Integer">
        delete from role_t where role_id=#{roleId}
     </delete>       
-    <update id="updateUser" parameterType="RoleVO">
-       update role_t set rolename=#{roleName}, 
+    <update id="updateRole" parameterType="RoleVO">
+       update role_t set role_name=#{roleName}, 
                          enable=#{enable},
                          remark=#{remark},
                          last_updated_by=#{last_updated_by},
@@ -66,7 +66,7 @@
            res.priority as priority       
            from role_t r
       left join role_resource_t rr on r.role_id = rr.role_id  
-      left join resource_t res on rr.resource_id = rr.resource_id 
+      left join resource_t res on rr.resource_id = res.resource_id 
        where r.role_id=#{roleId} 
     </select>
 </mapper>

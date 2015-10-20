@@ -1,0 +1,60 @@
+<div tabid="roleUpdate" class="tabs-body-item creditPageContext credit-validator">
+	<div>
+		<!--排名池查询条件开始-->
+		<h3>角色信息</h3>	
+		<div class="row" name="roleUpdateForm" id="roleUpdateForm" >
+			<div class="credit-spacecontrol col-xs-12 col-sm-6">
+				<div class="row" >
+					<label class="col-xs-12 col-sm-3">
+						<div class="credit-label">
+							<span style="color:red;">*</span>角色名称
+						</div>
+					</label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="credit-input">
+							<input type="text" name="rolenameupdate" >
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="credit-spacecontrol col-xs-12 col-sm-6">
+				<div class="row">
+					<label class="col-xs-12 col-sm-3">
+						<div class="credit-label">
+							<span style="color:red;">*</span>是否可用
+						</div>
+					</label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="credit-input">
+							<select name="enable">
+								<option value="1"  selected="selected">可用</option>
+								<option value="0" >不可用</option>
+							</select>						
+						</div>
+					</div>
+				</div>
+			</div>							
+			<div class="credit-spacecontrol col-xs-12 col-sm-4" style="width:100%;">
+				<div class="row">
+					<label class="col-xs-12 col-sm-3" style="width:15%;">
+						<div class="credit-label">
+							备注
+						</div>
+					</label>
+					<div class="col-xs-12 col-sm-9" style="width:85%;">
+						<div class="credit-input">
+							<textarea  name="remark"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="credit-toolbar" style="margin-top: 5px;margin-bottom: 30px;">
+				<div style="display: inline-block;">
+					<button class="grid-toobar-btn" name="saveRole4UpdateBtn" type="button">保存</button>
+					<button class="grid-toobar-btn" name="closeRole4UpdateBtn" onclick="removeTabItem('roleTab','roleUpdate');" type="button">取消</button>
+				</div>
+			</div>														
+		</div>
+	</div>
+</div>
