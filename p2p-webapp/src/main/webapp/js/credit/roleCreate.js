@@ -61,7 +61,7 @@ $(function(){
 		check: {
 			enable: true,
 			chkStyle:"checkbox",
-			chkboxType: { "Y": "p", "N": "s"}
+			chkboxType: { "Y": "ps", "N": "ps"}
 		},
 		data:{
 		   simpleData: {
