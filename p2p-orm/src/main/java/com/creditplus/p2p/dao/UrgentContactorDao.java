@@ -12,4 +12,6 @@ public interface UrgentContactorDao {
 	
 	public void deleteByUserId(Integer user_id);
 	
+	List<?> getUrgentListByUserId(Integer user_id);
+	
 }

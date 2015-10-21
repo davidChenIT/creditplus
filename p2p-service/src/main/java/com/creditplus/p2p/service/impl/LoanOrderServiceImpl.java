@@ -14,6 +14,7 @@ import com.creditplus.p2p.dao.UrgentContactorDao;
 import com.creditplus.p2p.model.PageVO;
 import com.creditplus.p2p.page.PageUtil;
 import com.creditplus.p2p.service.ApproveLogService;
+import com.creditplus.p2p.service.CommonInfoService;
 import com.creditplus.p2p.service.LoanOrderService;
 
 
@@ -27,6 +28,8 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	private UrgentContactorDao urgentContactorDao;
 	@Autowired
 	private CustomerInfoDao customerInfoDao;
+	@Autowired
+	private CommonInfoService commonInfoService;
 
 	
 	
@@ -45,7 +48,13 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		
 		approveLogService.insertApproveLog(paramMap, true);
 		updateLoanApply(paramMap);
-		return loanOrderDao.getCreditFirstTrialDetailByLoanId(Integer.valueOf(paramMap.get("loan_id")+""));
+		Map loanOrderMap= loanOrderDao.getCreditFirstTrialDetailByLoanId(Integer.valueOf(paramMap.get("loan_id")+""));
+		//根据身份证号算出身份证相关信息
+		if(loanOrderMap!=null && loanOrderMap.size()>0){
+			Map cardInfo=commonInfoService.getCardInfoById(loanOrderMap.get("id_num")+"");
+			loanOrderMap.putAll(cardInfo);
+		}
+		return loanOrderMap;
 	}
 
 	
@@ -64,7 +73,12 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		
 		approveLogService.insertApproveLog(paramMap,true);
 		updateLoanApply(paramMap);
-		return loanOrderDao.getCreditReviewDetailByLoanId(Integer.valueOf(paramMap.get("loan_id")+""));
+		Map loanOrderMap=loanOrderDao.getCreditReviewDetailByLoanId(Integer.valueOf(paramMap.get("loan_id")+""));
+		if(loanOrderMap!=null && loanOrderMap.size()>0){
+			Map cardInfo=commonInfoService.getPhoneInfoById(loanOrderMap.get("mobile")+"");
+			loanOrderMap.putAll(cardInfo);
+		}
+		return loanOrderMap;
 	}
 	
 	
@@ -92,6 +106,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	}
 	
 	
+	/**
+	 * 信用复审服务
+	 */
 	public void creditReview(Map paramMap) throws Exception{
 		paramMap=initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state","user_id");
@@ -108,7 +125,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	
 	/**
 	 * 复审驳回
-	 * 1.更新loan_order_t状态为初审，复审人为空
+	 * 1.更新loan_order_t状态为初审状态2，复审人为空
 	 * 2.插入驳回日志
 	 * @throws Exception 
 	 */
@@ -122,13 +139,12 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	
 	
 	/**
-	 * 初审复审更新借款申请扩展表
-	 * 借款申请扩展表loan_apply_t插入
+	 * 初审复审更新状态,并且插入审核日志
 	 * @param paramMap
 	 */
 	public void updateLoanApply(Map paramMap){
 		Map loanMap=new HashMap(paramMap);
-		List loanAppList=loanOrderDao.selectLoanApplyList(loanMap);
+		List loanAppList=loanOrderDao.selectLoanApplyList(loanMap); 
 		int apply_state=Integer.valueOf(loanMap.get("apply_state")+"");
 		//2开始初审 3初审完毕 4开始复审 5复审完毕
 		if(apply_state==2 || apply_state==3){
@@ -144,7 +160,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		if(loanAppList.size()==0){
 			loanOrderDao.insertLoanApply(loanMap);
 		}else{
-			if(apply_state!=2 && apply_state!=4){ //这两个状态只做插入动作
+			if(apply_state!=2 && apply_state!=4){ //这两个状态开始初审和复审只做插入动作
 				loanOrderDao.updateLoanOrderByLoanId(loanMap);
 			}
 		}
