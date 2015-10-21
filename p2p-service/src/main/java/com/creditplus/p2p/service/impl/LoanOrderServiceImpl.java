@@ -52,7 +52,8 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		//根据身份证号算出身份证相关信息
 		if(loanOrderMap!=null && loanOrderMap.size()>0){
 			Map cardInfo=commonInfoService.getCardInfoById(loanOrderMap.get("id_num")+"");
-			loanOrderMap.putAll(cardInfo);
+			if(cardInfo!=null && cardInfo.size()>0)
+				loanOrderMap.putAll(cardInfo);
 		}
 		return loanOrderMap;
 	}
@@ -75,8 +76,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		updateLoanApply(paramMap);
 		Map loanOrderMap=loanOrderDao.getCreditReviewDetailByLoanId(Integer.valueOf(paramMap.get("loan_id")+""));
 		if(loanOrderMap!=null && loanOrderMap.size()>0){
-			Map cardInfo=commonInfoService.getPhoneInfoById(loanOrderMap.get("mobile")+"");
-			loanOrderMap.putAll(cardInfo);
+			Map cardInfo=commonInfoService.getCardInfoById(loanOrderMap.get("id_num")+"");
+			if(cardInfo!=null && cardInfo.size()>0)
+				loanOrderMap.putAll(cardInfo);
 		}
 		return loanOrderMap;
 	}

@@ -524,8 +524,8 @@ INSERT INTO catalog_t VALUES (1,'首页',0,'/page/index.jsp',0,'首页','test','
 
 INSERT INTO p2p.user_info VALUES (4,1,'o8EeQw_voTztu6J-jPttrk7LBGSA','朱胜','18923880749','511702198506123795',NULL,NULL,NULL,'中国工商银行','1234','18923880749','1234','10000以上','Qwer','北京','北京','18923880749','博士','1234',NULL,NULL,7,'Y','2015-10-04 10:34:02');
 
-INSERT INTO p2p.urgent_list VALUES (5,4,'xxxx','配偶','13703003333',sysdate());
-INSERT INTO p2p.urgent_list VALUES (6,4,'yyyy','姐妹','15902020202',sysdate());
+INSERT INTO p2p.urgent_list VALUES (5,4,'xxxx','配偶','13704673333',sysdate());
+INSERT INTO p2p.urgent_list VALUES (6,4,'yyyy','姐妹','15904670202',sysdate());
 INSERT INTO p2p.urgent_list VALUES (8,4,'aaaa','情侣','18876615555',sysdate());
 
 INSERT INTO p2p.loan_list VALUES (11,4,NULL,5000,'2015-10-04 17:53:55',90,'2016-01-02',0,5000,0,0,NULL,'1234',1,'2015-10-04 09:53:55');
@@ -8661,4 +8661,4 @@ INSERT INTO `origin_place` (`sn`, `id_last_num`, `province`, `city`, `district`,
 (15112, '632321', '青海省', '同仁县', '同仁县', NULL, NULL, '2015-10-18 15:40:15'),
 (15113, '632322', '青海省', '尖扎县', '尖扎县', NULL, NULL, '2015-10-18 15:40:15'),
 (15114, '632323', '青海省', '泽库县', '泽库县', NULL, NULL, '2015-10-18 15:40:15'),
-(15115, '632324', '青海省', '河南蒙古族自治县', '河南蒙古族自治县', NULL, NULL, '2015-10-18 15:40:15');s
+(15115, '632324', '青海省', '河南蒙古族自治县', '河南蒙古族自治县', NULL, NULL, '2015-10-18 15:40:15');
