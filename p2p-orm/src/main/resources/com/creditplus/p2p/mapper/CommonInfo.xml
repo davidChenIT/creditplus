@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.creditplus.p2p.dao.CommonInfoDao">
+	
+	<select id="getCardInfoById" parameterType="String" resultType="java.util.Map">
+		select province as id_province,city as id_city,district as id_district from p2p.origin_place where id_last_num=#{id_first_num} limit 1
+	</select>
+	
+	<select id="getPhoneInfoById" parameterType="String" resultType="java.util.Map">
+		select concat(province,' ',city) as mobile_address from tel_area_code where area=#{area} limit 1
+	</select>
+	
+</mapper>

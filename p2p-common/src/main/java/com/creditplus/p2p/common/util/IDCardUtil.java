@@ -2,6 +2,7 @@ package com.creditplus.p2p.common.util;
 
  
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,12 +71,12 @@ public class IDCardUtil {
      *@param s  号码内容
      *@return 是否有效 null和"" 都是false 
      */
-    public static boolean isIDCard(String certNo){
-        if(certNo == null || (certNo.length() != 15 && certNo.length() != 18))
+    public static boolean isIDCard(String cardNo){
+        if(cardNo == null || (cardNo.length() != 15 && cardNo.length() != 18))
             return false;
-        if(!StringUtils.isNumeric(certNo.subSequence(0, 17)))
+        if(!StringUtils.isNumeric(cardNo.subSequence(0, 17)))
         	return false;
-        final char[] cs = certNo.toUpperCase().toCharArray();
+        final char[] cs = cardNo.toUpperCase().toCharArray();
         //校验位数
         int power = 0;
         for(int i=0; i<cs.length; i++){
@@ -89,57 +90,66 @@ public class IDCardUtil {
         }
          
         //校验区位码
-        if(!zoneNum.containsKey(Integer.valueOf(certNo.substring(0,2)))){
+        Integer province_code=Integer.valueOf(cardNo.substring(0,2));
+        if(!zoneNum.containsKey(province_code)){
             return false;
         }
          
         //校验年份
-        String year = certNo.length() == 15 ? getIdcardCalendar() + certNo.substring(6,8) :certNo.substring(6, 10);
-         
+        String year = cardNo.length() == 15 ? getIdcardCalendar() + cardNo.substring(6,8) :cardNo.substring(6, 10);
         final int iyear = Integer.parseInt(year);
         if(iyear < 1900 || iyear > Calendar.getInstance().get(Calendar.YEAR))
             return false;//1900年的PASS，超过今年的PASS
          
         //校验月份
-        String month = certNo.length() == 15 ? certNo.substring(8, 10) : certNo.substring(10,12);
+        String month = cardNo.length() == 15 ? cardNo.substring(8, 10) : cardNo.substring(10,12);
         final int imonth = Integer.parseInt(month);
         if(imonth <1 || imonth >12){
             return false;
         }
          
         //校验天数      
-        String day = certNo.length() ==15 ? certNo.substring(10, 12) : certNo.substring(12, 14);
+        String day = cardNo.length() ==15 ? cardNo.substring(10, 12) : cardNo.substring(12, 14);
         final int iday = Integer.parseInt(day);
         if(iday < 1 || iday > 31)
             return false;       
          
         //校验"校验码"
-        if(certNo.length() == 15)
+        if(cardNo.length() == 15)
             return true;
         boolean flag= cs[cs.length -1 ] == PARITYBIT[power % 11];
-        card_map.put("card_state", flag);
+        card_map.put("id_state", flag?1:0);
         
         if(flag){
-        	card_map.put("card_year", year);
+        	int age=(Calendar.getInstance().get(Calendar.YEAR)-Integer.valueOf(year));
+        	String sex=Integer.valueOf(cardNo.substring(cardNo.length()-2, cardNo.length()-1))%2==1?"男":"女";
+        	card_map.put("id_year", year);
+        	card_map.put("id_province", zoneNum.get(province_code));
+        	card_map.put("id_age", age);
+        	card_map.put("id_sex", sex);
+        	card_map.put("id_6", cardNo.substring(0, 6));
         }
 		return flag;
     }
-     
+    
+    public static Map getCardInfo(String cardNo){
+    	isIDCard(cardNo);
+    	return new HashMap(card_map);
+    }
+    
     private static int getIdcardCalendar() {        
          GregorianCalendar curDay = new GregorianCalendar();
          int curYear = curDay.get(Calendar.YEAR);
          int year2bit = Integer.parseInt(String.valueOf(curYear).substring(2));   
-         System.out.println(year2bit);
          return  year2bit;
     }     
      
      
      
     public static void main(String[] args) {    
-    	String idcard="370883198605305339";
-        boolean mark = isIDCard(idcard);    
-        System.out.println(idcard.length());
-        System.out.println(mark);
+    	String idcard="511702198307271621";
+    	Map cardMap=getCardInfo(idcard);
+        System.out.println(cardMap);
     }
  
 }

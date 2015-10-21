@@ -70,6 +70,9 @@
 		</collection>
 	</resultMap> -->
 
+
+
+  	<!-- pic_type 1 身份证正面 2 身份证背面 3 工牌照片 4 学历证书 5 芝麻信用   6 工资单 7 银行流水 8 职业证书 9 住址证明材料 -->
 	<select id="getCreditReviewDetailByLoanId" parameterType="Integer" resultType="java.util.Map">
 		select 		
 		    t.user_id,
@@ -138,7 +141,16 @@
 		    ifnull(a.apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
-		    a.version
+		    a.version,
+		    (select url from p2p.attach_pic where user_id=#{user_id} and type=1) as id_num_pic1,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=2) as id_num_pic2,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=3) as work_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=4) as degree_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=5) as seasame_score_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=6) as income_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=7) as bank_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=8) as certificate_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=9) as address_pic
 	    from p2p.loan_list t
 		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
 		left join p2p.user_info u on t.user_id=u.user_id
@@ -188,7 +200,16 @@
 		    ifnull(a.apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
-		    a.version
+		    a.version,
+		    (select url from p2p.attach_pic where user_id=#{user_id} and type=1) as id_num_pic1,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=2) as id_num_pic2,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=3) as work_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=4) as degree_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=5) as seasame_score_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=6) as income_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=7) as bank_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=8) as certificate_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=9) as address_pic
 	    from p2p.loan_list t
 		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
 		left join p2p.user_info u on t.user_id=u.user_id
@@ -371,7 +392,7 @@
 	
 	<!-- 复审驳回更新服务 -->
 	<update id="creditReviewRejectUpdate" parameterType="java.util.Map">
-		update loan_apply_t set modifytime=sysdate(),apply_state=2,review_assign_user='' where loan_id = #{loan_id}
+		update loan_apply_t set modifytime=sysdate(),apply_state=2,review_assign_user='',version=(version+0.1) where loan_id = #{loan_id}
 	</update>
 
 	<delete id="deleteByLoanId" parameterType="Integer">
