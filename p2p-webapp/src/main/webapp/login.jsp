@@ -6,6 +6,7 @@
 <meta charset="utf-8">
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
 <title>登录</title>
 <link href="<%=request.getContextPath()%>/css/credit.css" rel="stylesheet" type="text/css">
 <script src="<%=request.getContextPath()%>/js/jquery/jquery-2.0.3.min.js" type="text/javascript"></script>
