@@ -439,3 +439,73 @@ function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeI
 		}
 	});
 }
+
+
+//自定义alert、confirm框
+var messageBox={
+    
+    //创建弹出框
+    createMessageDialog:function(title,content,cancel,focus,icon,okFunc,cancelFunc){
+    	debugger;
+    	messageBox.createMaskDiv();
+    	messageBox.okFunc=okFunc;
+    	messageBox.cancelFunc=cancelFunc;
+    	
+    	/*		
+		参数列表说明:
+		title :弹出对话框的标题,标题内容最好在25个字符内,否则会导致显示图片的异常															
+		text  :弹出对话框的内容,可以使用HTML代码,例如<font color='red'>删除么?</font>,如果直接带入函数,注意转义
+		func  :弹出对话框点击确认后执行的函数,需要写全函数的引用,例如add(),如果直接带入函数,注意转义。
+		cancel:弹出对话框是否显示取消按钮,为空的话不显示,为1时显示
+		focus :弹出对话框焦点的位置,0焦点在确认按钮上,1在取消按钮上,为空时默认在确认按钮上
+		icon  :弹出对话框的图标
+		Author:Jedliu
+		Blog  :Jedliu.cublog.cn 
+		【网页转载请保留版权信息,实际使用时可以除去该信息】
+		*/	
+		icon="/p2p-webapp/images/msgbox_"+icon+".png";
+		var temp="<div style=\"width:300px;border:2px solid #37B6D1;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
+				+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">"+title+"</div>"
+				+"<table  cellspacing=\"0\" border=\"0\"><tr><td style=\" padding:0px 0px 0px 20px; \"><img src=\""+icon+"\" width=\"64\" height=\"64\"></td>"
+				+"<td ><div style=\"background-color: #fff; font-weight: bold;font-size: 12px;padding:20px 0px ; text-align:left;word-break: break-all;\">"+content
+				+"</div></td></tr></table>"
+				+"<div style=\"text-align:center; padding:0px 0px 20px;background-color: #fff;\"><input type='button'  style=\"border:1px solid #CCC; background-color:#CCC; width:50px; height:25px;\" value='确定'id=\"msgDialogConfirmBtn\"  onclick=\"messageBox.removeMessageDialogDiv(1);"+func+";\">";
+		if(!cancel){
+			temp+="&nbsp;&nbsp;&nbsp;<input type='button' style=\"border:1px solid #CCC; background-color:#CCC; width:50px; height:25px;\" value='取消'  id=\"msgDialogCancelBtn\"   onClick='messageBox.removeMessageDialogDiv(0);'>";
+		}
+		temp+="</div></div>";
+		
+		//创建弹出层
+		$("body").append("<div id='messageDialogDiv'></div>");
+		var messageDialogDiv=$("#messageDialogDiv");
+		messageDialogDiv.attr("style","position:absolute;width:400px;height:200px;overflow:visible;z-index:2001");
+		messageDialogDiv.html(temp);
+		var left=(document.body.clientWidth-messageDialogDiv.width())/2+"px";
+		var top=(document.body.clientHeight-messageDialogDiv.height())/2+"px";
+		messageDialogDiv.css({'left':left,'top':top});
+		if(focus==0||focus=="0"||null==focus){
+			$("#msgDialogConfirmBtn").focus();
+		}else if(focus==1||focus=="1"){
+			$("#msgDialogCancelBtn").focus();
+		}	
+    },
+    //移除弹出框
+    removeMessageDialogDiv:function(status){
+    	$("#messageDialogDiv").remove();
+    	messageBox.removeMaskDiv();
+    	if(status==1){
+    		messageBox.okFunc && messageBox.okFunc();
+    	}else{
+    		messageBox.cancelFunc && messageBox.cancelFunc();
+    	}
+    
+    },
+    //创建遮罩层
+    createMaskDiv:function(){
+    	var messageDialogMaskDivHtml='<div id="messageDialogMaskDiv" unselectable="on" style="background:#000;filter:alpha(opacity=10);opacity:.1;left:0px;top:0px;position:fixed;height:100%;width:100%;overflow:hidden;z-index:2000;"></div>';
+        $("body").append(messageDialogMaskDivHtml);
+    },
+    removeMaskDiv:function(){
+    	$("body").find("#messageDialogMaskDiv").remove();
+    }
+}

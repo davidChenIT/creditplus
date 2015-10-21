@@ -8,7 +8,7 @@
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>登录</title>
 <link href="<%=request.getContextPath()%>/css/credit.css" rel="stylesheet" type="text/css">
-<script src="<%=request.getContextPath()%>/js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/jquery/jquery-2.0.3.min.js" type="text/javascript"></script>
 </head>
 <script>  
   //页面初始化加载函数

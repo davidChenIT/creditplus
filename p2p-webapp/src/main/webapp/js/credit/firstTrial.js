@@ -105,7 +105,7 @@ $(function(){
 			debugger;
 			publicSaveAjax("loanOrderService","creditFirstTrial",JSON.stringify(request_data),"firstTrialTab","firstTrial","[name='firstTrialSearhBtn']");
 		}else{
-			alert("校验失败！");
+			messageBox.createMessageDialog("提示","对不起，您有数据录入不正确，请检查并正确录入后再次提交！","","","warning");
 		}
 		
 	});
