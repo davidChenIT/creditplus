@@ -5,6 +5,12 @@ $(function(){
 	$(window).resize(function(){
 		debugger;
 		gridResize("credit_Main");
+		
+		messageBox.resetMessageDialogDiv();
+	});
+	$(window).scroll(function(){
+		debugger;
+		messageBox.resetMessageDialogDiv();
 	});
 	//注册window的onpopstate事件
 	window.onpopstate = function(e) {  
@@ -407,7 +413,8 @@ function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
 		success: function(data){
 			resultData=data;
 		},error:function(error){
-			alert("调用服务失败！");
+			var errorStr=$.parseJSON(error.responseText).cause.message;
+			messageBox.createMessageDialog("提示",errorStr,"","","error");
 		}
 	});
 	if(setValueDiv){
@@ -417,7 +424,7 @@ function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
 }
 
 //公共的保存或修改表单的方法
-function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeItemId,searchBtn){
+function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeItemId,searchBtn,successTipInfo){
 	debugger;
 	$.ajax({ 
 		url: serviceAddress,
@@ -429,13 +436,16 @@ function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeI
 			"request_data":requestDataStr
 		},			
 		success: function(data){
-			alert("操作成功！");
+			if(successTipInfo){
+			  messageBox.createMessageDialog("提示",successTipInfo,"","","true");
+			}
 			if(removeTabId && removeItemId){
 				removeTabItem(removeTabId,removeItemId);
 			}
 			$(searchBtn).click();
 		},error:function(error){
-			alert("调用服务失败！");
+			var errorStr=$.parseJSON(error.responseText).cause.message;
+			messageBox.createMessageDialog("提示",errorStr,"","","error");
 		}
 	});
 }
@@ -454,23 +464,21 @@ var messageBox={
     	/*		
 		参数列表说明:
 		title :弹出对话框的标题,标题内容最好在25个字符内,否则会导致显示图片的异常															
-		text  :弹出对话框的内容,可以使用HTML代码,例如<font color='red'>删除么?</font>,如果直接带入函数,注意转义
-		func  :弹出对话框点击确认后执行的函数,需要写全函数的引用,例如add(),如果直接带入函数,注意转义。
+		content:弹出对话框的内容,可以使用HTML代码,例如<font color='red'>删除么?</font>,如果直接带入函数,注意转义
 		cancel:弹出对话框是否显示取消按钮,为空的话不显示,为1时显示
 		focus :弹出对话框焦点的位置,0焦点在确认按钮上,1在取消按钮上,为空时默认在确认按钮上
 		icon  :弹出对话框的图标
-		Author:Jedliu
-		Blog  :Jedliu.cublog.cn 
-		【网页转载请保留版权信息,实际使用时可以除去该信息】
+		okFunc：点击确定按钮的回调函数
+		cancelFunc：点击取消按钮的毁掉函数
 		*/	
 		icon="/p2p-webapp/images/msgbox_"+icon+".png";
-		var temp="<div style=\"width:300px;border:2px solid #37B6D1;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
+		var temp="<div style=\"width:400px;border:2px solid #37B6D1;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
 				+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">"+title+"</div>"
 				+"<table  cellspacing=\"0\" border=\"0\"><tr><td style=\" padding:0px 0px 0px 20px; \"><img src=\""+icon+"\" width=\"64\" height=\"64\"></td>"
 				+"<td ><div style=\"background-color: #fff; font-weight: bold;font-size: 12px;padding:20px 0px ; text-align:left;word-break: break-all;\">"+content
 				+"</div></td></tr></table>"
-				+"<div style=\"text-align:center; padding:0px 0px 20px;background-color: #fff;\"><input type='button'  style=\"border:1px solid #CCC; background-color:#CCC; width:50px; height:25px;\" value='确定'id=\"msgDialogConfirmBtn\"  onclick=\"messageBox.removeMessageDialogDiv(1);"+func+";\">";
-		if(!cancel){
+				+"<div style=\"text-align:center; padding:0px 0px 20px;background-color: #fff;\"><input type='button'  style=\"border:1px solid #CCC; background-color:#CCC; width:50px; height:25px;\" value='确定'id=\"msgDialogConfirmBtn\"  onclick=\"messageBox.removeMessageDialogDiv(1);\">";
+		if(cancel){
 			temp+="&nbsp;&nbsp;&nbsp;<input type='button' style=\"border:1px solid #CCC; background-color:#CCC; width:50px; height:25px;\" value='取消'  id=\"msgDialogCancelBtn\"   onClick='messageBox.removeMessageDialogDiv(0);'>";
 		}
 		temp+="</div></div>";
@@ -498,7 +506,6 @@ var messageBox={
     	}else{
     		messageBox.cancelFunc && messageBox.cancelFunc();
     	}
-    
     },
     //创建遮罩层
     createMaskDiv:function(){
@@ -507,5 +514,11 @@ var messageBox={
     },
     removeMaskDiv:function(){
     	$("body").find("#messageDialogMaskDiv").remove();
+    },
+    resetMessageDialogDiv:function(){
+    	var messageDialogDiv=$("#messageDialogDiv");
+		var left=($(window).width()-messageDialogDiv.width())/2+"px";
+		var top=(($(window).height()-messageDialogDiv.height())/2+document.body.scrollTop)+"px";
+		messageDialogDiv.css({'left':left,'top':top});
     }
 }
