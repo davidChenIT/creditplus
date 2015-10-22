@@ -21,9 +21,13 @@
 <script src="<%=request.getContextPath()%>/js/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/credit/basic.js" type="text/javascript"></script>
 </head>
-
+<script type="text/javascript">
+$(function(){
+	loadingBox.showLoading();
+	setTimeout(function(){loadingBox.hideLoading();},300);
+});
+</script>
 <body>
-
 	<!--  头部start -->
 	<header id="credit_Header" class="credit-header">
 		<!-- logo区域-->

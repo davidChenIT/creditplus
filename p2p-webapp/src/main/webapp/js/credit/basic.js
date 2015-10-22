@@ -78,6 +78,7 @@ $(function(){
 					//获取页面
 					var fileUrlstr=treeNode.urlstr;
 					if(fileUrlstr){
+						loadingBox.showLoading();
 						var jsFileUrl="/p2p-webapp/js/credit/"+fileUrlstr.substring(fileUrlstr.lastIndexOf("/")+1,fileUrlstr.lastIndexOf("."))+".js";
 						var requestUrl="http://"+window.location.host+"/p2p-webapp/"+fileUrlstr;
 						
@@ -87,6 +88,10 @@ $(function(){
 							url: requestUrl,
 							//context: document.body,
 							success: function(data){
+								loadingBox.hideLoading(500);
+								if(data && data.indexOf("loginBtn")!=-1){
+									window.location.href="http://localhost:8080/p2p-webapp/page/login.jsp";
+								}
 								debugger;	
 								if(data && data.length>0){
 								  var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->")+24,data.indexOf("<!--credit_Main_end-->"));
@@ -105,6 +110,7 @@ $(function(){
 		                        };
 								window.history.pushState(state,data,requestUrl);
 							},error:function(error){
+								loadingBox.hideLoading(500);
 							  debugger;
 							  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
 							}
@@ -164,7 +170,7 @@ $(function(){
 	checkAllParents1(curentTreeNode);
 	//设置面包屑
 	$(".credit-breadcrumb").html(liHtml);
-
+	loadingBox.hideLoading();
 
 
 	//展开或隐藏左侧栏目区域
@@ -207,6 +213,7 @@ $(function(){
 			   //获取tab的pege属性，如果不为空就通过ajax获取页面
 			   var pageAddress=$(this).attr("page");
 			   if(pageAddress){
+				    loadingBox.showLoading();
 				    $(".tabs-body").children("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
 				    var requestUrl="http://"+window.location.host+"/p2p-webapp/"+pageAddress;
 				    var jsFileUrl="../js/credit/"+pageAddress.substring(pageAddress.lastIndexOf("/")+1,pageAddress.lastIndexOf("."))+".js";
@@ -214,6 +221,10 @@ $(function(){
 						url: requestUrl,
 						//context: document.body,
 						success: function(data){
+							loadingBox.hideLoading();
+							if(data && data.indexOf("loginBtn")!=-1){
+								window.location.href="http://localhost:8080/p2p-webapp/page/login.jsp";
+							}
 							debugger;	
 							if(data && data.length>0){
 							  //var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->"),data.indexOf("<!--credit_Main_end-->")+19);
@@ -225,11 +236,11 @@ $(function(){
 							}
 							
 						},error:function(error){
+						  loadingBox.hideLoading();
 						  debugger;
 						  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
 						}
 					});
-					
 					$(this).removeAttr("page");
 			   }else{
 				   currentTab.attr("class","tabs-body-item creditPageContext credit-validator");
@@ -281,6 +292,7 @@ function removeTabItem(tabId,itemId){
 function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
 	debugger;
 	if(tabId && itemId && pageUrl){
+		loadingBox.showLoading();
 		var paramsObj;
 		if(paramsStr){
 			paramsObj=JSON.parse(paramsStr.replace(/@#_@#/g,"\""));
@@ -301,6 +313,10 @@ function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
 		$.ajax({ 
 			url: requestUrl,
 			success: function(data){
+				loadingBox.hideLoading(500);
+				if(data && data.indexOf("loginBtn")!=-1){
+					window.location.href="http://localhost:8080/p2p-webapp/page/login.jsp";
+				}
 				debugger;	
 				if(data && data.length>0){
 					$("div[name='"+tabId+"']").find(".tabs-body").append(data);
@@ -310,6 +326,7 @@ function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
 					}
 				}
 			},error:function(error){
+				loadingBox.hideLoading(500);
 				$("div[name='"+tabId+"']").find(".tabs-body").append('<div tabid="'+itemId+'" class="tabs-body-item creditPageContext credit-validator"><div><div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div></div>');
 			}
 		});
@@ -400,6 +417,7 @@ function gridResize(domId){
 
 //公共的查询并赋值的方法
 function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
+	loadingBox.showLoading();
 	debugger;
 	var  resultData={};
 	$.ajax({ 
@@ -412,8 +430,10 @@ function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
 			"request_data":requestDataStr
 		},			
 		success: function(data){
+			loadingBox.hideLoading();
 			resultData=data;
 		},error:function(error){
+			loadingBox.hideLoading();
 			var errorStr=$.parseJSON(error.responseText).cause.message;
 			messageBox.createMessageDialog("提示",errorStr,"","","error");
 		}
@@ -427,6 +447,7 @@ function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
 //公共的保存或修改表单的方法
 function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeItemId,searchBtn,successTipInfo,okFunc,cancelFunc){
 	debugger;
+	loadingBox.showLoading();
 	$.ajax({ 
 		url: serviceAddress,
 		datatype:'json',
@@ -437,6 +458,7 @@ function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeI
 			"request_data":requestDataStr
 		},			
 		success: function(data){
+			loadingBox.hideLoading(500);
 			if(successTipInfo){
 			  messageBox.createMessageDialog("提示",successTipInfo,"","","true",okFunc,cancelFunc);
 			}
@@ -445,6 +467,7 @@ function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeI
 			}
 			$(searchBtn).click();
 		},error:function(error){
+			loadingBox.hideLoading(500);
 			var errorStr=$.parseJSON(error.responseText).cause.message;
 			messageBox.createMessageDialog("提示",errorStr,"","","error");
 		}
@@ -531,6 +554,7 @@ var loadingBox={
 		//创建loading提示层
 		showLoading:function(){
 			debugger;
+			loadingBox.hideLoading();
 			loadingBox.createloadingMaskDiv();
 			
 			var icon="/p2p-webapp/images/loading.gif";
@@ -550,9 +574,16 @@ var loadingBox={
 			loadingDiv.css({'left':left,'top':top});
 		},
 		//关闭loading提示层
-		hideLoading:function(){
-			loadingBox.removeLoadingDiv();
-			loadingBox.removeLoadingMaskDiv();
+		hideLoading:function(delayTime){
+			if(delayTime && delayTime>0){
+				setTimeout(function(){
+					loadingBox.removeLoadingDiv();
+					loadingBox.removeLoadingMaskDiv();
+				},delayTime)
+			}else{
+				loadingBox.removeLoadingDiv();
+				loadingBox.removeLoadingMaskDiv();
+			}
 		},
 		//创建遮罩层
 	    createloadingMaskDiv:function(){
