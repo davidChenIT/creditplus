@@ -424,7 +424,7 @@ function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
 }
 
 //公共的保存或修改表单的方法
-function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeItemId,searchBtn,successTipInfo,okFunc){
+function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeItemId,searchBtn,successTipInfo,okFunc,cancelFunc){
 	debugger;
 	$.ajax({ 
 		url: serviceAddress,
@@ -437,7 +437,7 @@ function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeI
 		},			
 		success: function(data){
 			if(successTipInfo){
-			  messageBox.createMessageDialog("提示",successTipInfo,"","","true");
+			  messageBox.createMessageDialog("提示",successTipInfo,"","","true",okFunc,cancelFunc);
 			}
 			if(removeTabId && removeItemId){
 				removeTabItem(removeTabId,removeItemId);
