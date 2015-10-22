@@ -5,12 +5,13 @@ $(function(){
 	$(window).resize(function(){
 		debugger;
 		gridResize("credit_Main");
-		
 		messageBox.resetMessageDialogDiv();
+		loadingBox.resetLoadingDiv();
 	});
 	$(window).scroll(function(){
 		debugger;
 		messageBox.resetMessageDialogDiv();
+		loadingBox.resetLoadingDiv();
 	});
 	//注册window的onpopstate事件
 	window.onpopstate = function(e) {  
@@ -474,7 +475,7 @@ var messageBox={
 		icon="/p2p-webapp/images/msgbox_"+icon+".png";
 		var temp="<div style=\"width:400px;border:2px solid #37B6D1;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
 				+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">"+title+"</div>"
-				+"<table  cellspacing=\"0\" border=\"0\"><tr><td style=\" padding:0px 0px 0px 20px; \"><img src=\""+icon+"\" width=\"64\" height=\"64\"></td>"
+				+"<table  cellspacing=\"0\" border=\"0\"><tr><td style=\" padding:0px 0px 0px 20px;vertical-align: text-top; \"><img src=\""+icon+"\" width=\"64\" height=\"64\"></td>"
 				+"<td ><div style=\"background-color: #fff; font-weight: bold;font-size: 12px;padding:20px 0px ; text-align:left;word-break: break-all;\">"+content
 				+"</div></td></tr></table>"
 				+"<div style=\"text-align:center; padding:0px 0px 20px;background-color: #fff;\"><input type='button'  style=\"border:1px solid #CCC; background-color:#CCC; width:50px; height:25px;\" value='确定'id=\"msgDialogConfirmBtn\"  onclick=\"messageBox.removeMessageDialogDiv(1);\">";
@@ -486,10 +487,12 @@ var messageBox={
 		//创建弹出层
 		$("body").append("<div id='messageDialogDiv'></div>");
 		var messageDialogDiv=$("#messageDialogDiv");
-		messageDialogDiv.attr("style","position:absolute;width:400px;height:200px;overflow:visible;z-index:2001");
+		messageDialogDiv.attr("style","position:absolute;width:400px;overflow:visible;z-index:2001");
 		messageDialogDiv.html(temp);
-		var left=(document.body.clientWidth-messageDialogDiv.width())/2+"px";
-		var top=(document.body.clientHeight-messageDialogDiv.height())/2+"px";
+//		var left=(document.body.clientWidth-messageDialogDiv.width())/2+"px";
+//		var top=(document.body.clientHeight-messageDialogDiv.height())/2+"px";
+		var left=($(window).width()-messageDialogDiv.width())/2+"px";
+		var top=(($(window).height()-messageDialogDiv.height())/2+document.body.scrollTop)+"px";
 		messageDialogDiv.css({'left':left,'top':top});
 		if(focus==0||focus=="0"||null==focus){
 			$("#msgDialogConfirmBtn").focus();
@@ -521,4 +524,52 @@ var messageBox={
 		var top=(($(window).height()-messageDialogDiv.height())/2+document.body.scrollTop)+"px";
 		messageDialogDiv.css({'left':left,'top':top});
     }
+}
+
+//创建loading锁屏，防止重复提交
+var loadingBox={
+		//创建loading提示层
+		showLoading:function(){
+			debugger;
+			loadingBox.createloadingMaskDiv();
+			
+			var icon="/p2p-webapp/images/loading.gif";
+			var temp="<div style=\"width:200px;border:2px solid #6DD137;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
+					+"<table  cellspacing=\"0\" border=\"0\"><tr><td style=\" padding:0px 0px 0px 50px;\"><img src=\""+icon+"\"></td>"
+					+"<td ><div style=\"background-color: #fff; font-weight: bold;font-size: 16px;padding:20px 0px;font-style: oblique;;text-align:left;word-break: break-all;\">Loading..."
+					+"</div></td></tr></table>"
+					+"</div>";
+			
+			//创建弹出层
+			$("body").append("<div id='loadingDiv'></div>");
+			var loadingDiv=$("#loadingDiv");
+			loadingDiv.attr("style","position:absolute;width:200px;overflow:visible;z-index:1999");
+			loadingDiv.html(temp);
+			var left=($(window).width()-loadingDiv.width())/2+"px";
+			var top=(($(window).height()-loadingDiv.height())/2+document.body.scrollTop)+"px";
+			loadingDiv.css({'left':left,'top':top});
+		},
+		//关闭loading提示层
+		hideLoading:function(){
+			loadingBox.removeLoadingDiv();
+			loadingBox.removeLoadingMaskDiv();
+		},
+		//创建遮罩层
+	    createloadingMaskDiv:function(){
+	    	var loadingMaskDivHtml='<div id="loadingMaskDiv" unselectable="on" style="background:#000;filter:alpha(opacity=10);opacity:.1;left:0px;top:0px;position:fixed;height:100%;width:100%;overflow:hidden;z-index:1998;"></div>';
+	        $("body").append(loadingMaskDivHtml);
+	    },
+	    removeLoadingMaskDiv:function(){
+	    	$("body").find("#loadingMaskDiv").remove();
+	    },
+	    //删除loading层
+	    removeLoadingDiv:function(){
+	    	$("#loadingDiv").remove();
+	    },
+	    resetLoadingDiv:function(){
+	    	var loadingDiv=$("#loadingDiv");
+			var left=($(window).width()-loadingDiv.width())/2+"px";
+			var top=(($(window).height()-loadingDiv.height())/2+document.body.scrollTop)+"px";
+			loadingDiv.css({'left':left,'top':top});
+	    }
 }
