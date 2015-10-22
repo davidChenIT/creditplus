@@ -64,8 +64,9 @@ public class RoleServiceImpl implements RoleService {
 			int roleId = roleVO.getRoleId();
 	    	String currentUser = CommonUtil.getCurrentUser();
 			for(Map<String,Object> resourceMap : resList){
+				resourceMap.put("rr_id",null);
 				resourceMap.put("role_id",roleId);
-				resourceMap.put("resouce_id",resourceMap.get("catalog_id")); 
+				resourceMap.put("resource_id",resourceMap.get("catalog_id")); 
 				resourceMap.put("last_updated_by",currentUser);        			
 				String createdBy = (String)resourceMap.get("created_by");
 				if(StringUtils.isBlank(createdBy)){
