@@ -72,7 +72,20 @@ $(function(){
        
     //点击用户列表中的删除按钮
     $("[name='delRoleBtn']").click(function(){
+        var request_data=[];
+    	var rowids = $("#roleListGrid").jqGrid('getDataIDs');
+    	for(var i=0;i<rowids.length;i++){
+    		var isChecked = $("#roleListGrid").find("tr[id='"+rowids[i]+"']").find("input[type='checkbox']").is(':checked');
+    		if(isChecked){
+          	    var dataVal = $.trim($("#roleListGrid").find("tr[id='"+rowids[i]+"']").find("a").text());
+          	    request_data.push(dataVal*1);    			
+    		}
+      	}
     	
-    	
+    	if(request_data.length <=0){
+    		return;
+    	}
+		//调用服务
+		publicSaveAjax("roleService","deleteRoleById",JSON.stringify(request_data),null,null,"#searchRoleListBtn");    	
     });
 })

@@ -12,4 +12,6 @@ public interface CatalogService {
 	void insertCatalog(@ParamName("parentId") int parentId,@ParamName("griddata")List<Map<String,Object>> dataList);
 	
 	PageVO getCatalogListWithPage(PageVO pageVO,CatalogVO catalogVO);
+	
+	List<Map<String,Object>> getCatalogTree();
 }

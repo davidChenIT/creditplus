@@ -120,4 +120,9 @@ public class CatalogServiceImpl implements CatalogService{
 		
 		return PageUtil.getPageVO();
 	}
+	
+	public List<Map<String,Object>> getCatalogTree(){
+		List<Map<String,Object>> catalogList = catalogDao.getCatalogTree();
+		return catalogList;
+	}
 }

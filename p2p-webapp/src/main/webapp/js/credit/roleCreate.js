@@ -4,20 +4,15 @@ $(function(){
     	debugger;
     	var checkPass = true;
         var request_data={};
+    	request_data.enable=$("select[name='enable']").val();
+
         var rolename = validateRequire("rolenamecreate","请输入角色名！");
 		if(rolename){			
         	request_data.roleName=rolename;
         }else{
         	checkPass = false;
         }
-		
-        var enable = validateRequire("enable","请选择是否可用！");
-		if(enable){			
-        	request_data.enable=enable;
-        }else{
-        	checkPass = false;
-        }
-			
+					
 		var remark = $("textarea[name='remark']").val();
 		if(remark && $.trim(remark)){
         	request_data.remark=remark;
@@ -30,21 +25,36 @@ $(function(){
 		//获取权限树勾选行的数据
 		var treeObj = $.fn.zTree.getZTreeObj("catalog_ztree_role_create");
 		var selNodeDataArray=treeObj.getCheckedNodes();
-		var nodeIds="";
+		var resList=[];
 		if(selNodeDataArray && selNodeDataArray.length>0){
 			for(var i=0;i<selNodeDataArray.length;i++){
 				var nodeObj=selNodeDataArray[i];
-				if(!nodeIds){
-					nodeIds=nodeObj.id;
-				}else{
-					nodeIds+=","+nodeObj.id;
-				}
+				resList[i] = nodeObj;
 			}
+			
+			request_data.resList = resList;
 		}
 
 		//调用服务
 		publicSaveAjax("roleService","insertRole",JSON.stringify(request_data),"roleTab","roleCreate","#searchRoleListBtn");
     });
+    
+	var resList = {};
+	$.ajax({ 
+		url: serviceAddress,
+		datatype:'json',
+		method:"post",
+	    async:false,
+		data:{"module":"catalogService",
+			  "method":"getCatalogTree",
+			  "request_data":""
+		},			
+		success: function(data){
+			resList = data;
+		},error:function(error){
+			messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","warning");
+		}
+	});    
     
     //构造栏目树
   //设置栏目菜单
@@ -64,15 +74,20 @@ $(function(){
 			chkboxType: { "Y": "ps", "N": "ps"}
 		},
 		data:{
+			key:{
+				name: "catalog_name",
+				url:""
+			},
 		   simpleData: {
 			enable: true,
-			idKey: "id",
-			pIdKey: "pId",
+			idKey: "catalog_id",
+			pIdKey: "parent_id",
 			rootPId: 0
 		  }
 		},
 		callback: {
 			//禁用ztree自带的双击展开子节点的方法
+			
 			beforeExpand:function(){
 			   return false;
 			},
@@ -82,9 +97,9 @@ $(function(){
 				var treeObj = $.fn.zTree.getZTreeObj(treeId); 
 				//展开或收缩子节点
 				if(treeNode.open){
-				   treeObj.expandNode(treeNode, false, false, true,false);
+				   treeObj.expandNode(treeNode, false, false, false,false);
 				}else{
-				   treeObj.expandNode(treeNode, true, false, true,false);
+				   treeObj.expandNode(treeNode, true, false, false,false);
 				}
 			},
 			//勾选节点事件
@@ -95,21 +110,7 @@ $(function(){
 			
 		}
 
-	},zTreeNodes = [
-		{"id":1,"pId":0,"name":"首页","urlstr":"page/index.jsp"},
-		{"id":2,"pId":0,"name":"风控管理"},
-		{"id":3,"pId":0,"name":"系统管理"},
-		{"id":4,"pId":2,"name":"信用初审","urlstr":"page/firstTrialList.jsp"},
-		{"id":5,"pId":2,"name":"信用复审","urlstr":"page/reviewList.jsp"},
-		{"id":6,"pId":2,"name":"标的管理","urlstr":"page/tenderMngList.jsp"},
-		{"id":7,"pId":2,"name":"投标","urlstr":"page/makeTenderList.jsp"},
-		{"id":8,"pId":3,"name":"字典管理","urlstr":"page/systemmng/dictList.jsp"},
-		{"id":9,"pId":3,"name":"栏目管理","urlstr":"page/systemmng/catalogList.jsp"},
-		{"id":10,"pId":3,"name":"用户管理","urlstr":"page/systemmng/userList.jsp"},
-		{"id":11,"pId":3,"name":"角色管理","urlstr":"page/systemmng/roleList.jsp"},
-		{"id":12,"pId":3,"name":"资源管理","urlstr":"page/systemmng/resourceList.jsp"},
-		{"id":13,"pId":3,"name":"修改密码","urlstr":"page/systemmng/changePassword.jsp"}		
-	];
+	},zTreeNodes = resList;
 	
 	zTreeObj = $.fn.zTree.init($("#catalog_ztree_role_create"), setting, zTreeNodes);
 })   

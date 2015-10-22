@@ -15,4 +15,5 @@ public interface CatalogDao {
 	
 	List<CatalogVO> getCatalogListByParentId(List<CatalogVO> dataList);
 	
+	List<Map<String,Object>> getCatalogTree();
 }

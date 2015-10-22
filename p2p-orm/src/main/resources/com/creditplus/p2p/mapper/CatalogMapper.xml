@@ -53,5 +53,8 @@
             open="(" close=")" separator=",">        
          	#{catalogVO.parentId} 
  		</foreach>             
-     </select>     
+     </select>  
+     <select id="getCatalogTree" resultType="java.util.Map" >
+     	select catalog_id,parent_id,catalog_name,url,order_number from catalog_t c order by parent_id asc, order_number asc      
+    </select>       
 </mapper>

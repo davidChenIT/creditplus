@@ -36,8 +36,12 @@
        insert into role_t(role_id,enable,role_name,remark,created_by,created_date,last_updated_by,last_updated_date) 
              values(#{roleId},#{enable},#{roleName},#{remark},#{created_by},#{created_date},#{last_updated_by},now())
     </insert>
-    <delete id="deleteRoleById" parameterType="Integer">
-       delete from role_t where role_id=#{roleId}
+    <delete id="deleteRoleById" parameterType="java.util.List">
+       delete from role_t where role_id in 
+       <foreach collection="list" item="roleId" index="index"
+            open="(" close=")" separator=",">        
+         	#{roleId} 
+ 	   </foreach>
     </delete>       
     <update id="updateRole" parameterType="RoleVO">
        update role_t set role_name=#{roleName}, 
@@ -68,5 +72,22 @@
       left join role_resource_t rr on r.role_id = rr.role_id  
       left join resource_t res on rr.resource_id = res.resource_id 
        where r.role_id=#{roleId} 
+    </select>
+   <select id="getRoleIdByName" parameterType="String" resultType="Integer" >
+       select role_id from role_t where role_name = #{roleName}
+    </select>
+        
+    <insert id="insertRoleResource" parameterType="java.util.List">
+       insert into role_resource_t(rr_id,role_id,resource_id,created_by,created_date,last_updated_by,last_updated_date) 
+             values
+	    <foreach collection="list" item="item" index="index" separator="," >  
+             (#{item.rr_id},#{item.role_id},#{item.resource_id},#{item.created_by},#{item.created_date},#{item.last_updated_by},now())
+        </foreach>
+    </insert>
+    <delete id="deleteRoleResourceByRoleId" parameterType="Integer">
+    	delete from role_resource_t where role_id = #{roleId}
+    </delete>    
+    <select id="getRoleResourceByRoleId" parameterType="Integer" resultType="java.util.Map">
+    	select rr.* from role_resource_t rr where rr.role_id = #{roleId}
     </select>
 </mapper>
