@@ -64,6 +64,26 @@ $(function(){
 		debugger;
 		var request_data={"loan_id":$("#firstTrial").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"初审完毕","apply_state":3};
 		var checkPass = true;
+		//1. 获取所有的必填项
+		var requiredDoms = $("#firstTrial").find("[validtion*='required']");
+		//2. 循环校验\
+		if(requiredDoms.length > 0){
+			var isFocusError = false;
+			$.each(requiredDoms,function(i){
+				var validDomName = $(requiredDoms[i]).attr('name');
+				var elementVal = validateRequire(validDomName,"此项为必填！","firstTrial");
+				if(elementVal){
+					request_data[validDomName] = elementVal;
+				}else{
+					if(!isFocusError){
+						$(requiredDoms[i]).focus();
+						isFocusError = true;
+					}
+					checkPass = false;
+				}
+			});	
+		}
+		/*
         var thnic_v = validateRequire("thnic_v","请输入名族！","firstTrial");
 		if(thnic_v){			
         	request_data.thnic_v=thnic_v;
@@ -100,13 +120,14 @@ $(function(){
 		}else{
 			checkPass = false;
 		}
-		
+		*/
+		//3. 校验通过调提交初审服务
 		if(checkPass){
-			$("div[name='firstTrial']").find("input").each(function(i,input){
-				var inputName=$(input).attr("name");
-				var inputValue=$(input).val();
-				request_data[inputName]=inputValue;
-			});
+//			$("div[name='firstTrial']").find("input").each(function(i,input){
+//				var inputName=$(input).attr("name");
+//				var inputValue=$(input).val();
+//				request_data[inputName]=inputValue;
+//			});
 			debugger;
 			publicSaveAjax("loanOrderService","creditFirstTrial",JSON.stringify(request_data),"firstTrialTab","firstTrial","[name='firstTrialSearhBtn']");
 		}else{
