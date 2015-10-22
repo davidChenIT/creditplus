@@ -424,7 +424,7 @@ function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
 }
 
 //公共的保存或修改表单的方法
-function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeItemId,searchBtn,successTipInfo){
+function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeItemId,searchBtn,successTipInfo,okFunc){
 	debugger;
 	$.ajax({ 
 		url: serviceAddress,

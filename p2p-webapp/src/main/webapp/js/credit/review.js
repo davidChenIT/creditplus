@@ -62,7 +62,7 @@ $(function(){
 			publicSaveAjax("loanOrderService","creditReview",JSON.stringify(request_data),"reviewTab","review","[name='reviewSearchBtn']");
 			
 		}else{
-			alert("校验失败！");
+			messageBox.createMessageDialog("提示","对不起，您有数据录入不正确，请检查并正确录入后再次提交！","","","warning");
 			return false;
 		}
 		
@@ -82,7 +82,7 @@ $(function(){
 			//提交
 			publicSaveAjax("loanOrderService","creditReviewReject",JSON.stringify(request_data),"reviewTab","review","[name='reviewSearchBtn']");
 		}else{
-			alert("校验失败！");
+			messageBox.createMessageDialog("提示","对不起，您有数据录入不正确，请检查并正确录入后再次提交！","","","warning");
 			return false;
 		}
 		

@@ -238,7 +238,7 @@ $(function(){
     		}
     		
     		if(!item.catalogName || !$.trim(item.catalogName)){
-    			alert("第" + i + "行名称不能为空！");
+    			messageBox.createMessageDialog("提示","第" + i + "行名称不能为空！","","","warning");
     			checkFlag = false;
     		}
     	});

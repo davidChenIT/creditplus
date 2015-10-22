@@ -47,7 +47,7 @@ $(function(){
 			});
 			roleData = roleData.substring(0,roleData.length -1);
 		},error:function(error){
-			alert(jQuery.parseJSON(error.responseText).cause.message);
+			messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","warning");
 		}
 	});
 	
