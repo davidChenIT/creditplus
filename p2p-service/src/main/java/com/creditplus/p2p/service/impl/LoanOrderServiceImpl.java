@@ -3,9 +3,11 @@ package com.creditplus.p2p.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+
 import com.creditplus.p2p.common.constant.PageConstant;
 import com.creditplus.p2p.common.util.CheckParamUtil;
 import com.creditplus.p2p.dao.CustomerInfoDao;
@@ -226,6 +228,64 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	}
 
 	
+	
+	public PageVO rankingPoolListWithPage(Map paramMap) {
+		paramMap=initParamMap(paramMap);
+		int currentPage=1,pageSize=20;
+		if(paramMap!=null && (paramMap.get(PageConstant.CURRPAGE)!=null || paramMap.get(PageConstant.ROWNUM)!=null)){
+			currentPage=Integer.valueOf(paramMap.get(PageConstant.CURRPAGE)+"");
+			pageSize=Integer.valueOf(paramMap.get(PageConstant.ROWNUM)+"");
+		}
+		//初始化分页信息
+		PageUtil.initPageInfo(currentPage, pageSize);
+		loanOrderDao.rankingPoolListWithPage(paramMap);
+		//得到分页VO
+		PageVO pageVo=PageUtil.getPageVO();
+		return pageVo;
+	}
+
+	
+	public PageVO checkInterceptListWithPage(Map paramMap){
+		paramMap=initParamMap(paramMap);
+		int currentPage=1,pageSize=20;
+		if(paramMap!=null && (paramMap.get(PageConstant.CURRPAGE)!=null || paramMap.get(PageConstant.ROWNUM)!=null)){
+			currentPage=Integer.valueOf(paramMap.get(PageConstant.CURRPAGE)+"");
+			pageSize=Integer.valueOf(paramMap.get(PageConstant.ROWNUM)+"");
+		}
+		//初始化分页信息
+		PageUtil.initPageInfo(currentPage, pageSize);
+		loanOrderDao.checkInterceptListWithPage(paramMap);
+		//得到分页VO
+		PageVO pageVo=PageUtil.getPageVO();
+		return pageVo;
+	}
+	
+	
+	public PageVO faBiaoListWithPage(Map paramMap) {
+		paramMap=initParamMap(paramMap);
+		int currentPage=1,pageSize=20;
+		if(paramMap!=null && (paramMap.get(PageConstant.CURRPAGE)!=null || paramMap.get(PageConstant.ROWNUM)!=null)){
+			currentPage=Integer.valueOf(paramMap.get(PageConstant.CURRPAGE)+"");
+			pageSize=Integer.valueOf(paramMap.get(PageConstant.ROWNUM)+"");
+		}
+		//初始化分页信息
+		PageUtil.initPageInfo(currentPage, pageSize);
+		loanOrderDao.faBiaoListWithPage(paramMap);
+		//得到分页VO
+		PageVO pageVo=PageUtil.getPageVO();
+		return pageVo;
+	}
+
+
+	public void joinTheBackList(Map paramMap) {
+		List list=(List) paramMap.get("list");
+		if(list!=null && list.size()>0)
+			loanOrderDao.joinTheBackList(paramMap);
+	}
+	
+	
+	
+	
 	public Map initParamMap(Map paramMap){
 		if(paramMap==null)
 			paramMap=new HashMap();
@@ -247,6 +307,8 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	public double generatorVersion(String version,int apply_state){
 		return 1.0;
 	}
+
+
 
 
 }
