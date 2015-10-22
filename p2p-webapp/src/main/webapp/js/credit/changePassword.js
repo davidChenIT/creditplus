@@ -36,7 +36,7 @@ $(function(){
 			return;
 		}
 		//调用服务
-		publicSaveAjax("userService","changePassword",JSON.stringify(request_data),"","","","修改密码成功！",function(){window.location.href = "http://"+window.location.host + "/p2p-webapp";});
+		publicSaveAjax("userService","changePassword",JSON.stringify(request_data),"","","","修改密码成功！",function(){setValues("userPassWordTab",{});});
     	
     });    
 })
