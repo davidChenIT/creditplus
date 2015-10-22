@@ -26,7 +26,7 @@
 				<div id="credit_Main" class="credit-page creditPageContext" creditpagecontextid="main">
 				    <div>
 						<!-- 整个tab控件区域 -->
-						<div hw_id="_hw_8117" name="dictTab" widget="tab" class="creditRendered credit-tabs" id="Tab_47892031">
+						<div hw_id="_hw_8117" id="userPassWordTab" name="userPassWordTab" widget="tab" class="creditRendered credit-tabs" id="Tab_47892031">
 							<!-- 标题区域 -->
 							<div class="tabs-head">
 									<div class="credit-slider slider-tabs credit-hide">
@@ -35,7 +35,7 @@
 									</div>
 									
 									<ul>
-										<li tabid="dictList" class="tabs-selected"> 
+										<li tabid="userPassWord" class="tabs-selected"> 
 										<span>修改密码</span>									
 										</li>
 									</ul>
@@ -44,7 +44,7 @@
 							<!-- 内容区域start -->
 							<div class="tabs-body">
 								<!-- 页签1 -->
-								<div tabid="dictList" class="tabs-body-item creditPageContext credit-validator" creditpagecontextid="page_85823101">
+								<div tabid="userPassWord" class="tabs-body-item creditPageContext credit-validator" creditpagecontextid="page_85823101">
 									<div>
 									    <!-- 条件区域开始 -->
 										<div class="row">

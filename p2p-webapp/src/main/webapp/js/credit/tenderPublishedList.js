@@ -112,13 +112,12 @@ $("[name='ofWithdrawalBtn']").click(function(){
 					removeTabItem("userTab","userCreate");
 					$("#searchUserListBtn").click();
 				},error:function(error){
-					alert(error);
 				}
 		  });*/
-		  alert("撤标");
+		  messageBox.createMessageDialog("提示","撤标！","","","warning");
 		  
 	  }else{
-		  alert("请至少选择一条数据进行撤标！");
+		  messageBox.createMessageDialog("提示","请至少选择一条数据进行撤标！","","","warning");
 	  }
 	  
 });

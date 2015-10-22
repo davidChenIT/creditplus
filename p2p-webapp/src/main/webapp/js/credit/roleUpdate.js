@@ -20,7 +20,7 @@ $(function(){
 			created_by = data.created_by;
 			created_date = data.created_date;
 		},error:function(error){
-			alert(jQuery.parseJSON(error.responseText).cause.message);
+			messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","error");
 		}
 	});
 	

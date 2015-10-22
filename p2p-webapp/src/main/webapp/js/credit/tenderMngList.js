@@ -105,13 +105,12 @@ $(function(){
 					removeTabItem("userTab","userCreate");
 					$("#searchUserListBtn").click();
 				},error:function(error){
-					alert(error);
 				}
 		  });*/
-		  alert("发标");
+		  messageBox.createMessageDialog("提示","发标！","","","warning");
 		  
 	  }else{
-		  alert("请至少选择一条申请单进行发标！");
+		  messageBox.createMessageDialog("提示","请至少选择一条申请单进行发标！","","","warning");
 	  }
 	  
   });

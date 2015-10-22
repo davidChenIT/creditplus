@@ -70,10 +70,10 @@ $(function(){
 			 /**
 			  * publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeItemId,searchBtnId)
 			  *  */
-			  alert("加入黑名单！");
+			  messageBox.createMessageDialog("提示","加入黑名单成功！","","","warning");
 			  
 		  }else{
-			  alert("请至少选择一条数据加入黑名单！");
+			  messageBox.createMessageDialog("提示","请至少选择一条数据加入黑名单！","","","warning");
 		  }
 		  
 	 });
