@@ -47,6 +47,13 @@
     	</if>        
      </select>
      
+     <select id="getDictItems" parameterType="DictVO" resultMap="dictVOMap">
+     	select * from p2p.dict_t where state=1 and type=#{type} 
+     	<if test="code != null">
+     		and code=#{code}
+     	</if>
+     </select>
+     
     <select id="getDictListByParentId" parameterType="java.util.List" resultMap="dictVOMap">
 	   select d.*
          from dict_t d

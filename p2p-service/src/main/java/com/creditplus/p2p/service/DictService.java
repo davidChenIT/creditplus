@@ -12,4 +12,6 @@ public interface DictService {
 	void insertDict(@ParamName("parentId") int parentId,@ParamName("griddata")List<Map<String,Object>> dataList);
 	
 	PageVO getDictListWithPage(PageVO pageVO,DictVO dictVO);
+	
+	List getDictItems(DictVO dictVO);
 }
