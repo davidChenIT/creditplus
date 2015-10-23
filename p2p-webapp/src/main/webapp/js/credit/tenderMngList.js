@@ -5,7 +5,7 @@ $(function(){
     $("#rankPoolGrid").jqGrid({
 			url:serviceAddress,
 			datatype: 'json',
-			postData:{"module":"loanOrderService","method":"getCreditFirstTrialListWithPage","request_data":{}},
+			postData:{"module":"loanOrderService","method":"rankingPoolListWithPage","request_data":{}},
 			mtype: 'POST',
 			autowidth:true,
 			colNames:['申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','信用分1','信用分2','排名'],
