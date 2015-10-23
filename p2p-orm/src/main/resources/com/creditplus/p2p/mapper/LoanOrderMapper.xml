@@ -5,73 +5,6 @@
 
 <mapper namespace="com.creditplus.p2p.dao.LoanOrderDao">
 
-	<!-- <resultMap type="com.creditplus.p2p.model.LoanOrderVO" id="loanListMap">
-		<id column="loan_id" property="loan_id" />
-		<result column="user_id" property="user_id" />
-		<result column="loan_full_id" property="loan_full_id" />
-		<result column="loan_money" property="loan_money" />
-		<result column="start_day" property="start_day" />
-		<result column="loan_day" property="loan_day" />
-		<result column="expire_day" property="expire_day" />
-		<result column="pay_fee" property="pay_fee" />
-		<result column="interest" property="interest" />
-		<result column="act_money" property="act_money" />
-		<result column="overdue_fee" property="overdue_fee" />
-		<result column="bank_type" property="bank_type" />
-		<result column="bank_card" property="bank_card" />
-		<result column="state" property="state" />
-		<result column="modifytime" property="modifytime" />
-		<result column="first_assign_user" property="first_assign_user" />
-		<result column="two_assign_user" property="two_assign_user" />
-		<association property="customerInfo"
-			javaType="com.creditplus.p2p.model.CustomerVO">
-			<id column="user_id" property="user_id" />
-			<result column="login_type" property="login_type" />
-			<result column="loging_key" property="loging_key" />
-			<result column="name" property="name" />
-			<result column="mobile" property="mobile" />
-			<result column="id_num" property="id_num" />
-			<result column="province" property="province" />
-			<result column="city" property="city" />
-			<result column="address" property="address" />
-			<result column="card_bank" property="card_bank" />
-			<result column="card_no" property="card_no" />
-			<result column="card_tel" property="card_tel" />
-			<result column="company" property="company" />
-			<result column="income" property="income" />
-			<result column="company_address" property="company_address" />
-			<result column="work_province" property="work_province" />
-			<result column="work_city" property="work_city" />
-			<result column="work_tel" property="work_tel" />
-			<result column="seasame_scope" property="seasame_scope" />
-			<result column="mobile_ser_code" property="mobile_ser_code" />
-			<result column="state" property="state" />
-			<result column="is_done" property="is_done" />
-			<result column="modifytime" property="modifytime" />
-		</association>
-		<collection property="appLogList"
-			ofType="com.creditplus.p2p.model.ApproveLogVO" column="loan_id">
-			<id column="id" property="id" />
-			<result column="assign_user" property="assign_user" />
-			<result column="approve_content" property="approve_content" />
-			<result column="state" property="state" />
-			<result column="created_date" property="created_date" />
-			<result column="created_by" property="created_by" />
-			<result column="last_updated_by" property="last_updated_by" />
-			<result column="last_updated_date" property="last_updated_date" />
-		</collection>
-		<collection property="urgentList"
-			ofType="com.creditplus.p2p.model.UrgentContactorVO" column="user_id">
-			<id column="id" property="id" />
-			<result column="ur_name" property="name" />
-			<result column="ur_relation" property="relation" />
-			<result column="ur_mobile" property="mobile" />
-			<result column="mobild_address" property="mobild_address" />
-		</collection>
-	</resultMap> -->
-
-
-
   	<!-- pic_type 1 身份证正面 2 身份证背面 3 工牌照片 4 学历证书 5 芝麻信用   6 工资单 7 银行流水 8 职业证书 9 住址证明材料 -->
 	<select id="getCreditReviewDetailByLoanId" parameterType="Integer" resultType="java.util.Map">
 		select 		
@@ -99,93 +32,7 @@
 		    u.seasame_score,
 		    u.mobile_ser_code,
 		    u.is_done,
-           <!--  c.thnic_v,
-			c.registered_place_v,
-			c.address_phone,
-			c.address_phone_v,
-			c.current_city_v,
-			c.current_address_v,
-			c.id_num_name_v,
-			c.id_num_v,
-			c.mobile_place_v,
-			c.company_name_v,
-			c.work_tel_v,
-			c.work_tel_place_v,
-			c.work_name_v,
-			c.work_position_v,
-			c.income_v,
-			c.income_name_v,
-			c.seasame_score_v,
-			c.tencent_credit_v,
-			c.certificate_type_v,
-			c.certificate_name_v,
-			c.profession_grade_v,
-			c.mobile_name_v,
-			c.mobile_online_time_v,
-			c.profession_code,
-			c.degree_name_v,
-			c.school_name_v,
-			c.highest_degree_v, -->
-			t.loan_full_id,
-			t.loan_money,
-			t.loan_day,
-			t.start_day,
-			t.expire_day,
-			t.pay_fee,
-			t.act_money,
-			t.Interest,
-			t.overdue_fee,
-			t.bank_type,
-			t.bank_card,
-			t.modifytime,
-		    ifnull(a.apply_state,t.state) as apply_state,
-			a.first_assign_user,
-			a.review_assign_user,
-		    a.version,
-		    (select url from p2p.attach_pic where user_id=#{user_id} and type=1) as id_num_pic1,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=2) as id_num_pic2,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=3) as work_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=4) as degree_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=5) as seasame_score_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=6) as income_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=7) as bank_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=8) as certificate_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=9) as address_pic
-	    from p2p.loan_list t
-		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
-		left join p2p.user_info u on t.user_id=u.user_id
-      <!--   left join p2p.customer_info_t c on t.user_id=c.user_id -->
-       	where t.loan_id=#{loan_id}
-		
-	</select>
-
-	<select id="getCreditFirstTrialDetailByLoanId" parameterType="Integer"	resultType="java.util.Map">
-		select 		
-		    t.user_id,
-		    t.loan_id,
-		    u.login_type,
-		    u.login_key,
-		    u.name,
-		    u.mobile,
-		    u.id_num,
-		    u.province,
-		    u.city,
-		    u.address,
-		    u.card_bank,
-		    u.card_no,
-		    u.card_tel,
-		    u.company,
-		    u.income,
-		    u.company_address,
-		    u.work_province,
-		    u.work_city,
-		    u.work_tel,
-		    u.degree,
-		    u.school,
-		    u.seasame_score,
-		    u.mobile_ser_code,
-		    u.is_done,
-	        c.thnic_v,
+            c.thnic_v,
 			c.registered_place_v,
 			c.address_phone,
 			c.address_phone_v,
@@ -240,7 +87,93 @@
 	    from p2p.loan_list t
 		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
 		left join p2p.user_info u on t.user_id=u.user_id
-		 left join p2p.customer_info_t c on t.user_id=c.user_id
+        left join p2p.customer_info_t c on t.user_id=c.user_id
+       	where t.loan_id=#{loan_id}
+		
+	</select>
+
+	<select id="getCreditFirstTrialDetailByLoanId" parameterType="Integer"	resultType="java.util.Map">
+		select 		
+		    t.user_id,
+		    t.loan_id,
+		    u.login_type,
+		    u.login_key,
+		    u.name,
+		    u.mobile,
+		    u.id_num,
+		    u.province,
+		    u.city,
+		    u.address,
+		    u.card_bank,
+		    u.card_no,
+		    u.card_tel,
+		    u.company,
+		    u.income,
+		    u.company_address,
+		    u.work_province,
+		    u.work_city,
+		    u.work_tel,
+		    u.degree,
+		    u.school,
+		    u.seasame_score,
+		    u.mobile_ser_code,
+		    u.is_done,
+	       <!--  c.thnic_v,
+			c.registered_place_v,
+			c.address_phone,
+			c.address_phone_v,
+			c.current_city_v,
+			c.current_address_v,
+			c.id_num_name_v,
+			c.id_num_v,
+			c.mobile_place_v,
+			c.company_name_v,
+			c.work_tel_v,
+			c.work_tel_place_v,
+			c.work_name_v,
+			c.work_position_v,
+			c.income_v,
+			c.income_name_v,
+			c.seasame_score_v,
+			c.tencent_credit_v,
+			c.certificate_type_v,
+			c.certificate_name_v,
+			c.profession_grade_v,
+			c.mobile_name_v,
+			c.mobile_online_time_v,
+			c.profession_code,
+			c.degree_name_v,
+			c.school_name_v,
+			c.highest_degree_v, -->
+			t.loan_full_id,
+			t.loan_money,
+			t.loan_day,
+			t.start_day,
+			t.expire_day,
+			t.pay_fee,
+			t.act_money,
+			t.Interest,
+			t.overdue_fee,
+			t.bank_type,
+			t.bank_card,
+			t.modifytime,
+		    ifnull(a.apply_state,t.state) as apply_state,
+			a.first_assign_user,
+			a.review_assign_user,
+		    a.version,
+		    (select url from p2p.attach_pic where user_id=#{user_id} and type=1) as id_num_pic1,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=2) as id_num_pic2,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=3) as work_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=4) as degree_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=5) as seasame_score_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=6) as income_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=7) as bank_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=8) as certificate_pic,
+			(select url from p2p.attach_pic where user_id=#{user_id} and type=9) as address_pic
+	    from p2p.loan_list t
+		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
+		left join p2p.user_info u on t.user_id=u.user_id
+		<!--  left join p2p.customer_info_t c on t.user_id=c.user_id -->
 		where t.loan_id=#{loan_id}
 	</select>
 
@@ -296,7 +229,7 @@
 				AND loan_id = #{loan_id}
 			</if>
 			<if test="apply_state!= null">
-				AND apply_state = #{state,jdbcType=INTEGER}
+				AND apply_state = #{apply_state,jdbcType=INTEGER}
 			</if>
 			<if test="loan_money!= null">
 				AND loan_money = #{loan_money}
@@ -308,13 +241,13 @@
 				AND name = #{name,jdbcType=VARCHAR}
 			</if>
 			<if test="id_num != null">
-				AND loan_money = #{id_num}
+				AND id_num = #{id_num}
 			</if>
 			<if test="first_assign_user != null">
 				AND first_assign_user = #{first_assign_user}
 			</if>
 			<if test="two_assign_user != null">
-				AND two_assign_user = #{two_assign_user}
+				AND review_assign_user = #{review_assign_user}
 			</if>
 		</where>
 		order by modifytime desc
@@ -384,13 +317,13 @@
 				AND name = #{name,jdbcType=VARCHAR}
 			</if>
 			<if test="id_num != null">
-				AND loan_money = #{id_num}
+				AND id_num = #{id_num}
 			</if>
 			<if test="first_assign_user != null">
 				AND first_assign_user = #{first_assign_user}
 			</if>
 			<if test="two_assign_user != null">
-				AND two_assign_user = #{two_assign_user}
+				AND review_assign_user = #{review_assign_user}
 			</if>
 		</where>
 		order by modifytime desc
@@ -460,13 +393,13 @@
 				AND name = #{name,jdbcType=VARCHAR}
 			</if>
 			<if test="id_num != null">
-				AND loan_money = #{id_num}
+				AND id_num = #{id_num}
 			</if>
 			<if test="first_assign_user != null">
 				AND first_assign_user = #{first_assign_user}
 			</if>
 			<if test="two_assign_user != null">
-				AND two_assign_user = #{two_assign_user}
+				AND review_assign_user = #{review_assign_user}
 			</if>
 		</where>
 		order by modifytime desc
@@ -536,13 +469,13 @@
 				AND name = #{name,jdbcType=VARCHAR}
 			</if>
 			<if test="id_num != null">
-				AND loan_money = #{id_num}
+				AND id_num = #{id_num}
 			</if>
 			<if test="first_assign_user != null">
 				AND first_assign_user = #{first_assign_user}
 			</if>
 			<if test="two_assign_user != null">
-				AND two_assign_user = #{two_assign_user}
+				AND review_assign_user = #{review_assign_user}
 			</if>
 		</where>
 		order by modifytime desc
@@ -612,13 +545,13 @@
 				AND name = #{name,jdbcType=VARCHAR}
 			</if>
 			<if test="id_num != null">
-				AND loan_money = #{id_num}
+				AND id_num = #{id_num}
 			</if>
 			<if test="first_assign_user != null">
 				AND first_assign_user = #{first_assign_user}
 			</if>
 			<if test="two_assign_user != null">
-				AND two_assign_user = #{two_assign_user}
+				AND review_assign_user = #{review_assign_user}
 			</if>
 		</where>
 		order by modifytime desc
@@ -673,7 +606,73 @@
 	<select id="selectLoanApplyList" parameterType="java.util.Map" resultType="java.util.Map">
 		select loan_id,version,apply_state,first_assign_user,review_assign_user,modifytime from loan_apply_t t where loan_id = #{loan_id} 
 	</select>
-	
+
+
+
+	<!-- <resultMap type="com.creditplus.p2p.model.LoanOrderVO" id="loanListMap">
+		<id column="loan_id" property="loan_id" />
+		<result column="user_id" property="user_id" />
+		<result column="loan_full_id" property="loan_full_id" />
+		<result column="loan_money" property="loan_money" />
+		<result column="start_day" property="start_day" />
+		<result column="loan_day" property="loan_day" />
+		<result column="expire_day" property="expire_day" />
+		<result column="pay_fee" property="pay_fee" />
+		<result column="interest" property="interest" />
+		<result column="act_money" property="act_money" />
+		<result column="overdue_fee" property="overdue_fee" />
+		<result column="bank_type" property="bank_type" />
+		<result column="bank_card" property="bank_card" />
+		<result column="state" property="state" />
+		<result column="modifytime" property="modifytime" />
+		<result column="first_assign_user" property="first_assign_user" />
+		<result column="two_assign_user" property="two_assign_user" />
+		<association property="customerInfo"
+			javaType="com.creditplus.p2p.model.CustomerVO">
+			<id column="user_id" property="user_id" />
+			<result column="login_type" property="login_type" />
+			<result column="loging_key" property="loging_key" />
+			<result column="name" property="name" />
+			<result column="mobile" property="mobile" />
+			<result column="id_num" property="id_num" />
+			<result column="province" property="province" />
+			<result column="city" property="city" />
+			<result column="address" property="address" />
+			<result column="card_bank" property="card_bank" />
+			<result column="card_no" property="card_no" />
+			<result column="card_tel" property="card_tel" />
+			<result column="company" property="company" />
+			<result column="income" property="income" />
+			<result column="company_address" property="company_address" />
+			<result column="work_province" property="work_province" />
+			<result column="work_city" property="work_city" />
+			<result column="work_tel" property="work_tel" />
+			<result column="seasame_scope" property="seasame_scope" />
+			<result column="mobile_ser_code" property="mobile_ser_code" />
+			<result column="state" property="state" />
+			<result column="is_done" property="is_done" />
+			<result column="modifytime" property="modifytime" />
+		</association>
+		<collection property="appLogList"
+			ofType="com.creditplus.p2p.model.ApproveLogVO" column="loan_id">
+			<id column="id" property="id" />
+			<result column="assign_user" property="assign_user" />
+			<result column="approve_content" property="approve_content" />
+			<result column="state" property="state" />
+			<result column="created_date" property="created_date" />
+			<result column="created_by" property="created_by" />
+			<result column="last_updated_by" property="last_updated_by" />
+			<result column="last_updated_date" property="last_updated_date" />
+		</collection>
+		<collection property="urgentList"
+			ofType="com.creditplus.p2p.model.UrgentContactorVO" column="user_id">
+			<id column="id" property="id" />
+			<result column="ur_name" property="name" />
+			<result column="ur_relation" property="relation" />
+			<result column="ur_mobile" property="mobile" />
+			<result column="mobild_address" property="mobild_address" />
+		</collection>
+	</resultMap> -->	
 </mapper>
 
 

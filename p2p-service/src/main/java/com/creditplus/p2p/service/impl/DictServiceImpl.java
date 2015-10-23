@@ -118,4 +118,12 @@ public class DictServiceImpl implements DictService {
 		return PageUtil.getPageVO();
 	}
 
+	public List getDictItems(DictVO dictVO) {
+		if(null == dictVO){
+			dictVO = new DictVO();
+		}
+		return dictDao.getDictItems(dictVO);
+	}
+
+
 }

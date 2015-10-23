@@ -135,7 +135,7 @@ $(function(){
 		{"id":9,"pId":3,"name":"栏目管理","urlstr":"page/systemmng/catalogList.jsp",isloadjs:"true"},
 		{"id":10,"pId":3,"name":"用户管理","urlstr":"page/systemmng/userList.jsp",isloadjs:"true"},
 		{"id":11,"pId":3,"name":"角色管理","urlstr":"page/systemmng/roleList.jsp",isloadjs:"true"},
-		{"id":12,"pId":3,"name":"资源管理","urlstr":"page/systemmng/resourceList.jsp",isloadjs:"true"},
+//		{"id":12,"pId":3,"name":"资源管理","urlstr":"page/systemmng/resourceList.jsp",isloadjs:"true"},
 		{"id":13,"pId":3,"name":"修改密码","urlstr":"page/systemmng/changePassword.jsp",isloadjs:"true"}		
 	];
 	
@@ -349,6 +349,9 @@ function setValues(divId,dataObj,appendHtml){
 				var name=$(dom).attr("name");
 				var textValue=dataObj[name] || "";
 				$(dom).text(textValue);
+				if($(dom).attr("widget") && $(dom).attr("widget")=="dropdown"){
+					$(dom).attr("code",textValue);
+				}
 			});
 			
 			//设置input的值
@@ -363,6 +366,19 @@ function setValues(divId,dataObj,appendHtml){
 				var name=$(dom).attr("name");
 				var textareaValue=dataObj[name] || "";
 				$(dom).text(textareaValue);
+			});
+			
+			//下拉框
+			$("#"+divId).find(".credit-input").find("select").each(function(i,dom){
+				var name=$(dom).attr("name");
+				var textareaValue=dataObj[name] || "";
+				var widgetName=$(dom).attr("widget");
+				if("dropdown"==widgetName){
+					$(dom).val(textareaValue);
+					$(dom).attr("code",textareaValue);
+				}else{
+					$(dom).val(textareaValue);
+				}
 			});
 			
 		}
@@ -440,6 +456,8 @@ function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
 	});
 	if(setValueDiv){
 		setValues(setValueDiv,resultData);
+		//渲染下拉框
+		selectRender("","",setValueDiv,{});
 	}
 	return resultData;
 }
@@ -603,4 +621,82 @@ var loadingBox={
 			var top=(($(window).height()-loadingDiv.height())/2+document.body.scrollTop)+"px";
 			loadingDiv.css({'left':left,'top':top});
 	    }
+}
+
+//下拉框组件通过数据字典服务构造选项
+function selectRender(serviceModuleName,serviceMethodName,formDivId,requestData,valueField,textField){
+	debugger;
+	var moduleName=serviceModuleName || "dictService";
+	var methodName=serviceMethodName || "getDictItems";
+	$("#"+formDivId).find("[widget='dropdown']").each(function(i,dom){
+		var dictionaryType=$(dom).attr("dictionary_type");
+		var istext=$(dom).attr("istext");
+		var code=$(dom).attr("code");
+		var paramsObj={};
+		if(dictionaryType){
+			paramsObj.type=dictionaryType;
+		}
+		if(istext=="true"){
+			paramsObj.code=code;
+		}
+		if(requestData){
+			$.extend(paramsObj,requestData);
+		}
+		//调用数据字典服务
+		$.ajax({ 
+			url: serviceAddress,
+			datatype:'json',
+			method:"post",
+			data:{"module":moduleName,
+				"method":methodName,
+				"request_data":JSON.stringify(paramsObj)
+			},			
+			success: function(data){
+				if(data && data.length>0){
+					if(istext=="true"){
+						$(dom).text(data[0][textField]);
+						$(dom).attr("code",data[0][valueField]);
+					}else{
+						for(var i=0;i<data.length;i++){
+							if(code==data[i][valueField]){
+								$(dom).append('<option value="'+data[i][valueField]+'" selected="selected">'+data[i][textField]+'</option>');
+							}else{
+								$(dom).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
+							}
+						}
+					}
+				}
+			},error:function(error){
+				var errorStr=$.parseJSON(error.responseText).cause.message;
+				messageBox.createMessageDialog("提示",errorStr,"","","error");
+			}
+		});
+		
+	});
+}
+
+//获取grid列需要构造的下拉框的值
+function gridSelectColRender(serviceModuleName,serviceMethodName,requestData,valueField,textField){
+	var resltObj={};
+	$.ajax({ 
+		url: serviceAddress,
+		datatype:'json',
+		method:"post",
+	    async:false,
+		data:{"module":serviceModuleName,
+			  "method":serviceMethodName,
+			  "request_data":requestData?JSON.stringify(requestData):"{}"
+		},			
+		success: function(data){
+			resltObj.jsonArray = data;
+			resltObj.jsonStr="";
+			$.each(data,function(i,item){
+				resltObj.jsonStr += item[valueField] + ":" + item[textField] + ";";
+			});
+			resltObj.jsonStr = resltObj.jsonStr.substring(0,resltObj.jsonStr.length-1);
+		},error:function(error){
+			messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","error");
+		}
+	});
+	return resltObj;
 }

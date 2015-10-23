@@ -28,6 +28,7 @@ DROP TABLE IF EXISTS dict_t;
 DROP TABLE IF EXISTS catalog_t;
 drop table if exists rule_t;
 drop table if exists dimension_t;
+drop table if exists cheat_intercept_t;
 
 
 create table user_info
@@ -116,7 +117,7 @@ create table customer_info_t(
    mobile_online_time_v float			comment '手机在网时长',
    profession_code      varchar(200)	comment '证书编号',
    degree_name_v		varchar(200)    comment '学历验证姓名',
-   school_name_v		varchar(200)    comment '学校验证全程',
+   school_name_v		varchar(200)    comment '学校验证全称',
    highest_degree_v     int				comment '最高学历',
   created_by 			varchar(200)  NOT NULL COMMENT '创建人',
   created_date 			timestamp NOT NULL COMMENT  '创建时间',
@@ -481,7 +482,18 @@ create table dimension_t(
 
 
 
-
+CREATE TABLE cheat_intercept_t (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  loan_id varchar(50) NOT NULL  COMMENT '申请单编号',
+  intercept_source varchar(200)  COMMENT '拦截来源',
+  check_item varchar(200)  COMMENT '检查项',
+  intercept_cause varchar(200)  COMMENT '拦截原因',
+  created_by varchar(200)  NOT NULL COMMENT '创建人',
+  created_date timestamp NOT NULL COMMENT '创建时间',
+  last_updated_by  varchar(200)  NOT NULL,
+  last_updated_date timestamp NOT NULL ,  
+  PRIMARY KEY (id)
+)  COMMENT='欺诈用户表';
 
 
 
@@ -534,7 +546,7 @@ INSERT INTO p2p.loan_list VALUES ('14', '4',null, '50000', '2015-10-12 17:53:55'
 
 
 
-
+INSERT INTO `dict_t` VALUES (1,'1','提单','apply_state',1,0,1,'test','2015-10-22 13:53:02','test','2015-10-23 14:55:58',''),(4,'5','复审完成','apply_state',1,0,5,'test','2015-10-23 06:52:27','test','2015-10-23 14:55:58',''),(5,'4','开始复审','apply_state',1,0,4,'test','2015-10-23 06:52:27','test','2015-10-23 14:55:58',''),(6,'3','初审完成','apply_state',1,0,3,'test','2015-10-23 06:52:27','test','2015-10-23 14:55:58',''),(7,'2','开始初审','apply_state',1,0,2,'test','2015-10-23 06:52:27','test','2015-10-23 14:55:58',''),(9,'11','黑名单','黑名单',1,0,11,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),(10,'10','关闭','apply_state',1,0,10,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),(11,'9','生成合同','apply_state',1,0,9,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),(12,'8','撤标','apply_state',1,0,8,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),(13,'7','发标','apply_state',1,0,7,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),(14,'6','停止','apply_state',1,0,6,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58','');
 
 
 
