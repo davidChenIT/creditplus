@@ -135,7 +135,7 @@ $(function(){
 		{"id":9,"pId":3,"name":"栏目管理","urlstr":"page/systemmng/catalogList.jsp",isloadjs:"true"},
 		{"id":10,"pId":3,"name":"用户管理","urlstr":"page/systemmng/userList.jsp",isloadjs:"true"},
 		{"id":11,"pId":3,"name":"角色管理","urlstr":"page/systemmng/roleList.jsp",isloadjs:"true"},
-		{"id":12,"pId":3,"name":"资源管理","urlstr":"page/systemmng/resourceList.jsp",isloadjs:"true"},
+//		{"id":12,"pId":3,"name":"资源管理","urlstr":"page/systemmng/resourceList.jsp",isloadjs:"true"},
 		{"id":13,"pId":3,"name":"修改密码","urlstr":"page/systemmng/changePassword.jsp",isloadjs:"true"}		
 	];
 	
@@ -349,6 +349,9 @@ function setValues(divId,dataObj,appendHtml){
 				var name=$(dom).attr("name");
 				var textValue=dataObj[name] || "";
 				$(dom).text(textValue);
+				if($(dom).attr("widget") && $(dom).attr("widget")=="dropdown"){
+					$(dom).attr("code",textValue);
+				}
 			});
 			
 			//设置input的值
@@ -363,6 +366,19 @@ function setValues(divId,dataObj,appendHtml){
 				var name=$(dom).attr("name");
 				var textareaValue=dataObj[name] || "";
 				$(dom).text(textareaValue);
+			});
+			
+			//下拉框
+			$("#"+divId).find(".credit-input").find("select").each(function(i,dom){
+				var name=$(dom).attr("name");
+				var textareaValue=dataObj[name] || "";
+				var widgetName=$(dom).attr("widget");
+				if("dropdown"==widgetName){
+					$(dom).val(textareaValue);
+					$(dom).attr("code",textareaValue);
+				}else{
+					$(dom).val(textareaValue);
+				}
 			});
 			
 		}
@@ -440,6 +456,8 @@ function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
 	});
 	if(setValueDiv){
 		setValues(setValueDiv,resultData);
+		//渲染下拉框
+		selectRender("","",setValueDiv,{});
 	}
 	return resultData;
 }
@@ -603,4 +621,55 @@ var loadingBox={
 			var top=(($(window).height()-loadingDiv.height())/2+document.body.scrollTop)+"px";
 			loadingDiv.css({'left':left,'top':top});
 	    }
+}
+
+//下拉框组件通过数据字典服务构造选项
+function selectRender(serviceModuleName,serviceMethodName,formDivId,requestData){
+	var moduleName=serviceModuleName || "";
+	var methodName=serviceMethodName || "";
+	$("#"+formDivId).find("[widget='dropdown']").each(function(i,dom){
+		var dictionaryType=$(dom).attr("dictionary_type");
+		var istext=$(dom).attr("istext");
+		var code=$(dom).attr("code");
+		var paramsObj={};
+		if(dictionaryType){
+			paramsObj.dictionaryType=dictionaryType;
+		}
+		if(istext=="true"){
+			paramsObj.code=code;
+		}
+		if(requestData){
+			$.extend(paramsObj,requestData);
+		}
+		//调用数据字典服务
+		$.ajax({ 
+			url: serviceAddress,
+			datatype:'json',
+			method:"post",
+			data:{"module":moduleName,
+				"method":methodName,
+				"request_data":JSON.stringify(paramsObj)
+			},			
+			success: function(data){
+				if(data && data.length>0){
+					if(istext=="true"){
+						$(dom).text(data[0].name);
+						$(dom).attr("code",data[0].code);
+					}else{
+						for(var i=0;i<data.length;i++){
+							if(code==data[i].code){
+								$(dom).append('<option value="'+data[i].code+'" selected="selected">'+data[i].name+'</option>');
+							}else{
+								$(dom).append('<option value="'+data[i].code+'">'+data[i].name+'</option>');
+							}
+						}
+					}
+				}
+			},error:function(error){
+				var errorStr=$.parseJSON(error.responseText).cause.message;
+				messageBox.createMessageDialog("提示",errorStr,"","","error");
+			}
+		});
+		
+	});
 }
