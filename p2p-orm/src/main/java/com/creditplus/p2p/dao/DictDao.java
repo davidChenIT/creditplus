@@ -15,4 +15,5 @@ public interface DictDao {
 	
 	List<DictVO> getDictListByParentId(List<DictVO> dataList);
 
+	List<DictVO> getDictItems(DictVO dictVO);
 }
