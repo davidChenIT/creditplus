@@ -52,6 +52,7 @@
      	<if test="code != null">
      		and code=#{code}
      	</if>
+     	order by order_number
      </select>
      
     <select id="getDictListByParentId" parameterType="java.util.List" resultMap="dictVOMap">

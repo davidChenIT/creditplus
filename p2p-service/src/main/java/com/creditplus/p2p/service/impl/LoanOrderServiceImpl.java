@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 
 import com.creditplus.p2p.common.constant.PageConstant;
 import com.creditplus.p2p.common.util.CheckParamUtil;
+import com.creditplus.p2p.common.util.CommonUtil;
 import com.creditplus.p2p.dao.CustomerInfoDao;
 import com.creditplus.p2p.dao.LoanOrderDao;
 import com.creditplus.p2p.dao.UrgentContactorDao;
@@ -152,11 +153,11 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		int apply_state=Integer.valueOf(loanMap.get("apply_state")+"");
 		//2开始初审 3初审完毕 4开始复审 5复审完毕
 		if(apply_state==2 || apply_state==3){
-			loanMap.put("first_assign_user", getCurrentUser());
+			loanMap.put("first_assign_user", CommonUtil.getCurrentUser());
 			loanMap.put("version", 1.0);
 		}
 		if(apply_state==4 || apply_state==5){
-			loanMap.put("review_assign_user", getCurrentUser());
+			loanMap.put("review_assign_user", CommonUtil.getCurrentUser());
 			loanMap.put("version", 2.0);
 		}
 		
@@ -187,7 +188,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	
 	
 	//更新客户信息
-	public void updateCustomerInfo(Map paramMap,int user_id){
+	private void updateCustomerInfo(Map paramMap,int user_id){
 		customerInfoDao.deleteByUserId(user_id);
 		customerInfoDao.insert(paramMap);
 	}
@@ -195,7 +196,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	
 	public PageVO getCreditFirstTrialListWithPage(Map paramMap) {
 		paramMap=initParamMap(paramMap);
-		int currentPage=1,pageSize=20;
+		int currentPage=1,pageSize=10;
 		if(paramMap!=null && (paramMap.get(PageConstant.CURRPAGE)!=null || paramMap.get(PageConstant.ROWNUM)!=null)){
 			currentPage=Integer.valueOf(paramMap.get(PageConstant.CURRPAGE)+"");
 			pageSize=Integer.valueOf(paramMap.get(PageConstant.ROWNUM)+"");
@@ -205,8 +206,6 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		loanOrderDao.getCreditFirstTrialListWithPage(paramMap);
 		//得到分页VO
 		PageVO pageVo=PageUtil.getPageVO();
-		System.out.println("=====>"+pageVo);
-		System.out.println("=====>"+pageVo.getGriddata());
 		return pageVo;
 	}
 
@@ -222,8 +221,6 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		loanOrderDao.getCreditReviewListWithPage(paramMap);
 		//得到分页VO
 		PageVO pageVo=PageUtil.getPageVO();
-		System.out.println("=====>"+pageVo);
-		System.out.println("=====>"+pageVo.getGriddata());
 		return pageVo;
 	}
 
@@ -295,14 +292,10 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	
 	private Map getPublicInfoMap(){
 		Map publicMap=new HashMap();
-		publicMap.put("last_updated_by", getCurrentUser());
+		publicMap.put("last_updated_by", CommonUtil.getCurrentUser());
 		return publicMap;
 	}
 	
-	private String getCurrentUser(){
-		User user = ((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-		return user.getUsername();
-	}
 
 	public double generatorVersion(String version,int apply_state){
 		return 1.0;
