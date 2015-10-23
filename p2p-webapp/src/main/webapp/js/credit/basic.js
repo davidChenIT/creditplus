@@ -624,16 +624,17 @@ var loadingBox={
 }
 
 //下拉框组件通过数据字典服务构造选项
-function selectRender(serviceModuleName,serviceMethodName,formDivId,requestData){
-	var moduleName=serviceModuleName || "";
-	var methodName=serviceMethodName || "";
+function selectRender(serviceModuleName,serviceMethodName,formDivId,requestData,valueField,textField){
+	debugger;
+	var moduleName=serviceModuleName || "dictService";
+	var methodName=serviceMethodName || "getDictItems";
 	$("#"+formDivId).find("[widget='dropdown']").each(function(i,dom){
 		var dictionaryType=$(dom).attr("dictionary_type");
 		var istext=$(dom).attr("istext");
 		var code=$(dom).attr("code");
 		var paramsObj={};
 		if(dictionaryType){
-			paramsObj.dictionaryType=dictionaryType;
+			paramsObj.type=dictionaryType;
 		}
 		if(istext=="true"){
 			paramsObj.code=code;
@@ -653,14 +654,14 @@ function selectRender(serviceModuleName,serviceMethodName,formDivId,requestData)
 			success: function(data){
 				if(data && data.length>0){
 					if(istext=="true"){
-						$(dom).text(data[0].name);
-						$(dom).attr("code",data[0].code);
+						$(dom).text(data[0][textField]);
+						$(dom).attr("code",data[0][valueField]);
 					}else{
 						for(var i=0;i<data.length;i++){
-							if(code==data[i].code){
-								$(dom).append('<option value="'+data[i].code+'" selected="selected">'+data[i].name+'</option>');
+							if(code==data[i][valueField]){
+								$(dom).append('<option value="'+data[i][valueField]+'" selected="selected">'+data[i][textField]+'</option>');
 							}else{
-								$(dom).append('<option value="'+data[i].code+'">'+data[i].name+'</option>');
+								$(dom).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
 							}
 						}
 					}
@@ -672,4 +673,30 @@ function selectRender(serviceModuleName,serviceMethodName,formDivId,requestData)
 		});
 		
 	});
+}
+
+//获取grid列需要构造的下拉框的值
+function gridSelectColRender(serviceModuleName,serviceMethodName,requestData,valueField,textField){
+	var resltObj={};
+	$.ajax({ 
+		url: serviceAddress,
+		datatype:'json',
+		method:"post",
+	    async:false,
+		data:{"module":serviceModuleName,
+			  "method":serviceMethodName,
+			  "request_data":requestData?JSON.stringify(requestData):"{}"
+		},			
+		success: function(data){
+			resltObj.jsonArray = data;
+			resltObj.jsonStr="";
+			$.each(data,function(i,item){
+				resltObj.jsonStr += item[valueField] + ":" + item[textField] + ";";
+			});
+			resltObj.jsonStr = resltObj.jsonStr.substring(0,resltObj.jsonStr.length-1);
+		},error:function(error){
+			messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","error");
+		}
+	});
+	return resltObj;
 }

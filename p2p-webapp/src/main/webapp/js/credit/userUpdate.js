@@ -23,28 +23,32 @@ $(function(){
 			messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","error");
 		}
 	});
+	debugger;
 	
 	var roleData = "";
 	var roleJson = {};
-	$.ajax({ 
-		url: serviceAddress,
-		datatype:'json',
-		method:"post",
-	    async:false,
-		data:{"module":"roleService",
-			  "method":"getRoleList",
-			  "request_data":JSON.stringify({"userId":userId})
-		},			
-		success: function(data){
-			roleJson = data;
-			$.each(data,function(i,item){
-				roleData += item.roleId + ":" + item.roleName + ";";
-			});
-			roleData = roleData.substring(0,roleData.length -1);
-		},error:function(error){
-			messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","error");
-		}
-	});
+	var roleSelectObj=gridSelectColRender("roleService","getRoleList",{},"roleId","roleName");
+	roleData=roleSelectObj.jsonStr;
+	roleJson=roleSelectObj.jsonArray;
+//	$.ajax({ 
+//		url: serviceAddress,
+//		datatype:'json',
+//		method:"post",
+//	    async:false,
+//		data:{"module":"roleService",
+//			  "method":"getRoleList",
+//			  "request_data":JSON.stringify({"userId":userId})
+//		},			
+//		success: function(data){
+//			roleJson = data;
+//			$.each(data,function(i,item){
+//				roleData += item.roleId + ":" + item.roleName + ";";
+//			});
+//			roleData = roleData.substring(0,roleData.length -1);
+//		},error:function(error){
+//			messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","error");
+//		}
+//	});
 
 	//构造grid
     $("#roleList4UpdateGrid").jqGrid({
