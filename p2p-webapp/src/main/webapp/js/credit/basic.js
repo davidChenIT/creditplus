@@ -257,14 +257,14 @@ function createCatalogTree(){
 					 var nodeObj=zTreeNodes[i];
 					 var url=nodeObj.url.indexOf("/")==0?nodeObj.url.substring(1):nodeObj.url;
 					 if(currrentUrl==url){
-						 nodeId=nodeObj.id;
+						 nodeId=nodeObj.catalog_id;
 					 }
 					
 				}
 			}
 			//创建ztree
 			zTreeObj = $.fn.zTree.init($("#menu_ztree"), setting, zTreeNodes);
-			var treeNodes=zTreeObj.getNodesByParam("id",nodeId,null);
+			var treeNodes=zTreeObj.getNodesByParam("catalog_id",nodeId,null);
 			var curentTreeNode=treeNodes[0];
 			//获取父节点
 			var liHtml="";
