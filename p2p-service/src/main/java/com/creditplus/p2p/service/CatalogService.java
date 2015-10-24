@@ -14,4 +14,6 @@ public interface CatalogService {
 	PageVO getCatalogListWithPage(PageVO pageVO,CatalogVO catalogVO);
 	
 	List<Map<String,Object>> getCatalogTree();
+	
+	List<Map<String,Object>> getCatalogLeftTree()throws Exception;
 }

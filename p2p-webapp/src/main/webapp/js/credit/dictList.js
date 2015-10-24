@@ -13,6 +13,7 @@ $(function(){
 			postData:{"module":"dictService","method":"getDictListWithPage","request_data":JSON.stringify(request_data)},
 			mtype: 'POST',
 			autowidth:true,
+			height:390,
 			colNames:['<input type="checkbox" class="dict-create-selall-cbox">',
 			          "操作",
 			          "<span style='color:red;'>*</span>名称",
@@ -85,7 +86,12 @@ $(function(){
 		     gridComplete:function(){
 			    	debugger;
 			    	$("div[name='dictTab']").find(".dict-create-selall-cbox").parent("div").attr("class","");
-			 }		     
+			 },
+			 onPaging:function(pgButton){
+				 debugger;
+				 var  grid=$(this).jqGrid();
+				 gridOnPaging(pgButton,grid,"dictListPager",{});
+			 }	     
 	});
     
     

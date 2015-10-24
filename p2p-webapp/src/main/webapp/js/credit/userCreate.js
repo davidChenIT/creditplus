@@ -34,26 +34,6 @@ $(function(){
 	var roleSelectObj=gridSelectColRender("roleService","getRoleList",{},"roleId","roleName");
 	roleData=roleSelectObj.jsonStr;
 	roleJson=roleSelectObj.jsonArray;
-//	$.ajax({ 
-//		url: serviceAddress,
-//		datatype:'json',
-//		method:"post",
-//	    async:false,
-//		data:{"module":"roleService",
-//			  "method":"getRoleList",
-//			  "request_data":""
-//		},			
-//		success: function(data){
-//			roleJson = data;
-//			$.each(data,function(i,item){
-//				roleData += item.roleId + ":" + item.roleName + ";";
-//			});
-//			roleData = roleData.substring(0,roleData.length -1);
-//		},error:function(error){
-//			messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","error");
-//		}
-//	});
-	
 	//构造grid
     $("#roleList4CreateGrid").jqGrid({
 			autowidth:true,

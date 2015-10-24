@@ -3,19 +3,16 @@ var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process"
 //页面初始化加载函数
 $(function(){
 	$(window).resize(function(){
-		debugger;
 		gridResize("credit_Main");
 		messageBox.resetMessageDialogDiv();
 		loadingBox.resetLoadingDiv();
 	});
 	$(window).scroll(function(){
-		debugger;
 		messageBox.resetMessageDialogDiv();
 		loadingBox.resetLoadingDiv();
 	});
 	//注册window的onpopstate事件
 	window.onpopstate = function(e) {  
-		  debugger;
 		  //点击浏览器的前进后退按钮处理
           if (e.state) {
               window.location.href=e.state.url;
@@ -28,150 +25,11 @@ $(function(){
         otherkey: null
     };
     window.history.replaceState(state, document.title, document.location.href);
-	//设置栏目菜单
-	var zTreeObj,
-	setting = {
-	    treeId:"menu_ztree",
-		view: {
-			selectedMulti: false,
-			showIcon: false,
-			showLine: false,
-			dblClickExpand:false
-		},
-		data:{
-		   simpleData: {
-			enable: true,
-			idKey: "id",
-			pIdKey: "pId",
-			rootPId: 0
-		  }
-		},
-		callback: {
-				//禁用ztree自带的双击展开子节点的方法
-				beforeExpand:function(){
-				   return false;
-				},
-				//节点点击事件
-				onClick:function(event, treeId, treeNode){
-					debugger;
-					var treeObj = $.fn.zTree.getZTreeObj(treeId); 
-					//展开或收缩子节点
-					if(treeNode.open){
-					   treeObj.expandNode(treeNode, false, false, true,false);
-					}else{
-					   treeObj.expandNode(treeNode, true, false, true,false);
-					}
-					//获取父节点
-					var liHtml="";
-					var checkAllParents=function(treeNode){
-						if(treeNode==null){
-							return;
-						}else{
-							liHtml="<li><a>"+treeNode.name+"</a></li>"+liHtml;
-							checkAllParents(treeNode.getParentNode());
-						}
-					}
-					checkAllParents(treeNode);
-					//设置面包屑
-					$(".credit-breadcrumb").html(liHtml);
-					
-					//获取页面
-					var fileUrlstr=treeNode.urlstr;
-					if(fileUrlstr){
-						loadingBox.showLoading();
-						var jsFileUrl="/p2p-webapp/js/credit/"+fileUrlstr.substring(fileUrlstr.lastIndexOf("/")+1,fileUrlstr.lastIndexOf("."))+".js";
-						var requestUrl="http://"+window.location.host+"/p2p-webapp/"+fileUrlstr;
-						
-						
-						$("title").text(treeNode.name);
-						$.ajax({ 
-							url: requestUrl,
-							//context: document.body,
-							success: function(data){
-								loadingBox.hideLoading(500);
-								if(data && data.indexOf("loginBtn")!=-1){
-									window.location.href="http://localhost:8080/p2p-webapp/page/login.jsp";
-								}
-								debugger;	
-								if(data && data.length>0){
-								  var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->")+24,data.indexOf("<!--credit_Main_end-->"));
-								  $("#credit_MainPanel").find("#credit_Main").remove();
-								  $("#credit_MainPanel").append(creditMainHtml);
-								  if(treeNode.isloadjs=="true"){
-									  $("head").find("script[src='"+jsFileUrl+"']").remove();
-									  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>');
-								  }
-								}
-								//加入到历史状态里面
-		                        var state = {
-		                            title:treeNode.name,
-		                            url: requestUrl,
-		                            isloadjs:treeNode.isloadjs
-		                        };
-								window.history.pushState(state,data,requestUrl);
-							},error:function(error){
-								loadingBox.hideLoading(500);
-							  debugger;
-							  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
-							}
-						});
-					}
-					
-					
-				}
-		}
-
-	},zTreeNodes = [
-		{"id":1,"pId":0,"name":"首页","urlstr":"page/index.jsp",isloadjs:"true"},
-		{"id":2,"pId":0,"name":"风控管理"},
-		{"id":3,"pId":0,"name":"系统管理"},
-		
-		{"id":4,"pId":2,"name":"信用初审","urlstr":"page/firstTrialList.jsp",isloadjs:"true"},
-		{"id":5,"pId":2,"name":"信用复审","urlstr":"page/reviewList.jsp",isloadjs:"true"},
-		{"id":6,"pId":2,"name":"标的管理","urlstr":"page/tenderMngList.jsp",isloadjs:"true"},
-		{"id":7,"pId":2,"name":"投标","urlstr":"page/makeTenderList.jsp",isloadjs:"true"},
-		
-		{"id":8,"pId":3,"name":"字典管理","urlstr":"page/systemmng/dictList.jsp",isloadjs:"true"},
-		{"id":9,"pId":3,"name":"栏目管理","urlstr":"page/systemmng/catalogList.jsp",isloadjs:"true"},
-		{"id":10,"pId":3,"name":"用户管理","urlstr":"page/systemmng/userList.jsp",isloadjs:"true"},
-		{"id":11,"pId":3,"name":"角色管理","urlstr":"page/systemmng/roleList.jsp",isloadjs:"true"},
-//		{"id":12,"pId":3,"name":"资源管理","urlstr":"page/systemmng/resourceList.jsp",isloadjs:"true"},
-		{"id":13,"pId":3,"name":"修改密码","urlstr":"page/systemmng/changePassword.jsp",isloadjs:"true"}		
-	];
-	
-	//获取当前访问的路径
-	var currrentUrl=window.location.pathname.substring(window.location.pathname.indexOf("p2p-webapp/")+11);
-	var nodeId="";
-	if(currrentUrl){
-		for(var i=0;i<zTreeNodes.length;i++){
-		     var nodeObj=zTreeNodes[i];
-			 if(currrentUrl==nodeObj.urlstr){
-				 nodeId=nodeObj.id;
-			 }
-			
-		}
-	}
-	
-	zTreeObj = $.fn.zTree.init($("#menu_ztree"), setting, zTreeNodes);
-	
-	var treeNodes=zTreeObj.getNodesByParam("id",nodeId,null);
-	var curentTreeNode=treeNodes[0];
-	//获取父节点
-	var liHtml="";
-	var checkAllParents1=function(curentTreeNode){
-		zTreeObj.expandNode(curentTreeNode, true, false, true,false);
-		if(curentTreeNode==null){
-			return;
-		}else{
-			liHtml="<li><a>"+curentTreeNode.name+"</a></li>"+liHtml;
-			checkAllParents1(curentTreeNode.getParentNode());
-		}
-	}
-	checkAllParents1(curentTreeNode);
-	//设置面包屑
-	$(".credit-breadcrumb").html(liHtml);
+    
+    debugger;
+    //创建左侧栏目
+    createCatalogTree();
 	loadingBox.hideLoading();
-
 
 	//展开或隐藏左侧栏目区域
 	$("#credit_LeftPanel").on("click",".toggle-icon",function(){
@@ -224,6 +82,12 @@ $(function(){
 							loadingBox.hideLoading();
 							if(data && data.indexOf("loginBtn")!=-1){
 								window.location.href="http://localhost:8080/p2p-webapp/page/login.jsp";
+							}else if(data && data.indexOf("<p>No Permission</p>")!=-1){
+								$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">403</h2><p class="credit-errtext">No Permission</p><div></div><p></p><p>诚立信金融</p></div>');
+								return;
+							}else if(data && data.indexOf("<p>Not Found</p>")!=-1){
+								$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
+								return;
 							}
 							debugger;	
 							if(data && data.length>0){
@@ -238,7 +102,7 @@ $(function(){
 						},error:function(error){
 						  loadingBox.hideLoading();
 						  debugger;
-						  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
+						  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">500</h2><p class="credit-errtext">Error</p><div></div><p></p><p>诚立信金融</p></div>');
 						}
 					});
 					$(this).removeAttr("page");
@@ -275,6 +139,166 @@ $(function(){
 	
 
 })
+
+//构造左侧菜单的函数
+function createCatalogTree(){
+    loadingBox.showLoading();
+    //调用获取栏目菜单的服务
+	$.ajax({ 
+		url: serviceAddress,
+		datatype:'json',
+		method:"post",
+		async:false,
+		data:{"module":"commonAction",
+			  "method":"getCatalogLeftTree"
+		},			
+		success: function(zTreeNodes){
+			if(!zTreeNodes){
+				loadingBox.hideLoading();
+				return;
+			}
+			//设置栏目菜单
+			var zTreeObj,
+			setting = {
+				treeId:"menu_ztree",
+				view: {
+					selectedMulti: false,
+					showIcon: false,
+					showLine: false,
+					dblClickExpand:false
+				},
+				data:{
+				   key:{
+				     name:"catalog_name",
+				     url:""
+				   },
+				   simpleData: {
+					enable: true,
+					idKey: "catalog_id",
+					pIdKey: "parent_id",
+					rootPId: 0
+				  }
+				},
+				callback: {
+						//禁用ztree自带的双击展开子节点的方法
+						beforeExpand:function(){
+						   return false;
+						},
+						//节点点击事件
+						onClick:function(event, treeId, treeNode){
+							debugger;
+							var treeObj = $.fn.zTree.getZTreeObj(treeId); 
+							//展开或收缩子节点
+							if(treeNode.open){
+							   treeObj.expandNode(treeNode, false, false, true,false);
+							}else{
+							   treeObj.expandNode(treeNode, true, false, true,false);
+							}
+							//获取父节点
+							var liHtml="";
+							var checkAllParents=function(treeNode){
+								if(treeNode==null){
+									return;
+								}else{
+									liHtml="<li><a>"+treeNode.catalog_name+"</a></li>"+liHtml;
+									checkAllParents(treeNode.getParentNode());
+								}
+							}
+							checkAllParents(treeNode);
+							//设置面包屑
+							$(".credit-breadcrumb").html(liHtml);
+							
+							//获取页面
+							var fileUrlstr=treeNode.url;
+							if(fileUrlstr && fileUrlstr!="#"){
+								loadingBox.showLoading();
+								var jsFileUrl="/p2p-webapp/js/credit/"+fileUrlstr.substring(fileUrlstr.lastIndexOf("/")+1,fileUrlstr.lastIndexOf("."))+".js";
+								fileUrlstr=fileUrlstr.indexOf("/")==0?fileUrlstr.substring(1):fileUrlstr;
+								var requestUrl="http://"+window.location.host+"/p2p-webapp/"+fileUrlstr;
+								$("title").text(treeNode.catalog_name);
+								$.ajax({ 
+									url: requestUrl,
+									//context: document.body,
+									success: function(data){
+										loadingBox.hideLoading(500);
+										if(data && data.indexOf("loginBtn")!=-1){
+											window.location.href="http://localhost:8080/p2p-webapp/page/login.jsp";
+										}else if(data && data.indexOf("<p>No Permission</p>")!=-1){
+											$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">403</h2><p class="credit-errtext">No Permission</p><div></div><p></p><p>诚立信金融</p></div>');
+											return;
+										}else if(data && data.indexOf("<p>Not Found</p>")!=-1){
+											$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
+											return;
+										}
+										debugger;	
+										if(data && data.length>0){
+										  var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->")+24,data.indexOf("<!--credit_Main_end-->"));
+										  $("#credit_MainPanel").find("#credit_Main").remove();
+										  $("#credit_MainPanel").append(creditMainHtml);
+										  if(fileUrlstr.indexOf("index.jsp")==-1){
+											  $("head").find("script[src='"+jsFileUrl+"']").remove();
+											  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>');
+										  }
+										}
+										//加入到历史状态里面
+										var state = {
+											title:treeNode.catalog_name,
+											url: requestUrl,
+											isloadjs:treeNode.isloadjs
+										};
+										window.history.pushState(state,data,requestUrl);
+									},error:function(error){
+										loadingBox.hideLoading(500);
+									  debugger;
+									  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">500</h2><p class="credit-errtext">Error</p><div></div><p></p><p>诚立信金融</p></div>');
+									}
+								});
+							}
+							
+							
+						}
+				}
+
+			};
+			
+			//获取当前访问的路径
+			var currrentUrl=window.location.pathname.substring(window.location.pathname.indexOf("p2p-webapp/")+11);
+			var nodeId="";
+			if(currrentUrl){
+				for(var i=0;i<zTreeNodes.length;i++){
+					 var nodeObj=zTreeNodes[i];
+					 var url=nodeObj.url.indexOf("/")==0?nodeObj.url.substring(1):nodeObj.url;
+					 if(currrentUrl==url){
+						 nodeId=nodeObj.catalog_id;
+					 }
+					
+				}
+			}
+			//创建ztree
+			zTreeObj = $.fn.zTree.init($("#menu_ztree"), setting, zTreeNodes);
+			var treeNodes=zTreeObj.getNodesByParam("catalog_id",nodeId,null);
+			var curentTreeNode=treeNodes[0];
+			//获取父节点
+			var liHtml="";
+			var checkAllParents1=function(curentTreeNode){
+				zTreeObj.expandNode(curentTreeNode, true, false, true,false);
+				if(curentTreeNode==null){
+					return;
+				}else{
+					liHtml="<li><a>"+curentTreeNode.catalog_name+"</a></li>"+liHtml;
+					checkAllParents1(curentTreeNode.getParentNode());
+				}
+			}
+			checkAllParents1(curentTreeNode);
+			//设置面包屑
+			$(".credit-breadcrumb").html(liHtml);
+			loadingBox.hideLoading();
+		},error:function(error){
+		    loadingBox.hideLoading();
+			messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","error");
+		}
+	});
+}
 
 //移除tab控件的也签
 function removeTabItem(tabId,itemId){
@@ -385,6 +409,32 @@ function setValues(divId,dataObj,appendHtml){
 	}
 }
 
+/**
+ * 获取查询参数
+ * @param divId 参数div id
+ */
+function getValue(divId){
+	var request_data = {};
+	if(divId && $("#"+divId) && $("#"+divId).length>0){
+		//设置input和select的值
+		$("#"+divId).find(".credit-input").find("input,select").each(function(i,dom){
+			var name=$(dom).attr("name");
+			var value = $(dom).val();
+			if(!isEmptyString(value)) request_data[name] = $(dom).val();
+		});
+	}
+	return request_data;
+}
+/**
+ * 是否为空字符串
+ * @param value 校验值
+ * @return boolean
+ */
+function isEmptyString(value){
+	var result = false;
+	if(value == null || value == "") result = true;
+	return result;
+}
 
 //公共校验函数
 function validateRequire(elemName,tip,parantsDivId){
@@ -457,7 +507,7 @@ function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
 	if(setValueDiv){
 		setValues(setValueDiv,resultData);
 		//渲染下拉框
-		selectRender("","",setValueDiv,{});
+		selectRender(setValueDiv);
 	}
 	return resultData;
 }
@@ -624,11 +674,13 @@ var loadingBox={
 }
 
 //下拉框组件通过数据字典服务构造选项
-function selectRender(serviceModuleName,serviceMethodName,formDivId,requestData,valueField,textField){
+function selectRender(formDivId){
 	debugger;
-	var moduleName=serviceModuleName || "dictService";
-	var methodName=serviceMethodName || "getDictItems";
 	$("#"+formDivId).find("[widget='dropdown']").each(function(i,dom){
+		var moduleName=$(dom).attr("serviceModule") || "dictService";
+		var methodName=$(dom).attr("serviceMethod") || "getDictItems";
+		var valueField=$(dom).attr("valueField") || "code";
+		var textField=$(dom).attr("textField") || "name";
 		var dictionaryType=$(dom).attr("dictionary_type");
 		var istext=$(dom).attr("istext");
 		var code=$(dom).attr("code");
@@ -638,9 +690,6 @@ function selectRender(serviceModuleName,serviceMethodName,formDivId,requestData,
 		}
 		if(istext=="true"){
 			paramsObj.code=code;
-		}
-		if(requestData){
-			$.extend(paramsObj,requestData);
 		}
 		//调用数据字典服务
 		$.ajax({ 
@@ -675,6 +724,15 @@ function selectRender(serviceModuleName,serviceMethodName,formDivId,requestData,
 	});
 }
 
+
+//公共渲染时间控件
+function datepickerRender(formDiv){
+	$("#"+formDiv).find("[widget='datepicker']").each(function(i,dom){
+		var dateFormat=$(dom).attr("dateFormat") || "yy-mm-dd";
+		$(dom).datepicker({dateFormat:dateFormat});
+	});
+}
+
 //获取grid列需要构造的下拉框的值
 function gridSelectColRender(serviceModuleName,serviceMethodName,requestData,valueField,textField){
 	var resltObj={};
@@ -699,4 +757,35 @@ function gridSelectColRender(serviceModuleName,serviceMethodName,requestData,val
 		}
 	});
 	return resltObj;
+}
+
+//grid公共分页函数
+function gridOnPaging(pgButton,grid,pagerDiv,request_data){
+	debugger;
+    var request_data=request_data || {};
+	var page = grid.getGridParam('page'); // current page
+	var lastpage =grid.getGridParam('lastpage'); // current page
+	var sidx = grid.getGridParam('sidx'); // sidx
+	var sord = grid.getGridParam('sord'); // sord
+	var totalPage = grid.getGridParam('totalPage'); // sord
+	if(pgButton=='next'){
+		page+=1;
+	}else if(pgButton=='prev'){
+		page-=1;
+	}else if(pgButton=='first'){
+		page=1;
+	}else if(pgButton=='last'){
+		page=lastpage;
+	}else if(pgButton=='user'){
+		page=$("#"+pagerDiv).find("input").val();
+	}
+	request_data.currpage=page;
+	var rows=$("#"+pagerDiv).find("select").val();
+	request_data.rowNum=rows;
+	grid.jqGrid('setGridParam', {
+		datatype:'json',  
+		postData:{'request_data':JSON.stringify(request_data)}, //发送数据
+		page:page,
+		rowNum:rows
+	}).trigger("reloadGrid");
 }

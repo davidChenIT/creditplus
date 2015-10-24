@@ -1,6 +1,10 @@
 //页面初始化加载函数
 $(function(){
 	debugger;
+	//日期空间format
+	datepickerRender("conditionDiv");
+	//下拉框数据填充
+	selectRender("conditionDiv");
 	//构造grid
 	$("#firstTrialListGrid").jqGrid({
 			url:serviceAddress,
@@ -52,7 +56,8 @@ $(function(){
 	
 	//查询按钮
     $("[name='firstTrialSearhBtn']").click(function(){
-        var request_data={};
+    	debugger;
+        var request_data= getValue("conditionDiv");
         $("#firstTrialListGrid").jqGrid('setGridParam',{  
             datatype:'json',  
             postData:{'request_data':JSON.stringify(request_data)}, //发送数据
