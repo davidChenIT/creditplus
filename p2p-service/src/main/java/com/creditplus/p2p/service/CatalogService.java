@@ -11,9 +11,10 @@ public interface CatalogService {
 	
 	void insertCatalog(@ParamName("parentId") int parentId,@ParamName("griddata")List<Map<String,Object>> dataList);
 	
+	void deleteCatalog(List<Integer> idList);
+	
 	PageVO getCatalogListWithPage(PageVO pageVO,CatalogVO catalogVO);
 	
 	List<Map<String,Object>> getCatalogTree();
 	
-	List<Map<String,Object>> getCatalogLeftTree()throws Exception;
 }

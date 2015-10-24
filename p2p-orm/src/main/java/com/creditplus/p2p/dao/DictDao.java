@@ -9,11 +9,11 @@ public interface DictDao {
 	
 	void insertDict(List<Map<String,Object>> dataList);
 	
-	void deleteDict(List<DictVO> dataList);
+	void deleteDict(List<Integer> idList);
+	
+	List<Integer> getDictListByParentId(List<Integer> idList);
 	
 	List<DictVO> getDictListWithPage(DictVO dictVO);
 	
-	List<DictVO> getDictListByParentId(List<DictVO> dataList);
-
 	List<DictVO> getDictItems(DictVO dictVO);
 }

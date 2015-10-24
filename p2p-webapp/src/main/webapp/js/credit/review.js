@@ -10,10 +10,14 @@ $(function(){
 	var user_id=paramsObj.user_id || "";
 	var userInfoList=publicQueryInfoAjax("urgentContactorService","getListByUserId",JSON.stringify({"user_id":user_id}));
 	if(userInfoList){
+		var userTemplateDiv = $("#applyUserUrgentConnectionUserInfoDiv .connection-user");
+		var userDom = userTemplateDiv.html();
+		//移除静态html，循环输出动态列表元素
+		userTemplateDiv.remove();
 		$.each(userInfoList, function(i){
-			var userDivIdx = "user_idx_" + i;
-			var userTemplate = '<div id="'+userDivIdx+'"><div class="credit-spacecontrol col-xs-12 col-sm-2"><div class="row"><label class="col-xs-12 col-sm-4"><div class="credit-label">联系人姓名</div></label><div class="col-xs-12 col-sm-8"><div class="credit-input"><span name="name"></span></div></div></div></div><div class="credit-spacecontrol col-xs-12 col-sm-2"><div class="row"><label class="col-xs-12 col-sm-4"><div class="credit-label">联系人关系</div></label><div class="col-xs-12 col-sm-8"><div class="credit-input"><span name="relation"></span></div></div></div></div><div class="credit-spacecontrol col-xs-12 col-sm-2"><div class="row"><label class="col-xs-12 col-sm-4"><div class="credit-label">联系人电话</div></label><div class="col-xs-12 col-sm-8"><div class="credit-input"><span name="mobile"></span></div></div></div></div><div class="credit-spacecontrol col-xs-12 col-sm-2"><div class="row"><label class="col-xs-12 col-sm-5"><div class="credit-label">联系人电话属地</div></label><div class="col-xs-12 col-sm-7"><div class="credit-input"><input name="mobile_address" type="text"></div></div></div></div></div>';
-			setValues("applyUserUrgentConnectionUserInfoDiv",userInfoList[i],userTemplate);
+			var userDivIdx = "connectionUserIdx" + i;
+			var userTemplate = '<div id="'+userDivIdx+'">'+userDom+'</div>';
+			setValues("applyUserUrgentConnectionUserInfoDiv", userInfoList[i], userTemplate);
 			setValues(userDivIdx,userInfoList[i]);
 		});
 	}
