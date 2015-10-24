@@ -15,5 +15,5 @@ public interface CatalogService {
 	
 	List<Map<String,Object>> getCatalogTree();
 	
-	List<Map<String,Object>> getCatalogLeftTree();
+	List<Map<String,Object>> getCatalogLeftTree()throws Exception;
 }

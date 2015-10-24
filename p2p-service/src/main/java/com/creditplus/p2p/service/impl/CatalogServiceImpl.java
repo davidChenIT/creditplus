@@ -126,7 +126,7 @@ public class CatalogServiceImpl implements CatalogService{
 		return catalogList;
 	}
 	
-	public List<Map<String,Object>> getCatalogLeftTree(){
+	public List<Map<String,Object>> getCatalogLeftTree()throws Exception{    	
 		List<Map<String,Object>> catalogList = catalogDao.getCatalogTree();
 		return catalogList;
 	}

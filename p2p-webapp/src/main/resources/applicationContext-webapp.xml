@@ -50,5 +50,7 @@
 	        <value>messages</value>
 	        </list>
 	    </property>
-	</bean>    
+	</bean>
+	
+    <bean id="commonAction" class="com.creditplus.p2p.webapp.impl.CommonActionImpl" />
 </beans>

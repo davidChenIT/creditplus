@@ -105,16 +105,16 @@
 		       select u.*,
 		              r.role_id as role_id,
 		              r.role_name as role_name,
-		              res.resource_id as resource_id,
-		              res.resource_name as resource_name,
-		              res.url as url,
-		              res.resource_type as resource_type,
-		              res.priority as priority
+		              rr.resource_id as resource_id,
+		              c.catalog_name as resource_name,
+		              c.url as url,
+		              1 as resource_type,
+		              1 as priority
                  from user_t u 
             left join user_role_t ur on u.user_id = ur.user_id 
             left join role_t r on ur.role_id = r.role_id 
             left join role_resource_t rr on r.role_id = rr.role_id  
-            left join resource_t res on rr.resource_id = rr.resource_id             
+            left join catalog_t c on rr.resource_id = c.catalog_id             
                 where username=#{username}
     </select>
    <select id="getUserListWithPage" parameterType="UserVO" resultMap="userVOMap">
