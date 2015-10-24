@@ -1,6 +1,10 @@
 //页面初始化加载函数
 $(function(){
 	debugger;
+	//日期空间format
+	datepickerRender("rankPollConditionDiv");
+	//下拉框数据填充
+	selectRender("rankPollConditionDiv");
 	//构造grid
     $("#rankPoolGrid").jqGrid({
 			url:serviceAddress,

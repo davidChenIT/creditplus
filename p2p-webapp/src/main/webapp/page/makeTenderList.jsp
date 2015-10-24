@@ -76,7 +76,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="apply_date" >
+															<input type="text" name="modifytime" widget="datepicker">
 														</div>
 													</div>
 												</div>
@@ -90,7 +90,9 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="apply_status" >
+															<select name="apply_state" widget="dropdown" dictionary_type="apply_state">
+																<option value="">请选择</option>
+															</select>
 														</div>
 													</div>
 												</div>
