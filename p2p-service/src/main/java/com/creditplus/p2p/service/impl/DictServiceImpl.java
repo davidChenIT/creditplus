@@ -21,51 +21,17 @@ public class DictServiceImpl implements DictService {
 	
 	public static final Logger logger = LogManager.getLogger(DictServiceImpl.class);
 
-	
 	@Autowired
 	private DictDao dictDao;
 
-	public void insertDict(int parentId,List<Map<String,Object>> dataList) {
-		DictVO dictVO = new DictVO();
-		dictVO.setParentId(parentId);
-		List<DictVO> paramList = new ArrayList<DictVO>();
-		paramList.add(dictVO);
-		List<DictVO> rsList = this.getDictListByParentId(paramList);
-		if(null != rsList && !rsList.isEmpty()){
-			List<DictVO>  deleteList = new ArrayList<DictVO>();
-			if(null != dataList && !dataList.isEmpty()){
-				for(DictVO rDictVO : rsList){
-					boolean deleteFlag = true;
-					int dictId = rDictVO.getDictId();
-					for(Map<String,Object> map : dataList){
-						Object pDictId = map.get("dict_id");
-						if(null != pDictId && dictId == (Integer)pDictId){
-							deleteFlag = false;
-							break;
-						}
-					}
-					
-					if(deleteFlag){
-						deleteList.add(rDictVO);
-					}
-				}
-			}else{
-				deleteList.addAll(rsList);
-			}
-			
-			dictDao.deleteDict(deleteList);
-			deleteChildrenCascade(deleteList);
-		}
-		
+	public void insertDict(int parentId,List<Map<String,Object>> dataList) {		
     	String currentUser = CommonUtil.getCurrentUser();
     	if(null != dataList && !dataList.isEmpty()){
-    		List<DictVO>  updateList = new ArrayList<DictVO>();
+    		List<Integer>  updateList = new ArrayList<Integer>();
 			for(Map<String,Object> map : dataList){
-				Object dictId =map.get("dict_id");
+				Object dictId =map.get("dictId");
 				if(null != dictId){
-					DictVO pDictVO = new DictVO();
-					pDictVO.setDictId((Integer)dictId);
-					updateList.add(pDictVO);
+					updateList.add((Integer)dictId);
 				}
 				
 				map.put("last_updated_by",currentUser);        			
@@ -90,16 +56,25 @@ public class DictServiceImpl implements DictService {
     	}
 	}
 	
-	private void deleteChildrenCascade(List<DictVO> dataList){		
-		List<DictVO>  deleteList = getDictListByParentId(dataList);
+	public void deleteDict(List<Integer> idList){
+		if(null == idList || idList.isEmpty()){
+			return;
+		}	
+	
+		dictDao.deleteDict(idList);
+		deleteChildrenCascade(idList);
+	}
+
+	private void deleteChildrenCascade(List<Integer> idList){		
+		List<Integer>  deleteList = getDictListByParentId(idList);
 		if(!deleteList.isEmpty()){
 			dictDao.deleteDict(deleteList);
 			deleteChildrenCascade(deleteList);
 		}
 	}
 	
-	public List<DictVO> getDictListByParentId(List<DictVO> dataList){
-		return dictDao.getDictListByParentId(dataList);
+	private List<Integer> getDictListByParentId(List<Integer> idList){
+		return dictDao.getDictListByParentId(idList);
 	}
 
 	public PageVO getDictListWithPage(PageVO pageVO,DictVO dictVO) {
@@ -118,12 +93,11 @@ public class DictServiceImpl implements DictService {
 		return PageUtil.getPageVO();
 	}
 
-	public List getDictItems(DictVO dictVO) {
+	public List<DictVO> getDictItems(DictVO dictVO) {
 		if(null == dictVO){
 			dictVO = new DictVO();
 		}
+		
 		return dictDao.getDictItems(dictVO);
 	}
-
-
 }

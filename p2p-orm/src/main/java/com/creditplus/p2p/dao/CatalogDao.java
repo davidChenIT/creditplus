@@ -9,11 +9,11 @@ public interface CatalogDao {
 	
 	void insertCatalog(List<Map<String,Object>> dataList);
 	
-	void deleteCatalog(List<CatalogVO> dataList);
+	void deleteCatalog(List<Integer> dataList);
 	
 	List<CatalogVO> getCatalogListWithPage(CatalogVO catalogVO);
 	
-	List<CatalogVO> getCatalogListByParentId(List<CatalogVO> dataList);
+	List<Integer> getCatalogListByParentId(List<Integer> dataList);
 	
 	List<Map<String,Object>> getCatalogTree();
 }

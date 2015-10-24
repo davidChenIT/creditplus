@@ -29,9 +29,9 @@
     
     <delete id="deleteDict" parameterType="java.util.List">
     	delete from dict_t where dict_id in
- 		<foreach collection="list" item="dictVO" index="index"
+ 		<foreach collection="list" item="dictId" index="index"
             open="(" close=")" separator=",">        
-         	#{dictVO.dictId} 
+         	#{dictId} 
  		</foreach>     	
     </delete>
     
@@ -55,13 +55,13 @@
      	order by order_number
      </select>
      
-    <select id="getDictListByParentId" parameterType="java.util.List" resultMap="dictVOMap">
-	   select d.*
+    <select id="getDictListByParentId" parameterType="java.util.List" resultType="Integer">
+	   select dict_id as dictId
          from dict_t d
          where d.parent_id in 
- 		<foreach collection="list" item="dictVO" index="index"
+ 		<foreach collection="list" item="dictId" index="index"
             open="(" close=")" separator=",">        
-         	#{dictVO.parentId} 
+         	#{dictId}
  		</foreach>             
      </select>
 </mapper>
