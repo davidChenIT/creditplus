@@ -73,7 +73,7 @@ $(function(){
 		var checkPass = true;
 		//1. 获取所有的必填项
 		var requiredDoms = $("#firstTrial").find("[validtion*='required']");
-		//2. 循环校验\
+		//2. 循环校验
 		if(requiredDoms.length > 0){
 			var isFocusError = false;
 			$.each(requiredDoms,function(i){
@@ -162,9 +162,10 @@ $(function(){
 //			});
 			debugger;
 			publicSaveAjax("loanOrderService","creditFirstTrial",JSON.stringify(request_data),"firstTrialTab","firstTrial","[name='firstTrialSearhBtn']");
-		}else{
-			messageBox.createMessageDialog("提示","对不起，您有数据录入不正确，请检查并正确录入后再次提交！","","","warning");
 		}
+//		else{
+//			messageBox.createMessageDialog("提示","对不起，您有数据录入不正确，请检查并正确录入后再次提交！","","","warning");
+//		}
 		
 	});
 	

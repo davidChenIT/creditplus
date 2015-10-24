@@ -450,7 +450,7 @@ function validateRequire(elemName,tip,parantsDivId){
 		  if(elemNameTipLength==0){
 			  elementDom.parent().after("<span name='" + elemName + "Tip' style='color:red;'>" + tip + "</span>");
 		  }
-		  elementDom.focus(function(e){
+		  elementDom.change(function(e){
 			  $("span[name='" + elemName + "Tip']").remove();
 			  $(this).unbind(e);
 		  });
