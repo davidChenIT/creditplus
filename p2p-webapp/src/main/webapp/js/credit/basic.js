@@ -507,7 +507,7 @@ function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
 	if(setValueDiv){
 		setValues(setValueDiv,resultData);
 		//渲染下拉框
-		selectRender("","",setValueDiv,{});
+		selectRender(setValueDiv);
 	}
 	return resultData;
 }
