@@ -5,6 +5,8 @@ $(function(){
 	datepickerRender("conditionDiv");
 	//下拉框数据填充
 	selectRender("conditionDiv");
+	//构造grid下拉框需要的数据
+	var applyStateSelectObj=gridSelectColRender("","",{},"code","name");
 	//构造grid
 	$("#firstTrialListGrid").jqGrid({
 			url:serviceAddress,
@@ -31,7 +33,11 @@ $(function(){
 				{name:'dateCount', index:'dateCount',align:'center',"sortable":false},
 				{name:'loan_day', index:'loan_day',align:'center',"sortable":false},
 				{name:'modifytime', index:'modifytime',align:'center',"sortable":false},
-				{name:'apply_state', index:'apply_state',align:'center',"sortable":false},
+				{name:'apply_state', index:'apply_state',align:'center',
+					"sortable":false,
+					edittype:'select',
+					editoptions:{value:applyStateSelectObj.jsonStr}
+				},
 				{name:'first_assign_user', index:'first_assign_user',align:'center',"sortable":false},
 				{name:'review_assign_user', index:'review_assign_user',align:'center',"sortable":false}
 			],

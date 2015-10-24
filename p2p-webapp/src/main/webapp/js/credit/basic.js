@@ -735,14 +735,16 @@ function datepickerRender(formDiv){
 
 //获取grid列需要构造的下拉框的值
 function gridSelectColRender(serviceModuleName,serviceMethodName,requestData,valueField,textField){
+	var moduleName=serviceModuleName || "dictService";
+	var methodName=serviceMethodName || "getDictItems";
 	var resltObj={};
 	$.ajax({ 
 		url: serviceAddress,
 		datatype:'json',
 		method:"post",
 	    async:false,
-		data:{"module":serviceModuleName,
-			  "method":serviceMethodName,
+		data:{"module":moduleName,
+			  "method":methodName,
 			  "request_data":requestData?JSON.stringify(requestData):"{}"
 		},			
 		success: function(data){
@@ -765,9 +767,6 @@ function gridOnPaging(pgButton,grid,pagerDiv,request_data){
     var request_data=request_data || {};
 	var page = grid.getGridParam('page'); // current page
 	var lastpage =grid.getGridParam('lastpage'); // current page
-	var sidx = grid.getGridParam('sidx'); // sidx
-	var sord = grid.getGridParam('sord'); // sord
-	var totalPage = grid.getGridParam('totalPage'); // sord
 	if(pgButton=='next'){
 		page+=1;
 	}else if(pgButton=='prev'){

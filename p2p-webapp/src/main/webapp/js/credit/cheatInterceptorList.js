@@ -5,6 +5,8 @@ $(function(){
 	datepickerRender("cheatInterceptorConditionDiv");
 	//下拉框数据填充
 	selectRender("cheatInterceptorConditionDiv");
+	//构造grid下拉框需要的数据
+	var applyStateSelectObj=gridSelectColRender("","",{},"code","name");
 	//构造grid
  $("#cheatInterceptorGrid").jqGrid({
 	 url:serviceAddress,
@@ -39,7 +41,11 @@ $(function(){
 		{name:'dateCount', index:'dateCount',align:'center',"sortable":false},
 		{name:'loan_day', index:'loan_day',align:'center',"sortable":false},
 		{name:'modifytime', index:'modifytime',align:'center',"sortable":false},
-		{name:'apply_state', index:'apply_state',align:'center',"sortable":false}
+		{name:'apply_state', index:'apply_state',align:'center',
+			"sortable":false,
+			edittype:'select',
+			editoptions:{value:applyStateSelectObj.jsonStr}
+		}
 	],
 	pager: '#cheatInterceptorPager',
 	multiselect: true,
