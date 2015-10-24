@@ -14,9 +14,11 @@ import org.springframework.security.core.GrantedAuthority;
 public class AccessDecisionManagerImpl implements AccessDecisionManager {
 	
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
+		System.out.println("=====执行到这里");
 		if(configAttributes == null) {
 			return;
 		}
+		
 		//所请求的资源拥有的权限(一个资源对多个权限)
 		Iterator<ConfigAttribute> iterator = configAttributes.iterator();
 		while(iterator.hasNext()) {
@@ -31,17 +33,16 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
 				}
 			}
 		}
+		
 		//没有权限让我们去捕捉
-		throw new AccessDeniedException(" 没有权限访问！");
+//		throw new AccessDeniedException("没有权限访问！");
 	}
 
 	public boolean supports(ConfigAttribute attribute) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	public boolean supports(Class<?> clazz) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 	
