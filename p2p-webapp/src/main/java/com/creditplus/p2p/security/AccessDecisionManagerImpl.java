@@ -10,11 +10,9 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-//3
 public class AccessDecisionManagerImpl implements AccessDecisionManager {
 	
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
-		System.out.println("=====执行到这里");
 		if(configAttributes == null) {
 			return;
 		}
@@ -26,6 +24,7 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
 			//访问所请求资源所需要的权限
 			String needPermission = configAttribute.getAttribute();
 			System.out.println("needPermission is " + needPermission);
+			
 			//用户所拥有的权限authentication
 			for(GrantedAuthority ga : authentication.getAuthorities()) {
 				if(needPermission.equals(ga.getAuthority())) {

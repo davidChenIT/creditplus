@@ -11,7 +11,10 @@ public interface DictService {
 	
 	void insertDict(@ParamName("parentId") int parentId,@ParamName("griddata")List<Map<String,Object>> dataList);
 	
+	void deleteDict(List<Integer> idList);
+
 	PageVO getDictListWithPage(PageVO pageVO,DictVO dictVO);
 	
-	List getDictItems(DictVO dictVO);
+	List<DictVO> getDictItems(DictVO dictVO);
+	
 }

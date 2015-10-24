@@ -27,9 +27,9 @@
 
     <delete id="deleteCatalog" parameterType="java.util.List">
     	delete from catalog_t where catalog_id in
- 		<foreach collection="list" item="catalogVO" index="index"
+ 		<foreach collection="list" item="catalogId" index="index"
             open="(" close=")" separator=",">        
-         	#{catalogVO.catalogId} 
+         	#{catalogId}
  		</foreach>     	
     </delete>
     
@@ -45,13 +45,13 @@
   		</if>
   		order by order_number asc       
      </select>
-    <select id="getCatalogListByParentId" parameterType="java.util.List" resultMap="catalogVOMap">
-     	select c.*
+    <select id="getCatalogListByParentId" parameterType="java.util.List" resultType="Integer" >
+     	select catalog_id as catalogId
           from catalog_t c
          where c.parent_id in 
- 		<foreach collection="list" item="catalogVO" index="index"
+ 		<foreach collection="list" item="catalogId" index="index"
             open="(" close=")" separator=",">        
-         	#{catalogVO.parentId} 
+         	#{catalogId} 
  		</foreach>             
      </select>  
      <select id="getCatalogTree" resultType="java.util.Map" >

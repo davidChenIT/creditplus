@@ -188,31 +188,35 @@ $(function(){
     
     //点击用户列表中的删除按钮
     $("[name='delCatalogBtn']").click(function(){
-    	var selRowIds=[];
+    	var request_data=[];
     	$("div[name='catalogTab']").find(".catalog-create-sel-cbox").each(function(i,cbox){
 			var ischecked=$(cbox)[0].checked;
 			if(ischecked){
-				selRowIds.push($(cbox).parents("tr:first").attr("id"));
+				var catalogId = $(cbox).parents("tr:first").find("span:first").attr("data-val");
+				if(catalogId && $.trim(catalogId)){
+					request_data.push(catalogId);
+				}else{
+		    		$("#catalogListGrid").jqGrid("delRowData", $(cbox).parents("tr:first").attr("id")); 
+				}			
 			}
 		});
-    	for(var i = 0;i <selRowIds.length;i ++) {  
-    		$("#catalogListGrid").jqGrid("delRowData", selRowIds[i]);  
-    	}  
+    	
+    	if(request_data.length < 1){
+    		return;
+    	}
+    	
+		publicSaveAjax("catalogService","deleteCatalog",JSON.stringify(request_data),"","","#searchCatalogListBtn"); 
     });
     
     $("[name='saveCatalogBtn']").click(function(){
-//    	var rowids = $("#catalogListGrid").jqGrid('getDataIDs');
-//    	for(var i=0;i<rowids.length;i++){
-//    	  $("#catalogListGrid").restoreRow(rowids[i]);
-//    	}
-//    	
-//    	var request_data =$("#catalogListGrid").jqGrid("getRowData");
-    	var checkFlag = true;
     	debugger;
-    	var rowids = $("#catalogListGrid").jqGrid('getDataIDs');
-    	var grid_data=[];
+
+    	var checkFlag = true;
     	var parentId = $("#parentArea").find("a:last").attr("href").replace("#","");
     	parentId = parentId==""?0:parentId;
+    	
+    	var grid_data=[];
+    	var rowids = $("#catalogListGrid").jqGrid('getDataIDs');
     	for(var i=0;i<rowids.length;i++){
     	  var rowData=$("#catalogListGrid").jqGrid("getRowData",rowids[i]);
     	  $("#catalogListGrid").find("tr[id='"+rowids[i]+"']").find("input[type='text']").each(function(i,input){
@@ -220,11 +224,13 @@ $(function(){
     		var inputVal=$(input).val();
     		rowData[inputName]=inputVal;
     	  });
+    	  
     	  $("#catalogListGrid").find("tr[id='"+rowids[i]+"']").find("textarea").each(function(i,textarea){
     	    var textareaName=$(textarea).attr("name");
     		var textareaVal=$(textarea).val();
     		rowData[textareaName]=textareaVal;
     	  });
+    	  
     	  rowData.parent_id = parentId;
     	  grid_data.push(rowData);
     	}
@@ -234,7 +240,7 @@ $(function(){
     		if(!catalogId || !$.trim(catalogId)){
     			item.catalogId = null;
     		}else{
-    			item.catalogId = catalogId;
+    			item.catalogId = catalogId*1;
     		}
     		
     		if(!item.catalogName || !$.trim(item.catalogName)){
