@@ -1,6 +1,10 @@
 //页面初始化加载函数
 $(function(){
 	debugger;
+	//日期空间format
+	datepickerRender("tenderPublishedConditionDiv");
+	//下拉框数据填充
+	selectRender("tenderPublishedConditionDiv");
 	//构造grid
  $("#tenderPublishedGrid").jqGrid({
 	 url:serviceAddress,
