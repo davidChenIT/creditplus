@@ -18,14 +18,14 @@ $(function(){
 	var user_id=paramsObj.user_id || "";
 	var userInfoList=publicQueryInfoAjax("urgentContactorService","getListByUserId",JSON.stringify({"user_id":user_id}));
 	if(userInfoList){
+		debugger;
+		var userTemplateDiv = $("#applyUserUrgentConnectionUserInfoDiv .connection-user");
+		var userDom = userTemplateDiv.html();
+		//移除静态html，循环输出动态列表元素
+		userTemplateDiv.remove();
 		$.each(userInfoList, function(i){
-			debugger;
-			var userTemplateDiv = $("#applyUserUrgentConnectionUserInfoDiv .connection-user");
-			//移除静态html，循环输出动态列表元素
-			userTemplateDiv.hide();
-			var userTemplate = userTemplateDiv.html();
 			var userDivIdx = "connectionUserIdx" + i;
-			var userTemplate = '<div id="'+userDivIdx+'">'+userTemplate+'</div>';
+			var userTemplate = '<div id="'+userDivIdx+'">'+userDom+'</div>';
 			setValues("applyUserUrgentConnectionUserInfoDiv",userInfoList[i],userTemplate);
 			setValues(userDivIdx,userInfoList[i]);
 		});
