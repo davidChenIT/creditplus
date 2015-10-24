@@ -7,5 +7,5 @@ public interface CheatInterceptDao {
 
 	List<?> getCheatInfoListByLoanId(Integer loan_id);
 	
-	void insertBatch(Map<String,List<?>> cheatMap);
+	void insertBatch(Map cheatMap);
 }

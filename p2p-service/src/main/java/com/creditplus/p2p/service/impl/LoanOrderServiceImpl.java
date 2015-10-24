@@ -17,6 +17,7 @@ import com.creditplus.p2p.dao.UrgentContactorDao;
 import com.creditplus.p2p.model.PageVO;
 import com.creditplus.p2p.page.PageUtil;
 import com.creditplus.p2p.service.ApproveLogService;
+import com.creditplus.p2p.service.CheatInterceptService;
 import com.creditplus.p2p.service.CommonInfoService;
 import com.creditplus.p2p.service.LoanOrderService;
 
@@ -33,6 +34,8 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	private CustomerInfoDao customerInfoDao;
 	@Autowired
 	private CommonInfoService commonInfoService;
+	@Autowired
+	CheatInterceptService cheatInterceptService;
 
 	
 	
@@ -93,15 +96,17 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 * 1.插入初审完成日志
 	 * 2.向customer_info_t表插入初审人补填字段
 	 * 3.更新紧急联系人列表
-	 * @param paramMap
+	 * @param paramMap 
 	 * @return
 	 * @throws Exception 
 	 */
 	public void creditFirstTrial(Map paramMap) throws Exception{
 		paramMap=initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state","user_id");
-		
 		Integer user_id=Integer.valueOf(paramMap.get("user_id")+"");
+		Integer loan_id=Integer.valueOf(paramMap.get("loan_id")+"");
+		cheatInterceptService.intercept(user_id, loan_id);
+		
 		List urgentList=(List) paramMap.get("urgentList");
 		approveLogService.insertApproveLog(paramMap,false);
 		updateCustomerInfo(paramMap, user_id);
@@ -117,8 +122,10 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	public void creditReview(Map paramMap) throws Exception{
 		paramMap=initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state","user_id");
-		
 		Integer user_id=Integer.valueOf(paramMap.get("user_id")+"");
+		Integer loan_id=Integer.valueOf(paramMap.get("loan_id")+"");
+		cheatInterceptService.intercept(user_id, loan_id);
+		
 		List urgentList=(List) paramMap.get("urgentList");
 		approveLogService.insertApproveLog(paramMap,false);
 		updateCustomerInfo(paramMap, user_id);
@@ -136,6 +143,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 */
 	public void creditReviewReject(Map paramMap) throws Exception {
 		paramMap=initParamMap(paramMap);
+		
 		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state");
 		loanOrderDao.creditReviewRejectUpdate(paramMap);
 		approveLogService.insertApproveLog(paramMap, false);
@@ -158,7 +166,6 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		}
 		if(apply_state==4 || apply_state==5){
 			loanMap.put("review_assign_user", CommonUtil.getCurrentUser());
-			loanMap.put("version", 2.0);
 		}
 		
 		System.out.println("updateLoanApply===loanMap:"+loanMap);

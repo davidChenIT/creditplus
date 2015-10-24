@@ -26,17 +26,5 @@ public class RuleServiceImpl implements RuleService{
 		return false;
 		
 	}
-
 	
-	private String getCheckSql(Map dismensionMap,Integer user_id){
-		String tableName=(String) dismensionMap.get("table_name");
-		String column_name=(String) dismensionMap.get("column_name");
-		String semanteme=(String) dismensionMap.get("semanteme");
-		String value=(String) dismensionMap.get("value");
-		StringBuilder sbSql=new StringBuilder("select count(1) as total_record from ").append(tableName).append(" where ")
-				.append(column_name).append(semanteme).append(value).append(" and ").append("user_id = ").append(user_id);
-		System.out.println("rule check sql"+sbSql);
-		return sbSql.toString();
-		
-	}
 }

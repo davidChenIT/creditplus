@@ -58,10 +58,14 @@ $(function(){
 			pager: '#dictListPager',
 //			multiselect: true,
 			rowNum:10,
-			rowList:[10,20,30],
+			rowList:[2,10,20,30],
 			viewrecords: true,
 			sortable:false,
 			emptyrecords:"没有数据！",
+			prmNames:{
+				rows:"rowNum",
+				page:"currpage"
+			},
 			jsonReader : {
 		         root:"griddata",  
 
@@ -72,6 +76,9 @@ $(function(){
 		         records: "totalrecords"
 
 		     },
+		     onPaging:function(pgButton){
+		    	 gridOnPaging(pgButton,this,request_data);
+		     },
 		     afterEditCell:function (id,name,val,iRow,iCol){
 			      $("#"+iRow+"_"+name,"#roleList4CreateGrid").attr("style","width:100%");
 			 },		     
@@ -80,6 +87,8 @@ $(function(){
 			    	$("div[name='dictTab']").find(".dict-create-selall-cbox").parent("div").attr("class","");
 			 }		     
 	});
+    
+    
     
     //grid里面的复选框
     $("div[name='dictTab']").on("click",".dict-create-sel-cbox",function(){

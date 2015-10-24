@@ -44,7 +44,8 @@
     	</if>                  
  		<if test="name !=null " >  
                  and lower(d.name) LIKE CONCAT(CONCAT('%', lower(#{name,jdbcType=VARCHAR})),'%')  
-    	</if>        
+    	</if>   
+    	order by type,order_number     
      </select>
      
      <select id="getDictItems" parameterType="DictVO" resultMap="dictVOMap">

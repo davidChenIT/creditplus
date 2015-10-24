@@ -7,7 +7,7 @@ public class CommonUtil {
 	
 	public static String getCurrentUser(){
     	String currentUser = "System";
-    	User user = ((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());        	
+    	User user = ((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());      
     	if(null != user){
     		currentUser = user.getUsername();
     	}

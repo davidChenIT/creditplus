@@ -13,4 +13,7 @@
 		select concat(province,' ',city) as mobile_address from tel_area_code where area=#{area} limit 1
 	</select>
 	
+	<select id="executeDonamicSQL" parameterType="java.util.Map" resultType="java.util.Map">
+		${sql}
+	</select>
 </mapper>
