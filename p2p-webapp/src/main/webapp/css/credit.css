@@ -1777,6 +1777,7 @@ input[type="text"]:focus + .input-btn .credit-icon {
 .credit-tabs .tabs-body {
     padding: 30px 20px 20px;
     margin-top: -1px;
+    margin-bottom: 30px;
 }
 .credit-role .credit-validator input[readonly]:nth-last-child(2) {
     border: 1px solid #e5e9ea;
