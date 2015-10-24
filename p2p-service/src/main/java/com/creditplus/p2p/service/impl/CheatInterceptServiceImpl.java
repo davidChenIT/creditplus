@@ -24,7 +24,8 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	LoanOrderDao loanOrderDao;
 	
 	
-	public void intercept(Integer user_id,Integer loan_id) {
+	public boolean intercept(Integer user_id,Integer loan_id) {
+		boolean checkFlag=false;
 		List<Map> ruleList=getRuleList();
 		if(ruleList!=null && ruleList.size()>0){
 			for(Map ruleMap:ruleList){
@@ -32,11 +33,12 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 				List<Map> dimensionList=getDimensionByRuleId(rule_id);
 				if(dimensionList!=null && dimensionList.size()>0){
 					for(Map dismensionMap:dimensionList){
-						executeChectSql(dismensionMap, user_id,loan_id);
+						checkFlag=executeChectSql(dismensionMap, user_id,loan_id);
 					}
 				}
 			}
 		}
+		return checkFlag;
 	}
 	
 	private List<Map> getRuleList(){
@@ -58,7 +60,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	}
 
 	
-	private void executeChectSql(Map dismensionMap,Integer user_id,Integer loan_id){
+	private boolean executeChectSql(Map dismensionMap,Integer user_id,Integer loan_id){
 		String tableName=(String) dismensionMap.get("table_name");
 		String column_name=(String) dismensionMap.get("column_name");
 		String semanteme=(String) dismensionMap.get("semanteme");
@@ -91,13 +93,15 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 		if(checkFlag){
 			System.out.println("有欺诈=============");
 			
+			//更新申请单状态
 			String userName=CommonUtil.getCurrentUser();
 			Map loanOrderMap=new HashMap();
 			loanOrderMap.put("loan_id", loan_id);
-			loanOrderMap.put("apply_state", 2);
+			loanOrderMap.put("apply_state", 6);
 			loanOrderMap.put("last_updated_by", userName);
 			loanOrderDao.updateLoanOrderByLoanId(loanOrderMap);
 			
+			//插入拦截日志
 			Map cheatMap=new HashMap();
 			cheatMap.put("loan_id", loan_id);
 			cheatMap.put("intercept_source", "system");
@@ -105,7 +109,16 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 			cheatMap.put("intercept_cause", "检查 "+dismensionMap.get("column_name")+" 不通过");
 			cheatMap.put("last_updated_by", userName);
 			cheatInterceptDao.insertBatch(cheatMap);
+			
+			//插入审批日志
+			Map approveMap=new HashMap();
+			approveMap.put("loan_id", loan_id);
+			approveMap.put("apply_state", 6);
+			approveMap.put("approve_content", dismensionMap.get("rule_name")+"检查 "+dismensionMap.get("column_name")+" 不通过");
+			approveMap.put("last_updated_by", userName);
+			
 		}
+		return checkFlag;
 	}
 
 }

@@ -105,7 +105,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state","user_id");
 		Integer user_id=Integer.valueOf(paramMap.get("user_id")+"");
 		Integer loan_id=Integer.valueOf(paramMap.get("loan_id")+"");
-		cheatInterceptService.intercept(user_id, loan_id);
+		boolean checkFlag=cheatInterceptService.intercept(user_id, loan_id);
+		if(checkFlag)
+			return;
 		
 		List urgentList=(List) paramMap.get("urgentList");
 		approveLogService.insertApproveLog(paramMap,false);
@@ -124,7 +126,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state","user_id");
 		Integer user_id=Integer.valueOf(paramMap.get("user_id")+"");
 		Integer loan_id=Integer.valueOf(paramMap.get("loan_id")+"");
-		cheatInterceptService.intercept(user_id, loan_id);
+		boolean checkFlag=cheatInterceptService.intercept(user_id, loan_id);
+		if(checkFlag)
+			return;
 		
 		List urgentList=(List) paramMap.get("urgentList");
 		approveLogService.insertApproveLog(paramMap,false);

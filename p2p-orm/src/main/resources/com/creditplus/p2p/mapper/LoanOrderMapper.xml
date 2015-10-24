@@ -246,7 +246,7 @@
 			<if test="first_assign_user != null">
 				AND first_assign_user = #{first_assign_user}
 			</if>
-			<if test="two_assign_user != null">
+			<if test="review_assign_user != null">
 				AND review_assign_user = #{review_assign_user}
 			</if>
 		</where>
@@ -322,7 +322,7 @@
 			<if test="first_assign_user != null">
 				AND first_assign_user = #{first_assign_user}
 			</if>
-			<if test="two_assign_user != null">
+			<if test="review_assign_user != null">
 				AND review_assign_user = #{review_assign_user}
 			</if>
 		</where>
@@ -398,7 +398,7 @@
 			<if test="first_assign_user != null">
 				AND first_assign_user = #{first_assign_user}
 			</if>
-			<if test="two_assign_user != null">
+			<if test="review_assign_user != null">
 				AND review_assign_user = #{review_assign_user}
 			</if>
 		</where>
@@ -474,7 +474,7 @@
 			<if test="first_assign_user != null">
 				AND first_assign_user = #{first_assign_user}
 			</if>
-			<if test="two_assign_user != null">
+			<if test="review_assign_user != null">
 				AND review_assign_user = #{review_assign_user}
 			</if>
 		</where>
@@ -550,7 +550,7 @@
 			<if test="first_assign_user != null">
 				AND first_assign_user = #{first_assign_user}
 			</if>
-			<if test="two_assign_user != null">
+			<if test="review_assign_user != null">
 				AND review_assign_user = #{review_assign_user}
 			</if>
 		</where>
@@ -626,7 +626,7 @@
 		<result column="state" property="state" />
 		<result column="modifytime" property="modifytime" />
 		<result column="first_assign_user" property="first_assign_user" />
-		<result column="two_assign_user" property="two_assign_user" />
+		<result column="review_assign_user" property="review_assign_user" />
 		<association property="customerInfo"
 			javaType="com.creditplus.p2p.model.CustomerVO">
 			<id column="user_id" property="user_id" />
