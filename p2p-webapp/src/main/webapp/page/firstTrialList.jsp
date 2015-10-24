@@ -89,7 +89,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<select name="apply_status" widget="dropdown" dictionary_type="apply_state">
+															<select name="apply_state" widget="dropdown" dictionary_type="apply_state">
 																<option value="">请选择</option>
 															</select>
 														</div>
