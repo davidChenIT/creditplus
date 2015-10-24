@@ -78,7 +78,12 @@ $(function(){
 		     gridComplete:function(){
 			    	debugger;
 			    	$("div[name='dictTab']").find(".dict-create-selall-cbox").parent("div").attr("class","");
-			 }		     
+			 },
+			 onPaging:function(pgButton){
+				 debugger;
+				 var  grid=$(this).jqGrid();
+				 gridOnPaging(pgButton,grid,"dictListPager",{});
+			 }	     
 	});
     
     //grid里面的复选框

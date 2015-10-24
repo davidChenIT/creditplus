@@ -3,19 +3,16 @@ var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process"
 //页面初始化加载函数
 $(function(){
 	$(window).resize(function(){
-		debugger;
 		gridResize("credit_Main");
 		messageBox.resetMessageDialogDiv();
 		loadingBox.resetLoadingDiv();
 	});
 	$(window).scroll(function(){
-		debugger;
 		messageBox.resetMessageDialogDiv();
 		loadingBox.resetLoadingDiv();
 	});
 	//注册window的onpopstate事件
 	window.onpopstate = function(e) {  
-		  debugger;
 		  //点击浏览器的前进后退按钮处理
           if (e.state) {
               window.location.href=e.state.url;
@@ -624,11 +621,13 @@ var loadingBox={
 }
 
 //下拉框组件通过数据字典服务构造选项
-function selectRender(serviceModuleName,serviceMethodName,formDivId,requestData,valueField,textField){
+function selectRender(formDivId){
 	debugger;
-	var moduleName=serviceModuleName || "dictService";
-	var methodName=serviceMethodName || "getDictItems";
 	$("#"+formDivId).find("[widget='dropdown']").each(function(i,dom){
+		var moduleName=$(dom).attr("serviceModule") || "dictService";
+		var methodName=$(dom).attr("serviceMethod") || "getDictItems";
+		var valueField=$(dom).attr("valueField") || "code";
+		var textField=$(dom).attr("textField") || "name";
 		var dictionaryType=$(dom).attr("dictionary_type");
 		var istext=$(dom).attr("istext");
 		var code=$(dom).attr("code");
@@ -675,6 +674,15 @@ function selectRender(serviceModuleName,serviceMethodName,formDivId,requestData,
 	});
 }
 
+
+//公共渲染时间控件
+function datepickerRender(formDiv){
+	$("#"+formDiv).find("[widget='datepicker']").each(function(i,dom){
+		var dateFormat=$(dom).attr("dateFormat") || "yy-mm-dd";
+		$(dom).datepicker({dateFormat:dateFormat});
+	});
+}
+
 //获取grid列需要构造的下拉框的值
 function gridSelectColRender(serviceModuleName,serviceMethodName,requestData,valueField,textField){
 	var resltObj={};
@@ -699,4 +707,35 @@ function gridSelectColRender(serviceModuleName,serviceMethodName,requestData,val
 		}
 	});
 	return resltObj;
+}
+
+//grid公共分页函数
+function gridOnPaging(pgButton,grid,pagerDiv,request_data){
+	debugger;
+    var request_data=request_data || {};
+	var page = grid.getGridParam('page'); // current page
+	var lastpage =grid.getGridParam('lastpage'); // current page
+	var sidx = grid.getGridParam('sidx'); // sidx
+	var sord = grid.getGridParam('sord'); // sord
+	var totalPage = grid.getGridParam('totalPage'); // sord
+	if(pgButton=='next'){
+		page+=1;
+	}else if(pgButton=='prev'){
+		page-=1;
+	}else if(pgButton=='first'){
+		page=1;
+	}else if(pgButton=='last'){
+		page=lastpage;
+	}else if(pgButton=='user'){
+		page=$("#"+pagerDiv).find("input").val();
+	}
+	request_data.currpage=page;
+	var rows=$("#"+pagerDiv).find("select").val();
+	request_data.rowNum=rows;
+	grid.jqGrid('setGridParam', {
+		datatype:'json',  
+		postData:{'request_data':JSON.stringify(request_data)}, //发送数据
+		page:page,
+		rowNum:rows
+	}).trigger("reloadGrid");
 }
