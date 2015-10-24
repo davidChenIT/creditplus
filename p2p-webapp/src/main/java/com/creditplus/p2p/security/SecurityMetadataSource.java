@@ -3,11 +3,10 @@ package com.creditplus.p2p.security;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -22,7 +21,9 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
 
 	private ResourceDao resourceDao;
 	
-	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
+	private Map<String, Collection<ConfigAttribute>> resourceMap = null;
+	
+	private Collection<ConfigAttribute> allConfigAttributes;
 
 	//由spring调用
 	public SecurityMetadataSource(ResourceDao resourceDao) {
@@ -31,7 +32,7 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
 	}
 		
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		return null;
+		return allConfigAttributes;
 	}
 
 	public boolean supports(Class<?> clazz) {
@@ -41,29 +42,36 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
 	//加载所有资源与权限的关系
 	private void loadResourceDefine() {
 		if(resourceMap == null) {
+			allConfigAttributes = new ArrayList<ConfigAttribute>();
 			resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
 			List<ResourceVO> resources = this.resourceDao.findAll();
 			for (ResourceVO resource : resources) {
 				Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
 				ConfigAttribute configAttribute = new SecurityConfig(resource.getResourceName());
 				configAttributes.add(configAttribute);
-				resourceMap.put(resource.getUrl(), configAttributes);
+				allConfigAttributes.add(configAttribute);
+				resourceMap.put(resource.getUrl(),configAttributes);
 			}
-		}
-		
-		Set<Entry<String, Collection<ConfigAttribute>>> resourceSet = resourceMap.entrySet();
-		Iterator<Entry<String, Collection<ConfigAttribute>>> iterator = resourceSet.iterator();
-		
+		}	
 	}
 	
 	//返回所请求资源所需要的权限
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
+		FilterInvocation filter = (FilterInvocation) object;
+		HttpServletRequest request = filter.getHttpRequest();
+		String module = request.getParameter("module");
+		String method = request.getParameter("method");
+
 		String requestUrl = ((FilterInvocation) object).getRequestUrl();
-		System.out.println("requestUrl is " + requestUrl);
 		if(resourceMap == null) {
 			loadResourceDefine();
 		}
 		
+		if(null != module && null != method){
+			requestUrl += "?module=" + module + "&method=" + method;
+		}
+		
+		System.out.println("requestUrl is " + requestUrl);
 		return resourceMap.get(requestUrl);
 	}
 }

@@ -13,7 +13,7 @@ $(function(){
 			postData:{"module":"dictService","method":"getDictListWithPage","request_data":JSON.stringify(request_data)},
 			mtype: 'POST',
 			autowidth:true,
-			height:390,
+			height:350,
 			colNames:['<input type="checkbox" class="dict-create-selall-cbox">',
 			          "操作",
 			          "<span style='color:red;'>*</span>名称",
@@ -192,6 +192,7 @@ $(function(){
         if(dictName){
         	request_data.name=dictName;
         }
+        
         $("#dictListGrid").jqGrid('setGridParam',{  
             datatype:'json',  
             postData:{'request_data':JSON.stringify(request_data)}, //发送数据
@@ -203,31 +204,33 @@ $(function(){
     
     //点击用户列表中的删除按钮
     $("[name='delDictBtn']").click(function(){
-    	var selRowIds=[];
+        var request_data=[];        
     	$("div[name='dictTab']").find(".dict-create-sel-cbox").each(function(i,cbox){
 			var ischecked=$(cbox)[0].checked;
 			if(ischecked){
-				selRowIds.push($(cbox).parents("tr:first").attr("id"));
+				var dictId = $(cbox).parents("tr:first").find("span:first").attr("data-val");
+				if(dictId && $.trim(dictId)){
+					request_data.push(dictId);
+				}else{
+		    		$("#dictListGrid").jqGrid("delRowData", $(cbox).parents("tr:first").attr("id")); 
+				}
 			}
 		});
-    	for(var i = 0;i <selRowIds.length;i ++) {  
-    		$("#dictListGrid").jqGrid("delRowData", selRowIds[i]);  
-    	}  
+    	
+    	if(request_data.length < 1){
+    		return;
+    	}
+    	
+		publicSaveAjax("dictService","deleteDict",JSON.stringify(request_data),"","","#searchDictListBtn");
     });
     
     $("[name='saveDictBtn']").click(function(){
-//    	var rowids = $("#dictListGrid").jqGrid('getDataIDs');
-//    	for(var i=0;i<rowids.length;i++){
-//    	  $("#dictListGrid").restoreRow(rowids[i]);
-//    	}
-//    	
-//    	var request_data =$("#dictListGrid").jqGrid("getRowData");
     	var checkFlag = true;
-    	debugger;
-    	var rowids = $("#dictListGrid").jqGrid('getDataIDs');
-    	var grid_data=[];
     	var parentId = $("#parentArea").find("a:last").attr("href").replace("#","");
     	parentId = parentId==""?0:parentId;
+    	
+    	var grid_data=[];
+    	var rowids = $("#dictListGrid").jqGrid('getDataIDs');
     	for(var i=0;i<rowids.length;i++){
     	  var rowData=$("#dictListGrid").jqGrid("getRowData",rowids[i]);
     	  $("#dictListGrid").find("tr[id='"+rowids[i]+"']").find("input[type='text']").each(function(i,input){
@@ -249,7 +252,7 @@ $(function(){
     		if(!dictId || !$.trim(dictId)){
     			item.dictId = null;
     		}else{
-    			item.dictId = dictId;
+    			item.dictId = dictId * 1;
     		}
     		
     		if(!item.name || !$.trim(item.name)){

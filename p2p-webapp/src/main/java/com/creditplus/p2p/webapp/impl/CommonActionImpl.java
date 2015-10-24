@@ -33,7 +33,7 @@ public class CommonActionImpl implements CommonAction {
 	
 	public List<Map<String, Object>> getCatalogLeftTree() throws Exception {
 		List<Map<String, Object>> rsList = new ArrayList<Map<String, Object>> ();
-		List<Map<String, Object>> catalogList = catalogService.getCatalogLeftTree();
+		List<Map<String, Object>> catalogList = catalogService.getCatalogTree();
 		if(CommonUtil.isSuperUser()){
 			rsList = catalogList;
 			return rsList;

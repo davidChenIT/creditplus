@@ -28,46 +28,13 @@ public class CatalogServiceImpl implements CatalogService{
 	private CatalogDao catalogDao;
 
 	public void insertCatalog(int parentId,List<Map<String,Object>> dataList) {
-		CatalogVO catalogVO = new CatalogVO();
-		catalogVO.setParentId(parentId);
-		List<CatalogVO> paramList = new ArrayList<CatalogVO>();
-		paramList.add(catalogVO);
-		List<CatalogVO> rsList = this.getCatalogListByParentId(paramList);
-		if(null != rsList && !rsList.isEmpty()){
-			List<CatalogVO>  deleteList = new ArrayList<CatalogVO>();
-			if(null != dataList && !dataList.isEmpty()){
-				for(CatalogVO rCatalogVO : rsList){
-					boolean deleteFlag = true;
-					int catalogId = rCatalogVO.getCatalogId();
-					for(Map<String,Object> map : dataList){
-						Object pCatalogId = map.get("catalog_id");
-						if(null != pCatalogId && catalogId == (Integer)pCatalogId){
-							deleteFlag = false;
-							break;
-						}
-					}
-					
-					if(deleteFlag){
-						deleteList.add(rCatalogVO);
-					}
-				}
-			}else{
-				deleteList.addAll(rsList);
-			}
-			
-			catalogDao.deleteCatalog(deleteList);
-			deleteChildrenCascade(deleteList);
-		}
-		
     	String currentUser = CommonUtil.getCurrentUser();
     	if(null != dataList && !dataList.isEmpty()){
-    		List<CatalogVO>  updateList = new ArrayList<CatalogVO>();
+    		List<Integer>  updateList = new ArrayList<Integer>();
 			for(Map<String,Object> map : dataList){
-				Object catalogId =map.get("catalog_id");
+				Object catalogId =map.get("catalogId");
 				if(null != catalogId){
-					CatalogVO pCatalogVO = new CatalogVO();
-					pCatalogVO.setCatalogId((Integer)catalogId);
-					updateList.add(pCatalogVO);
+					updateList.add((Integer)catalogId);
 				}
 				
 				map.put("last_updated_by",currentUser);        			
@@ -93,16 +60,21 @@ public class CatalogServiceImpl implements CatalogService{
     	}
 	}
 	
-	private void deleteChildrenCascade(List<CatalogVO> dataList){		
-		List<CatalogVO>  deleteList = getCatalogListByParentId(dataList);
+	public void deleteCatalog(List<Integer> idList){
+		catalogDao.deleteCatalog(idList);
+		deleteChildrenCascade(idList);
+	}
+	
+	private void deleteChildrenCascade(List<Integer> idList){		
+		List<Integer> deleteList = getCatalogListByParentId(idList);
 		if(!deleteList.isEmpty()){
 			catalogDao.deleteCatalog(deleteList);
 			deleteChildrenCascade(deleteList);
 		}
 	}
 	
-	public List<CatalogVO> getCatalogListByParentId(List<CatalogVO> dataList){
-		return catalogDao.getCatalogListByParentId(dataList);
+	private List<Integer> getCatalogListByParentId(List<Integer> idList){
+		return catalogDao.getCatalogListByParentId(idList);
 	}
 
 	public PageVO getCatalogListWithPage(PageVO pageVO,CatalogVO catalogVO) {
@@ -124,11 +96,5 @@ public class CatalogServiceImpl implements CatalogService{
 	public List<Map<String,Object>> getCatalogTree(){
 		List<Map<String,Object>> catalogList = catalogDao.getCatalogTree();
 		return catalogList;
-	}
-	
-	public List<Map<String,Object>> getCatalogLeftTree()throws Exception{    	
-		List<Map<String,Object>> catalogList = catalogDao.getCatalogTree();
-		return catalogList;
-	}
-	
+	}	
 }
