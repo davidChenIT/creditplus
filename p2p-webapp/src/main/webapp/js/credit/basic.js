@@ -82,6 +82,12 @@ $(function(){
 							loadingBox.hideLoading();
 							if(data && data.indexOf("loginBtn")!=-1){
 								window.location.href="http://localhost:8080/p2p-webapp/page/login.jsp";
+							}else if(data && data.indexOf("<p>No Permission</p>")!=-1){
+								$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">403</h2><p class="credit-errtext">No Permission</p><div></div><p></p><p>诚立信金融</p></div>');
+								return;
+							}else if(data && data.indexOf("<p>Not Found</p>")!=-1){
+								$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
+								return;
 							}
 							debugger;	
 							if(data && data.length>0){
@@ -96,7 +102,7 @@ $(function(){
 						},error:function(error){
 						  loadingBox.hideLoading();
 						  debugger;
-						  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
+						  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">500</h2><p class="credit-errtext">Error</p><div></div><p></p><p>诚立信金融</p></div>');
 						}
 					});
 					$(this).removeAttr("page");
@@ -217,6 +223,12 @@ function createCatalogTree(){
 										loadingBox.hideLoading(500);
 										if(data && data.indexOf("loginBtn")!=-1){
 											window.location.href="http://localhost:8080/p2p-webapp/page/login.jsp";
+										}else if(data && data.indexOf("<p>No Permission</p>")!=-1){
+											$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">403</h2><p class="credit-errtext">No Permission</p><div></div><p></p><p>诚立信金融</p></div>');
+											return;
+										}else if(data && data.indexOf("<p>Not Found</p>")!=-1){
+											$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
+											return;
 										}
 										debugger;	
 										if(data && data.length>0){
@@ -238,7 +250,7 @@ function createCatalogTree(){
 									},error:function(error){
 										loadingBox.hideLoading(500);
 									  debugger;
-									  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
+									  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">500</h2><p class="credit-errtext">Error</p><div></div><p></p><p>诚立信金融</p></div>');
 									}
 								});
 							}
