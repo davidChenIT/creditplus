@@ -255,7 +255,8 @@ function createCatalogTree(){
 			if(currrentUrl){
 				for(var i=0;i<zTreeNodes.length;i++){
 					 var nodeObj=zTreeNodes[i];
-					 if(currrentUrl==nodeObj.url){
+					 var url=nodeObj.url.indexOf("/")==0?nodeObj.url.substring(1):nodeObj.url;
+					 if(currrentUrl==url){
 						 nodeId=nodeObj.id;
 					 }
 					
