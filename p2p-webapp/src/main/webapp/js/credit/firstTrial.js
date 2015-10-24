@@ -13,7 +13,9 @@ $(function(){
 	var loan_id=paramsObj.loan_id || "";
 	//查询详细信息，并赋值
 	var queryFirstTrialDetaiParmsStr=JSON.stringify({"loan_id":loan_id,"approve_content":"开始初审","apply_state":2});
-	publicQueryInfoAjax("loanOrderService","getCreditFirstTrialDetailByLoanId",queryFirstTrialDetaiParmsStr,"firstTrial");
+	var resultData = publicQueryInfoAjax("loanOrderService","getCreditFirstTrialDetailByLoanId",queryFirstTrialDetaiParmsStr,"firstTrial");
+	if(resultData.apply_state != 3 && resultData.apply_state != 5)
+		$("[name='firstTrialBtn']").show()
 	//查询用户紧急联系人
 	var user_id=paramsObj.user_id || "";
 	var userInfoList=publicQueryInfoAjax("urgentContactorService","getListByUserId",JSON.stringify({"user_id":user_id}));
