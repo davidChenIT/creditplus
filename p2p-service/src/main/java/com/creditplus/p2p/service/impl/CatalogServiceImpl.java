@@ -125,4 +125,10 @@ public class CatalogServiceImpl implements CatalogService{
 		List<Map<String,Object>> catalogList = catalogDao.getCatalogTree();
 		return catalogList;
 	}
+	
+	public List<Map<String,Object>> getCatalogLeftTree(){
+		List<Map<String,Object>> catalogList = catalogDao.getCatalogTree();
+		return catalogList;
+	}
+	
 }
