@@ -21,23 +21,23 @@ import com.creditplus.p2p.model.ResourceVO;
 public class SecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
 	private ResourceDao resourceDao;
+	
+	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
 
 	//由spring调用
 	public SecurityMetadataSource(ResourceDao resourceDao) {
 		this.resourceDao = resourceDao;
 		loadResourceDefine();
 	}
-	
-	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
+		
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public boolean supports(Class<?> clazz) {
-		// TODO Auto-generated method stub
 		return true;
 	}
+	
 	//加载所有资源与权限的关系
 	private void loadResourceDefine() {
 		if(resourceMap == null) {
@@ -45,7 +45,6 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
 			List<ResourceVO> resources = this.resourceDao.findAll();
 			for (ResourceVO resource : resources) {
 				Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
-				//以权限名封装为Spring的security Object
 				ConfigAttribute configAttribute = new SecurityConfig(resource.getResourceName());
 				configAttributes.add(configAttribute);
 				resourceMap.put(resource.getUrl(), configAttributes);
@@ -56,15 +55,15 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
 		Iterator<Entry<String, Collection<ConfigAttribute>>> iterator = resourceSet.iterator();
 		
 	}
+	
 	//返回所请求资源所需要的权限
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-		
 		String requestUrl = ((FilterInvocation) object).getRequestUrl();
 		System.out.println("requestUrl is " + requestUrl);
 		if(resourceMap == null) {
 			loadResourceDefine();
 		}
+		
 		return resourceMap.get(requestUrl);
 	}
-
 }
