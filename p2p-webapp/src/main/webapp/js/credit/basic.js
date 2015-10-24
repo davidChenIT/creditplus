@@ -25,6 +25,24 @@ $(function(){
         otherkey: null
     };
     window.history.replaceState(state, document.title, document.location.href);
+    
+    //调用获取栏目菜单的服务
+//    $.ajax({ 
+//		url: serviceAddress,
+//		datatype:'json',
+//		method:"post",
+//	    async:false,
+//		data:{"module":"catalogService",
+//			  "method":"getCatalogLeftTree"
+//		},			
+//		success: function(data){
+//			
+//		},error:function(error){
+//			messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","error");
+//		}
+//	});
+    
+    
 	//设置栏目菜单
 	var zTreeObj,
 	setting = {
@@ -637,9 +655,6 @@ function selectRender(formDivId){
 		}
 		if(istext=="true"){
 			paramsObj.code=code;
-		}
-		if(requestData){
-			$.extend(paramsObj,requestData);
 		}
 		//调用数据字典服务
 		$.ajax({ 
