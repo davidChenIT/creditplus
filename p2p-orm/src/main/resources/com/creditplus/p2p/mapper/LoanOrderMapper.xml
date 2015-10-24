@@ -8,7 +8,7 @@
   	<!-- pic_type 1 身份证正面 2 身份证背面 3 工牌照片 4 学历证书 5 芝麻信用   6 工资单 7 银行流水 8 职业证书 9 住址证明材料 -->
 	<select id="getCreditReviewDetailByLoanId" parameterType="Integer" resultType="java.util.Map">
 		select 		
-		    t.user_id,
+		     t.user_id,
 		    t.loan_id,
 		    u.login_type,
 		    u.login_key,
@@ -32,7 +32,7 @@
 		    u.seasame_score,
 		    u.mobile_ser_code,
 		    u.is_done,
-	       <!--  c.thnic_v,
+            c.thnic_v,
 			c.registered_place_v,
 			c.address_phone,
 			c.address_phone_v,
@@ -58,7 +58,7 @@
 			c.profession_code,
 			c.degree_name_v,
 			c.school_name_v,
-			c.highest_degree_v, -->
+			c.highest_degree_v,
 			t.loan_full_id,
 			t.loan_money,
 			t.loan_day,
@@ -118,7 +118,7 @@
 		    u.seasame_score,
 		    u.mobile_ser_code,
 		    u.is_done,
-	        c.thnic_v,
+	       <!--  c.thnic_v,
 			c.registered_place_v,
 			c.address_phone,
 			c.address_phone_v,
@@ -144,7 +144,7 @@
 			c.profession_code,
 			c.degree_name_v,
 			c.school_name_v,
-			c.highest_degree_v,
+			c.highest_degree_v, -->
 			t.loan_full_id,
 			t.loan_money,
 			t.loan_day,
