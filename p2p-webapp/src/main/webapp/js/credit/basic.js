@@ -396,6 +396,32 @@ function setValues(divId,dataObj,appendHtml){
 	}
 }
 
+/**
+ * 获取查询参数
+ * @param divId 参数div id
+ */
+function getValue(divId){
+	var request_data = {};
+	if(divId && $("#"+divId) && $("#"+divId).length>0){
+		//设置input和select的值
+		$("#"+divId).find(".credit-input").find("input,select").each(function(i,dom){
+			var name=$(dom).attr("name");
+			var value = $(dom).val();
+			if(!isEmptyString(value)) request_data[name] = $(dom).val();
+		});
+	}
+	return request_data;
+}
+/**
+ * 是否为空字符串
+ * @param value 校验值
+ * @return boolean
+ */
+function isEmptyString(value){
+	var result = false;
+	if(value == null || value == "") result = true;
+	return result;
+}
 
 //公共校验函数
 function validateRequire(elemName,tip,parantsDivId){
