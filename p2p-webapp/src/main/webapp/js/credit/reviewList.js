@@ -1,6 +1,10 @@
 //页面初始化加载函数
 $(function(){
 	debugger;
+	//日期空间format
+	datepickerRender("conditionDiv");
+	//下拉框数据填充
+	selectRender("conditionDiv");
 	//构造grid
 	$("#reviewlistGrid").jqGrid({
 			url:serviceAddress,

@@ -1,7 +1,10 @@
 //页面初始化加载函数
 $(function(){
 	debugger;
-
+	//日期空间format
+	datepickerRender("cheatInterceptorConditionDiv");
+	//下拉框数据填充
+	selectRender("cheatInterceptorConditionDiv");
 	//构造grid
  $("#cheatInterceptorGrid").jqGrid({
 	 url:serviceAddress,
