@@ -467,11 +467,13 @@ create table rule_t(
 create table dimension_t(
    	dis_id 		 	int 	 NOT NULL AUTO_INCREMENT,
 	rule_id			int 	 not null   comment '规则id',
-	table_name   	varchar(200) not null comment '表名',
-	column_name   	varchar(200) not null comment '字段名',
-	semanteme  	 	varchar(200) not null comment '语义',
-	value 		 	varchar(200)  NOT NULL COMMENT '匹配值',
-	arithmetic 	    varchar(200)  NOT NULL COMMENT '运算',
+	table_name   	varchar(200)  comment '表名',
+	column_name   	varchar(200)  comment '字段名',
+	semanteme  	 	varchar(200)  comment '语义',
+	dis_value 		varchar(200)  COMMENT '匹配值',
+	arithmetic 	    varchar(200)  COMMENT '运算',
+	dis_sql         varchar(512)  comment '执行sql',
+	dis_type  		int			  comment '维度类型',
     created_by 		varchar(200)  NOT NULL COMMENT '创建人',
     created_date    timestamp NOT NULL COMMENT '创建时间',
     last_updated_by varchar(200)  NOT NULL,
@@ -523,10 +525,15 @@ CREATE TABLE cheat_intercept_t (
 
 
 
-INSERT INTO user_t VALUES (1,1,'test','$2a$10$G5O/PkXx8LD5YV7jnujF7OokBiqKYCKQeitYMcNGbLWumV.RXR3hq','test remark','system','2015-10-24 10:12:42','system','2015-10-24 10:12:42'),(2,1,'test2','$2a$10$06HxDeP0zP20LhYFgflkduRkS.vpa7TZYES7zxeLIs5wQ69b7/Mj2','test2','test','2015-10-24 12:54:53','test','2015-10-24 12:54:53'),(3,1,'test3','$2a$10$KCQmAJLPBBUEXjrY8OmKceN3iK/C97ceiS6BT9kxGYPhiYMPc69vu','test3','test','2015-10-24 18:24:26','test','2015-10-24 18:24:26'),(4,1,'test4','$2a$10$M4IKFwji/7/FsD1Er3imc.YI9U/aMH4/Qk5caN.U7RavyFJ9FkbQ2','test4','test','2015-10-24 18:25:05','test','2015-10-24 18:25:05'),(5,1,'test5','$2a$10$8I44itVTfBz1RDOPz0wA0OzVFj06hJkS6R4FIgOFWRS0szRN9ymZq','test5','test','2015-10-24 18:25:53','test','2015-10-24 18:25:52'),(6,1,'test6','$2a$10$ngWhYuVOnVNW0tzSWF6d8OH2aVsvrJcfiuM2iHvmGTZVtAXoDNP8e','test6','test','2015-10-24 18:26:36','test','2015-10-24 18:26:35');INSERT INTO role_t VALUES (1,1,'admin','administrator','system','2015-10-24 10:12:42','system','2015-10-24 10:12:42'),(2,1,'RC-Assistant','RC-Assistant','system','2015-10-24 10:12:42','test','2015-10-24 18:22:48'),(3,1,'RC-Manager','RC-Manager','test','2015-10-24 18:19:18','test','2015-10-24 18:19:18'),(4,1,'CRO','CRO','test','2015-10-24 18:20:19','test','2015-10-24 18:20:19'),(5,1,'Customer','Customer','test','2015-10-24 18:21:37','test','2015-10-24 18:21:37'),(6,1,'Cust-Account','Cust-Account\n','test','2015-10-24 18:22:07','test','2015-10-24 18:22:07');
-INSERT INTO resource_t VALUES (1,'index','/page/index.html',1,1,'index page','system','2015-10-24 10:12:42','system','2015-10-24 10:12:42'),(2,'firstTrial','/page/firstTrial.html',1,1,'first trial page','system','2015-10-24 10:12:42','system','2015-10-24 10:12:42');
-INSERT INTO role_resource_t VALUES (1,1,1,'system','2015-10-24 10:12:42','system','2015-10-24 10:12:42'),(2,1,2,'system','2015-10-24 10:12:42','system','2015-10-24 10:12:42'),(10,3,1,'test','2015-10-24 18:19:18','test','2015-10-24 18:19:18'),(11,3,3,'test','2015-10-24 18:19:18','test','2015-10-24 18:19:18'),(12,3,8,'test','2015-10-24 18:19:18','test','2015-10-24 18:19:18'),(13,3,7,'test','2015-10-24 18:19:18','test','2015-10-24 18:19:18'),(14,4,3,'test','2015-10-24 18:20:19','test','2015-10-24 18:20:19'),(15,4,8,'test','2015-10-24 18:20:19','test','2015-10-24 18:20:19'),(16,4,7,'test','2015-10-24 18:20:19','test','2015-10-24 18:20:19'),(17,4,6,'test','2015-10-24 18:20:19','test','2015-10-24 18:20:19'),(18,4,2,'test','2015-10-24 18:20:19','test','2015-10-24 18:20:19'),(19,4,14,'test','2015-10-24 18:20:19','test','2015-10-24 18:20:19'),(20,5,1,'test','2015-10-24 18:21:37','test','2015-10-24 18:21:37'),(21,5,3,'test','2015-10-24 18:21:37','test','2015-10-24 18:21:37'),(22,5,5,'test','2015-10-24 18:21:37','test','2015-10-24 18:21:37'),(23,5,2,'test','2015-10-24 18:21:37','test','2015-10-24 18:21:37'),(24,5,14,'test','2015-10-24 18:21:37','test','2015-10-24 18:21:37'),(25,6,2,'test','2015-10-24 18:22:07','test','2015-10-24 18:22:07'),(26,6,14,'test','2015-10-24 18:22:07','test','2015-10-24 18:22:07'),(27,2,1,'test','2015-10-24 18:22:49','test','2015-10-24 18:22:48'),(28,2,3,'test','2015-10-24 18:22:49','test','2015-10-24 18:22:48'),(29,2,8,'test','2015-10-24 18:22:49','test','2015-10-24 18:22:48'),(30,2,2,'test','2015-10-24 18:22:49','test','2015-10-24 18:22:48'),(31,2,14,'test','2015-10-24 18:22:49','test','2015-10-24 18:22:48');
-INSERT INTO user_role_t VALUES (1,1,1,'2015-10-24','2016-10-24','system','2015-10-24 10:12:42','system','2015-10-24 10:12:42'),(2,2,2,'2015-10-24','2015-10-31','test','2015-10-24 12:54:53','test','2015-10-24 12:54:53'),(3,3,3,'2015-10-24','2016-10-24','test','2015-10-24 18:24:26','test','2015-10-24 18:24:26'),(4,4,4,'2015-10-24','2016-10-24','test','2015-10-24 18:25:05','test','2015-10-24 18:25:05'),(5,5,5,'2015-10-24','2016-10-24','test','2015-10-24 18:25:53','test','2015-10-24 18:25:52'),(6,6,6,'2015-10-24','2016-10-24','test','2015-10-24 18:26:36','test','2015-10-24 18:26:35');
+insert into p2p.user_t values(1,1,'test','$2a$10$G5O/PkXx8LD5YV7jnujF7OokBiqKYCKQeitYMcNGbLWumV.RXR3hq','test remark','system',now(),'system',now());
+insert into p2p.role_t values(1,1,'admin','administrator','system',now(),'system',now());
+insert into p2p.role_t values(2,1,'RC-Assistant','RC-Assistant','system',now(),'system',now());
+insert into p2p.resource_t values(1,'index','/page/index.html',1,1,'index page','system',now(),'system',now());
+insert into p2p.resource_t values(2,'firstTrial','/page/firstTrial.html',1,1,'first trial page','system',now(),'system',now());	
+insert into p2p.user_role_t values(1,1,1,now(),date_add(now(), interval 1 year),'system',now(),'system',now());
+insert into p2p.role_resource_t values(1,1,1,'system',now(),'system',now());
+insert into p2p.role_resource_t values(2,1,2,'system',now(),'system',now());
+insert into p2p.role_resource_t values(3,2,1,'system',now(),'system',now());
 INSERT INTO catalog_t VALUES (1,'首页',0,'/page/index.jsp',0,'首页','test','2015-10-17 21:26:38','test','2015-10-18 13:28:05'),(2,'系统管理',0,'#',2,'系统管理','test','2015-10-18 05:28:02','test','2015-10-18 13:28:05'),(3,'风控管理',0,'#',1,'风控管理','test','2015-10-18 05:28:02','test','2015-10-18 13:28:05'),(5,'投标',3,'/page/makeTenderList.jsp',3,'投标','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(6,'标的管理',3,'/page/tenderMngList.jsp',2,'标的管理','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(7,'信用复审',3,'/page/reviewList.jsp',1,'信用复审','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(8,'信用初审',3,'/page/firstTrialList.jsp',0,'信用初审','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(9,'字典管理',2,'/page/systemmng/dictList.jsp',0,'数据字典','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(10,'栏目管理',2,'/page/systemmng/catalogList.jsp',1,'栏目管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(11,'用户管理',2,'/page/systemmng/userList.jsp',2,'用户管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(12,'角色管理',2,'/page/systemmng/roleList.jsp',3,'角色管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(13,'资源管理',2,'/page/systemmng/resourceList.jsp',4,'资源管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(14,'修改密码',2,'/page/systemmng/changePassword.jsp',5,'修改密码','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09');
 
 INSERT INTO p2p.user_info VALUES (4,1,'o8EeQw_voTztu6J-jPttrk7LBGSA','朱胜','18923880749','511702198506123795',NULL,NULL,NULL,'中国工商银行','1234','18923880749','1234','10000以上','Qwer','北京','北京','18923880749','博士','1234',NULL,NULL,7,'Y','2015-10-04 10:34:02');
