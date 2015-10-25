@@ -12,17 +12,19 @@ $(function(){
 			postData:{"module":"loanOrderService","method":"rankingPoolListWithPage","request_data":{}},
 			mtype: 'POST',
 			autowidth:true,
-			colNames:['申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','信用分1','信用分2','排名'],
+			colNames:['申请单编号','申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','信用分1','信用分2','排名'],
 			colModel :[
 				{
-					name:'loan_id', index:'loan_id',align:'center',"sortable":false,
+					name:'loan_id', index:'loan_id',align:'center',"sortable":false, hidden:true
+				},
+				{	name:'loan_id_render', index:'loan_id', align:'center', "sortable":false,
 					formatter:function(cellvalue, options, rowObject){
-						   debugger;
-						   var paramsStr=JSON.stringify(rowObject);
-						   if(paramsStr){
-							   paramsStr=paramsStr.replace(/"/g,"@#_@#");
-						   }
-						   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','rankPoolDetail','排名池详细信息','/p2p-webapp/page/rankPoolDetail.html','false','/p2p-webapp/js/credit/rankPoolDetail.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+					   debugger;
+					   var paramsStr=JSON.stringify(rowObject);
+					   if(paramsStr){
+						   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+					   }
+					   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','rankPoolDetail','排名池详细信息','/p2p-webapp/page/rankPoolDetail.html','false','/p2p-webapp/js/credit/rankPoolDetail.js','"+paramsStr+"');\">"+rowObject.loan_id+"</a>";
 					}
 				},
 				{name:'name', index:'name',align:'center',"sortable":false},
@@ -97,20 +99,24 @@ $(function(){
 	  if(selectedIds && selectedIds.length>0){
 		  var selectRowDataArray=[];
 		  for(var i=0;i<selectedIds.length;i++){
-			  selectRowDataArray.push(grid.jqGrid('getRowData',selectedIds[i]));
+			  var rowData = grid.jqGrid('getRowData',selectedIds[i]);
+			  delete rowData['loan_id_render'];
+			  rowData.apply_state = 7;//发标状态
+			  rowData.approve_content = "发标";
+			  selectRowDataArray.push(rowData);
 		  }
 		  //调用发标服务
-		 /** $.ajax({ 
+		  $.ajax({ 
 				url: serviceAddress,
 				datatype: 'json',
 				method:"post",
-				data:{"module":"userService","method":"addUser","request_data":JSON.stringify(request_data)},			
+				data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(selectRowDataArray)},			
 				success: function(data){
 					removeTabItem("userTab","userCreate");
-					$("#searchUserListBtn").click();
+					$("[name=rankPollSeachBtn]").click();
 				},error:function(error){
 				}
-		  });*/
+		  });
 		  messageBox.createMessageDialog("提示","发标！","","","warning");
 		  
 	  }else{

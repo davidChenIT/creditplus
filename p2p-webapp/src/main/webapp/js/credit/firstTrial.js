@@ -155,11 +155,12 @@ $(function(){
 		*/
 		//4. 校验通过调提交初审服务
 		if(checkPass){
-//			$("div[name='firstTrial']").find("input").each(function(i,input){
-//				var inputName=$(input).attr("name");
-//				var inputValue=$(input).val();
-//				request_data[inputName]=inputValue;
-//			});
+			$("div[id='firstTrial']").find("input,select").each(function(i,input){
+				var inputName=$(input).attr("name");
+				var inputValue=$(input).val();
+				if(!isEmptyString(inputValue))
+					request_data[inputName]=inputValue;
+			});
 			debugger;
 			publicSaveAjax("loanOrderService","creditFirstTrial",JSON.stringify(request_data),"firstTrialTab","firstTrial","[name='firstTrialSearhBtn']");
 		}
