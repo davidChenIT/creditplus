@@ -580,11 +580,18 @@
 		where loan_id = #{loan_id}
 	</update>
 	
+	<update id="updateMuiltLoanOrderByLoanId" parameterType="java.util.Map">
+	  update loan_apply_t set modifytime=sysdate(),apply_state=#{item.apply_state}  where loan_id in
+       <foreach collection="list" item="item" index="index" open="(" separator="," close=")" >   
+			#{item.loan_id}
+	   </foreach>
+	</update>
+	
 	<update id="joinTheBackList" parameterType="java.util.Map">
 	  update loan_apply_t set modifytime=sysdate(),apply_state=11  where loan_id in
        <foreach collection="list" item="item" index="index" open="(" separator="," close=")" >   
 			#{item.loan_id}
-		</foreach>
+	  </foreach>
 	</update>
 	
 	

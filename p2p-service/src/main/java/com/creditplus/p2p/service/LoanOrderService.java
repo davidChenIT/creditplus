@@ -1,5 +1,6 @@
 package com.creditplus.p2p.service;
 
+import java.util.List;
 import java.util.Map;
 import com.creditplus.p2p.model.PageVO;
 
@@ -44,6 +45,10 @@ public interface LoanOrderService {
 	 @SuppressWarnings("rawtypes")
 	 void creditReviewReject(Map paramMap) throws Exception;
 	 
-	 void updateLoanOrderState(Map loanOrderMap) throws Exception;
+	 //批量更新订单状态
+	 void updateMuiltLoanOrderByLoanId(List<Map> updateList) throws Exception;
+	 
+	 //修改状态
+	 void updateLoanOrderState(List<Map> updateList) throws Exception;
 	 
 }

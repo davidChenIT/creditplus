@@ -30,6 +30,9 @@ public interface LoanOrderDao {
 	 //加入黑名单
 	 void joinTheBackList(Map paramMap);
 	 
+	 //批量更新
+	 void updateMuiltLoanOrderByLoanId(Map paramMap);
+	 
 	 //根据loan_id更新指定列
 	 void updateLoanOrderByLoanId(Map paramMap);
 	 

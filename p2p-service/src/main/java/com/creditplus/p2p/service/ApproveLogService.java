@@ -1,5 +1,6 @@
 package com.creditplus.p2p.service;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ApproveLogService {
@@ -9,4 +10,5 @@ public interface ApproveLogService {
 
 	void insertApproveLog(Map<?, ?> paramMap,boolean flag) throws Exception;
 	
+	void batchInsertApproveLog(List<Map> list);
 }

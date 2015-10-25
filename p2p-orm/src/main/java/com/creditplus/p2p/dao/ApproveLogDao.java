@@ -10,4 +10,6 @@ public interface ApproveLogDao {
 	Integer getCountByLoanId(Integer loan_id);
 	
 	void insertApproveLog(Map<?, ?> paramMap);
+	
+	void batchInsertApproveLog(Map approveLogMap);
 }

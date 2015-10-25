@@ -304,17 +304,28 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		publicMap.put("last_updated_by", CommonUtil.getCurrentUser());
 		return publicMap;
 	}
-
+	
+	public void updateMuiltLoanOrderByLoanId(List<Map> updateList){
+		if(updateList!=null && updateList.size()>0){
+			Map paramMap=new HashMap();
+			paramMap.put("list", updateList);
+			loanOrderDao.updateMuiltLoanOrderByLoanId(paramMap);
+		}
+	}
 
 	/* 
 	 * 更新申请单状态 
 	 * @param loanOrderMap
 	 */
-	public void updateLoanOrderState(Map loanOrderMap) throws Exception {
-		loanOrderMap=initParamMap(loanOrderMap);
-		CheckParamUtil.checkKey(loanOrderMap, Constant.LOAN_ID,Constant.APPLY_STATE,Constant.APPROVE_CONTENT);
-		loanOrderDao.updateLoanOrderByLoanId(loanOrderMap);
-		approveLogService.insertApproveLog(loanOrderMap, false);
+	public void updateLoanOrderState(List<Map> updateList) throws Exception {
+		if(updateList!=null && updateList.size()>0){
+			for(Map map:updateList){
+				CheckParamUtil.checkKey(map, Constant.LOAN_ID,Constant.APPLY_STATE,Constant.APPROVE_CONTENT);
+				initParamMap(map);
+			}
+		}
+		updateMuiltLoanOrderByLoanId(updateList);
+		approveLogService.batchInsertApproveLog(updateList);
 	}
 
 }

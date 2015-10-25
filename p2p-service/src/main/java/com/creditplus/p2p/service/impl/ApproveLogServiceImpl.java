@@ -41,4 +41,17 @@ public class ApproveLogServiceImpl  implements ApproveLogService{
 		}
 	}
 
+
+	/* 
+	 * @param list
+	 * 批量插入
+	 */
+	public void batchInsertApproveLog(List<Map> list) {
+		if(list!=null && list.size()>0){
+			Map approveLogMap=new HashMap();
+			approveLogMap.put("list", list);
+			approveLogDao.batchInsertApproveLog(approveLogMap);
+		}
+	}
+
 }

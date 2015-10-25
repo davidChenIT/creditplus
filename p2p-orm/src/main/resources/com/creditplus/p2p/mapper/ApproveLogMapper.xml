@@ -38,6 +38,14 @@
      	insert into approve_log_t(id,loan_id,assign_user,approve_content,state,created_by,created_date,last_updated_by,last_updated_date)values(#{id},#{loan_id},#{last_updated_by},#{approve_content},#{apply_state},#{last_updated_by},sysdate(),#{last_updated_by},sysdate())
     </insert>
     
+    <insert id="batchInsertApproveLog" parameterType="java.util.Map">
+		insert into approve_log_t(id,loan_id,assign_user,approve_content,state,created_by,created_date,last_updated_by,last_updated_date)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.id},#{item.loan_id},#{item.last_updated_by},#{item.approve_content},#{item.apply_state},#{item.last_updated_by},sysdate(),#{item.last_updated_by},sysdate())
+		</foreach>
+	</insert>
+    
     <delete id="deleteAppLogByLoanId" parameterType="Integer">
        delete from approve_log_t  where loan_id = #{loan_id}
     </delete>
