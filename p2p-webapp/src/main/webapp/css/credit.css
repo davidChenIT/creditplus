@@ -1027,9 +1027,9 @@ label {
 }
 .credit-label {
   vertical-align: middle;
-  overflow: hidden;
+  /**overflow: hidden;*/
   text-overflow: ellipsis;
-  white-space: nowrap;
+  /**white-space: nowrap;*/
 }
 @media (min-width: 768px) {
   .credit-label {
@@ -1854,9 +1854,9 @@ input[type="text"]:focus {
 }
 .credit-label {
     vertical-align: middle;
-    overflow: hidden;
+    /**overflow: hidden;*/
     text-overflow: ellipsis;
-    white-space: nowrap;
+   /** white-space: nowrap;*/
 }
 
 .credit-btn {
