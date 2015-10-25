@@ -5,19 +5,18 @@
 
 <mapper namespace="com.creditplus.p2p.dao.RuleDao">
 
-	<select id="getRulesList" resultType="java.util.Map">
-		select rule_id,rule_name,state,remark from p2p.rule_t where state=1
+	<select id="getRulesList" parameterType="java.util.Map" resultType="java.util.Map">
+		select rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark from p2p.rule_t 
+		where state=1
+		<if test="rule_name!= null">
+			AND rule_name = #{rule_name}
+		</if>
+		<if test="created_by!= null">
+			AND created_by = #{created_by}
+		</if>
 	</select>
-
-	<select id="getDimensionListByRuleId" parameterType="Integer" resultType="java.util.Map">
-		select t.dis_id,t.rule_id,r.rule_name,t.table_name,t.column_name,t.semanteme,t.value,t.arithmetic,t.remark 
-		from dimension_t t left join rule_t r on t.rule_id=r.rule_id 
-		where r.state=1 and t.rule_id=#{rule_id}
-	</select>
 	
-	
-	
-	<!-- <select id="getRulesList" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="getRulesListWithPage" parameterType="java.util.Map" resultType="java.util.Map">
 		select rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark from p2p.rule_t 
 		where state=1
 		<if test="rule_name!= null">
@@ -44,5 +43,48 @@
 		<if test="created_by!= null">
 			AND t.created_by = #{created_by}
 		</if>
-	</select> -->
+	</select>
+	
+	
+   <insert id="insertRule" parameterType="java.util.List">
+       insert into rule_t(rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark)
+       	values
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	       (#{item.rule_id},#{item.rule_name},#{item.state},#{item.created_by},sysdate(),#{item.last_updated_by},sysdate(),#{item.remark})  
+	    </foreach>
+    </insert>
+    
+      <insert id="insertDimension" parameterType="java.util.List">
+       insert into dimension_t(dis_id,rule_id,table_name,column_name,semanteme,dis_value,arithmetic,dis_sql,dis_type,created_by,created_date,last_updated_by,last_updated_date,remark)
+       	values
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.dis_id},#{item.rule_id},#{item.table_name},#{item.column_name},#{item.semanteme},#{item.dis_value},#{item.arithmetic},#{item.dis_sql},#{item.dis_type},#{item.last_updated_by},sysdate(),#{item.last_updated_by},sysdate(),#{item.remark})  
+	    </foreach>
+    </insert>
+    
+    <delete id="deleteRule" parameterType="java.util.List">
+    		delete from rule_t  where rule_id in
+    	<foreach collection="list" item="ruleId" index="index"
+            open="(" close=")" separator=",">        
+         	#{ruleId} 
+ 		</foreach>  
+    </delete>
+    
+    <delete id="deleteDimension" parameterType="java.util.List">
+    	delete from dimension_t  where dis_id in
+    	<foreach collection="list" item="dimeId" index="index"
+            open="(" close=")" separator=",">        
+         	#{dimeId} 
+ 		</foreach>  
+    </delete>
+    
+     <delete id="deleteDimensionByRuleId" parameterType="java.util.List">
+    	delete from dimension_t  where rule_id in
+    	<foreach collection="list" item="ruleId" index="index"
+            open="(" close=")" separator=",">        
+         	#{ruleId} 
+ 		</foreach>  
+    </delete>
+	
+	
 </mapper>

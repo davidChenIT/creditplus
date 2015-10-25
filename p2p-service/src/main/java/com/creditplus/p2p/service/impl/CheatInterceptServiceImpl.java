@@ -43,7 +43,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	}
 	
 	private List<Map> getRuleList(){
-		return ruleDao.getRulesList();
+		return ruleDao.getRulesList(new HashMap());
 	}
 	
 	private List<Map> getDimensionByRuleId(Integer rule_id){

@@ -46,4 +46,5 @@
     <bean id="urgentContactorService" class="com.creditplus.p2p.service.impl.UrgentContactorServiceImpl" />     
     <bean id="commonInfoService" class="com.creditplus.p2p.service.impl.CommonInfoServiceImpl" />     
     <bean id="cheatInterceptService" class="com.creditplus.p2p.service.impl.CheatInterceptServiceImpl" />     
+    <bean id="ruleService" class="com.creditplus.p2p.service.impl.RuleServiceImpl" />     
 </beans>

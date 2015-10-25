@@ -149,7 +149,16 @@ public class RequestProcess{
         return args;
 	}	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NoSuchMethodException, SecurityException {
+		
+		Class clz=new RequestProcess().getClass();
+		Method method=clz.getMethod("execute", String.class,String.class,String.class);
+		Annotation[][] annotations=method.getParameterAnnotations();
+		System.out.println("annotations:"+annotations.length);
+		for(int i=0;i<annotations.length;i++){
+			Annotation[] paramAnnotations=annotations[i];
+			System.out.println(paramAnnotations.length);
+		}
 		try {
 			Object obj = JSONTools.JSON2Object("",BaseVO.class);
 			System.out.println("===" + obj);
