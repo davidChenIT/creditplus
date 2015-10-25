@@ -34,6 +34,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 				if(dimensionList!=null && dimensionList.size()>0){
 					for(Map dismensionMap:dimensionList){
 						checkFlag=executeChectSql(dismensionMap, user_id,loan_id);
+						
 					}
 				}
 			}
@@ -42,24 +43,41 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	}
 	
 	private List<Map> getRuleList(){
-		/*String sql="select rule_id,rule_name from rule_t where state=1 and rule_id=#{rule_id}";
-		Map sqlMap=new HashMap();
-		sqlMap.put("sql",sql);
-		sqlMap.put("rule_id", rule_id);
-		return commonInfoDao.executeDonamicSQL(sqlMap);*/
 		return ruleDao.getRulesList();
 	}
 	
 	private List<Map> getDimensionByRuleId(Integer rule_id){
-		/*String sql="select rule_id, table_name,column_name,semanteme,value,arithmetic from dimension_t where rule_id=#{rule_id}";
-		Map sqlMap=new HashMap();
-		sqlMap.put("sql",sql);
-		sqlMap.put("rule_id", rule_id);
-		return commonInfoDao.executeDonamicSQL(sqlMap);*/
 		return ruleDao.getDimensionListByRuleId(rule_id);
 	}
+	
+/*	private executeChectSql(List<Map> dismensionList,Integer user_id,Integer loan_id){
+		StringBuilder sbSql=new StringBuilder("select count(1) as total_record from ");
+		if(dismensionList!=null && dismensionList.size()>0){
+			String tableName=(String) dismensionList.iterator().next().get("table_name");
+			sbSql.append(tableName).append(" where ");
+		}
+			
+		for(int i=0;i<dismensionList.size();i++){
+			Map dismensionMap=dismensionList.get(i);
+			String tableName=(String) dismensionMap.get("table_name");
+			String column_name=(String) dismensionMap.get("column_name");
+			String semanteme=(String) dismensionMap.get("semanteme");
+			String value=(String) dismensionMap.get("value");
+			sbSql.append(column_name).append(semanteme).append("#{value} ");
+			if(i<dismensionList.size()-1)
+				sbSql.append(c)
+		}
+	} */
 
 	
+	/**
+	 * 校验单个维度
+	 * @param dismensionMap
+	 * @param user_id
+	 * @param loan_id
+	 * @return
+		boolean
+	 */
 	private boolean executeChectSql(Map dismensionMap,Integer user_id,Integer loan_id){
 		String tableName=(String) dismensionMap.get("table_name");
 		String column_name=(String) dismensionMap.get("column_name");

@@ -7,5 +7,7 @@ public interface ApproveLogDao {
 
 	List<?> getAppLogByLoanId(Map<?, ?> paramMap);
 	
+	Integer getCountByLoanId(Integer loan_id);
+	
 	void insertApproveLog(Map<?, ?> paramMap);
 }

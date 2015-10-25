@@ -8,7 +8,7 @@ public class ApproveLogVO  extends BaseVO{
 	private Integer loan_id;
 	private String assign_user;
 	private String approve_content;
-	private Integer state;
+	private Integer state; 
 	
 	public Integer getState() {
 		return state;

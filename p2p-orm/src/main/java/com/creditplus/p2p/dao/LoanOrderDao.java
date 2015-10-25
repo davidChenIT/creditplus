@@ -3,8 +3,6 @@ package com.creditplus.p2p.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.creditplus.p2p.model.PageVO;
-
 
 public interface LoanOrderDao {
 
@@ -43,5 +41,7 @@ public interface LoanOrderDao {
 	 void insertLoanApply(Map<?, ?> paramMap);
 	 
 	 List<?> selectLoanApplyList(Map<?, ?> paramMap);
+	 
+	 Integer getCountByLoanId(Integer loan_id);
 	 
 }

@@ -24,21 +24,26 @@ public interface LoanOrderService {
 	 //加入黑名单
 	 void joinTheBackList(Map paramMap);
 	 
-	 //初审详情
+	 //初审
 	 @SuppressWarnings("rawtypes")
 	 void creditFirstTrial( Map paramMap) throws Exception;
 	 
-	//复审详情
+	//复审
 	 @SuppressWarnings("rawtypes")
 	 void creditReview(Map paramMap) throws Exception;
 	 
+	 //初审详情
 	 @SuppressWarnings("rawtypes")
 	 Map getCreditFirstTrialDetailByLoanId(Map paramMap) throws Exception;
 	 
+	 //复审详情
 	 @SuppressWarnings("rawtypes")
 	 Map getCreditReviewDetailByLoanId(Map paramMap) throws Exception;
 	 
+	 //复审驳回
 	 @SuppressWarnings("rawtypes")
 	 void creditReviewReject(Map paramMap) throws Exception;
+	 
+	 void updateLoanOrderState(Map loanOrderMap) throws Exception;
 	 
 }

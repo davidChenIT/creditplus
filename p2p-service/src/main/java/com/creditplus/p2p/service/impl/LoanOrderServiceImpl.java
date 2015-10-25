@@ -5,21 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-
-import com.creditplus.p2p.common.constant.PageConstant;
+import com.creditplus.p2p.common.constant.Constant;
 import com.creditplus.p2p.common.util.CheckParamUtil;
 import com.creditplus.p2p.common.util.CommonUtil;
 import com.creditplus.p2p.dao.CustomerInfoDao;
 import com.creditplus.p2p.dao.LoanOrderDao;
-import com.creditplus.p2p.dao.UrgentContactorDao;
 import com.creditplus.p2p.model.PageVO;
 import com.creditplus.p2p.page.PageUtil;
 import com.creditplus.p2p.service.ApproveLogService;
 import com.creditplus.p2p.service.CheatInterceptService;
 import com.creditplus.p2p.service.CommonInfoService;
 import com.creditplus.p2p.service.LoanOrderService;
+import com.creditplus.p2p.service.UrgentContactorService;
 
 
 public class LoanOrderServiceImpl implements LoanOrderService{
@@ -29,7 +26,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	@Autowired
 	private ApproveLogService approveLogService;
 	@Autowired
-	private UrgentContactorDao urgentContactorDao;
+	private UrgentContactorService urgentContactorService;
 	@Autowired
 	private CustomerInfoDao customerInfoDao;
 	@Autowired
@@ -50,14 +47,14 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 */
 	public Map getCreditFirstTrialDetailByLoanId(Map paramMap) throws Exception {
 		paramMap=initParamMap(paramMap);
-		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state");
+		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE);
 		
 		approveLogService.insertApproveLog(paramMap, true);
 		updateLoanApply(paramMap);
-		Map loanOrderMap= loanOrderDao.getCreditFirstTrialDetailByLoanId(Integer.valueOf(paramMap.get("loan_id")+""));
+		Map loanOrderMap= loanOrderDao.getCreditFirstTrialDetailByLoanId(Integer.valueOf(paramMap.get(Constant.LOAN_ID)+""));
 		//根据身份证号算出身份证相关信息
 		if(loanOrderMap!=null && loanOrderMap.size()>0){
-			Map cardInfo=commonInfoService.getCardInfoById(loanOrderMap.get("id_num")+"");
+			Map cardInfo=commonInfoService.getCardInfoById(loanOrderMap.get(Constant.ID_NUM)+"");
 			if(cardInfo!=null && cardInfo.size()>0)
 				loanOrderMap.putAll(cardInfo);
 		}
@@ -76,13 +73,13 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 */
 	public Map getCreditReviewDetailByLoanId(Map paramMap) throws Exception {
 		paramMap=initParamMap(paramMap);
-		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state");
+		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE);
 		
 		approveLogService.insertApproveLog(paramMap,true);
 		updateLoanApply(paramMap);
-		Map loanOrderMap=loanOrderDao.getCreditReviewDetailByLoanId(Integer.valueOf(paramMap.get("loan_id")+""));
+		Map loanOrderMap=loanOrderDao.getCreditReviewDetailByLoanId(Integer.valueOf(paramMap.get(Constant.LOAN_ID)+""));
 		if(loanOrderMap!=null && loanOrderMap.size()>0){
-			Map cardInfo=commonInfoService.getCardInfoById(loanOrderMap.get("id_num")+"");
+			Map cardInfo=commonInfoService.getCardInfoById(loanOrderMap.get(Constant.ID_NUM)+"");
 			if(cardInfo!=null && cardInfo.size()>0)
 				loanOrderMap.putAll(cardInfo);
 		}
@@ -102,18 +99,21 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 */
 	public void creditFirstTrial(Map paramMap) throws Exception{
 		paramMap=initParamMap(paramMap);
-		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state","user_id");
-		Integer user_id=Integer.valueOf(paramMap.get("user_id")+"");
-		Integer loan_id=Integer.valueOf(paramMap.get("loan_id")+"");
+		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE,Constant.USER_ID);
+		Integer user_id=Integer.valueOf(paramMap.get(Constant.USER_ID)+"");
+		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
+		//防欺诈拦截
 		boolean checkFlag=cheatInterceptService.intercept(user_id, loan_id);
 		if(checkFlag)
 			return;
-		
-		List urgentList=(List) paramMap.get("urgentList");
+		//出入初审日志
 		approveLogService.insertApproveLog(paramMap,false);
+		//更新客户信息
 		updateCustomerInfo(paramMap, user_id);
+		//更新紧急联系人
+		List urgentList=(List) paramMap.get("urgentList");
 		updateUrgentContactor(urgentList, user_id);
-		//更新状态
+		//更新申请单状态
 		updateLoanApply(paramMap);
 	}
 	
@@ -123,9 +123,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 */
 	public void creditReview(Map paramMap) throws Exception{
 		paramMap=initParamMap(paramMap);
-		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state","user_id");
-		Integer user_id=Integer.valueOf(paramMap.get("user_id")+"");
-		Integer loan_id=Integer.valueOf(paramMap.get("loan_id")+"");
+		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE,Constant.USER_ID);
+		Integer user_id=Integer.valueOf(paramMap.get(Constant.USER_ID)+"");
+		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
 		boolean checkFlag=cheatInterceptService.intercept(user_id, loan_id);
 		if(checkFlag)
 			return;
@@ -147,8 +147,8 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 */
 	public void creditReviewReject(Map paramMap) throws Exception {
 		paramMap=initParamMap(paramMap);
+		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE);
 		
-		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state");
 		loanOrderDao.creditReviewRejectUpdate(paramMap);
 		approveLogService.insertApproveLog(paramMap, false);
 	}
@@ -161,19 +161,20 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 */
 	public void updateLoanApply(Map paramMap){
 		Map loanMap=new HashMap(paramMap);
-		List loanAppList=loanOrderDao.selectLoanApplyList(loanMap); 
-		int apply_state=Integer.valueOf(loanMap.get("apply_state")+"");
+		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
+		Integer apply_state=Integer.valueOf(loanMap.get(Constant.APPLY_STATE)+"");
 		//2开始初审 3初审完毕 4开始复审 5复审完毕
 		if(apply_state==2 || apply_state==3){
-			loanMap.put("first_assign_user", CommonUtil.getCurrentUser());
-			loanMap.put("version", 1.0);
+			loanMap.put(Constant.FIRST_ASSIGN_USER, CommonUtil.getCurrentUser());
+			loanMap.put(Constant.VERSION, 1.0);
 		}
 		if(apply_state==4 || apply_state==5){
-			loanMap.put("review_assign_user", CommonUtil.getCurrentUser());
+			loanMap.put(Constant.REVIEW_ASSIGN_USER, CommonUtil.getCurrentUser());
 		}
 		
+		Integer total_record=loanOrderDao.getCountByLoanId(loan_id);
 		System.out.println("updateLoanApply===loanMap:"+loanMap);
-		if(loanAppList.size()==0){
+		if(total_record==0){
 			loanOrderDao.insertLoanApply(loanMap);
 		}else{
 			if(apply_state!=2 && apply_state!=4){ //这两个状态开始初审和复审只做插入动作
@@ -184,21 +185,18 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	
 	//更新紧急联系人
 	public void updateUrgentContactor(List<Map> insertList,int user_id){
-		System.out.println("updateUrgentContactor===insertList:"+insertList);
 		if(insertList!=null){
 			for(Map map:insertList){
 				map.putAll(getPublicInfoMap());
-				map.put("user_id", user_id);
+				map.put(Constant.USER_ID, user_id);
 			}
-			urgentContactorDao.deleteByUserId(user_id);
-			Map urgentMap=new HashMap();
-			urgentMap.put("list",insertList);
-			urgentContactorDao.insertBatch(urgentMap);
+			urgentContactorService.deleteByUserId(user_id);
+			urgentContactorService.insertBatch(insertList);
 		}
 	}
 	
 	
-	//更新客户信息
+	//更新客户信息 先删后增
 	private void updateCustomerInfo(Map paramMap,int user_id){
 		customerInfoDao.deleteByUserId(user_id);
 		customerInfoDao.insert(paramMap);
@@ -208,9 +206,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	public PageVO getCreditFirstTrialListWithPage(Map paramMap) {
 		paramMap=initParamMap(paramMap);
 		int currentPage=1,pageSize=10;
-		if(paramMap!=null && (paramMap.get(PageConstant.CURRPAGE)!=null || paramMap.get(PageConstant.ROWNUM)!=null)){
-			currentPage=Integer.valueOf(paramMap.get(PageConstant.CURRPAGE)+"");
-			pageSize=Integer.valueOf(paramMap.get(PageConstant.ROWNUM)+"");
+		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
+			currentPage=Integer.valueOf(paramMap.get(Constant.CURRPAGE)+"");
+			pageSize=Integer.valueOf(paramMap.get(Constant.ROWNUM)+"");
 		}
 		//初始化分页信息
 		PageUtil.initPageInfo(currentPage, pageSize);
@@ -223,9 +221,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	public PageVO getCreditReviewListWithPage(Map paramMap) {
 		paramMap=initParamMap(paramMap);
 		int currentPage=1,pageSize=20;
-		if(paramMap!=null && (paramMap.get(PageConstant.CURRPAGE)!=null || paramMap.get(PageConstant.ROWNUM)!=null)){
-			currentPage=Integer.valueOf(paramMap.get(PageConstant.CURRPAGE)+"");
-			pageSize=Integer.valueOf(paramMap.get(PageConstant.ROWNUM)+"");
+		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
+			currentPage=Integer.valueOf(paramMap.get(Constant.CURRPAGE)+"");
+			pageSize=Integer.valueOf(paramMap.get(Constant.ROWNUM)+"");
 		}
 		//初始化分页信息
 		PageUtil.initPageInfo(currentPage, pageSize);
@@ -240,9 +238,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	public PageVO rankingPoolListWithPage(Map paramMap) {
 		paramMap=initParamMap(paramMap);
 		int currentPage=1,pageSize=20;
-		if(paramMap!=null && (paramMap.get(PageConstant.CURRPAGE)!=null || paramMap.get(PageConstant.ROWNUM)!=null)){
-			currentPage=Integer.valueOf(paramMap.get(PageConstant.CURRPAGE)+"");
-			pageSize=Integer.valueOf(paramMap.get(PageConstant.ROWNUM)+"");
+		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
+			currentPage=Integer.valueOf(paramMap.get(Constant.CURRPAGE)+"");
+			pageSize=Integer.valueOf(paramMap.get(Constant.ROWNUM)+"");
 		}
 		//初始化分页信息
 		PageUtil.initPageInfo(currentPage, pageSize);
@@ -256,9 +254,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	public PageVO checkInterceptListWithPage(Map paramMap){
 		paramMap=initParamMap(paramMap);
 		int currentPage=1,pageSize=20;
-		if(paramMap!=null && (paramMap.get(PageConstant.CURRPAGE)!=null || paramMap.get(PageConstant.ROWNUM)!=null)){
-			currentPage=Integer.valueOf(paramMap.get(PageConstant.CURRPAGE)+"");
-			pageSize=Integer.valueOf(paramMap.get(PageConstant.ROWNUM)+"");
+		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
+			currentPage=Integer.valueOf(paramMap.get(Constant.CURRPAGE)+"");
+			pageSize=Integer.valueOf(paramMap.get(Constant.ROWNUM)+"");
 		}
 		//初始化分页信息
 		PageUtil.initPageInfo(currentPage, pageSize);
@@ -272,9 +270,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	public PageVO faBiaoListWithPage(Map paramMap) {
 		paramMap=initParamMap(paramMap);
 		int currentPage=1,pageSize=20;
-		if(paramMap!=null && (paramMap.get(PageConstant.CURRPAGE)!=null || paramMap.get(PageConstant.ROWNUM)!=null)){
-			currentPage=Integer.valueOf(paramMap.get(PageConstant.CURRPAGE)+"");
-			pageSize=Integer.valueOf(paramMap.get(PageConstant.ROWNUM)+"");
+		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
+			currentPage=Integer.valueOf(paramMap.get(Constant.CURRPAGE)+"");
+			pageSize=Integer.valueOf(paramMap.get(Constant.ROWNUM)+"");
 		}
 		//初始化分页信息
 		PageUtil.initPageInfo(currentPage, pageSize);
@@ -306,13 +304,17 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		publicMap.put("last_updated_by", CommonUtil.getCurrentUser());
 		return publicMap;
 	}
-	
 
-	public double generatorVersion(String version,int apply_state){
-		return 1.0;
+
+	/* 
+	 * 更新申请单状态 
+	 * @param loanOrderMap
+	 */
+	public void updateLoanOrderState(Map loanOrderMap) throws Exception {
+		loanOrderMap=initParamMap(loanOrderMap);
+		CheckParamUtil.checkKey(loanOrderMap, Constant.LOAN_ID,Constant.APPLY_STATE,Constant.APPROVE_CONTENT);
+		loanOrderDao.updateLoanOrderByLoanId(loanOrderMap);
+		approveLogService.insertApproveLog(loanOrderMap, false);
 	}
-
-
-
 
 }

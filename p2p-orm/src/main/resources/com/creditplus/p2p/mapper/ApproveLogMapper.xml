@@ -17,7 +17,7 @@
 		<result column="last_created_date" property="last_created_date"/>    	
     </resultMap> -->
     
-    <select id="getAppLogByLoanId" parameterType="Integer" resultType="java.util.Map">
+    <select id="getAppLogByLoanId" parameterType="java.util.Map" resultType="java.util.Map">
     	select id,loan_id,assign_user,approve_content,state,created_by,created_date,last_updated_by,last_updated_date from approve_log_t 
     	<where>
 			<if test="loan_id!= null">
@@ -28,6 +28,11 @@
 			</if>
 		</where>
     </select>
+    
+    <select id="getCountByLoanId" parameterType="Integer" resultType="Integer">
+    	select count(1) as total_record from approve_log_t  where loan_id = #{loan_id}
+    </select>
+    
     
     <insert id="insertApproveLog" parameterType="java.util.Map">
      	insert into approve_log_t(id,loan_id,assign_user,approve_content,state,created_by,created_date,last_updated_by,last_updated_date)values(#{id},#{loan_id},#{last_updated_by},#{approve_content},#{apply_state},#{last_updated_by},sysdate(),#{last_updated_by},sysdate())

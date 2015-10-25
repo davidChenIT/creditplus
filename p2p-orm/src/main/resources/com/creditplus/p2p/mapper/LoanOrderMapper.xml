@@ -74,7 +74,7 @@
 		    ifnull(a.apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
-		    a.version,
+		    concat(a.version,'') as version,
 		    (select url from p2p.attach_pic where user_id=#{user_id} and type=1) as id_num_pic1,
 			(select url from p2p.attach_pic where user_id=#{user_id} and type=2) as id_num_pic2,
 			(select url from p2p.attach_pic where user_id=#{user_id} and type=3) as work_pic,
@@ -160,7 +160,7 @@
 		    ifnull(a.apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
-		    a.version,
+		    concat(a.version,'') as version,
 		    (select url from p2p.attach_pic where user_id=#{user_id} and type=1) as id_num_pic1,
 			(select url from p2p.attach_pic where user_id=#{user_id} and type=2) as id_num_pic2,
 			(select url from p2p.attach_pic where user_id=#{user_id} and type=3) as work_pic,
@@ -219,7 +219,7 @@
 		    ifnull(apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
-		    a.version
+		    concat(a.version,'') as version
 	    from (select * from p2p.loan_list where loan_id not in( select loan_id from p2p.loan_apply_t where apply_state!=2 and apply_state!=3 or first_assign_user!=#{last_updated_by})) t
 		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
 		left join p2p.user_info u on t.user_id=u.user_id) s
@@ -296,7 +296,7 @@
 		    ifnull(apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
-		    a.version
+		    concat(a.version,'') as version
 	    from (select * from p2p.loan_list where loan_id in( select loan_id from p2p.loan_apply_t where apply_state=3 or review_assign_user=#{last_updated_by})) t
 		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
 		left join p2p.user_info u on t.user_id=u.user_id) s
@@ -372,7 +372,7 @@
 		    ifnull(apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
-		    a.version
+		    concat(a.version,'') as version
 	    from (select * from p2p.loan_list where loan_id in( select loan_id from p2p.loan_apply_t where apply_state=5)) t
 		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
 		left join p2p.user_info u on t.user_id=u.user_id) s
@@ -448,7 +448,7 @@
 		    ifnull(apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
-		    a.version
+		    concat(a.version,'') as version
 	    from (select * from p2p.loan_list where loan_id in( select loan_id from p2p.loan_apply_t where apply_state=6)) t
 		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
 		left join p2p.user_info u on t.user_id=u.user_id) s
@@ -524,7 +524,7 @@
 		    ifnull(apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
-		    a.version
+		    concat(a.version,'') as version
 	    from (select * from p2p.loan_list where loan_id in( select loan_id from p2p.loan_apply_t where apply_state=7)) t
 		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
 		left join p2p.user_info u on t.user_id=u.user_id) s
@@ -605,6 +605,10 @@
 	
 	<select id="selectLoanApplyList" parameterType="java.util.Map" resultType="java.util.Map">
 		select loan_id,version,apply_state,first_assign_user,review_assign_user,modifytime from loan_apply_t t where loan_id = #{loan_id} 
+	</select>
+	
+	<select id="getCountByLoanId" parameterType="Integer" resultType="Integer">
+		select count(1) as total_record from loan_apply_t t where loan_id = #{loan_id}
 	</select>
 
 

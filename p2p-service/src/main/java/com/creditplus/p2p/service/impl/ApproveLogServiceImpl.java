@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.creditplus.p2p.common.constant.Constant;
 import com.creditplus.p2p.common.util.CheckParamUtil;
 import com.creditplus.p2p.dao.ApproveLogDao;
 import com.creditplus.p2p.service.ApproveLogService;
@@ -14,7 +16,7 @@ public class ApproveLogServiceImpl  implements ApproveLogService{
 	private ApproveLogDao approveLogDao;
 	
 	public Map getAppLogByLoanId(Map paramMap) throws Exception {
-		CheckParamUtil.checkKey(paramMap, "loan_id");
+		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID);
 		List applogList=approveLogDao.getAppLogByLoanId(paramMap);
 		Map gridMap=new HashMap();
 		gridMap.put("griddata", applogList);
@@ -30,13 +32,13 @@ public class ApproveLogServiceImpl  implements ApproveLogService{
 //		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state");
 		System.out.println("paramMap:"+paramMap);
 		if(flag){
-			List logList=approveLogDao.getAppLogByLoanId(paramMap);
-			if(logList.size()==0)
+			Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
+			Integer total_record=approveLogDao.getCountByLoanId(loan_id);
+			if(total_record==0)
 				approveLogDao.insertApproveLog(paramMap);
 		}else{
 			approveLogDao.insertApproveLog(paramMap);
 		}
 	}
-	
-	
+
 }

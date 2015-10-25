@@ -13,6 +13,4 @@ public interface UrgentContactorService {
 	
 	public void deleteByUserId(Integer user_id);
 	
-	void getUrgentListByUserId(Integer user_id);
-	
 }

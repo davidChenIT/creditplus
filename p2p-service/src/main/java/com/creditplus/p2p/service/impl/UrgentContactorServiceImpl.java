@@ -17,11 +17,15 @@ public class UrgentContactorServiceImpl implements UrgentContactorService {
 	@Autowired
 	CommonInfoService commonInfoService;
 	
+	/**
+	 * 先查urgent_contactor_t表，如果该表没有数据就查urgent_list表
+	 */
 	public List<?> getListByUserId(Integer user_id) {
 		List<Map> list=(List<Map>) urgentDao.getListByUserId(user_id);
 		if(list==null || list.size()==0)
 			list=(List<Map>) urgentDao.getUrgentListByUserId(user_id);
 		
+		//补全号码归属地
 		for(Map map:list){
 			String phoneNum=(String) map.get("mobile");
 			Map phoneMap=commonInfoService.getPhoneInfoById(phoneNum);
@@ -40,10 +44,6 @@ public class UrgentContactorServiceImpl implements UrgentContactorService {
 
 	public void deleteByUserId(Integer user_id) {
 		urgentDao.deleteByUserId(user_id);
-	}
-
-	public void getUrgentListByUserId(Integer user_id) {
-		urgentDao.getListByUserId(user_id);
 	}
 
 
