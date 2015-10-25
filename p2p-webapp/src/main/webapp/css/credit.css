@@ -1031,6 +1031,20 @@ label {
   text-overflow: ellipsis;
   /**white-space: nowrap;*/
 }
+
+/**红色字体的label*/
+.label-red{
+	color:red;
+}
+
+/**红色加斜体的label*/
+.lable-red-oblique{
+	color:red;
+	font-style: oblique;
+}
+
+
+
 @media (min-width: 768px) {
   .credit-label {
     text-align: right;
