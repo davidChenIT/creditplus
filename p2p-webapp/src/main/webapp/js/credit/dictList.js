@@ -13,7 +13,7 @@ $(function(){
 			postData:{"module":"dictService","method":"getDictListWithPage","request_data":JSON.stringify(request_data)},
 			mtype: 'POST',
 			autowidth:true,
-			height:350,
+			height:290,
 			colNames:['<input type="checkbox" class="dict-create-selall-cbox">',
 			          "操作",
 			          "<span style='color:red;'>*</span>名称",
