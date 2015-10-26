@@ -14,11 +14,12 @@ $(function(){
 				{name:'ruleId', index:'operate_col',align:'center',"sortable":false,width:"100px",
 					formatter:function(cellvalue, options, rowObject){
 					   debugger;
-					   if(!rowObject.dictId){
-						   return "<span name='ruleEditSpan' class='ui-icon-edit' data-val='' data-name=''></span>";
-					   }else{
-						   return "<span name='ruleEditSpan' class='ui-icon-edit' data-val='"+rowObject.id+ "' data-name='" + rowObject.name +"'></span>";
+					   var paramsStr=JSON.stringify(rowObject);
+					   if(paramsStr){
+						   paramsStr=paramsStr.replace(/"/g,"@#_@#");
 					   }
+					   return "<span name='ruleEditSpan' class='ui-icon-edit' data-val='"+rowObject.id+ "' data-name='" + rowObject.name +"' onclick=\"addTabItem('ruleTab','ruleUpdate','规则修改','/p2p-webapp/page/systemmng/ruleUpdate.html','true','/p2p-webapp/js/credit/ruleUpdate.js','"+paramsStr+"');\"></span>";
+					   
 					}
 				},
 				{name:'ruleName', index:'ruleName',align:'center',"sortable":false},

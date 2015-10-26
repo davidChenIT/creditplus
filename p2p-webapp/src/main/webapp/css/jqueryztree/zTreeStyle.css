@@ -15,11 +15,11 @@ website:	http://code.google.com/p/jquerytree/
 .ztree li ul{ margin:0; padding:0 0 0 18px}
 .ztree li ul.line{ background:url(./img/line_conn.gif) 0 0 repeat-y;}
 
-/**修改树节点的a标签鼠标浮动改变背景颜色*/
-.ztree li a:hover{color:#3e89d4;text-decoration:none;}
-.ztree li a:link{color:#3e89d4;text-decoration:none;}
-.ztree li a:visted{color:#3e89d4;text-decoration:none;}
-.ztree li a:active{color:#3e89d4;text-decoration:none;}
+/**修改树节点的a标签鼠标浮动改变背景颜色#3e89d4*/
+.ztree li a:hover{color:blue;text-decoration:none;}
+.ztree li a:link{color:blue;text-decoration:none;}
+.ztree li a:visted{color:blue;text-decoration:none;}
+.ztree li a:active{color:blue;text-decoration:none;}
 /**
 .ztree li a {padding:1px 3px 0 0; margin:0; cursor:pointer; height:17px; color:#333; background-color: transparent;
 	text-decoration:none; vertical-align:top; display: inline-block}

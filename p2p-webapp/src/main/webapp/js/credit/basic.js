@@ -186,6 +186,8 @@ function createCatalogTree(){
 						},
 						//节点点击事件
 						onClick:function(event, treeId, treeNode){
+							$("#menu_ztree").find("span[class='credit-span-blue']").attr("class","");
+							$(event.toElement).attr("class","credit-span-blue");
 							debugger;
 							var treeObj = $.fn.zTree.getZTreeObj(treeId); 
 							//展开或收缩子节点
@@ -207,7 +209,7 @@ function createCatalogTree(){
 							checkAllParents(treeNode);
 							//设置面包屑
 							$(".credit-breadcrumb").html(liHtml);
-							
+							$(".credit-breadcrumb").find("li:last").find("a").attr("style","class:blue;");
 							//获取页面
 							var fileUrlstr=treeNode.url;
 							if(fileUrlstr && fileUrlstr!="#"){
@@ -292,6 +294,7 @@ function createCatalogTree(){
 			checkAllParents1(curentTreeNode);
 			//设置面包屑
 			$(".credit-breadcrumb").html(liHtml);
+			$(".credit-breadcrumb").find("li:last").find("a").attr("style","class:blue;");
 			loadingBox.hideLoading();
 		},error:function(error){
 		    loadingBox.hideLoading();

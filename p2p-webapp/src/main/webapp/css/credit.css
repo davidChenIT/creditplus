@@ -1055,6 +1055,11 @@ label {
   color: #666666;
   padding-right: 4px\9;
 }
+
+.credit-span-blue{
+	color:blue;
+}
+
 .credit-input {
   position: relative;
   display: inline-block;
@@ -1119,6 +1124,7 @@ label {
   margin-top: 10px;
   margin-right: 8px;
 }
+
 .credit-tabs .credit-tabs {
   margin: 0 10px;
 }
