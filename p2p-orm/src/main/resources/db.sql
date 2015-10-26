@@ -92,7 +92,7 @@ CREATE TABLE approve_log_t (
 create table customer_info_t(
    id                   int not null auto_increment,
    user_id				int not null,
-   thnic_v				varchar(50)  	COMMENT '名族',
+   thnic_v				varchar(50)  	COMMENT '民族',
    registered_place_v   varchar(200)	comment '户口所在地',
    address_phone     	varchar(20)   	comment '住址电话',
    address_phone_v		varchar(20) 	comment '住址验证电话',

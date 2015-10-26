@@ -2061,3 +2061,15 @@ h3{
 	top: 2px;
 	display: inline-block;
 }
+
+.save-btn:before{
+	content:"";
+	background-position: -100px -111px;
+    background-image: url("/p2p-webapp/css/jqueryui/images/ui-icons_ef8c08_256x240.png");
+    width: 16px;
+    height: 16px;
+	position: relative;
+	right: -3px;
+	top: 2px;
+	display: inline-block;
+}

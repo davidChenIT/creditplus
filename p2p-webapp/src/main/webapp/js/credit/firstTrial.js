@@ -116,7 +116,7 @@ $(function(){
 		request_data['urgentList'] = urgentList;
 		
 		/*
-        var thnic_v = validateRequire("thnic_v","请输入名族！","firstTrial");
+        var thnic_v = validateRequire("thnic_v","请输入民族！","firstTrial");
 		if(thnic_v){			
         	request_data.thnic_v=thnic_v;
         }else{
