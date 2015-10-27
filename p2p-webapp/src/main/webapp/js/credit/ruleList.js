@@ -5,13 +5,13 @@ $(function(){
     $("#ruleListGrid").jqGrid({
 			url:serviceAddress,
 			datatype: 'json',
-			postData:{"module":"roleService","method":"getRoleListWithPage"},
+			postData:{"module":"ruleService","method":"getRuleListWithPage"},
 			mtype: 'POST',
 			autowidth:true,
 			height:290,
-			colNames:["操作","规则名称","是否可用","创建人","创建时间","最后修改人","最后修改时间","备注"],
+			colNames:["操作","","规则名称","是否可用","创建人","创建时间","最后修改人","最后修改时间","备注"],
 			colModel :[
-				{name:'ruleId', index:'operate_col',align:'center',"sortable":false,width:"100px",
+				{name:'operate_col', index:'operate_col',align:'center',"sortable":false,width:"100px",
 					formatter:function(cellvalue, options, rowObject){
 					   debugger;
 					   var paramsStr=JSON.stringify(rowObject);
@@ -22,6 +22,7 @@ $(function(){
 					   
 					}
 				},
+				{name:'ruleId', index:'ruleId',hidden:true,"sortable":false},
 				{name:'ruleName', index:'ruleName',align:'center',"sortable":false},
 				{name:'enable', index:'enable',align:'center',"sortable":false,formatter:"select", editoptions:{value:"0:不可用;1:可用"}},
 				{name:'created_by', index:'created_by',align:'center',"sortable":false},
@@ -73,20 +74,21 @@ $(function(){
        
     //点击用户列表中的删除按钮
     $("[name='delRuleBtn']").click(function(){
+        debugger;
         var request_data=[];
-    	var rowids = $("#ruleListGrid").jqGrid('getDataIDs');
-    	for(var i=0;i<rowids.length;i++){
-    		var isChecked = $("#ruleListGrid").find("tr[id='"+rowids[i]+"']").find("input[type='checkbox']").is(':checked');
-    		if(isChecked){
-          	    var dataVal = $.trim($("#ruleListGrid").find("tr[id='"+rowids[i]+"']").find("a").text());
-          	    request_data.push(dataVal*1);    			
-    		}
-      	}
-    	
-    	if(request_data.length <=0){
-    		return;
-    	}
+        var grid=$("#ruleListGrid");
+        var ids = grid.jqGrid('getGridParam','selarrrow');
+        if(ids && ids.length>0){
+        	for(var i=0;i<ids.length;i++){
+        		var rowData =grid.jqGrid('getRowData',ids[i]);
+        		request_data.push(rowData.ruleId);
+        	}
+        	
+        }else{
+        	messageBox.createMessageDialog("提示","请选择你要删除的行！","","","warning");
+        	return false;
+        }
 		//调用服务
-		publicSaveAjax("roleService","deleteRoleById",JSON.stringify(request_data),null,null,"#searchRoleListBtn");    	
+		//publicSaveAjax("roleService","deleteRoleById",JSON.stringify(request_data),null,null,"#searchRoleListBtn");    	
     });
 })

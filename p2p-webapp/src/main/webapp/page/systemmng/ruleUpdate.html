@@ -6,12 +6,12 @@
 				<div class="row" >
 					<label class="col-xs-12 col-sm-3">
 						<div class="credit-label">
-							<span style="color:red;">*</span>规则名称
+							规则名称
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="rulename" >
+							<span name="rulename" >wmt_test</span>
 						</div>
 					</div>
 				</div>
@@ -25,7 +25,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select name="enable">
+							<select name="enable" validtion='required'>
 								<option value="1"  selected="selected">可用</option>
 								<option value="0" >不可用</option>
 							</select>						
@@ -58,7 +58,21 @@
 		<div class="row">
 			 <table id="ruleList4UpdateGrid"></table> 
 		</div>
-		<!-- 维度grid区域结束 -->	
+		<!-- 维度grid区域结束 -->
+		
+		<!-- 自定义sql区域开始 -->
+		<h3 name="customSql4UpdateH3">自定义SQL</h3>
+		<div class="row" id="customSql4UpdateDiv" style="display:none;">
+		   <div class="credit-spacecontrol col-xs-12 col-sm-4" style="width:100%;">
+				<div class="row">
+					<div class="col-xs-12 col-sm-9" style="width:100%;">
+						<div class="credit-input">
+							<textarea  name="custom_sql" style="margin-top: -10px;"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
 		
 		<div class="credit-toolbar" style="margin-top: 5px;margin-bottom: 30px;">
 			<div style="display: inline-block;">

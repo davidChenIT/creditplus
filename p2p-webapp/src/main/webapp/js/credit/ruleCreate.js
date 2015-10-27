@@ -9,7 +9,7 @@ $(function(){
 	//构造grid
     $("#ruleList4CreateGrid").jqGrid({
 			autowidth:true,
-			colNames:['<input type="checkbox" class="rule-create-selall-cbox">',"业务对象","字段","语义","值","与或运算"],
+			colNames:['<input type="checkbox" class="rule-create-selall-cbox">',"<span style='color:red;'>*</span>业务对象","<span style='color:red;'>*</span>字段","<span style='color:red;'>*</span>语义","<span style='color:red;'>*</span>值","<span style='color:red;'>*</span>与或运算"],
 			colModel :[
 			    {
 			    	name:'rule_sel_create',
@@ -77,7 +77,20 @@ $(function(){
 		    }
 	});
     
-    //角色新增行
+    
+    //控制sql语句展开或者收缩
+    $("h3[name='customSql4CreateH3']").click(function(){
+    	debugger;
+    	var customSqlDiv=$("#customSql4CreateDiv");
+    	var divStyle=customSqlDiv.attr("style");
+    	if(divStyle=="display:none;"){
+    		customSqlDiv.attr("style","display:block;");
+    	}else{
+    		customSqlDiv.attr("style","display:none;");
+    	}
+    });
+    
+    //维度新增行
     $("[name='addRule4CreateBtn']").click(function(){
     	debugger;
     	var ids = $("#ruleList4CreateGrid").jqGrid('getDataIDs');
@@ -131,7 +144,7 @@ $(function(){
     });
     
     
-    //角色删除行
+    //维度删除行
     $("[name='delRule4CreateBtn']").click(function(){
     	debugger;
     	var selRowIds=[];
@@ -146,68 +159,83 @@ $(function(){
     	}  
     });
     
-    //新增用户
+    //新增规则
     $("[name='saveRule4CreateBtn']").click(function(){
     	debugger;
-    	var checkPass = true;
-        var request_data={};
-        var username = validateRequire("usernamecreate","请输入用户名！");
-		if(username){			
-        	request_data.username=username;
-        }else{
-        	checkPass = false;
-        }
-		
-    	request_data.enable=$("select[name='enable']").val();
-        var password = validateRequire("password","请输入密码！");
-		if(password){			
-        	request_data.password=password;
-        }else{
-        	checkPass = false;
-        }
-		
-        var checkPassword = validateRequire("checkPassword","请确认密码！");
-		if(password!=checkPassword){
-	        $("input[name='checkPassword']").val("");
-	        validateRequire("checkPassword","请密码与确认密码不一致！");
-	        $("input[name='checkPassword']").val(checkPassword);
-	        checkPass = false;
-        }
-		
-		var remark = $("textarea[name='remark']").val();
-		if(remark && $.trim(remark)){
-        	request_data.remark=remark;
+    	var request_data={};
+		var checkPass = true;
+    	//1. 获取所有的必填项
+		var requiredDoms = $("#ruleCreateForm").find("[validtion*='required']");
+		var ruleInfo={};
+		//2. 循环校验
+		if(requiredDoms.length > 0){
+			var isFocusError = false;
+			$.each(requiredDoms,function(i,dom){
+				var validDomName = $(dom).attr('name');
+				var elementVal = validateRequire(validDomName,"此项为必填！","ruleCreateForm");
+				if(elementVal){
+					ruleInfo[validDomName] = elementVal;
+				}else{
+					if(!isFocusError){
+						$(dom).focus();
+						isFocusError = true;
+					}
+					checkPass = false;
+				}
+			});	
 		}
-		
-		if(!checkPass){
-			return;
-		}
-		
-    	var rowids = $("#roleList4CreateGrid").jqGrid('getDataIDs');
+		if(!checkPass){return false;}
+		ruleInfo.remark=$("#ruleCreateForm").find("[name='remark']").val();
+		request_data.ruleInfo=ruleInfo;
+        //校验grid的数据		
+    	var rowids = $("#ruleList4CreateGrid").jqGrid('getDataIDs');
     	var grid_data=[];
     	for(var i=0;i<rowids.length;i++){
-      	  var rowData=$("#roleList4CreateGrid").jqGrid("getRowData",rowids[i]);
-      	  $("#roleList4CreateGrid").find("tr[id='"+rowids[i]+"']").find("input[type='text']").each(function(i,input){
+      	  var rowData=$("#ruleList4CreateGrid").jqGrid("getRowData",rowids[i]);
+      	  $("#ruleList4CreateGrid").find("tr[id='"+rowids[i]+"']").find("input[type='text']").each(function(i,input){
       	    var inputName=$(input).attr("name");
       		var inputVal=$(input).val();
       		rowData[inputName]=inputVal;
       	  });
-      	  $("#roleList4CreateGrid").find("tr[id='"+rowids[i]+"']").find("textarea").each(function(i,textarea){
-      	    var textareaName=$(textarea).attr("name");
-      		var textareaVal=$(textarea).val();
-      		rowData[textareaName]=textareaVal;
+      	  $("#ruleList4CreateGrid").find("tr[id='"+rowids[i]+"']").find("select").each(function(i,select){
+      	    var selectName=$(select).attr("name");
+      		var selectVal=$(select).val();
+      		rowData[selectName]=selectVal;
       	  });
-      	  
-		  $.each(roleJson,function(i,item){
-			  if(item.roleName == rowData.roleName){
-				  rowData.roleId = item.roleId;
-				  return true;
-			  }
-		  });
-      	  rowData.ur_id = null;
       	  grid_data.push(rowData);
-      	}    	
-    	request_data.griddata = grid_data;
-		publicSaveAjax("userService","addUser",JSON.stringify(request_data),"userTab","userCreate","#searchUserListBtn");
+      	}    
+    	if(grid_data && grid_data.length>0){
+    		var isTrue=true;
+    		for(var i=0;i<grid_data.length;i++){
+    			var rowObj=grid_data[i];
+    			if(!rowObj.business_name){
+    				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“业务对象”不能为空！","","","warning");
+    				isTrue=false;
+    				break;
+    			}else if(!rowObj.col_name){
+    				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“字段”不能为空！","","","warning");
+    				isTrue=false;
+    				break;
+    			}else if(!rowObj.semantics_name){
+    				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“语义”不能为空！","","","warning");
+    				isTrue=false;
+    				break;
+    			}else if(!rowObj.value){
+    				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“值”不能为空！","","","warning");
+    				isTrue=false;
+    				break;
+    			}else if(!rowObj.versus_operators){
+    				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“与或运算”不能为空！","","","warning");
+    				isTrue=false;
+    				break;
+    			}
+    		}
+    		if(!isTrue){
+    			return false;
+    		}
+    	}
+    	request_data.demensionList = grid_data;
+    	
+		//publicSaveAjax("userService","addUser",JSON.stringify(request_data),"userTab","userCreate","#searchUserListBtn");
     });    
 })
