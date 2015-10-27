@@ -1,5 +1,6 @@
 package com.creditplus.p2p.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +68,7 @@ public class RuleServiceImpl implements RuleService{
 	/* 
 	 * @param dataList
 	 */
-	public void insertDimension(List<Map<String, Object>> dataList) {
+	public void insertDimension(List<Map> dataList) {
 		if(dataList!=null && dataList.size()>0){
 			for(Map dimenMap:dataList){
 				initParamMap(dimenMap);
@@ -110,9 +111,38 @@ public class RuleServiceImpl implements RuleService{
 	 * @param dimensionList
 	 * @throws Exception
 	 */
-	public void updateRule(Map ruleMap, List dimensionList) throws Exception {
-		// TODO Auto-generated method stub
+	public void updateRule(Map ruleMap, List<Map> dimensionList) throws Exception {
+		String currentUser=CommonUtil.getCurrentUser();
+		if(dimensionList!=null && dimensionList.size()>0){
+			List<Integer> updateList=new ArrayList<Integer>();
+			for(Map dimenMap:dimensionList){
+				Object dis_id=dimenMap.get(Constant.DIS_ID);
+				if(dis_id!=null){
+					updateList.add((Integer) dis_id);
+				}
+			}
+			ruleDao.deleteDimension(updateList);
+			insertDimension(dimensionList);
+		}
 		
+		if(ruleMap!=null && ruleMap.size()>0){
+			List<Integer> deleteList=new ArrayList<Integer>();
+			Object rule_id=ruleMap.get(Constant.RULE_ID);
+			if(rule_id!=null){
+				deleteList.add((Integer) rule_id);
+				initParamMap(ruleMap);
+				ruleDao.deleteRule(deleteList);
+				ruleDao.insertRule(ruleMap);
+			}
+		}
+	}
+
+	/* 
+	 * @param rule_id
+	 * @return
+	 */
+	public Map getRuleDetailById(Integer rule_id) {
+		return ruleDao.getRuleDetailById(rule_id);
 	}
 
 	

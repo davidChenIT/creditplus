@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.creditplus.p2p.dao.OriginPlaceDao">
+
+	<select id="queryProvince" resultType="java.util.Map">
+	     select sn as id,province from origin_place group by province
+	</select>
+	
+	<select id="queryCityByProvince" parameterType="Integer" resultType="java.util.Map">
+		select sn as id,city from origin_place where province=#{province} group by city
+	</select>
+	
+	
+</mapper>

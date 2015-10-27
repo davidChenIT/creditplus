@@ -7,6 +7,8 @@ public interface RuleDao {
 
 	List<Map> getRulesList(Map<String, Object> paramMap);
 	
+	Map getRuleDetailById(Integer rule_id);
+	
 	List<Map> getRulesListWithPage(Map<String, Object> paramMap);
 	
 	List<Map> getDimensionListByRuleId(Map dimensionMap);

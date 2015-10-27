@@ -16,6 +16,11 @@
 		</if>
 	</select>
 	
+	<select id="getRuleDetailById" parameterType="Integer" resultType="java.util.Map">
+		select rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark from p2p.rule_t 
+		where rule_id=#{rule_id}
+	</select>
+	
 	<select id="getRulesListWithPage" parameterType="java.util.Map" resultType="java.util.Map">
 		select * from p2p.rule_t 
 		where state=1
