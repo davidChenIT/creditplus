@@ -5,7 +5,7 @@ $(function(){
     $("#ruleListGrid").jqGrid({
 			url:serviceAddress,
 			datatype: 'json',
-			postData:{"module":"ruleService","method":"getRuleListWithPage"},
+			postData:{"module":"ruleService","method":"getRulesListWithPage"},
 			mtype: 'POST',
 			autowidth:true,
 			height:290,
@@ -18,13 +18,13 @@ $(function(){
 					   if(paramsStr){
 						   paramsStr=paramsStr.replace(/"/g,"@#_@#");
 					   }
-					   return "<span name='ruleEditSpan' class='ui-icon-edit' data-val='"+rowObject.id+ "' data-name='" + rowObject.name +"' onclick=\"addTabItem('ruleTab','ruleUpdate','规则修改','/p2p-webapp/page/systemmng/ruleUpdate.html','true','/p2p-webapp/js/credit/ruleUpdate.js','"+paramsStr+"');\"></span>";
+					   return "<span name='ruleEditSpan' class='ui-icon-edit' onclick=\"addTabItem('ruleTab','ruleUpdate','规则修改','/p2p-webapp/page/systemmng/ruleUpdate.html','true','/p2p-webapp/js/credit/ruleUpdate.js','"+paramsStr+"');\"></span>";
 					   
 					}
 				},
-				{name:'ruleId', index:'ruleId',hidden:true,"sortable":false},
-				{name:'ruleName', index:'ruleName',align:'center',"sortable":false},
-				{name:'enable', index:'enable',align:'center',"sortable":false,formatter:"select", editoptions:{value:"0:不可用;1:可用"}},
+				{name:'rule_id', index:'rule_id',hidden:true,"sortable":false},
+				{name:'rule_name', index:'rule_name',align:'center',"sortable":false},
+				{name:'state', index:'state',align:'center',"sortable":false,formatter:"select", editoptions:{value:"0:不可用;1:可用"}},
 				{name:'created_by', index:'created_by',align:'center',"sortable":false},
 				{name:'created_date', index:'created_date',align:'center',"sortable":false},
 				{name:'last_updated_by', index:'last_updated_by',align:'center',"sortable":false},
@@ -56,7 +56,7 @@ $(function(){
         var rulename = $("input[name='rulename']").val();
         var request_data={};
         if(rolename){
-        	request_data.rulename=rulename;
+        	request_data.rule_name=rulename;
         }
         $("#ruleListGrid").jqGrid('setGridParam',{  
             datatype:'json',  
@@ -81,7 +81,7 @@ $(function(){
         if(ids && ids.length>0){
         	for(var i=0;i<ids.length;i++){
         		var rowData =grid.jqGrid('getRowData',ids[i]);
-        		request_data.push(rowData.ruleId);
+        		request_data.push(rowData.rule_id);
         	}
         	
         }else{
@@ -89,6 +89,6 @@ $(function(){
         	return false;
         }
 		//调用服务
-		//publicSaveAjax("roleService","deleteRoleById",JSON.stringify(request_data),null,null,"#searchRoleListBtn");    	
+		publicSaveAjax("ruleService","deleteRule",JSON.stringify(request_data),null,null,"#searchRuleListBtn");    	
     });
 })

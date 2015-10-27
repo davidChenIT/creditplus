@@ -236,6 +236,6 @@ $(function(){
     	}
     	request_data.demensionList = grid_data;
     	
-		//publicSaveAjax("userService","addUser",JSON.stringify(request_data),"userTab","userCreate","#searchUserListBtn");
+		publicSaveAjax("ruleService","insertRule",JSON.stringify(request_data),"ruleTab","ruleCreate","#searchRuleListBtn");
     });    
 })
