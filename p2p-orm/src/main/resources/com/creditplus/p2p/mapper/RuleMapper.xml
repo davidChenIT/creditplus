@@ -17,7 +17,7 @@
 	</select>
 	
 	<select id="getRulesListWithPage" parameterType="java.util.Map" resultType="java.util.Map">
-		select rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark from p2p.rule_t 
+		select * from p2p.rule_t 
 		where state=1
 		<if test="rule_name!= null">
 			AND rule_name = #{rule_name}
@@ -28,7 +28,7 @@
 	</select>
 
 	<select id="getDimensionListByRuleId" parameterType="java.util.Map" resultType="java.util.Map">
-		select t.dis_id,t.rule_id,r.rule_name,t.table_name,t.column_name,t.semanteme,t.value,t.arithmetic,t.created_by,t.created_date,t.last_updated_by,t.last_updated_date,t.remark 
+		select t.dis_id,t.rule_id,r.rule_name,t.table_name,t.column_name,t.semanteme,t.dis_value,t.arithmetic,dis_sql,dis_type,t.created_by,t.created_date,t.last_updated_by,t.last_updated_date,t.remark 
 		from dimension_t t left join rule_t r on t.rule_id=r.rule_id 
 		where r.state=1
 		<if test="rule_id!= null">
@@ -36,6 +36,9 @@
 		</if>
 		<if test="table_name!= null">
 			AND t.table_name = #{table_name}
+		</if>
+		<if test="dis_type!= null">
+			AND t.dis_type = #{dis_type}
 		</if>
 		<if test="column_name!= null">
 			AND t.column_name = #{column_name}
@@ -46,15 +49,20 @@
 	</select>
 	
 	
-   <insert id="insertRule" parameterType="java.util.List">
+   <!-- <insert id="insertRule" parameterType="java.util.List">
        insert into rule_t(rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark)
        	values
 	    <foreach collection="list" item="item" index="index" separator="," >  
 	       (#{item.rule_id},#{item.rule_name},#{item.state},#{item.created_by},sysdate(),#{item.last_updated_by},sysdate(),#{item.remark})  
 	    </foreach>
+    </insert> -->
+    
+   <insert id="insertRule" parameterType="java.util.Map">
+       insert into rule_t(rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark)
+		values(rule_id,rule_name,state,created_by,sysdate(),last_updated_by,sysdate(),remark)  
     </insert>
     
-      <insert id="insertDimension" parameterType="java.util.List">
+      <insert id="insertDimension" parameterType="java.util.Map">
        insert into dimension_t(dis_id,rule_id,table_name,column_name,semanteme,dis_value,arithmetic,dis_sql,dis_type,created_by,created_date,last_updated_by,last_updated_date,remark)
        	values
 	    <foreach collection="list" item="item" index="index" separator="," >  

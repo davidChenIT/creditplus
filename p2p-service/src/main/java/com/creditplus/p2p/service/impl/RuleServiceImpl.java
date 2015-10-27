@@ -1,11 +1,14 @@
 package com.creditplus.p2p.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.creditplus.p2p.common.constant.Constant;
+import com.creditplus.p2p.common.util.CheckParamUtil;
+import com.creditplus.p2p.common.util.CommonUtil;
 import com.creditplus.p2p.dao.RuleDao;
 import com.creditplus.p2p.model.PageVO;
 import com.creditplus.p2p.page.PageUtil;
@@ -38,8 +41,8 @@ public class RuleServiceImpl implements RuleService{
 	 * @param rule_id
 	 * @return
 	 */
-	public List<Map> getDimensionListByRuleId(Integer rule_id) {
-		return ruleDao.getDimensionListByRuleId(rule_id);
+	public List<Map> getDimensionListByRuleId(Map  dimensionMap) {
+		return ruleDao.getDimensionListByRuleId(dimensionMap);
 	}
 
 	/* 
@@ -60,22 +63,57 @@ public class RuleServiceImpl implements RuleService{
 			ruleDao.deleteDimension(idList);
 	}
 
-	/* 
-	 * @param dataList
-	 */
-	public void insertRule(List<Map<String, Object>> dataList) {
-		if(dataList!=null && dataList.size()>0)
-			ruleDao.insertRule(dataList);
-	}
 
 	/* 
 	 * @param dataList
 	 */
 	public void insertDimension(List<Map<String, Object>> dataList) {
-		if(dataList!=null && dataList.size()>0)
-			ruleDao.insertDimension(dataList);
+		if(dataList!=null && dataList.size()>0){
+			for(Map dimenMap:dataList){
+				initParamMap(dimenMap);
+			}
+			
+			Map dataMap=new HashMap();
+			dataMap.put("list", dataList);
+			ruleDao.insertDimension(dataMap);
+		}
+	}
+
+	/* 
+	 * @param ruleMap
+	 * @param dimensionList
+	 */
+	public void insertRule(Map ruleMap, List dimensionList) {
+		if(ruleMap!=null && ruleMap.size()>0){
+			initParamMap(ruleMap);
+			ruleDao.insertRule(ruleMap);
+		}
+		insertDimension(dimensionList);
 	}
 
 	
+	public Map initParamMap(Map paramMap){
+		if(paramMap==null)
+			paramMap=new HashMap();
+		paramMap.putAll(getPublicInfoMap());
+		return paramMap;
+	}
+	
+	private Map getPublicInfoMap(){
+		Map publicMap=new HashMap();
+		publicMap.put("last_updated_by", CommonUtil.getCurrentUser());
+		return publicMap;
+	}
+
+	/* 
+	 * @param ruleMap
+	 * @param dimensionList
+	 * @throws Exception
+	 */
+	public void updateRule(Map ruleMap, List dimensionList) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

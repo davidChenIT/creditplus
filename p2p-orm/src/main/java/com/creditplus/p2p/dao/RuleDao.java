@@ -9,7 +9,7 @@ public interface RuleDao {
 	
 	List<Map> getRulesListWithPage(Map<String, Object> paramMap);
 	
-	List<Map> getDimensionListByRuleId(Integer rule_id);
+	List<Map> getDimensionListByRuleId(Map dimensionMap);
 	
 	void deleteRule(List<Integer> idList);
 	
@@ -17,8 +17,8 @@ public interface RuleDao {
 	
 	void deleteDimensionByRuleId(List<Integer> idList);
 
-	void insertRule(List<Map<String, Object>> dataList);
+	void insertRule(Map ruleMap);
 	
-	void insertDimension(List<Map<String, Object>> dataList);
+	void insertDimension(Map<String, Object> dataMap);
 	
 }
