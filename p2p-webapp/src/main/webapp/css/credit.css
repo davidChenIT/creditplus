@@ -1032,6 +1032,11 @@ label {
   /**white-space: nowrap;*/
 }
 
+/**蓝色字体的label*/
+.label-blue{
+	color:blue;
+}
+
 /**红色字体的label*/
 .label-red{
 	color:red;
@@ -1042,7 +1047,6 @@ label {
 	color:red;
 	font-style: oblique;
 }
-
 
 
 @media (min-width: 768px) {

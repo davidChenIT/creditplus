@@ -19,6 +19,8 @@ $(function(){
 			var userTemplate = '<div id="'+userDivIdx+'">'+userDom+'</div>';
 			setValues("applyUserUrgentConnectionUserInfoDiv", userInfoList[i], userTemplate);
 			setValues(userDivIdx,userInfoList[i]);
+			//渲染下拉框
+			selectRender(userDivIdx);
 		});
 	}
 	//构造grid

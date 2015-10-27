@@ -97,7 +97,7 @@
 						</label>
 						<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-					 		<span name="apply_state" widget="dropdown" istext="true" dictionary_type="state"></span>
+					 		<span name="apply_state" widget="dropdown" istext="true" dictionary_type="apply_state"></span>
 						</div>
 						</div>
 				</div>
@@ -214,7 +214,9 @@
 						</label>
 						<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-					 		<input name="thnic_v" type="text" validtion="required">
+							<select name="thnic_v" widget="dropdown" dictionary_type="d_nation" validtion="required">
+								<option value="">请选择</option>
+							</select>
 						</div>
 						</div>
 				</div>
@@ -354,12 +356,30 @@
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
 						<div class="credit-label lable-red-oblique">
+							当前居住省份验证
+						</div>
+					</label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="credit-input">
+							<select name="current_province_v" widget="dropdown" dictionary_type="d_province">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="credit-spacecontrol col-xs-12 col-sm-4">
+				<div class="row">
+					<label class="col-xs-12 col-sm-3">
+						<div class="credit-label lable-red-oblique">
 							当前居住城市验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input name="current_city_v" type="text">
+							<select name="current_city_v" widget="dropdown" dictionary_type="d_city">
+								<option value="">请选择</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -413,7 +433,7 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label lable-blue">
 							公司电话属地
 						</div>
 					</label>
@@ -614,7 +634,7 @@
 		<!-- 申请人紧急联络人 -->
 		<div class="row" id="applyUserUrgentConnectionUserInfoDiv">
 			<h3>申请人紧急联络人</h3>
-			<div class="connection-user">
+			<div class="connection-user" id="user_temp">
 				<div class="credit-spacecontrol col-xs-12 col-sm-2">
 					<div class="row">
 						<label class="col-xs-12 col-sm-4">
@@ -661,15 +681,17 @@
 				<div class="credit-spacecontrol col-xs-12 col-sm-2">
 					<div class="row">
 						<label class="col-xs-12 col-sm-5">
-							<div class="credit-label lable-red-oblique">
+							<div class="credit-label label-blue">
 								联系人电话属地
 							</div>
 						</label>
 						<div class="col-xs-12 col-sm-7">
 							<div class="credit-input">
-								<select name="mobile_address">
-									<option value="SXZ">深圳</option>
-									<option value="CAN">广州</option>
+								<select name="mobile_address_province" widget="dropdown" dictionary_type="d_province" style="width: 48%;">
+									<option value="">请选择</option>
+								</select>
+								<select name="mobile_address_city" widget="dropdown" dictionary_type="d_city" style="width: 48%;">
+									<option value="">请选择</option>
 								</select>
 							</div>
 						</div>
@@ -763,7 +785,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<select name="certificate_type_v" widget="dropdown" dictionary_type="certificate_type">
+							<select name="certificate_type_v" widget="dropdown" dictionary_type="d_certificate_type">
 								<option value="">请选择</option>
 							</select>
 						</div>

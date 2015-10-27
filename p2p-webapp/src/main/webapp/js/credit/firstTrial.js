@@ -6,7 +6,6 @@ $(function(){
 //
 //	 urgentContactorService   getListByUserId 查询紧急连接人{user_id=“”}
 	
-	
 	//获取tab页传入的参数，并调用服务
 	debugger;
 	var paramsObj=$("div[name='firstTrialTab']").find("li[tabid='firstTrial']").data();
@@ -15,7 +14,7 @@ $(function(){
 	var queryFirstTrialDetaiParmsStr=JSON.stringify({"loan_id":loan_id,"approve_content":"开始初审","apply_state":2});
 	var resultData = publicQueryInfoAjax("loanOrderService","getCreditFirstTrialDetailByLoanId",queryFirstTrialDetaiParmsStr,"firstTrial");
 	if(resultData.apply_state != 3 && resultData.apply_state != 5)
-		$("[name='firstTrialBtn']").show()
+		$("[name='firstTrialBtn']").show();
 	//查询用户紧急联系人
 	var user_id=paramsObj.user_id || "";
 	var userInfoList=publicQueryInfoAjax("urgentContactorService","getListByUserId",JSON.stringify({"user_id":user_id}));
@@ -29,7 +28,9 @@ $(function(){
 			var userDivIdx = "connectionUserIdx" + i;
 			var userTemplate = '<div id="'+userDivIdx+'">'+userDom+'</div>';
 			setValues("applyUserUrgentConnectionUserInfoDiv",userInfoList[i],userTemplate);
-			setValues(userDivIdx,userInfoList[i]);
+			setValues(userDivIdx, userInfoList[i]);
+			//渲染下拉框
+			selectRender(userDivIdx);
 		});
 	}
 	//加载审批日志grid

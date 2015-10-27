@@ -42,21 +42,20 @@ $(function(){
 				{name:'review_assign_user', index:'review_assign_user',align:'center',"sortable":false}
 			],
 			pager: '#firstTrialListPager',
-			rowNum:10,
-			rowList:[10,20,30],
+			rowNum:1,
+			rowList:[1,2,3],
 			viewrecords: true,
 			sortable:false,
 			emptyrecords:"没有数据！",
 			jsonReader : {  
-		
-		         root:"griddata",  
-		
-		         page: "currpage",  
-		
-		         total: "totalpages",  
-		
-		         records: "totalrecords"
-		
+		        root:"griddata", 
+		        page: "currpage", 
+		        total: "totalpages",
+		        records: "totalrecords"
+		    },
+		    onPaging:function(pgButton){
+		    	var request_data = getValue("conditionDiv");
+		    	gridOnPaging(pgButton, request_data);
 		    }
 	});
 	
