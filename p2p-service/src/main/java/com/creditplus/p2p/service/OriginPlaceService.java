@@ -17,6 +17,6 @@ public interface OriginPlaceService {
 	
 	List<Map> queryProvince();
 	
-	List<Map> queryCityByProvince(@ParamName("province")String province);
+	List<Map> queryCityByProvince(@ParamName("type")String province);
 
 }
