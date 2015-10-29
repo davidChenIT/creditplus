@@ -81,7 +81,7 @@ $(function(){
         if(ids && ids.length>0){
         	for(var i=0;i<ids.length;i++){
         		var rowData =grid.jqGrid('getRowData',ids[i]);
-        		request_data.push(rowData.rule_id);
+        		request_data.push(parseInt(rowData.rule_id));
         	}
         	
         }else{
