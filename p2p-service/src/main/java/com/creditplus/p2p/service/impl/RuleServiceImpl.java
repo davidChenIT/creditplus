@@ -58,21 +58,6 @@ public class RuleServiceImpl implements RuleService{
 
 
 	/* 
-	 * @param dataList
-	 */
-	public void insertDimension(List<Map> dataList) {
-		if(dataList!=null && dataList.size()>0){
-			for(Map dimenMap:dataList){
-				initParamMap(dimenMap);
-			}
-			
-			Map dataMap=new HashMap();
-			dataMap.put("list", dataList);
-			ruleDao.insertDimension(dataMap);
-		}
-	}
-
-	/* 
 	 * @param ruleMap
 	 * @param dimensionList
 	 */
@@ -100,6 +85,7 @@ public class RuleServiceImpl implements RuleService{
 			throw new Exception("角色已删除！");
 		CheckParamUtil.checkKey(ruleMap, Constant.RULE_ID);
 		Integer rule_id=(Integer) ruleMap.get(Constant.RULE_ID);
+		initParamMap(ruleMap);
 		ruleDao.updateRule(ruleMap);
 		if(dimensionList!=null && dimensionList.size()>0){
 			this.saveDimension(rule_id, dimensionList);
@@ -121,8 +107,7 @@ public class RuleServiceImpl implements RuleService{
 		ruleDao.deleteDimensionByRuleId(rule_id);
 		if(dataList!=null && dataList.size()>0){
 			String currentUser=CommonUtil.getCurrentUser();
-			for(int i=0;i<dataList.size();i++){
-				Map dataMap=new HashMap();
+			for(Map dataMap:dataList){
 				dataMap.put("last_updated_by",currentUser);
 				dataMap.put(Constant.RULE_ID, rule_id);
 			}
