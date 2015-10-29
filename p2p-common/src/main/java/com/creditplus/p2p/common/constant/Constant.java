@@ -28,6 +28,7 @@ public class Constant {
 	public static final String VERSION="version";
 	public static final String ID_NUM="id_num";
 	public static final String RULE_ID="rule_id";
+	public static final String RULE_NAME="rule_name";
 	public static final String DIS_ID="dis_id";
 	
 	

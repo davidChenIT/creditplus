@@ -13,13 +13,11 @@ public interface RuleService {
 	
 	List<Map> getDimensionListByRuleId(Map dimensionMap);
 	
-	void deleteRule(List<Integer> idList);
+	void deleteRuleById(List<Integer> idList);
 	
-	void deleteDimension(List<Integer> idList);
+	void deleteDimensionById(List<Integer> idList);
 
 	void insertRule(@ParamName("ruleInfo")Map ruleMap,@ParamName("dimensionList")List<Map> dimensionList);
-	
-	void insertDimension(List<Map> dataList);
 	
 	void updateRule(@ParamName("ruleInfo")Map ruleMap,@ParamName("dimensionList")List<Map> dimensionList) throws Exception;
 }

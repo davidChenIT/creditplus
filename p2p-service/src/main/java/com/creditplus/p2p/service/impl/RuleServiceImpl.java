@@ -20,10 +20,6 @@ public class RuleServiceImpl implements RuleService{
 	@Autowired
 	RuleDao ruleDao;
 
-	/* 
-	 * @param paramMap
-	 * @return
-	 */
 	public PageVO getRulesListWithPage(Map paramMap) {
 		int currentPage=1,pageSize=10;
 		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
@@ -38,28 +34,25 @@ public class RuleServiceImpl implements RuleService{
 		return pageVo;
 	}
 
-	/* 
-	 * @param rule_id
-	 * @return
-	 */
+	
 	public List<Map> getDimensionListByRuleId(Map  dimensionMap) {
 		return ruleDao.getDimensionListByRuleId(dimensionMap);
 	}
 
-	/* 
-	 * @param idList
-	 */
-	public void deleteRule(List<Integer> idList) {
+	
+	public void deleteRuleById(List<Integer> idList) {
 		if(idList!=null && idList.size()>0){
 			ruleDao.deleteRule(idList);
-			ruleDao.deleteDimensionByRuleId(idList);
+			for(int i=0;i<idList.size();i++){
+				ruleDao.deleteDimensionByRuleId(idList.get(i));
+			}
 		}
 	}
 
 	/* 
 	 * @param idList
 	 */
-	public void deleteDimension(List<Integer> idList) {
+	public void deleteDimensionById(List<Integer> idList) {
 		if(idList!=null && idList.size()>0)
 			ruleDao.deleteDimension(idList);
 	}
@@ -89,7 +82,12 @@ public class RuleServiceImpl implements RuleService{
 			initParamMap(ruleMap);
 			ruleDao.insertRule(ruleMap);
 		}
-		insertDimension(dimensionList);
+		
+		if(dimensionList!=null && dimensionList.size()>0){
+			Map resultMap=ruleDao.findByName((String) ruleMap.get(Constant.RULE_NAME));
+			Integer rule_id=(Integer) resultMap.get(Constant.RULE_ID);
+			saveDimension(rule_id, dimensionList);
+		}
 	}
 
 	
@@ -112,6 +110,11 @@ public class RuleServiceImpl implements RuleService{
 	 * @throws Exception
 	 */
 	public void updateRule(Map ruleMap, List<Map> dimensionList) throws Exception {
+		
+		if(ruleMap!=null && ruleMap.size()>0){
+				
+		}
+		
 		String currentUser=CommonUtil.getCurrentUser();
 		if(dimensionList!=null && dimensionList.size()>0){
 			List<Integer> updateList=new ArrayList<Integer>();
@@ -125,16 +128,7 @@ public class RuleServiceImpl implements RuleService{
 			insertDimension(dimensionList);
 		}
 		
-		if(ruleMap!=null && ruleMap.size()>0){
-			List<Integer> deleteList=new ArrayList<Integer>();
-			Object rule_id=ruleMap.get(Constant.RULE_ID);
-			if(rule_id!=null){
-				deleteList.add((Integer) rule_id);
-				initParamMap(ruleMap);
-				ruleDao.deleteRule(deleteList);
-				ruleDao.insertRule(ruleMap);
-			}
-		}
+		
 	}
 
 	/* 
@@ -143,6 +137,25 @@ public class RuleServiceImpl implements RuleService{
 	 */
 	public Map getRuleDetailById(Integer rule_id) {
 		return ruleDao.getRuleDetailById(rule_id);
+	}
+
+	/* 
+	 * @param rule_id
+	 * @param dataList
+	 */
+	private void saveDimension(Integer rule_id, List<Map> dataList) {
+		ruleDao.deleteDimensionByRuleId(rule_id);
+		if(dataList!=null && dataList.size()>0){
+			String currentUser=CommonUtil.getCurrentUser();
+			for(int i=0;i<dataList.size();i++){
+				Map dataMap=new HashMap();
+				dataMap.put("last_updated_by",currentUser);
+				dataMap.put(Constant.RULE_ID, rule_id);
+			}
+			Map dimensionMap=new HashMap();
+			dimensionMap.put("list", dataList);
+			ruleDao.insertDimension(dimensionMap);
+		}
 	}
 
 	
