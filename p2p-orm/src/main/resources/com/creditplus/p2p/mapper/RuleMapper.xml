@@ -77,7 +77,7 @@
  		</foreach>  
     </delete>
     
-    <update id="updateRule" parameterMap="java.util.Map">
+    <update id="updateRule" parameterType="java.util.Map">
     	update rule_t  set  rule_name = #{rule_name}, state = #{state},  last_updated_by = #{last_updated_by}, last_updated_date = sysdate(), remark = #{remark} 
     	where rule_id = #{rule_id}
     </update>

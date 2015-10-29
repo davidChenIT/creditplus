@@ -512,7 +512,8 @@ function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
 			resultData=data;
 		},error:function(error){
 			loadingBox.hideLoading();
-			var errorStr=$.parseJSON(error.responseText).cause.message;
+			var errorObj=$.parseJSON(error.responseText);
+			var errorStr=errorObj.cause?errorObj.cause.message:errorObj.message;
 			messageBox.createMessageDialog("提示",errorStr,"","","error");
 		}
 	});
@@ -548,7 +549,8 @@ function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeI
 			$(searchBtn).click();
 		},error:function(error){
 			loadingBox.hideLoading(500);
-			var errorStr=$.parseJSON(error.responseText).cause.message;
+			var errorObj=$.parseJSON(error.responseText);
+			var errorStr=errorObj.cause?errorObj.cause.message:errorObj.message;
 			messageBox.createMessageDialog("提示",errorStr,"","","error");
 		}
 	});
@@ -728,7 +730,8 @@ function selectRender(formDivId){
 					}
 				}
 			},error:function(error){
-				var errorStr=$.parseJSON(error.responseText).cause.message;
+				var errorObj=$.parseJSON(error.responseText);
+				var errorStr=errorObj.cause?errorObj.cause.message:errorObj.message;
 				messageBox.createMessageDialog("提示",errorStr,"","","error");
 			}
 		});

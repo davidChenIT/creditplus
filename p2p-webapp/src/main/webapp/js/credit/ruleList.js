@@ -89,6 +89,6 @@ $(function(){
         	return false;
         }
 		//调用服务
-		publicSaveAjax("ruleService","deleteRule",JSON.stringify(request_data),null,null,"#searchRuleListBtn");    	
+		publicSaveAjax("ruleService","deleteRuleById",JSON.stringify(request_data),null,null,"#searchRuleListBtn");    	
     });
 })
