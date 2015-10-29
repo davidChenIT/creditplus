@@ -55,7 +55,7 @@ $(function(){
     $("#searchRuleListBtn").click(function(){
         var rulename = $("input[name='rulename']").val();
         var request_data={};
-        if(rolename){
+        if(rulename){
         	request_data.rule_name=rulename;
         }
         $("#ruleListGrid").jqGrid('setGridParam',{  
