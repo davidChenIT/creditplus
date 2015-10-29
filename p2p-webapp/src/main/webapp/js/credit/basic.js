@@ -803,3 +803,47 @@ function gridOnPaging(pgButton,grid,pagerDiv,request_data){
 		rowNum:rows
 	}).trigger("reloadGrid");
 }
+
+
+/**
+ * 城市级联数据服务请求
+ * @param e 省下拉框
+ * @param value 下拉框值
+ */
+function cascadeCity(e, value){
+	var trigger = $(e).attr("trigger");
+	//city dom
+	var cityDrop = $("#"+trigger);
+	var moduleName = $(cityDrop).attr("serviceModule");
+	var methodName = $(cityDrop).attr("serviceMethod");
+	var valueField = $(cityDrop).attr("valueField");
+	var textField = $(cityDrop).attr("textField");
+	var paramsObj = {};
+	//参数
+	paramsObj.type = value;
+	//调用数据字典服务
+	$.ajax({ 
+		url: serviceAddress,
+		datatype:'json',
+		method:"post",
+		data:{"module" : moduleName,
+			"method" : methodName,
+			"request_data" : JSON.stringify(paramsObj)
+		},			
+		success: function(data){
+			//清空下拉框
+			$(cityDrop).html();
+			//赋值
+			if(data && data.length>0){
+				for(var i=0;i<data.length;i++){
+					$(cityDrop).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
+				}
+			}else{
+				$(cityDrop).append('<option value="">请选择</option>');
+			}
+		},error:function(error){
+			var errorStr=$.parseJSON(error.responseText).cause.message;
+			messageBox.createMessageDialog("提示",errorStr,"","","error");
+		}
+	});
+}
