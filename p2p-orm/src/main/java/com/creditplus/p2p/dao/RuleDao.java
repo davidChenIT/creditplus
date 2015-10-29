@@ -11,15 +11,15 @@ public interface RuleDao {
 	
 	List<Map> getRulesListWithPage(Map<String, Object> paramMap);
 	
-	List<Map> getDimensionListByRuleId(Map dimensionMap);
+	List<Map> getDimensionListByRuleId(Integer rule_id);
 	
 	Map findByName(String rule_name);
 
-	void deleteRule(List<Integer> idList);
+	void deleteRuleById(List<Integer> idList);
 	
-	void updateRule(Integer rule_id);
+	void updateRule(Map ruleMap);
 	
-	void deleteDimension(List<Integer> idList);
+	void deleteDimensionById(List<Integer> idList);
 	
 	void deleteDimensionByRuleId(Integer rule_id);
 

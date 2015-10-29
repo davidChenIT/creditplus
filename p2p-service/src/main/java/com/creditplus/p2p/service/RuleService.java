@@ -11,7 +11,7 @@ public interface RuleService {
 	
 	Map getRuleDetailById(@ParamName("rule_id")Integer rule_id);
 	
-	List<Map> getDimensionListByRuleId(Map dimensionMap);
+	List<Map> getDimensionListByRuleId(@ParamName("rule_id")Integer rule_id);
 	
 	void deleteRuleById(List<Integer> idList);
 	

@@ -41,25 +41,10 @@
 		</if>
 	</select>
 
-	<select id="getDimensionListByRuleId" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="getDimensionListByRuleId" parameterType="Integer" resultType="java.util.Map">
 		select t.dis_id,t.rule_id,r.rule_name,t.table_name,t.column_name,t.semanteme,t.dis_value,t.arithmetic,dis_sql,dis_type,t.created_by,t.created_date,t.last_updated_by,t.last_updated_date,t.remark 
 		from dimension_t t left join rule_t r on t.rule_id=r.rule_id 
-		where r.state=1
-		<if test="rule_id!= null">
-			AND t.rule_id = #{rule_id}
-		</if>
-		<if test="table_name!= null">
-			AND t.table_name = #{table_name}
-		</if>
-		<if test="dis_type!= null">
-			AND t.dis_type = #{dis_type}
-		</if>
-		<if test="column_name!= null">
-			AND t.column_name = #{column_name}
-		</if>
-		<if test="created_by!= null">
-			AND t.created_by = #{created_by}
-		</if>
+		where t.rule_id=#{rule_id}
 	</select>
 	
 	
@@ -84,7 +69,7 @@
 	    </foreach>
     </insert>
     
-    <delete id="deleteRule" parameterType="java.util.List">
+    <delete id="deleteRuleById" parameterType="java.util.List">
     		delete from rule_t  where rule_id in
     	<foreach collection="list" item="ruleId" index="index"
             open="(" close=")" separator=",">        
@@ -92,12 +77,12 @@
  		</foreach>  
     </delete>
     
-    <update id="updateRule" parameterMap="Integer">
+    <update id="updateRule" parameterMap="java.util.Map">
     	update rule_t  set  rule_name = #{rule_name}, state = #{state},  last_updated_by = #{last_updated_by}, last_updated_date = sysdate(), remark = #{remark} 
     	where rule_id = #{rule_id}
     </update>
     
-    <delete id="deleteDimension" parameterType="java.util.List">
+    <delete id="deleteDimensionById" parameterType="java.util.List">
     	delete from dimension_t  where dis_id in
     	<foreach collection="list" item="dimeId" index="index"
             open="(" close=")" separator=",">        
