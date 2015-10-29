@@ -8,6 +8,9 @@
 	<select id="getRulesList" parameterType="java.util.Map" resultType="java.util.Map">
 		select rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark from p2p.rule_t 
 		where state=1
+		<if test="rule_id!= null">
+			AND rule_id = #{rule_id}
+		</if>
 		<if test="rule_name!= null">
 			AND rule_name = #{rule_name}
 		</if>
@@ -20,6 +23,12 @@
 		select rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark from p2p.rule_t 
 		where rule_id=#{rule_id}
 	</select>
+	
+	<select id="findByName" parameterType="String" resultType="java.util.Map">
+		select rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark from p2p.rule_t 
+		where rule_name=#{rule_name}
+	</select>
+	
 	
 	<select id="getRulesListWithPage" parameterType="java.util.Map" resultType="java.util.Map">
 		select * from p2p.rule_t 
@@ -64,7 +73,7 @@
     
    <insert id="insertRule" parameterType="java.util.Map">
        insert into rule_t(rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark)
-		values(rule_id,rule_name,state,created_by,sysdate(),last_updated_by,sysdate(),remark)  
+		values(#{rule_id},#{rule_name},#{state},#{last_updated_by},sysdate(),#{last_updated_by},sysdate(),#{remark})  
     </insert>
     
       <insert id="insertDimension" parameterType="java.util.Map">
@@ -83,6 +92,11 @@
  		</foreach>  
     </delete>
     
+    <update id="updateRule" parameterMap="Integer">
+    	update rule_t  set  rule_name = #{rule_name}, state = #{state},  last_updated_by = #{last_updated_by}, last_updated_date = sysdate(), remark = #{remark} 
+    	where rule_id = #{rule_id}
+    </update>
+    
     <delete id="deleteDimension" parameterType="java.util.List">
     	delete from dimension_t  where dis_id in
     	<foreach collection="list" item="dimeId" index="index"
@@ -91,13 +105,17 @@
  		</foreach>  
     </delete>
     
-     <delete id="deleteDimensionByRuleId" parameterType="java.util.List">
+    <delete id="deleteDimensionByRuleId" parameterType="Integer">
+    	delete from dimension_t  where rule_id=#{rule_id}
+    </delete>
+    
+    <!--  <delete id="deleteDimensionByRuleId" parameterType="java.util.List">
     	delete from dimension_t  where rule_id in
     	<foreach collection="list" item="ruleId" index="index"
             open="(" close=")" separator=",">        
          	#{ruleId} 
  		</foreach>  
-    </delete>
+    </delete> -->
 	
 	
 </mapper>

@@ -13,14 +13,19 @@ public interface RuleDao {
 	
 	List<Map> getDimensionListByRuleId(Map dimensionMap);
 	
+	Map findByName(String rule_name);
+
 	void deleteRule(List<Integer> idList);
+	
+	void updateRule(Integer rule_id);
 	
 	void deleteDimension(List<Integer> idList);
 	
-	void deleteDimensionByRuleId(List<Integer> idList);
+	void deleteDimensionByRuleId(Integer rule_id);
 
 	void insertRule(Map ruleMap);
 	
 	void insertDimension(Map<String, Object> dataMap);
+	
 	
 }
