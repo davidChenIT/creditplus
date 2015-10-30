@@ -3,6 +3,8 @@ package com.creditplus.p2p.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.creditplus.p2p.common.constant.Constant;
@@ -11,6 +13,7 @@ import com.creditplus.p2p.dao.CheatInterceptDao;
 import com.creditplus.p2p.dao.CommonInfoDao;
 import com.creditplus.p2p.dao.LoanOrderDao;
 import com.creditplus.p2p.dao.RuleDao;
+import com.creditplus.p2p.service.ApproveLogService;
 import com.creditplus.p2p.service.CheatInterceptService;
 
 public class CheatInterceptServiceImpl implements CheatInterceptService {
@@ -23,6 +26,8 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	CheatInterceptDao cheatInterceptDao;
 	@Autowired
 	LoanOrderDao loanOrderDao;
+	@Autowired
+	ApproveLogService approveLogService;
 	
 	
 	public boolean intercept(Integer user_id,Integer loan_id) {
@@ -30,25 +35,30 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 		List<Map> ruleList=getRuleList();
 		if(ruleList!=null && ruleList.size()>0){
 			for(Map ruleMap:ruleList){
+				String rule_name=(String) ruleMap.get(Constant.RULE_NAME);
 				Integer rule_id=Integer.valueOf(ruleMap.get(Constant.RULE_ID)+"");
+				checkFlag=ruleSqlCheat(ruleMap, loan_id);
+				if(checkFlag){
+					CheatProcess(loan_id, "检查规则sql");
+					break;
+				}
+					
+				
 				List<Map> dimensionList=getDimensionByRuleId(rule_id);
 				if(dimensionList!=null && dimensionList.size()>0){
-					checkFlag=executeChectSql(dimensionList, user_id,loan_id);
+					checkFlag=dimensionCheat(dimensionList, user_id,loan_id);
+					if(checkFlag){
+						CheatProcess(loan_id, "检查规则维度项");
+						break;
+					}
 				}
 			}
 		}
 		return checkFlag;
 	}
 	
-	private List<Map> getRuleList(){
-		return ruleDao.getRulesList(new HashMap());
-	}
 	
-	private List<Map> getDimensionByRuleId(Integer rule_id){
-		return ruleDao.getDimensionListByRuleId(rule_id);
-	}
-	
-	private boolean executeChectSql(List<Map> dismensionList,Integer user_id,Integer loan_id){
+	private boolean dimensionCheat(List<Map> dismensionList,Integer user_id,Integer loan_id){
 		boolean flag=false;
 		if(dismensionList!=null && dismensionList.size()>0){
 			Map sqlMap=new HashMap();
@@ -66,15 +76,37 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 					sbSql.append(arithmetic);
 			}
 			sqlMap.put("sql", sbSql);
-			List<Map> result=commonInfoDao.executeDonamicSQL(sqlMap);
-			Integer total_record=0;
-			if(result!=null && result.size()>0)
-				total_record=(Integer) result.iterator().next().get("total_record");
+			Integer total_record=executeQuerySql(sqlMap);
 			flag=total_record>0?true:false;
 		}
+		
 		System.out.println("=====flag:"+flag);
 		return flag;	
 	} 
+	
+	
+	private boolean ruleSqlCheat(Map ruleMap,Integer loan_id){
+		boolean flag=false;
+		if(ruleMap!=null && ruleMap.size()>0){
+			String rule_sql=(String) ruleMap.get("rule_sql");
+			if(StringUtils.isNotEmpty(rule_sql)){
+				Map sqlMap=new HashMap();
+				String sql=new StringBuilder("select count(1) as total_record from (").append(rule_sql).append(") xt").toString();
+				sqlMap.put("sql", sql);
+				Integer total_record=executeQuerySql(sqlMap);
+				flag=total_record>0?true:false;
+			}
+		}
+		return flag;
+	}
+	
+	private Integer executeQuerySql(Map sqlMap){
+		Integer total_record=0;
+		List<Map> result=commonInfoDao.executeDonamicSQL(sqlMap);
+		if(result!=null && result.size()>0)
+			total_record=Integer.valueOf(result.iterator().next().get("total_record")+"");
+		return total_record;
+	}
 
 	
 	/**
@@ -84,8 +116,9 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	 * @param loan_id
 	 * @return
 		boolean
+	 * @throws Exception 
 	 */
-	private boolean executeChectSqlxxx(Map dismensionMap,Integer user_id,Integer loan_id){
+	private boolean executeChectSqlxxx(Map dismensionMap,Integer user_id,Integer loan_id) throws Exception{
 		String tableName=(String) dismensionMap.get("table_name");
 		String column_name=(String) dismensionMap.get("column_name");
 		String semanteme=(String) dismensionMap.get("semanteme");
@@ -141,9 +174,51 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 			approveMap.put("apply_state", 6);
 			approveMap.put("approve_content", dismensionMap.get("rule_name")+"检查 "+dismensionMap.get("column_name")+" 不通过");
 			approveMap.put("last_updated_by", userName);
-			
+			approveLogService.insertApproveLog(approveMap, false);
 		}
 		return checkFlag;
+	}
+	
+	
+	private void CheatProcess(Integer loan_id,String intercept_cause){
+		String userName=CommonUtil.getCurrentUser();
+		//更新申请单状态
+		Map loanOrderMap=new HashMap();
+		loanOrderMap.put("loan_id", loan_id);
+		loanOrderMap.put("apply_state", 6);
+		loanOrderMap.put("last_updated_by", userName);
+		loanOrderDao.updateLoanOrderByLoanId(loanOrderMap);
+		
+		//插入拦截日志
+		Map cheatMap=new HashMap();
+		cheatMap.put("loan_id", loan_id);
+		cheatMap.put("intercept_source", "system");
+		cheatMap.put("check_item", intercept_cause);
+		cheatMap.put("intercept_cause", intercept_cause);
+		cheatMap.put("last_updated_by", userName);
+		cheatInterceptDao.insertBatch(cheatMap);
+		
+		//插入审批日志
+		Map approveMap=new HashMap();
+		approveMap.put("loan_id", loan_id);
+		approveMap.put("apply_state", 6);
+		approveMap.put("approve_content", intercept_cause);
+		approveMap.put("last_updated_by", userName);
+		try {
+			approveLogService.insertApproveLog(approveMap, false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			//写异常日志表
+		}
+	}
+	
+	
+	private List<Map> getRuleList(){
+		return ruleDao.getRulesList(new HashMap());
+	}
+	
+	private List<Map> getDimensionByRuleId(Integer rule_id){
+		return ruleDao.getDimensionListByRuleId(rule_id);
 	}
 
 }
