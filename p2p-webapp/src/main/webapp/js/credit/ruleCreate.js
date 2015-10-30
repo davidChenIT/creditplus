@@ -22,8 +22,8 @@ $(function(){
 						   return '<input type="checkbox" class="rule-create-sel-cbox">';
 						}
 			    },
-				{name:'business_name',
-					index:'business_name',
+				{name:'table_name',
+					index:'table_name',
 					align:'center',
 					sortable:false,
 					editable:true,
@@ -32,8 +32,8 @@ $(function(){
 					editrules:{required:true},
 					editoptions:{value:"1:xx;2:aa"}
 				},
-				{name:'col_name',
-					index:'col_name',
+				{name:'column_name',
+					index:'column_name',
 					align:'center',
 					sortable:false,
 					editable:true,
@@ -42,8 +42,8 @@ $(function(){
 					editrules:{required:true},
 					editoptions:{value:"id:ID;name:name"}
 				},
-				{name:'semantics_name',
-					index:'semantics_name',
+				{name:'semanteme',
+					index:'semanteme',
 					align:'center',
 					sortable:false,
 					editable:true,
@@ -52,15 +52,15 @@ $(function(){
 					editrules:{required:true},
 					editoptions:{value:"=:=;like:like"}
 				},
-				{name:'value',
-					index:'value',
+				{name:'dis_value',
+					index:'dis_value',
 					align:'center',
 					sortable:false,
 					editable:true,
 					width:"31%"
 				},
-				{name:'versus_operators',
-					index:'versus_operators',
+				{name:'arithmetic',
+					index:'arithmetic',
 					align:'center',
 					sortable:false,
 					editable:true,
@@ -208,23 +208,23 @@ $(function(){
     		var isTrue=true;
     		for(var i=0;i<grid_data.length;i++){
     			var rowObj=grid_data[i];
-    			if(!rowObj.business_name){
+    			if(!rowObj.table_name){
     				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“业务对象”不能为空！","","","warning");
     				isTrue=false;
-    				break;
-    			}else if(!rowObj.col_name){
+    				break;    
+    			}else if(!rowObj.column_name){
     				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“字段”不能为空！","","","warning");
     				isTrue=false;
     				break;
-    			}else if(!rowObj.semantics_name){
+    			}else if(!rowObj.semanteme){
     				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“语义”不能为空！","","","warning");
     				isTrue=false;
     				break;
-    			}else if(!rowObj.value){
+    			}else if(!rowObj.dis_value){
     				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“值”不能为空！","","","warning");
     				isTrue=false;
     				break;
-    			}else if(!rowObj.versus_operators){
+    			}else if(!rowObj.arithmetic){
     				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“与或运算”不能为空！","","","warning");
     				isTrue=false;
     				break;
@@ -234,7 +234,8 @@ $(function(){
     			return false;
     		}
     	}
-    	request_data.demensionList = grid_data;
+    	
+    	request_data.dimensionList = grid_data;
     	
 		publicSaveAjax("ruleService","insertRule",JSON.stringify(request_data),"ruleTab","ruleCreate","#searchRuleListBtn");
     });    

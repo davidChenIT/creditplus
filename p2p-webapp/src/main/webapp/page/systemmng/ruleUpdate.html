@@ -1,7 +1,7 @@
 <div tabid="ruleUpdate" class="tabs-body-item creditPageContext credit-validator">
 	<div>
 		<h3>规则信息</h3>	
-		<div class="row" name="ruleUpdateForm">
+		<div class="row" id="ruleUpdateForm" name="ruleUpdateForm">
 			<div class="credit-spacecontrol col-xs-12 col-sm-6">
 				<div class="row" >
 					<label class="col-xs-12 col-sm-3">
@@ -11,7 +11,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<span name="rulename" >wmt_test</span>
+							<span name="rule_name" ></span>
 						</div>
 					</div>
 				</div>
@@ -25,7 +25,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select name="enable" validtion='required'>
+							<select name="state" validtion='required'>
 								<option value="1"  selected="selected">可用</option>
 								<option value="0" >不可用</option>
 							</select>						

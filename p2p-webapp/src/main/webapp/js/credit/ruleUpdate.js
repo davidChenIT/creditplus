@@ -1,13 +1,17 @@
 //页面初始化加载函数
 $(function(){
+	debugger;
 	var paramsObj=$("div[name='ruleTab']").find("li[tabid='ruleUpdate']").data();
-	var ruleId=paramsObj.ruleId || "";
-	var created_by = "";
-	var created_date="";
+	var ruleId=paramsObj.rule_id || "";
 	//查询详细信息，并赋值
+	publicQueryInfoAjax("ruleService","getRuleDetailById",JSON.stringify({"rule_id":ruleId}),"ruleUpdateForm");
 	
 	//构造grid
     $("#ruleList4UpdateGrid").jqGrid({
+	    	url:serviceAddress,
+			datatype: 'json',
+			postData:{"module":"ruleService","method":"getDimensionListByRuleId","request_data":JSON.stringify({"rule_id":ruleId})},
+			mtype: 'POST',
 			autowidth:true,
 			colNames:['<input type="checkbox" class="rule-update-selall-cbox">',"<span style='color:red;'>*</span>业务对象","<span style='color:red;'>*</span>字段","<span style='color:red;'>*</span>语义","<span style='color:red;'>*</span>值","<span style='color:red;'>*</span>与或运算"],
 			colModel :[
@@ -22,8 +26,8 @@ $(function(){
 						   return '<input type="checkbox" class="rule-update-sel-cbox">';
 						}
 			    },
-				{name:'business_name',
-					index:'business_name',
+			    {name:'table_name',
+					index:'table_name',
 					align:'center',
 					sortable:false,
 					editable:true,
@@ -32,8 +36,8 @@ $(function(){
 					editrules:{required:true},
 					editoptions:{value:"1:xx;2:aa"}
 				},
-				{name:'col_name',
-					index:'col_name',
+				{name:'column_name',
+					index:'column_name',
 					align:'center',
 					sortable:false,
 					editable:true,
@@ -42,8 +46,8 @@ $(function(){
 					editrules:{required:true},
 					editoptions:{value:"id:ID;name:name"}
 				},
-				{name:'semantics_name',
-					index:'semantics_name',
+				{name:'semanteme',
+					index:'semanteme',
 					align:'center',
 					sortable:false,
 					editable:true,
@@ -52,15 +56,15 @@ $(function(){
 					editrules:{required:true},
 					editoptions:{value:"=:=;like:like"}
 				},
-				{name:'value',
-					index:'value',
+				{name:'dis_value',
+					index:'dis_value',
 					align:'center',
 					sortable:false,
 					editable:true,
 					width:"31%"
 				},
-				{name:'versus_operators',
-					index:'versus_operators',
+				{name:'arithmetic',
+					index:'arithmetic',
 					align:'center',
 					sortable:false,
 					editable:true,
@@ -189,6 +193,8 @@ $(function(){
 		}
 		if(!checkPass){return false;}
 		ruleInfo.remark=$("#ruleUpdateForm").find("[name='remark']").val();
+		ruleInfo.rule_name=$("#ruleUpdateForm").find("[name='rule_name']").text();
+		ruleInfo.rule_id=ruleId;
 		request_data.ruleInfo=ruleInfo;
         //校验grid的数据		
     	var rowids = $("#ruleList4UpdateGrid").jqGrid('getDataIDs');
@@ -211,23 +217,23 @@ $(function(){
     		var isTrue=true;
     		for(var i=0;i<grid_data.length;i++){
     			var rowObj=grid_data[i];
-    			if(!rowObj.business_name){
+    			if(!rowObj.table_name){
     				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“业务对象”不能为空！","","","warning");
     				isTrue=false;
-    				break;
-    			}else if(!rowObj.col_name){
+    				break;    
+    			}else if(!rowObj.column_name){
     				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“字段”不能为空！","","","warning");
     				isTrue=false;
     				break;
-    			}else if(!rowObj.semantics_name){
+    			}else if(!rowObj.semanteme){
     				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“语义”不能为空！","","","warning");
     				isTrue=false;
     				break;
-    			}else if(!rowObj.value){
+    			}else if(!rowObj.dis_value){
     				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“值”不能为空！","","","warning");
     				isTrue=false;
     				break;
-    			}else if(!rowObj.versus_operators){
+    			}else if(!rowObj.arithmetic){
     				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“与或运算”不能为空！","","","warning");
     				isTrue=false;
     				break;
@@ -237,9 +243,9 @@ $(function(){
     			return false;
     		}
     	}
-    	request_data.demensionList = grid_data;
+    	request_data.dimensionList = grid_data;
     	
-		//publicSaveAjax("userService","addUser",JSON.stringify(request_data),"userTab","userCreate","#searchUserListBtn");
+    	publicSaveAjax("ruleService","updateRule",JSON.stringify(request_data),"ruleTab","ruleUpdate","#searchRuleListBtn");
     });   
     
 	
