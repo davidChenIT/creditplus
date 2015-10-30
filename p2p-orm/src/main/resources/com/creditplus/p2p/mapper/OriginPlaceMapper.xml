@@ -9,8 +9,8 @@
 	     select sn as id,province from origin_place group by province
 	</select>
 	
-	<select id="queryCityByProvince" parameterType="Integer" resultType="java.util.Map">
-		select sn as id,city from origin_place where province=#{province} group by city
+	<select id="queryCityByProvince" parameterType="String" resultType="java.util.Map">
+		select sn as id,city from origin_place where province=#{type} group by city
 	</select>
 	
 	

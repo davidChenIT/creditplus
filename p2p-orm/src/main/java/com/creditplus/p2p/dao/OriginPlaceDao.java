@@ -15,6 +15,6 @@ public interface OriginPlaceDao {
 	
 	List<Map> queryProvince();
 	
-	List<Map> queryCityByProvince(String province);
+	List<Map> queryCityByProvince(String type);
 
 }

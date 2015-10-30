@@ -22,18 +22,9 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	CheatInterceptDao cheatInterceptDao;
 	@Autowired
 	LoanOrderDao loanOrderDao;
-	/* 
-	 * @param user_id
-	 * @param loan_id
-	 * @return
-	 */
-	public boolean intercept(Integer user_id, Integer loan_id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	
-	/*public boolean intercept(Integer user_id,Integer loan_id) {
+	public boolean intercept(Integer user_id,Integer loan_id) {
 		boolean checkFlag=false;
 		List<Map> ruleList=getRuleList();
 		if(ruleList!=null && ruleList.size()>0){
@@ -41,10 +32,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 				Integer rule_id=Integer.valueOf(ruleMap.get("rule_id")+"");
 				List<Map> dimensionList=getDimensionByRuleId(rule_id);
 				if(dimensionList!=null && dimensionList.size()>0){
-					for(Map dismensionMap:dimensionList){
-						checkFlag=executeChectSql(dismensionMap, user_id,loan_id);
-						
-					}
+					checkFlag=executeChectSql(dimensionList, user_id,loan_id);
 				}
 			}
 		}
@@ -59,35 +47,44 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 		return ruleDao.getDimensionListByRuleId(rule_id);
 	}
 	
-	private executeChectSql(List<Map> dismensionList,Integer user_id,Integer loan_id){
-		StringBuilder sbSql=new StringBuilder("select count(1) as total_record from ");
+	private boolean executeChectSql(List<Map> dismensionList,Integer user_id,Integer loan_id){
+		boolean flag=false;
 		if(dismensionList!=null && dismensionList.size()>0){
-			String tableName=(String) dismensionList.iterator().next().get("table_name");
-			sbSql.append(tableName).append(" where ");
+			Map sqlMap=new HashMap();
+			StringBuilder sbSql=new StringBuilder("select count(1) as total_record from user_info u left join customer_info_t c on u.user_id=c.user_id where  ");
+			for(int i=0;i<dismensionList.size();i++){
+				Map dismensionMap=dismensionList.get(i);
+				String column_name=(String) dismensionMap.get("column_name");
+				String semanteme=(String) dismensionMap.get("semanteme");
+				String value=(String) dismensionMap.get("dis_value");
+				String arithmetic=(String) dismensionMap.get("arithmetic");
+				String key="value_"+i;
+				sbSql.append(column_name).append(semanteme).append("#{").append(key).append("} ");
+				sqlMap.put(key, value);
+				if(i<dismensionList.size()-1)
+					sbSql.append(arithmetic);
+			}
+			sqlMap.put("sql", sbSql);
+			List<Map> result=commonInfoDao.executeDonamicSQL(sqlMap);
+			Integer total_record=0;
+			if(result!=null && result.size()>0)
+				total_record=(Integer) result.iterator().next().get("total_record");
+			flag=total_record>0?true:false;
 		}
-			
-		for(int i=0;i<dismensionList.size();i++){
-			Map dismensionMap=dismensionList.get(i);
-			String tableName=(String) dismensionMap.get("table_name");
-			String column_name=(String) dismensionMap.get("column_name");
-			String semanteme=(String) dismensionMap.get("semanteme");
-			String value=(String) dismensionMap.get("value");
-			sbSql.append(column_name).append(semanteme).append("#{value} ");
-			if(i<dismensionList.size()-1)
-				sbSql.append(c)
-		}
+		System.out.println("=====flag:"+flag);
+		return flag;	
 	} 
 
 	
-	*//**
+	/**
 	 * 校验单个维度
 	 * @param dismensionMap
 	 * @param user_id
 	 * @param loan_id
 	 * @return
 		boolean
-	 *//*
-	private boolean executeChectSql(Map dismensionMap,Integer user_id,Integer loan_id){
+	 */
+	private boolean executeChectSqlxxx(Map dismensionMap,Integer user_id,Integer loan_id){
 		String tableName=(String) dismensionMap.get("table_name");
 		String column_name=(String) dismensionMap.get("column_name");
 		String semanteme=(String) dismensionMap.get("semanteme");
@@ -146,6 +143,6 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 			
 		}
 		return checkFlag;
-	}*/
+	}
 
 }

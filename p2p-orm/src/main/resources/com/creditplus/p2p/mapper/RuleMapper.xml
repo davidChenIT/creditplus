@@ -44,7 +44,7 @@
 	<select id="getDimensionListByRuleId" parameterType="Integer" resultType="java.util.Map">
 		select t.dis_id,t.rule_id,r.rule_name,t.table_name,t.column_name,t.semanteme,t.dis_value,t.arithmetic,dis_sql,dis_type,t.created_by,t.created_date,t.last_updated_by,t.last_updated_date,t.remark 
 		from dimension_t t left join rule_t r on t.rule_id=r.rule_id 
-		where t.rule_id=#{rule_id}
+		where t.rule_id=#{rule_id} order by dis_type
 	</select>
 	
 	
