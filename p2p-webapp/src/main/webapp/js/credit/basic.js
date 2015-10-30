@@ -723,6 +723,11 @@ function selectRender(formDivId){
 						for(var i=0;i<data.length;i++){
 							if(code==data[i][valueField]){
 								$(dom).append('<option value="'+data[i][valueField]+'" selected="selected">'+data[i][textField]+'</option>');
+								//下拉框（如果是省份，则触发change事件，级联城市）
+								var triggerKey = $(dom).attr('trigger');
+								if(triggerKey != null && triggerKey.indexOf("city_cascade_") != -1){
+									$(dom).change();
+								}
 							}else{
 								$(dom).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
 							}
@@ -832,14 +837,13 @@ function cascadeCity(e, value){
 		},			
 		success: function(data){
 			//清空下拉框
-			$(cityDrop).html();
+			$(cityDrop).empty();
+			$(cityDrop).append('<option value="">请选择</option>');
 			//赋值
 			if(data && data.length>0){
 				for(var i=0;i<data.length;i++){
 					$(cityDrop).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
 				}
-			}else{
-				$(cityDrop).append('<option value="">请选择</option>');
 			}
 		},error:function(error){
 			var errorStr=$.parseJSON(error.responseText).cause.message;

@@ -10,15 +10,23 @@ $(function(){
 	var user_id=paramsObj.user_id || "";
 	var userInfoList=publicQueryInfoAjax("urgentContactorService","getListByUserId",JSON.stringify({"user_id":user_id}));
 	if(userInfoList){
-		var userTemplateDiv = $("#applyUserUrgentConnectionUserInfoDiv .connection-user");
-		var userDom = userTemplateDiv.html();
-		//移除静态html，循环输出动态列表元素
-		userTemplateDiv.remove();
-		$.each(userInfoList, function(i){
+		$.each(userInfoList, function(i){//更新级联key
+			//取模板
+			var userTemplateDiv = $("#applyUserUrgentConnectionUserInfoDiv .connection-user");
+			//更新级联key
+			var triggerKey = $(userTemplateDiv).find("select[name=mobile_address_city]").attr("id");
+			var newTriggerKey = triggerKey.substring(0, triggerKey.length-1) + i;
+			$(userTemplateDiv).find("select[name=mobile_address_province]").attr("trigger", newTriggerKey);
+			$(userTemplateDiv).find("select[name=mobile_address_city]").attr("id", newTriggerKey);
+			var userDom = userTemplateDiv.html();
+			
 			var userDivIdx = "connectionUserIdx" + i;
 			var userTemplate = '<div id="'+userDivIdx+'">'+userDom+'</div>';
 			setValues("applyUserUrgentConnectionUserInfoDiv", userInfoList[i], userTemplate);
 			setValues(userDivIdx,userInfoList[i]);
+			//移除静态html，循环输出动态列表元素
+			if(i == userInfoList.length-1) 
+				userTemplateDiv.remove();
 			//渲染下拉框
 			selectRender(userDivIdx);
 		});
@@ -98,5 +106,10 @@ $(function(){
 		}
 		
 	});
-	
+	/**
+	 * 省份下拉框onChange事件，级联城市数据
+	 */
+	$("[trigger*=city_cascade_]").change(function(e){
+		cascadeCity(e.target, $(e.target).val());
+	});
 });
