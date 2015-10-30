@@ -5,7 +5,7 @@ $(function(){
 	var ruleId=paramsObj.rule_id || "";
 	//查询详细信息，并赋值
 	var ruleData=publicQueryInfoAjax("ruleService","getRuleDetailById",JSON.stringify({"rule_id":ruleId}),"ruleUpdateForm");
-	setValues(customSql4UpdateDiv, ruleData);
+	setValues("customSql4UpdateDiv", ruleData);
 	
 	//构造grid
     $("#ruleList4UpdateGrid").jqGrid({
