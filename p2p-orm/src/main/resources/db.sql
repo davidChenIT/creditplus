@@ -92,10 +92,11 @@ CREATE TABLE approve_log_t (
 create table customer_info_t(
    id                   int not null auto_increment,
    user_id				int not null,
-   thnic_v				varchar(50)  	COMMENT '民族',
+   thnic_v				varchar(50)  	COMMENT '名族',
    registered_place_v   varchar(200)	comment '户口所在地',
    address_phone     	varchar(20)   	comment '住址电话',
    address_phone_v		varchar(20) 	comment '住址验证电话',
+   current_province_v   varchar(50)     comment '当前居住身份',
    current_city_v		varchar(50) 	comment '当前居住城市',
    current_address_v	varchar(200)    comment '当前居住详址',
    id_num_name_v       varchar(100) 	comment '身份证验证姓名',
@@ -456,12 +457,14 @@ create table rule_t(
 	rule_id 	int 	 NOT NULL AUTO_INCREMENT,
 	rule_name   varchar(200) not null comment '规则名称',
 	state	    int			 not null DEFAULT 1 comment '规则状态',
+	rule_sql	varchar(1024)   comment '规则sql',
 	created_by  varchar(200)  NOT NULL COMMENT '创建人',
     created_date timestamp NOT NULL COMMENT '创建时间',
     last_updated_by  varchar(200)  NOT NULL,
     last_updated_date timestamp NOT NULL ,
 	remark varchar(1024)  COMMENT '规则描述',  
-	PRIMARY KEY (rule_id)    
+	PRIMARY KEY (`rule_id`),
+	UNIQUE KEY `rule_name_UNIQUE` (`rule_name`)	
 )COMMENT='规则配置表';
 
 create table dimension_t(
@@ -472,8 +475,6 @@ create table dimension_t(
 	semanteme  	 	varchar(200)  comment '语义',
 	dis_value 		varchar(200)  COMMENT '匹配值',
 	arithmetic 	    varchar(200)  COMMENT '运算',
-	dis_sql         varchar(512)  comment '执行sql',
-	dis_type  		int			  comment '维度类型',
     created_by 		varchar(200)  NOT NULL COMMENT '创建人',
     created_date    timestamp NOT NULL COMMENT '创建时间',
     last_updated_by varchar(200)  NOT NULL,
@@ -534,9 +535,7 @@ insert into p2p.user_role_t values(1,1,1,now(),date_add(now(), interval 1 year),
 insert into p2p.role_resource_t values(1,1,1,'system',now(),'system',now());
 insert into p2p.role_resource_t values(2,1,2,'system',now(),'system',now());
 insert into p2p.role_resource_t values(3,2,1,'system',now(),'system',now());
-INSERT INTO catalog_t VALUES (1,'首页',0,'/page/index.jsp',0,'首页','test','2015-10-17 21:26:38','test','2015-10-18 13:28:05'),
-(2,'系统管理',0,'#',2,'系统管理','test','2015-10-18 05:28:02','test','2015-10-18 13:28:05'),
-(3,'风控管理',0,'#',1,'风控管理','test','2015-10-18 05:28:02','test','2015-10-18 13:28:05'),(5,'投标',3,'/page/makeTenderList.jsp',3,'投标','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(6,'标的管理',3,'/page/tenderMngList.jsp',2,'标的管理','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(7,'信用复审',3,'/page/reviewList.jsp',1,'信用复审','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(8,'信用初审',3,'/page/firstTrialList.jsp',0,'信用初审','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(9,'字典管理',2,'/page/systemmng/dictList.jsp',0,'数据字典','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(10,'栏目管理',2,'/page/systemmng/catalogList.jsp',1,'栏目管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(11,'用户管理',2,'/page/systemmng/userList.jsp',2,'用户管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(12,'角色管理',2,'/page/systemmng/roleList.jsp',3,'角色管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(13,'资源管理',2,'/page/systemmng/resourceList.jsp',4,'资源管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(14,'修改密码',2,'/page/systemmng/changePassword.jsp',5,'修改密码','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09');
+INSERT INTO catalog_t VALUES (1,'首页',0,'/page/index.jsp',0,'首页','test','2015-10-17 21:26:38','test','2015-10-18 13:28:05'),(2,'系统管理',0,'#',2,'系统管理','test','2015-10-18 05:28:02','test','2015-10-18 13:28:05'),(3,'风控管理',0,'#',1,'风控管理','test','2015-10-18 05:28:02','test','2015-10-18 13:28:05'),(5,'投标',3,'/page/makeTenderList.jsp',3,'投标','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(6,'标的管理',3,'/page/tenderMngList.jsp',2,'标的管理','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(7,'信用复审',3,'/page/reviewList.jsp',1,'信用复审','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(8,'信用初审',3,'/page/firstTrialList.jsp',0,'信用初审','test','2015-10-18 05:35:17','test','2015-10-18 13:37:51'),(9,'字典管理',2,'/page/systemmng/dictList.jsp',0,'数据字典','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(10,'栏目管理',2,'/page/systemmng/catalogList.jsp',1,'栏目管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(11,'用户管理',2,'/page/systemmng/userList.jsp',2,'用户管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(12,'角色管理',2,'/page/systemmng/roleList.jsp',3,'角色管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(13,'资源管理',2,'/page/systemmng/resourceList.jsp',4,'资源管理','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09'),(14,'修改密码',2,'/page/systemmng/changePassword.jsp',5,'修改密码','test','2015-10-18 13:43:10','test','2015-10-18 13:43:09');
 
 INSERT INTO p2p.user_info VALUES (4,1,'o8EeQw_voTztu6J-jPttrk7LBGSA','朱胜','18923880749','511702198506123795',NULL,NULL,NULL,'中国工商银行','1234','18923880749','1234','10000以上','Qwer','北京','北京','18923880749','博士','1234',NULL,NULL,7,'Y','2015-10-04 10:34:02');
 
@@ -550,25 +549,7 @@ INSERT INTO p2p.loan_list VALUES ('14', '4',null, '50000', '2015-10-12 17:53:55'
 
 
 
-INSERT INTO `dict_t` VALUES 
-(1,'1','提单','apply_state',1,0,1,'test','2015-10-22 13:53:02','test','2015-10-23 14:55:58',''),
-(4,'5','复审完成','apply_state',1,0,5,'test','2015-10-23 06:52:27','test','2015-10-23 14:55:58',''),
-(5,'4','开始复审','apply_state',1,0,4,'test','2015-10-23 06:52:27','test','2015-10-23 14:55:58',''),
-(6,'3','初审完成','apply_state',1,0,3,'test','2015-10-23 06:52:27','test','2015-10-23 14:55:58',''),
-(7,'2','开始初审','apply_state',1,0,2,'test','2015-10-23 06:52:27','test','2015-10-23 14:55:58',''),
-(9,'11','黑名单','黑名单',1,0,11,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),
-(10,'10','关闭','apply_state',1,0,10,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),
-(11,'9','生成合同','apply_state',1,0,9,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),
-(12,'8','撤标','apply_state',1,0,8,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),
-(13,'7','发标','apply_state',1,0,7,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),
-(14,'201','汉','d_nation',1,0,201,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),
-(15,'6','停止','apply_state',1,0,6,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),
-(17,'301','护士证','d_certificate_type',1,0,301,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),
-(18,'101','广东省','d_certificate_type',1,0,101,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),
-(19,'10102','深圳市','d_certificate_type',1,0,10102,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),
-(20,'10101','广州市','d_certificate_type',1,0,10101,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58','');
-
-
+INSERT INTO `dict_t` VALUES (1,'1','提单','apply_state',1,0,1,'test','2015-10-22 13:53:02','test','2015-10-23 14:55:58',''),(4,'5','复审完成','apply_state',1,0,5,'test','2015-10-23 06:52:27','test','2015-10-23 14:55:58',''),(5,'4','开始复审','apply_state',1,0,4,'test','2015-10-23 06:52:27','test','2015-10-23 14:55:58',''),(6,'3','初审完成','apply_state',1,0,3,'test','2015-10-23 06:52:27','test','2015-10-23 14:55:58',''),(7,'2','开始初审','apply_state',1,0,2,'test','2015-10-23 06:52:27','test','2015-10-23 14:55:58',''),(9,'11','黑名单','黑名单',1,0,11,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),(10,'10','关闭','apply_state',1,0,10,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),(11,'9','生成合同','apply_state',1,0,9,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),(12,'8','撤标','apply_state',1,0,8,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),(13,'7','发标','apply_state',1,0,7,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58',''),(14,'6','停止','apply_state',1,0,6,'test','2015-10-23 14:55:58','test','2015-10-23 14:55:58','');
 
 
 
