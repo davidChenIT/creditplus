@@ -186,6 +186,7 @@ $(function(){
 		}
 		if(!checkPass){return false;}
 		ruleInfo.remark=$("#ruleCreateForm").find("[name='remark']").val();
+		ruleInfo.rule_sql=$("#customSql4CreateDiv").find("[name='rule_sql']").val();
 		request_data.ruleInfo=ruleInfo;
         //校验grid的数据		
     	var rowids = $("#ruleList4CreateGrid").jqGrid('getDataIDs');

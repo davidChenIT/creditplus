@@ -4,7 +4,8 @@ $(function(){
 	var paramsObj=$("div[name='ruleTab']").find("li[tabid='ruleUpdate']").data();
 	var ruleId=paramsObj.rule_id || "";
 	//查询详细信息，并赋值
-	publicQueryInfoAjax("ruleService","getRuleDetailById",JSON.stringify({"rule_id":ruleId}),"ruleUpdateForm");
+	var ruleData=publicQueryInfoAjax("ruleService","getRuleDetailById",JSON.stringify({"rule_id":ruleId}),"ruleUpdateForm");
+	setValues(customSql4UpdateDiv, ruleData);
 	
 	//构造grid
     $("#ruleList4UpdateGrid").jqGrid({
@@ -193,6 +194,7 @@ $(function(){
 		}
 		if(!checkPass){return false;}
 		ruleInfo.remark=$("#ruleUpdateForm").find("[name='remark']").val();
+		ruleInfo.rule_sql=$("#customSql4UpdateDiv").find("[name='rule_sql']").val();
 		ruleInfo.rule_name=$("#ruleUpdateForm").find("[name='rule_name']").text();
 		ruleInfo.rule_id=ruleId;
 		request_data.ruleInfo=ruleInfo;
