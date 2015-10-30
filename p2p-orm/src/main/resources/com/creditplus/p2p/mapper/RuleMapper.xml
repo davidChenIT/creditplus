@@ -6,7 +6,7 @@
 <mapper namespace="com.creditplus.p2p.dao.RuleDao">
 
 	<select id="getRulesList" parameterType="java.util.Map" resultType="java.util.Map">
-		select rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark from p2p.rule_t 
+		select rule_id,rule_name,state,rule_sql,created_by,created_date,last_updated_by,last_updated_date,remark from rule_t 
 		where state=1
 		<if test="rule_id!= null">
 			AND rule_id = #{rule_id}
@@ -20,19 +20,19 @@
 	</select>
 	
 	<select id="getRuleDetailById" parameterType="Integer" resultType="java.util.Map">
-		select rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark from p2p.rule_t 
+		select rule_id,rule_name,state,rule_sql,created_by,created_date,last_updated_by,last_updated_date,remark from rule_t 
 		where rule_id=#{rule_id}
 	</select>
 	
 	<select id="findByName" parameterType="String" resultType="java.util.Map">
-		select rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark from p2p.rule_t 
+		select rule_id,rule_name,state,rule_sql,created_by,created_date,last_updated_by,last_updated_date,remark from rule_t 
 		where rule_name=#{rule_name}
 	</select>
 	
 	
 	<select id="getRulesListWithPage" parameterType="java.util.Map" resultType="java.util.Map">
-		select * from p2p.rule_t 
-		where state=1
+		select * from rule_t 
+		where 1=1
 		<if test="rule_name!= null">
 			AND rule_name = #{rule_name}
 		</if>
@@ -42,9 +42,7 @@
 	</select>
 
 	<select id="getDimensionListByRuleId" parameterType="Integer" resultType="java.util.Map">
-		select t.dis_id,t.rule_id,r.rule_name,t.table_name,t.column_name,t.semanteme,t.dis_value,t.arithmetic,dis_sql,dis_type,t.created_by,t.created_date,t.last_updated_by,t.last_updated_date,t.remark 
-		from dimension_t t left join rule_t r on t.rule_id=r.rule_id 
-		where t.rule_id=#{rule_id} order by dis_type
+		select * from  dimension_t	where rule_id=#{rule_id} order by last_updated_date desc
 	</select>
 	
 	
@@ -57,15 +55,15 @@
     </insert> -->
     
    <insert id="insertRule" parameterType="java.util.Map">
-       insert into rule_t(rule_id,rule_name,state,created_by,created_date,last_updated_by,last_updated_date,remark)
-		values(#{rule_id},#{rule_name},#{state},#{last_updated_by},sysdate(),#{last_updated_by},sysdate(),#{remark})  
+       insert into rule_t(rule_id,rule_name,state,rule_sql,created_by,created_date,last_updated_by,last_updated_date,remark)
+		values(#{rule_id},#{rule_name},#{state},#{rule_sql},#{last_updated_by},sysdate(),#{last_updated_by},sysdate(),#{remark})  
     </insert>
     
       <insert id="insertDimension" parameterType="java.util.Map">
-       insert into dimension_t(dis_id,rule_id,table_name,column_name,semanteme,dis_value,arithmetic,dis_sql,dis_type,created_by,created_date,last_updated_by,last_updated_date,remark)
+       insert into dimension_t(dis_id,rule_id,table_name,column_name,semanteme,dis_value,arithmetic,created_by,created_date,last_updated_by,last_updated_date,remark)
        	values
 	    <foreach collection="list" item="item" index="index" separator="," >  
-	        (#{item.dis_id},#{item.rule_id},#{item.table_name},#{item.column_name},#{item.semanteme},#{item.dis_value},#{item.arithmetic},#{item.dis_sql},#{item.dis_type},#{item.last_updated_by},sysdate(),#{item.last_updated_by},sysdate(),#{item.remark})  
+	        (#{item.dis_id},#{item.rule_id},#{item.table_name},#{item.column_name},#{item.semanteme},#{item.dis_value},#{item.arithmetic},#{item.last_updated_by},sysdate(),#{item.last_updated_by},sysdate(),#{item.remark})  
 	    </foreach>
     </insert>
     
@@ -78,7 +76,20 @@
     </delete>
     
     <update id="updateRule" parameterType="java.util.Map">
-    	update rule_t  set  rule_name = #{rule_name}, state = #{state},  last_updated_by = #{last_updated_by}, last_updated_date = sysdate(), remark = #{remark} 
+    	update rule_t  set  
+    		<if test="rule_name != null">
+    			rule_name = #{rule_name},
+    		</if> 
+   			<if test="state != null">
+    			state = #{state},
+    		</if> 
+   			<if test="rule_sql != null">
+    			 rule_sql=#{rule_sql},
+    		</if> 
+    		<if test="remark != null">
+    			 remark = #{remark},
+    		</if>
+    		 last_updated_by = #{last_updated_by}, last_updated_date = sysdate()
     	where rule_id = #{rule_id}
     </update>
     

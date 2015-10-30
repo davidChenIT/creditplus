@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.creditplus.p2p.common.constant.Constant;
 import com.creditplus.p2p.common.util.CommonUtil;
 import com.creditplus.p2p.dao.CheatInterceptDao;
 import com.creditplus.p2p.dao.CommonInfoDao;
@@ -29,7 +30,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 		List<Map> ruleList=getRuleList();
 		if(ruleList!=null && ruleList.size()>0){
 			for(Map ruleMap:ruleList){
-				Integer rule_id=Integer.valueOf(ruleMap.get("rule_id")+"");
+				Integer rule_id=Integer.valueOf(ruleMap.get(Constant.RULE_ID)+"");
 				List<Map> dimensionList=getDimensionByRuleId(rule_id);
 				if(dimensionList!=null && dimensionList.size()>0){
 					checkFlag=executeChectSql(dimensionList, user_id,loan_id);

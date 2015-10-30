@@ -82,7 +82,7 @@ public class RuleServiceImpl implements RuleService{
 	 */
 	public void updateRule(Map ruleMap, List<Map> dimensionList) throws Exception {
 		if(ruleMap==null)
-			throw new Exception("角色已删除！");
+			throw new Exception("规则已删除！");
 		CheckParamUtil.checkKey(ruleMap, Constant.RULE_ID);
 		Integer rule_id=(Integer) ruleMap.get(Constant.RULE_ID);
 		initParamMap(ruleMap);
