@@ -25,8 +25,6 @@ $(function(){
         otherkey: null
     };
     window.history.replaceState(state, document.title, document.location.href);
-    
-    debugger;
     //创建左侧栏目
     createCatalogTree();
 	loadingBox.hideLoading();
@@ -89,7 +87,6 @@ $(function(){
 								$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
 								return;
 							}
-							debugger;	
 							if(data && data.length>0){
 							  //var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->"),data.indexOf("<!--credit_Main_end-->")+19);
 								$(".tabs-body").append(data);
@@ -101,7 +98,6 @@ $(function(){
 							
 						},error:function(error){
 						  loadingBox.hideLoading();
-						  debugger;
 						  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">500</h2><p class="credit-errtext">Error</p><div></div><p></p><p>诚立信金融</p></div>');
 						}
 					});
@@ -118,7 +114,6 @@ $(function(){
 	
 	//点击tab的关闭x图标
 	$("#credit_MainPanel").on("click",".credit-tab-close",function(){
-		debugger;
 		var removeLi=$(this).parent();
 		var siblingsLi=removeLi.siblings();
 		$(siblingsLi).each(function(i,li){
@@ -148,7 +143,6 @@ $(function(){
 
 	//点击图标显示某块区域
 	$("#credit_MainPanel").on("click",".expand-down",function(){
-		 debugger;
 		 $(this).parent().next("div:first").show();
 		 $(this).attr("class","expand-up");
 		 gridResize("credit_Main");
@@ -156,7 +150,6 @@ $(function(){
 	
 	//点击图标隐藏某块区域
 	$("#credit_MainPanel").on("click",".expand-up",function(){
-		 debugger;
 		 $(this).parent().next("div:first").hide();
 		 $(this).attr("class","expand-down");
 	});
@@ -210,7 +203,6 @@ function createCatalogTree(){
 						onClick:function(event, treeId, treeNode){
 							$("#menu_ztree").find("span[class='credit-span-blue']").attr("class","");
 							$(event.toElement).attr("class","credit-span-blue");
-							debugger;
 							var treeObj = $.fn.zTree.getZTreeObj(treeId); 
 							//展开或收缩子节点
 							if(treeNode.open){
@@ -254,7 +246,6 @@ function createCatalogTree(){
 											$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
 											return;
 										}
-										debugger;	
 										if(data && data.length>0){
 										  var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->")+24,data.indexOf("<!--credit_Main_end-->"));
 										  $("#credit_MainPanel").find("#credit_Main").remove();
@@ -273,8 +264,7 @@ function createCatalogTree(){
 										window.history.pushState(state,data,requestUrl);
 									},error:function(error){
 										loadingBox.hideLoading(500);
-									  debugger;
-									  $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">500</h2><p class="credit-errtext">Error</p><div></div><p></p><p>诚立信金融</p></div>');
+									    $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">500</h2><p class="credit-errtext">Error</p><div></div><p></p><p>诚立信金融</p></div>');
 									}
 								});
 							}
@@ -327,7 +317,6 @@ function createCatalogTree(){
 
 //移除tab控件的也签
 function removeTabItem(tabId,itemId){
-	debugger;
 	var currentItemLi=$("div[name='"+tabId+"']").find("li[tabid='"+itemId+"']");
 	var firstLi=$(currentItemLi.siblings()[0]);
 	var firstItemId=firstLi.attr("tabid");
@@ -339,7 +328,6 @@ function removeTabItem(tabId,itemId){
 
 //移除tab控件的也签
 function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
-	debugger;
 	if(tabId && itemId && pageUrl){
 		loadingBox.showLoading();
 		var paramsObj;
@@ -366,7 +354,6 @@ function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
 				if(data && data.indexOf("loginBtn")!=-1){
 					window.location.href="http://localhost:8080/p2p-webapp/page/login.jsp";
 				}
-				debugger;	
 				if(data && data.length>0){
 					$("div[name='"+tabId+"']").find(".tabs-body").append(data);
 					if(isLoadJs==true || isLoadJs=="true"){
@@ -387,7 +374,6 @@ function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
 
 //公共赋值函数
 function setValues(divId,dataObj,appendHtml){
-	debugger;
 	//判断传入的div是否存在
 	if(divId && $("#"+divId) && $("#"+divId).length>0){
 		if(appendHtml){
@@ -509,7 +495,6 @@ function gridResize(domId){
 //公共的查询并赋值的方法
 function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
 	loadingBox.showLoading();
-	debugger;
 	var  resultData={};
 	$.ajax({ 
 		url: serviceAddress,
@@ -540,7 +525,6 @@ function publicQueryInfoAjax(moduleName,methodName,requestDataStr,setValueDiv){
 
 //公共的保存或修改表单的方法
 function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeItemId,searchBtn,successTipInfo,okFunc,cancelFunc){
-	debugger;
 	loadingBox.showLoading();
 	$.ajax({ 
 		url: serviceAddress,
@@ -575,11 +559,9 @@ var messageBox={
     
     //创建弹出框
     createMessageDialog:function(title,content,cancel,focus,icon,okFunc,cancelFunc){
-    	debugger;
     	messageBox.createMaskDiv();
     	messageBox.okFunc=okFunc;
     	messageBox.cancelFunc=cancelFunc;
-    	
     	/*		
 		参数列表说明:
 		title :弹出对话框的标题,标题内容最好在25个字符内,否则会导致显示图片的异常															
@@ -648,7 +630,6 @@ var messageBox={
 var loadingBox={
 		//创建loading提示层
 		showLoading:function(){
-			debugger;
 			loadingBox.hideLoading();
 			loadingBox.createloadingMaskDiv();
 			
@@ -704,55 +685,79 @@ var loadingBox={
 function selectRender(formDivId){
 	debugger;
 	$("#"+formDivId).find("[widget='dropdown']").each(function(i,dom){
-		var moduleName=$(dom).attr("serviceModule") || "dictService";
-		var methodName=$(dom).attr("serviceMethod") || "getDictItems";
-		var valueField=$(dom).attr("valueField") || "code";
-		var textField=$(dom).attr("textField") || "name";
+		var moduleName=$(dom).attr("servicemodule") || "dictService";
+		var methodName=$(dom).attr("servicemethod") || "getDictItems";
+		var valueField=$(dom).attr("valuefield") || "code";
+		var textField=$(dom).attr("textfield") || "name";
 		var dictionaryType=$(dom).attr("dictionary_type");
 		var istext=$(dom).attr("istext");
 		var code=$(dom).attr("code");
-		var paramsObj={};
-		if(dictionaryType){
-			paramsObj.type=dictionaryType;
-		}
-		if(istext=="true"){
-			paramsObj.code=code;
-		}
-		//调用数据字典服务
-		$.ajax({ 
-			url: serviceAddress,
-			datatype:'json',
-			method:"post",
-			data:{"module":moduleName,
-				"method":methodName,
-				"request_data":JSON.stringify(paramsObj)
-			},			
-			success: function(data){
-				if(data && data.length>0){
-					if(istext=="true"){
-						$(dom).text(data[0][textField]);
-						$(dom).attr("code",data[0][valueField]);
-					}else{
-						for(var i=0;i<data.length;i++){
-							if(code==data[i][valueField]){
-								$(dom).append('<option value="'+data[i][valueField]+'" selected="selected">'+data[i][textField]+'</option>');
-								//下拉框（如果是省份，则触发change事件，级联城市）
-								var triggerKey = $(dom).attr('trigger');
-								if(triggerKey != null && triggerKey.indexOf("city_cascade_") != -1){
-									$(dom).change();
-								}
-							}else{
-								$(dom).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
-							}
+		var is_cache=$(dom).attr("is_cache");//是否需要缓存
+		var cacheKey=moduleName+"_"+methodName+"_"+(dictionaryType || "")+"_"+(code || "");
+		var dicDataArray=localStorage[cacheKey]?JSON.parse(localStorage[cacheKey]):[];
+		if(is_cache=="true" && dicDataArray && dicDataArray.length>0){
+			if(istext=="true"){
+				$(dom).text(data[0][textField]);
+				$(dom).attr("code",data[0][valueField]);
+			}else{
+				for(var i=0;i<dicDataArray.length;i++){
+					if(code==dicDataArray[i][valueField]){
+						$(dom).append('<option value="'+dicDataArray[i][valueField]+'" selected="selected">'+dicDataArray[i][textField]+'</option>');
+						//下拉框（如果是省份，则触发change事件，级联城市）
+						var triggerKey = $(dom).attr('trigger');
+						if(triggerKey != null && triggerKey.indexOf("city_cascade_") != -1){
+							$(dom).change();
 						}
+					}else{
+						$(dom).append('<option value="'+dicDataArray[i][valueField]+'">'+dicDataArray[i][textField]+'</option>');
 					}
 				}
-			},error:function(error){
-				var errorObj=$.parseJSON(error.responseText);
-				var errorStr=errorObj.cause?errorObj.cause.message:errorObj.message;
-				messageBox.createMessageDialog("提示",errorStr,"","","error");
 			}
-		});
+		}else{
+			var paramsObj={};
+			if(dictionaryType){
+				paramsObj.type=dictionaryType;
+			}
+			if(istext=="true"){
+				paramsObj.code=code;
+			}
+			//调用数据字典服务
+			$.ajax({ 
+				url: serviceAddress,
+				datatype:'json',
+				method:"post",
+				data:{"module":moduleName,
+					"method":methodName,
+					"request_data":JSON.stringify(paramsObj)
+				},			
+				success: function(data){
+					if(data && data.length>0){
+						if(istext=="true"){
+							$(dom).text(data[0][textField]);
+							$(dom).attr("code",data[0][valueField]);
+						}else{
+							for(var i=0;i<data.length;i++){
+								if(code==data[i][valueField]){
+									$(dom).append('<option value="'+data[i][valueField]+'" selected="selected">'+data[i][textField]+'</option>');
+									//下拉框（如果是省份，则触发change事件，级联城市）
+									var triggerKey = $(dom).attr('trigger');
+									if(triggerKey != null && triggerKey.indexOf("city_cascade_") != -1){
+										$(dom).change();
+									}
+								}else{
+									$(dom).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
+								}
+							}
+						}
+						localStorage[cacheKey]=JSON.stringify(data);
+					}
+				},error:function(error){
+					var errorObj=$.parseJSON(error.responseText);
+					var errorStr=errorObj.cause?errorObj.cause.message:errorObj.message;
+					messageBox.createMessageDialog("提示",errorStr,"","","error");
+				}
+			});
+		}
 		
 	});
 }
@@ -796,7 +801,6 @@ function gridSelectColRender(serviceModuleName,serviceMethodName,requestData,val
 
 //grid公共分页函数
 function gridOnPaging(pgButton,grid,pagerDiv,request_data){
-	debugger;
     var request_data=request_data || {};
 	var page = grid.getGridParam('page'); // current page
 	var lastpage =grid.getGridParam('lastpage'); // current page

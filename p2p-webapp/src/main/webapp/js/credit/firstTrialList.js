@@ -6,7 +6,9 @@ $(function(){
 	//下拉框数据填充
 	selectRender("conditionDiv");
 	//构造grid下拉框需要的数据
-	var applyStateSelectObj=gridSelectColRender("","",{},"code","name");
+	var applyStateData="";
+	var applyStateSelectObj=gridSelectColRender("","",{"type":"apply_state"},"code","name");
+	applyStateData=applyStateSelectObj.jsonStr; 
 	//构造grid
 	$("#firstTrialListGrid").jqGrid({
 			url:serviceAddress,
@@ -37,7 +39,7 @@ $(function(){
 				{name:'apply_state', index:'apply_state',align:'center',
 					"sortable":false,
 					edittype:'select',
-					editoptions:{value:applyStateSelectObj.jsonStr}
+					editoptions:{value:"1:提单;2:开始初审;3:初审完成;4:开始复审;5:复审完成;6:停止;7:发标;8:撤标;9:生成合同;10:关闭"}
 				},
 				{name:'first_assign_user', index:'first_assign_user',align:'center',"sortable":false},
 				{name:'review_assign_user', index:'review_assign_user',align:'center',"sortable":false}
