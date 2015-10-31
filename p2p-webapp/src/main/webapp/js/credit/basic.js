@@ -150,14 +150,15 @@ $(function(){
 	$("#credit_MainPanel").on("click",".expand-down",function(){
 		 debugger;
 		 $(this).parent().next("div:first").show();
-		 $(this).attr("class","expand-up")
+		 $(this).attr("class","expand-up");
+		 gridResize("credit_Main");
 	});
 	
 	//点击图标隐藏某块区域
 	$("#credit_MainPanel").on("click",".expand-up",function(){
 		 debugger;
 		 $(this).parent().next("div:first").hide();
-		 $(this).attr("class","expand-down")
+		 $(this).attr("class","expand-down");
 	});
 })
 
