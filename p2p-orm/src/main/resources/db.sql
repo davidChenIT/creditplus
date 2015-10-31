@@ -347,10 +347,11 @@ alter table urgent_list comment '紧急联系人列表';
 CREATE TABLE urgent_contactor_t (
   id int NOT NULL AUTO_INCREMENT,
   user_id int NOT NULL COMMENT '用户id',
-  name varchar(200)  NOT NULL COMMENT '姓名',
+  name varchar(200)   COMMENT '姓名',
   relation varchar(200)  NOT NULL COMMENT '关系',
   mobile varchar(20)  NOT NULL COMMENT '电话',
-  mobile_address   varchar(200)  comment '联系人电话归属地',
+  mobile_province   varchar(200)  comment '联系人电话所在省份',
+  mobile_city   varchar(200)  comment '联系人电话所在城市',
   created_by varchar(200) NOT NULL,
   created_date datetime NOT NULL,
   last_updated_by varchar(200) NOT NULL,
