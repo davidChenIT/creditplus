@@ -53,7 +53,7 @@ $(function(){
 				 debugger;
 				 var rulename = $("div[tabid='ruleList']").find("input[name='rulename']").val();
 				 var  grid=$(this).jqGrid();
-				 gridOnPaging(pgButton,grid,"ruleListPager",{"rulename":rulename});
+				 gridOnPaging(pgButton,grid,"ruleListPager",{"rule_name":rulename});
 			 }	   
 	});
     

@@ -183,7 +183,7 @@ $(function(){
         var request_data={};
         request_data.parentId = parentId;
         if(catalogName){
-        	request_data.name=catalogName;
+        	request_data.catalogName=catalogName;
         }
         $("#catalogListGrid").jqGrid('setGridParam',{  
             datatype:'json',  

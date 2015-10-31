@@ -57,7 +57,7 @@ $(function(){
 				 debugger;
 				 var rolename = $("div[tabid='roleList']").find("input[name='rolename']").val();
 				 var  grid=$(this).jqGrid();
-				 gridOnPaging(pgButton,grid,"roleListPager",{"rolename":rolename});
+				 gridOnPaging(pgButton,grid,"roleListPager",{"roleName":rolename});
 			 }	    
 	});
     
@@ -66,7 +66,7 @@ $(function(){
         var rolename = $("input[name='rolename']").val();
         var request_data={};
         if(rolename){
-        	request_data.rolename=rolename;
+        	request_data.roleName=rolename;
         }
         $("#roleListGrid").jqGrid('setGridParam',{  
             datatype:'json',  

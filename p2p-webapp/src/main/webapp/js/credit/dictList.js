@@ -92,7 +92,7 @@ $(function(){
 				 debugger;
 				 var dictName = $("input[name='dictName']").val();
 				 var  grid=$(this).jqGrid();
-				 gridOnPaging(pgButton,grid,"dictListPager",{"dictName":dictName});
+				 gridOnPaging(pgButton,grid,"dictListPager",{"name":dictName});
 			 }	     
 	});
     
