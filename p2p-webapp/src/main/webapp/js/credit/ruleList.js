@@ -48,7 +48,13 @@ $(function(){
 
 		         records: "totalrecords"
 
-		     }
+		     },
+		     onPaging:function(pgButton){
+				 debugger;
+				 var rulename = $("div[tabid='ruleList']").find("input[name='rulename']").val();
+				 var  grid=$(this).jqGrid();
+				 gridOnPaging(pgButton,grid,"ruleListPager",{"rulename":rulename});
+			 }	   
 	});
     
     //输入用户名称，点击按钮进行过滤

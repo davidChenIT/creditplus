@@ -19,6 +19,7 @@ $(function(){
 			    	name:'catalog_sel_create',
 					index:'catalog_sel_create',
 					align:'center',
+					width:"35px",
 					sortable:false,
 			    	formatter:function(cellvalue, options, rowObject){
 						   debugger;
@@ -70,7 +71,13 @@ $(function(){
 		     gridComplete:function(){
 			    	debugger;
 			    	$("div[name='catalogTab']").find(".catalog-create-selall-cbox").parent("div").attr("class","");
-			 }		     
+			 },
+			 onPaging:function(pgButton){
+				 debugger;
+				 var catalogName=$("input[name='catalogName']").val();
+				 var  grid=$(this).jqGrid();
+				 gridOnPaging(pgButton,grid,"catalogListPager",{"catalogName":catalogName});
+			 }	   
 	});
     
     //grid里面的复选框

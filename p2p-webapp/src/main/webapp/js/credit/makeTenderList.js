@@ -6,7 +6,7 @@ $(function(){
 	//下拉框数据填充
 	selectRender("makeTenderConditionDiv");
 	//构造grid
- $("#tenderMngListGrid").jqGrid({
+ $("#makeTenderListGrid").jqGrid({
 	 url:serviceAddress,
 		datatype: 'json',
 		postData:{"module":"loanOrderService","method":"getCreditFirstTrialListWithPage","request_data":{}},
@@ -34,7 +34,7 @@ $(function(){
 		{name:'cardAccountBank', index:'cardAccountBank',align:'center',"sortable":false},
 		{name:'bankCardNum', index:'bankCardNum',align:'center',"sortable":false}
 	],
-	pager: '#tenderMngListPager',
+	pager: '#makeTenderListPager',
 //	multiselect: true,
 	rowNum:10,
 	rowList:[10,20,30],
@@ -52,8 +52,15 @@ $(function(){
 
          records: "totalrecords"
 
-    }
-	//caption: 'My first grid'
+    },
+    onPaging:function(pgButton){
+		 debugger;
+		 var request_data = getValue("makeTenderConditionDiv");
+		 var  grid=$(this).jqGrid();
+		 gridOnPaging(pgButton,grid,"makeTenderListPager",request_data);
+	}	 
+		
+		
 	});
  
 //查询按钮

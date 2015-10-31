@@ -63,8 +63,15 @@ $(function(){
 
          records: "totalrecords"
 
-    }
-	});
+    },
+    onPaging:function(pgButton){
+		 debugger;
+		 var request_data = getValue("cheatInterceptorConditionDiv");
+		 var  grid=$(this).jqGrid();
+		 gridOnPaging(pgButton,grid,"cheatInterceptorPager",request_data);
+	}	 
+		
+});
  
     //加入黑名单
 	 $("[name='joinBlacklistBtn']").click(function(){

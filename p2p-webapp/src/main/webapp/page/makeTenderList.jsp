@@ -183,9 +183,9 @@
 									
 										<!-- grid区域开始 -->
 										<div class="row">
-											<table id="tenderMngListGrid"></table> 
+											<table id="makeTenderListGrid"></table> 
 
-											<div id="tenderMngListPager"></div>
+											<div id="makeTenderListPager"></div>
 										</div>
 										<!-- grid区域结束 -->
 									</div>

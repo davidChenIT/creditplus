@@ -14,11 +14,17 @@ $(function(){
 				{name:'roleId', index:'roleId',align:'center',"sortable":false,width:"100px",
 					formatter:function(cellvalue, options, rowObject){
 						   debugger;
+						   debugger;
 						   var paramsStr=JSON.stringify(rowObject);
 						   if(paramsStr){
 							   paramsStr=paramsStr.replace(/"/g,"@#_@#");
 						   }
-						   return "<a style='color:blue;' onclick=\"addTabItem('roleTab','roleUpdate','角色修改','/p2p-webapp/page/systemmng/roleUpdate.html','true','/p2p-webapp/js/credit/roleUpdate.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+						   return "<span name='ruleEditSpan' class='ui-icon-edit' onclick=\"addTabItem('roleTab','roleUpdate','角色修改','/p2p-webapp/page/systemmng/roleUpdate.html','true','/p2p-webapp/js/credit/roleUpdate.js','"+paramsStr+"');\"></span>";
+//						   var paramsStr=JSON.stringify(rowObject);
+//						   if(paramsStr){
+//							   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+//						   }
+//						   return "<a style='color:blue;' onclick=\"addTabItem('roleTab','roleUpdate','角色修改','/p2p-webapp/page/systemmng/roleUpdate.html','true','/p2p-webapp/js/credit/roleUpdate.js','"+paramsStr+"');\">"+cellvalue+"</a>";
 					}
 				},
 				{name:'roleName', index:'roleName',align:'center',"sortable":false},
@@ -46,7 +52,13 @@ $(function(){
 
 		         records: "totalrecords"
 
-		     }
+		     },
+		     onPaging:function(pgButton){
+				 debugger;
+				 var rolename = $("div[tabid='roleList']").find("input[name='rolename']").val();
+				 var  grid=$(this).jqGrid();
+				 gridOnPaging(pgButton,grid,"roleListPager",{"rolename":rolename});
+			 }	    
 	});
     
     //输入用户名称，点击按钮进行过滤

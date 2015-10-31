@@ -78,8 +78,14 @@ $(function(){
 			totalMoney-=parseInt(loan_money);
 		}
 		ofWithdrawalMoneySpan.text(totalMoney);
-	}
-	});
+	},
+	onPaging:function(pgButton){
+		 debugger;
+		 var request_data = getValue("tenderPublishedConditionDiv");
+		 var  grid=$(this).jqGrid();
+		 gridOnPaging(pgButton,grid,"tenderPublishedPager",request_data);
+	}	 
+  });
     
 //点击grid的全选按钮
  $("div[tabid='tenderPublished']").find("#cb_tenderPublishedGrid").click(function(){

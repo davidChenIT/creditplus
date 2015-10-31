@@ -46,7 +46,13 @@ $(function(){
 
 		         records: "totalrecords"
 
-		     }
+		     },
+		     onPaging:function(pgButton){
+				 debugger;
+				 var username = $("div[tabid='userList']").find("input[name='username']").val();
+				 var  grid=$(this).jqGrid();
+				 gridOnPaging(pgButton,grid,"userListPager",{"username":username});
+			 }	    
 	});
     
     //输入用户名称，点击按钮进行过滤

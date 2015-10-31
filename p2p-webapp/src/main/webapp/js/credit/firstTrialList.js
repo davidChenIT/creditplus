@@ -43,7 +43,7 @@ $(function(){
 			],
 			pager: '#firstTrialListPager',
 			rowNum:1,
-			rowList:[1,2,3],
+			rowList:[10,20,30],
 			viewrecords: true,
 			sortable:false,
 			emptyrecords:"没有数据！",
@@ -54,9 +54,11 @@ $(function(){
 		        records: "totalrecords"
 		    },
 		    onPaging:function(pgButton){
-		    	var request_data = getValue("conditionDiv");
-		    	gridOnPaging(pgButton, request_data);
-		    }
+				 debugger;
+				 var request_data = getValue("conditionDiv");
+				 var  grid=$(this).jqGrid();
+				 gridOnPaging(pgButton,grid,"firstTrialListPager",request_data);
+			}	   
 	});
 	
 	//查询按钮

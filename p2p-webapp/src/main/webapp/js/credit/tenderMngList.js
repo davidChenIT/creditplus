@@ -67,7 +67,13 @@ $(function(){
 					totalMoney-=parseInt(loan_money);
 				}
 				publishTenderMoneySpan.text(totalMoney);
-			}
+			},
+			onPaging:function(pgButton){
+				 debugger;
+				 var request_data = getValue("rankPollConditionDiv");
+				 var  grid=$(this).jqGrid();
+				 gridOnPaging(pgButton,grid,"rankPoolPager",request_data);
+			}	 
 	});
     
     //点击grid的全选按钮

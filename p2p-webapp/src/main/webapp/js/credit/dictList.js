@@ -28,6 +28,7 @@ $(function(){
 					index:'dict_sel_create',
 					align:'center',
 					sortable:false,
+					width:"35px",
 			    	formatter:function(cellvalue, options, rowObject){
 						   debugger;
 						   return '<input type="checkbox" class="dict-create-sel-cbox">';
@@ -59,7 +60,7 @@ $(function(){
 			pager: '#dictListPager',
 //			multiselect: true,
 			rowNum:10,
-			rowList:[2,10,20,30],
+			rowList:[10,20,30],
 			viewrecords: true,
 			sortable:false,
 			emptyrecords:"没有数据！",
@@ -89,8 +90,9 @@ $(function(){
 			 },
 			 onPaging:function(pgButton){
 				 debugger;
+				 var dictName = $("input[name='dictName']").val();
 				 var  grid=$(this).jqGrid();
-				 gridOnPaging(pgButton,grid,"dictListPager",{});
+				 gridOnPaging(pgButton,grid,"dictListPager",{"dictName":dictName});
 			 }	     
 	});
     

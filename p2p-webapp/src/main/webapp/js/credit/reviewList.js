@@ -57,7 +57,13 @@ $(function(){
 		
 		         records: "totalrecords"
 		
-		    }
+		    },
+		    onPaging:function(pgButton){
+				 debugger;
+				 var request_data = getValue("conditionDiv");
+				 var  grid=$(this).jqGrid();
+				 gridOnPaging(pgButton,grid,"reviewlistPager",request_data);
+			}	 
 	});
 	
 	
