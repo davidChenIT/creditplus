@@ -78,17 +78,6 @@ $(function(){
 	});
     
     
-    //控制sql语句展开或者收缩
-    $("h3[name='customSql4CreateH3']").click(function(){
-    	debugger;
-    	var customSqlDiv=$("#customSql4CreateDiv");
-    	var divStyle=customSqlDiv.attr("style");
-    	if(divStyle=="display:none;"){
-    		customSqlDiv.attr("style","display:block;");
-    	}else{
-    		customSqlDiv.attr("style","display:none;");
-    	}
-    });
     
     //维度新增行
     $("[name='addRule4CreateBtn']").click(function(){

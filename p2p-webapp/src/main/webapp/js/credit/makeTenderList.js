@@ -11,6 +11,7 @@ $(function(){
 		datatype: 'json',
 		postData:{"module":"loanOrderService","method":"getCreditFirstTrialListWithPage","request_data":{}},
 		mtype: 'POST',
+		height:220,
 	autowidth:true,
 	colNames:['操作','申请单编号','申请人姓名','申请人身份证号','信用等级','金额','期次','时长','银行卡开户行','卡号'],
 	colModel :[

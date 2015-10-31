@@ -184,7 +184,7 @@
 										<!--排名池按钮区域开始-->
 								
 										<!-- 排名池grid区域开始 -->
-										<div style="display: inline-block;">
+										<div style="display: inline-block;margin-top: -40px;">
 											<button class="grid-toobar-btn" name="publishTenderBtn" type="button" style="margin-left: -5px;">发 标</button>
 											<span style="margin-left: 20px;">标的金额：</span><span name="publishTenderMoney">0</span>
 										</div>

@@ -139,7 +139,6 @@ $(function(){
 	
 	
 	//跳转到ip138查询
-	//tab页面点击事件
 	$("#credit_MainPanel").on("click",".ip138",function(){
 		var ip138Address="http://www.ip138.com:8080/search.asp?action=mobile&mobile=";
 		var phoneNumber=$(this).parent().parent().siblings().find("input").val() || $(this).parent().parent().siblings().find("span").text();
@@ -147,6 +146,19 @@ $(function(){
 		window.open(ip138Address);  
 	});
 
+	//点击图标显示某块区域
+	$("#credit_MainPanel").on("click",".expand-down",function(){
+		 debugger;
+		 $(this).parent().next("div:first").show();
+		 $(this).attr("class","expand-up")
+	});
+	
+	//点击图标隐藏某块区域
+	$("#credit_MainPanel").on("click",".expand-up",function(){
+		 debugger;
+		 $(this).parent().next("div:first").hide();
+		 $(this).attr("class","expand-down")
+	});
 })
 
 //构造左侧菜单的函数

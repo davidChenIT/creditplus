@@ -2094,3 +2094,25 @@ h3{
 	top: 2px;
 	display: inline-block
 }
+
+.expand-up{
+	content: "";
+    background-position: 0px 0px;
+    background-image: url("/p2p-webapp/css/jqueryui/images/ui-icons_ef8c08_256x240.png");
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 5px;
+    display: inline-block;
+}
+
+.expand-down{
+	content: "";
+    background-position: -65px 0px;
+    background-image: url("/p2p-webapp/css/jqueryui/images/ui-icons_ef8c08_256x240.png");
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 5px;
+    display: inline-block;
+}
