@@ -2,6 +2,9 @@
 var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process"; 
 //页面初始化加载函数
 $(function(){
+	//清除缓存数据
+	localStorage.clear();
+	
 	$(window).resize(function(){
 		gridResize("credit_Main");
 		messageBox.resetMessageDialogDiv();
@@ -683,7 +686,6 @@ var loadingBox={
 
 //下拉框组件通过数据字典服务构造选项
 function selectRender(formDivId){
-	debugger;
 	$("#"+formDivId).find("[widget='dropdown']").each(function(i,dom){
 		var moduleName=$(dom).attr("servicemodule") || "dictService";
 		var methodName=$(dom).attr("servicemethod") || "getDictItems";
@@ -697,8 +699,8 @@ function selectRender(formDivId){
 		var dicDataArray=localStorage[cacheKey]?JSON.parse(localStorage[cacheKey]):[];
 		if(is_cache=="true" && dicDataArray && dicDataArray.length>0){
 			if(istext=="true"){
-				$(dom).text(data[0][textField]);
-				$(dom).attr("code",data[0][valueField]);
+				$(dom).text(dicDataArray[0][textField]);
+				$(dom).attr("code",dicDataArray[0][valueField]);
 			}else{
 				for(var i=0;i<dicDataArray.length;i++){
 					if(code==dicDataArray[i][valueField]){
@@ -772,30 +774,40 @@ function datepickerRender(formDiv){
 }
 
 //获取grid列需要构造的下拉框的值
-function gridSelectColRender(serviceModuleName,serviceMethodName,requestData,valueField,textField){
+function gridSelectColRender(serviceModuleName,serviceMethodName,requestData,valueField,textField,is_cache){
 	var moduleName=serviceModuleName || "dictService";
 	var methodName=serviceMethodName || "getDictItems";
 	var resltObj={};
-	$.ajax({ 
-		url: serviceAddress,
-		datatype:'json',
-		method:"post",
-	    async:false,
-		data:{"module":moduleName,
-			  "method":methodName,
-			  "request_data":requestData?JSON.stringify(requestData):"{}"
-		},			
-		success: function(data){
-			resltObj.jsonArray = data;
-			resltObj.jsonStr="";
-			$.each(data,function(i,item){
-				resltObj.jsonStr += item[valueField] + ":" + item[textField] + ";";
-			});
-			resltObj.jsonStr = resltObj.jsonStr.substring(0,resltObj.jsonStr.length-1);
-		},error:function(error){
-			messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","error");
-		}
-	});
+	var cacheKey="grid_select_col_"+moduleName+"_"+moduleName+"_"+(requestData?requestData.type:"");
+	resltObj.jsonArray=localStorage[cacheKey]?JSON.parse(localStorage[cacheKey]):[];
+	resltObj.jsonStr="";
+	if((is_cache || is_cache=="true") && resltObj.jsonArray && resltObj.jsonArray.length>0){
+		$.each(resltObj.jsonArray,function(i,item){
+			resltObj.jsonStr += item[valueField] + ":" + item[textField] + ";";
+		});
+		resltObj.jsonStr = resltObj.jsonStr.substring(0,resltObj.jsonStr.length-1);
+	}else{
+		$.ajax({ 
+			url: serviceAddress,
+			datatype:'json',
+			method:"post",
+		    async:false,
+			data:{"module":moduleName,
+				  "method":methodName,
+				  "request_data":requestData?JSON.stringify(requestData):"{}"
+			},			
+			success: function(data){
+				resltObj.jsonArray = data;
+				$.each(data,function(i,item){
+					resltObj.jsonStr += item[valueField] + ":" + item[textField] + ";";
+				});
+				resltObj.jsonStr = resltObj.jsonStr.substring(0,resltObj.jsonStr.length-1);
+				localStorage[cacheKey]=JSON.stringify(resltObj.jsonArray);
+			},error:function(error){
+				messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","error");
+			}
+		});
+	}
 	return resltObj;
 }
 
@@ -843,28 +855,44 @@ function cascadeCity(e, value){
 	var paramsObj = {};
 	//参数
 	paramsObj.type = value;
-	//调用数据字典服务
-	$.ajax({ 
-		url: serviceAddress,
-		datatype:'json',
-		method:"post",
-		data:{"module" : moduleName,
-			"method" : methodName,
-			"request_data" : JSON.stringify(paramsObj)
-		},			
-		success: function(data){
-			//清空下拉框
-			$(cityDrop).empty();
-			$(cityDrop).append('<option value="">请选择</option>');
-			//赋值
-			if(data && data.length>0){
-				for(var i=0;i<data.length;i++){
-					$(cityDrop).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
-				}
-			}
-		},error:function(error){
-			var errorStr=$.parseJSON(error.responseText).cause.message;
-			messageBox.createMessageDialog("提示",errorStr,"","","error");
+	//获取缓存里面的数据
+	var cacheKey="cascade_city"+"_"+moduleName+"_"+methodName+"_"+value;
+	var cityDataArray=localStorage[cacheKey]?JSON.parse(localStorage[cacheKey]):[];
+	if(cityDataArray && cityDataArray.length>0){
+		//清空下拉框
+		$(cityDrop).empty();
+		$(cityDrop).append('<option value="">请选择</option>');
+		//赋值
+		for(var i=0;i<cityDataArray.length;i++){
+			$(cityDrop).append('<option value="'+cityDataArray[i][valueField]+'">'+cityDataArray[i][textField]+'</option>');
 		}
-	});
+	}else{
+		//调用数据字典服务
+		$.ajax({ 
+			url: serviceAddress,
+			datatype:'json',
+			method:"post",
+			data:{"module" : moduleName,
+				"method" : methodName,
+				"request_data" : JSON.stringify(paramsObj)
+			},			
+			success: function(data){
+				//清空下拉框
+				$(cityDrop).empty();
+				$(cityDrop).append('<option value="">请选择</option>');
+				//赋值
+				if(data && data.length>0){
+					for(var i=0;i<data.length;i++){
+						$(cityDrop).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
+					}
+				}
+				//加入缓存
+				localStorage[cacheKey]=JSON.stringify(data);
+			},error:function(error){
+				var errorStr=$.parseJSON(error.responseText).cause.message;
+				messageBox.createMessageDialog("提示",errorStr,"","","error");
+			}
+		});
+	}
+	
 }
