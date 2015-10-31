@@ -12,6 +12,10 @@
 <script src="<%=request.getContextPath()%>/js/jquery/jquery-2.0.3.min.js" type="text/javascript"></script>
 </head>
 <script>  
+$(function(){
+	//清除缓存数据
+	localStorage.clear();
+});
   //页面初始化加载函数
   function validateForm(form){
 	    var  username=$("input[name='username']").val();

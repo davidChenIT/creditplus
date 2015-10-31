@@ -2,9 +2,6 @@
 var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process"; 
 //页面初始化加载函数
 $(function(){
-	//清除缓存数据
-	localStorage.clear();
-	
 	$(window).resize(function(){
 		gridResize("credit_Main");
 		messageBox.resetMessageDialogDiv();
