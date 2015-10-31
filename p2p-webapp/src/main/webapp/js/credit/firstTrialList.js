@@ -43,7 +43,7 @@ $(function(){
 				{name:'review_assign_user', index:'review_assign_user',align:'center',"sortable":false}
 			],
 			pager: '#firstTrialListPager',
-			rowNum:1,
+			rowNum:10,
 			rowList:[10,20,30],
 			viewrecords: true,
 			sortable:false,

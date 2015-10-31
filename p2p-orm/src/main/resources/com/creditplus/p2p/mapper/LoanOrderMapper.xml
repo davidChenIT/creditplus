@@ -76,19 +76,19 @@
 			a.first_assign_user,
 			a.review_assign_user,
 		    concat(a.version,'') as version,
-		    (select url from p2p.attach_pic where user_id=#{user_id} and type=1) as id_num_pic1,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=2) as id_num_pic2,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=3) as work_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=4) as degree_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=5) as seasame_score_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=6) as income_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=7) as bank_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=8) as certificate_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=9) as address_pic
-	    from p2p.loan_list t
-		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
-		left join p2p.user_info u on t.user_id=u.user_id
-        left join p2p.customer_info_t c on t.user_id=c.user_id
+		    (select url from attach_pic where user_id=#{user_id} and type=1) as id_num_pic1,
+			(select url from attach_pic where user_id=#{user_id} and type=2) as id_num_pic2,
+			(select url from attach_pic where user_id=#{user_id} and type=3) as work_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=4) as degree_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=5) as seasame_score_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=6) as income_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=7) as bank_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=8) as certificate_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=9) as address_pic
+	    from loan_list t
+		left join loan_apply_t a on t.loan_id=a.loan_id
+		left join user_info u on t.user_id=u.user_id
+        left join customer_info_t c on t.user_id=c.user_id
        	where t.loan_id=#{loan_id}
 		
 	</select>
@@ -163,19 +163,19 @@
 			a.first_assign_user,
 			a.review_assign_user,
 		    concat(a.version,'') as version,
-		    (select url from p2p.attach_pic where user_id=#{user_id} and type=1) as id_num_pic1,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=2) as id_num_pic2,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=3) as work_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=4) as degree_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=5) as seasame_score_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=6) as income_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=7) as bank_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=8) as certificate_pic,
-			(select url from p2p.attach_pic where user_id=#{user_id} and type=9) as address_pic
-	    from p2p.loan_list t
-		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
-		left join p2p.user_info u on t.user_id=u.user_id
-		<!--  left join p2p.customer_info_t c on t.user_id=c.user_id -->
+		    (select url from attach_pic where user_id=#{user_id} and type=1) as id_num_pic1,
+			(select url from attach_pic where user_id=#{user_id} and type=2) as id_num_pic2,
+			(select url from attach_pic where user_id=#{user_id} and type=3) as work_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=4) as degree_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=5) as seasame_score_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=6) as income_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=7) as bank_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=8) as certificate_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=9) as address_pic
+	    from loan_list t
+		left join loan_apply_t a on t.loan_id=a.loan_id
+		left join user_info u on t.user_id=u.user_id
+		<!--  left join customer_info_t c on t.user_id=c.user_id -->
 		where t.loan_id=#{loan_id}
 	</select>
 
@@ -222,9 +222,9 @@
 			a.first_assign_user,
 			a.review_assign_user,
 		    concat(a.version,'') as version
-	    from (select * from p2p.loan_list where loan_id not in( select loan_id from p2p.loan_apply_t where apply_state!=2 and apply_state!=3 or first_assign_user!=#{last_updated_by})) t
-		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
-		left join p2p.user_info u on t.user_id=u.user_id) s
+	    from (select * from loan_list where loan_id not in( select loan_id from loan_apply_t where apply_state!=2 and apply_state!=3 or first_assign_user!=#{last_updated_by})) t
+		left join loan_apply_t a on t.loan_id=a.loan_id
+		left join user_info u on t.user_id=u.user_id) s
 
 		<where>
 			<if test="loan_id!= null">
@@ -299,9 +299,9 @@
 			a.first_assign_user,
 			a.review_assign_user,
 		    concat(a.version,'') as version
-	    from (select * from p2p.loan_list where loan_id in( select loan_id from p2p.loan_apply_t where apply_state=3 or review_assign_user=#{last_updated_by})) t
-		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
-		left join p2p.user_info u on t.user_id=u.user_id) s
+	    from (select * from loan_list where loan_id in( select loan_id from loan_apply_t where apply_state=3 or review_assign_user=#{last_updated_by})) t
+		left join loan_apply_t a on t.loan_id=a.loan_id
+		left join user_info u on t.user_id=u.user_id) s
 		<where>
 			<if test="loan_id!= null">
 				AND loan_id = #{loan_id}
@@ -375,9 +375,9 @@
 			a.first_assign_user,
 			a.review_assign_user,
 		    concat(a.version,'') as version
-	    from (select * from p2p.loan_list where loan_id in( select loan_id from p2p.loan_apply_t where apply_state=5)) t
-		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
-		left join p2p.user_info u on t.user_id=u.user_id) s
+	    from (select * from loan_list where loan_id in( select loan_id from loan_apply_t where apply_state=5)) t
+		left join loan_apply_t a on t.loan_id=a.loan_id
+		left join user_info u on t.user_id=u.user_id) s
 		<where>
 			<if test="loan_id!= null">
 				AND loan_id = #{loan_id}
@@ -451,9 +451,9 @@
 			a.first_assign_user,
 			a.review_assign_user,
 		    concat(a.version,'') as version
-	    from (select * from p2p.loan_list where loan_id in( select loan_id from p2p.loan_apply_t where apply_state=6)) t
-		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
-		left join p2p.user_info u on t.user_id=u.user_id) s
+	    from (select * from loan_list where loan_id in( select loan_id from loan_apply_t where apply_state=6)) t
+		left join loan_apply_t a on t.loan_id=a.loan_id
+		left join user_info u on t.user_id=u.user_id) s
 		<where>
 			<if test="loan_id!= null">
 				AND loan_id = #{loan_id}
@@ -527,9 +527,9 @@
 			a.first_assign_user,
 			a.review_assign_user,
 		    concat(a.version,'') as version
-	    from (select * from p2p.loan_list where loan_id in( select loan_id from p2p.loan_apply_t where apply_state=7)) t
-		left join p2p.loan_apply_t a on t.loan_id=a.loan_id
-		left join p2p.user_info u on t.user_id=u.user_id) s
+	    from (select * from loan_list where loan_id in( select loan_id from loan_apply_t where apply_state=7)) t
+		left join loan_apply_t a on t.loan_id=a.loan_id
+		left join user_info u on t.user_id=u.user_id) s
 		<where>
 			<if test="loan_id!= null">
 				AND loan_id = #{loan_id}
@@ -622,7 +622,7 @@
 
 
 
-	<!-- <resultMap type="com.creditplus.p2p.model.LoanOrderVO" id="loanListMap">
+	<!-- <resultMap type="com.creditplus.model.LoanOrderVO" id="loanListMap">
 		<id column="loan_id" property="loan_id" />
 		<result column="user_id" property="user_id" />
 		<result column="loan_full_id" property="loan_full_id" />
@@ -641,7 +641,7 @@
 		<result column="first_assign_user" property="first_assign_user" />
 		<result column="review_assign_user" property="review_assign_user" />
 		<association property="customerInfo"
-			javaType="com.creditplus.p2p.model.CustomerVO">
+			javaType="com.creditplus.model.CustomerVO">
 			<id column="user_id" property="user_id" />
 			<result column="login_type" property="login_type" />
 			<result column="loging_key" property="loging_key" />
@@ -667,7 +667,7 @@
 			<result column="modifytime" property="modifytime" />
 		</association>
 		<collection property="appLogList"
-			ofType="com.creditplus.p2p.model.ApproveLogVO" column="loan_id">
+			ofType="com.creditplus.model.ApproveLogVO" column="loan_id">
 			<id column="id" property="id" />
 			<result column="assign_user" property="assign_user" />
 			<result column="approve_content" property="approve_content" />
@@ -678,7 +678,7 @@
 			<result column="last_updated_date" property="last_updated_date" />
 		</collection>
 		<collection property="urgentList"
-			ofType="com.creditplus.p2p.model.UrgentContactorVO" column="user_id">
+			ofType="com.creditplus.model.UrgentContactorVO" column="user_id">
 			<id column="id" property="id" />
 			<result column="ur_name" property="name" />
 			<result column="ur_relation" property="relation" />
