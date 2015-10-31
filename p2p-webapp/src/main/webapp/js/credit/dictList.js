@@ -28,7 +28,7 @@ $(function(){
 					index:'dict_sel_create',
 					align:'center',
 					sortable:false,
-					width:"35px",
+					width:"55px",
 			    	formatter:function(cellvalue, options, rowObject){
 						   debugger;
 						   return '<input type="checkbox" class="dict-create-sel-cbox">';

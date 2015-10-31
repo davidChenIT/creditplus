@@ -19,7 +19,7 @@ $(function(){
 			    	name:'catalog_sel_create',
 					index:'catalog_sel_create',
 					align:'center',
-					width:"35px",
+					width:"50px",
 					sortable:false,
 			    	formatter:function(cellvalue, options, rowObject){
 						   debugger;
