@@ -18,10 +18,10 @@ $(function(){
 			//取模板
 			var userTemplateDiv = $("#applyUserUrgentConnectionUserInfoDiv .connection-user");
 			//更新级联key
-			var triggerKey = $(userTemplateDiv).find("select[name=mobile_address_city]").attr("id");
+			var triggerKey = $(userTemplateDiv).find("select[name=mobile_city]").attr("id");
 			var newTriggerKey = triggerKey.substring(0, triggerKey.length-1) + i;
-			$(userTemplateDiv).find("select[name=mobile_address_province]").attr("trigger", newTriggerKey);
-			$(userTemplateDiv).find("select[name=mobile_address_city]").attr("id", newTriggerKey);
+			$(userTemplateDiv).find("select[name=mobile_province]").attr("trigger", newTriggerKey);
+			$(userTemplateDiv).find("select[name=mobile_city]").attr("id", newTriggerKey);
 			var userDom = userTemplateDiv.html();
 			
 			var userDivIdx = "connectionUserIdx" + i;

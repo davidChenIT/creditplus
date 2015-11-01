@@ -425,7 +425,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<span name="work_tel"></span>
+							<span name="work_tel"></span><span class="ip138"></span>
 						</div>
 					</div>
 				</div>
@@ -434,7 +434,7 @@
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
 						<div class="credit-label lable-blue">
-							公司电话属地<span class="ip138"></span>
+							公司电话属地
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
@@ -634,7 +634,7 @@
 		<!-- 申请人紧急联络人 -->
 		<div class="row" id="applyUserUrgentConnectionUserInfoDiv">
 			<h3>申请人紧急联络人</h3>
-			<div class="connection-user" id="user_temp">
+			<div class="connection-user" id="user_temp" style="display:none">
 				<div class="credit-spacecontrol col-xs-12 col-sm-2">
 					<div class="row">
 						<label class="col-xs-12 col-sm-4">
@@ -673,7 +673,7 @@
 						</label>
 						<div class="col-xs-12 col-sm-8">
 							<div class="credit-input">
-								<span name="mobile"></span>
+								<span name="mobile"></span><span class="ip138"></span>
 							</div>
 						</div>
 					</div>
@@ -681,16 +681,16 @@
 				<div class="credit-spacecontrol col-xs-12 col-sm-2">
 					<div class="row">
 						<label class="col-xs-12 col-sm-5">
-							<div class="credit-label label-blue">
-								联系人电话属地<span class="ip138"></span>
+							<div class="credit-label lable-red-oblique">
+								联系人电话属地
 							</div>
 						</label>
 						<div class="col-xs-12 col-sm-7">
 							<div class="credit-input">
-								<select name="mobile_address_province" widget="dropdown" is_cache="true"  trigger="city_cascade_contact_x" textField="province" valueField="province"  widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince" style="width: 48%;">
+								<select name="mobile_province" widget="dropdown" is_cache="true"  trigger="city_cascade_contact_x" textField="province" valueField="province"  widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince" style="width: 48%;">
 									<option value="">请选择</option>
 								</select>
-								<select id="city_cascade_contact_x" name="mobile_address_city" textField="city" valueField="city" serviceModule="originPlaceService" serviceMethod="queryCityByProvince" style="width: 48%;">
+								<select id="city_cascade_contact_x" name="mobile_city" textField="city" valueField="city" serviceModule="originPlaceService" serviceMethod="queryCityByProvince" style="width: 48%;">
 									<option value="">请选择</option>
 								</select>
 							</div>

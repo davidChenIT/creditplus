@@ -408,12 +408,9 @@ function setValues(divId,dataObj,appendHtml){
 				var name=$(dom).attr("name");
 				var textareaValue=dataObj[name] || "";
 				var widgetName=$(dom).attr("widget");
-				if("dropdown"==widgetName){
-					$(dom).val(textareaValue);
-					$(dom).attr("code",textareaValue);
-				}else{
-					$(dom).val(textareaValue);
-				}
+				$(dom).val(textareaValue);
+				//渲染值到下拉框code属性上
+				$(dom).attr("code",textareaValue);
 			});
 			
 		}
@@ -699,18 +696,8 @@ function selectRender(formDivId){
 				$(dom).text(dicDataArray[0][textField]);
 				$(dom).attr("code",dicDataArray[0][valueField]);
 			}else{
-				for(var i=0;i<dicDataArray.length;i++){
-					if(code==dicDataArray[i][valueField]){
-						$(dom).append('<option value="'+dicDataArray[i][valueField]+'" selected="selected">'+dicDataArray[i][textField]+'</option>');
-						//下拉框（如果是省份，则触发change事件，级联城市）
-						var triggerKey = $(dom).attr('trigger');
-						if(triggerKey != null && triggerKey.indexOf("city_cascade_") != -1){
-							$(dom).change();
-						}
-					}else{
-						$(dom).append('<option value="'+dicDataArray[i][valueField]+'">'+dicDataArray[i][textField]+'</option>');
-					}
-				}
+				//下拉框填充
+				_setOptions(dom, dicDataArray, textField, valueField, code);
 			}
 		}else{
 			var paramsObj={};
@@ -735,18 +722,8 @@ function selectRender(formDivId){
 							$(dom).text(data[0][textField]);
 							$(dom).attr("code",data[0][valueField]);
 						}else{
-							for(var i=0;i<data.length;i++){
-								if(code==data[i][valueField]){
-									$(dom).append('<option value="'+data[i][valueField]+'" selected="selected">'+data[i][textField]+'</option>');
-									//下拉框（如果是省份，则触发change事件，级联城市）
-									var triggerKey = $(dom).attr('trigger');
-									if(triggerKey != null && triggerKey.indexOf("city_cascade_") != -1){
-										$(dom).change();
-									}
-								}else{
-									$(dom).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
-								}
-							}
+							//下拉框填充
+							_setOptions(dom, data, textField, valueField, code);
 						}
 						localStorage[cacheKey]=JSON.stringify(data);
 					}
@@ -849,6 +826,7 @@ function cascadeCity(e, value){
 	var methodName = $(cityDrop).attr("serviceMethod");
 	var valueField = $(cityDrop).attr("valueField");
 	var textField = $(cityDrop).attr("textField");
+	var code=$(cityDrop).attr("code");
 	var paramsObj = {};
 	//参数
 	paramsObj.type = value;
@@ -860,9 +838,7 @@ function cascadeCity(e, value){
 		$(cityDrop).empty();
 		$(cityDrop).append('<option value="">请选择</option>');
 		//赋值
-		for(var i=0;i<cityDataArray.length;i++){
-			$(cityDrop).append('<option value="'+cityDataArray[i][valueField]+'">'+cityDataArray[i][textField]+'</option>');
-		}
+		_setOptions(cityDrop, cityDataArray, textField, valueField, code);
 	}else{
 		//调用数据字典服务
 		$.ajax({ 
@@ -872,16 +848,14 @@ function cascadeCity(e, value){
 			data:{"module" : moduleName,
 				"method" : methodName,
 				"request_data" : JSON.stringify(paramsObj)
-			},			
+			},
 			success: function(data){
 				//清空下拉框
 				$(cityDrop).empty();
 				$(cityDrop).append('<option value="">请选择</option>');
 				//赋值
 				if(data && data.length>0){
-					for(var i=0;i<data.length;i++){
-						$(cityDrop).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
-					}
+					_setOptions(cityDrop, data, textField, valueField, code)
 				}
 				//加入缓存
 				localStorage[cacheKey]=JSON.stringify(data);
@@ -892,4 +866,29 @@ function cascadeCity(e, value){
 		});
 	}
 	
+}
+/**
+ * 渲染下拉框选项数据，并根据code值选中
+ * @param dom
+ * @param data
+ * @param textField
+ * @param valueField
+ * @param code 选中值(可选)
+ */
+function _setOptions(dom, data, textField, valueField, code){
+	//赋值
+	if(data && data.length>0){
+		for(var i=0;i<data.length;i++){
+			if(!isEmptyString(code) && code == data[i][valueField]){
+				$(dom).append('<option value="'+data[i][valueField]+'"  selected="selected">'+data[i][textField]+'</option>');
+				//下拉框（如果是省份，则触发change事件，级联城市）
+				var triggerKey = $(dom).attr('trigger');
+				if(triggerKey != null && triggerKey.indexOf("city_cascade_") != -1){
+					$(dom).change();
+				}
+			}else{
+				$(dom).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
+			}
+		}
+	}
 }
