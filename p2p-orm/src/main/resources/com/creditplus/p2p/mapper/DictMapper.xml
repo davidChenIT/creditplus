@@ -53,6 +53,9 @@
      	<if test="code != null">
      		and code=#{code}
      	</if>
+     	<if test="parentId != null">
+     		and parent_id=#{parentId}
+     	</if>
      	order by order_number
      </select>
      
