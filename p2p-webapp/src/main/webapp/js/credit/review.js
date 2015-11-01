@@ -5,7 +5,7 @@ $(function(){
 	var loan_id=paramsObj.loan_id || "";
 	//查询详细信息，并赋值
 	var queryReviewDetailParmsStr=JSON.stringify({"loan_id":loan_id,"approve_content":"开始复审","apply_state":4});
-	publicQueryInfoAjax("loanOrderService","getCreditReviewDetailByLoanId",queryReviewDetailParmsStr,"review");
+	var resultData=publicQueryInfoAjax("loanOrderService","getCreditReviewDetailByLoanId",queryReviewDetailParmsStr,"review");
 	if(resultData.apply_state == 4){
 		$("[name='reviewBtn']").show();
 		$("[name='rejectBtn']").show();
@@ -93,6 +93,7 @@ $(function(){
 				}
 			});	
 		}
+		checkPass=true;
 		//3. 获取紧急联系人数据
 		var connectionUserDoms = $("div[id*=connectionUserIdx]");
 		var urgentList = [];
