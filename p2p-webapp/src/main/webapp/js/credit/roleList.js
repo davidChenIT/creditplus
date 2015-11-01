@@ -10,9 +10,9 @@ $(function(){
 			mtype: 'POST',
 			autowidth:true,
 			height:290,
-			colNames:["操作","角色名称","是否可用","创建人","创建时间","最后修改人","最后修改时间","备注"],
+			colNames:["操作","角色id","角色名称","是否可用","创建人","创建时间","最后修改人","最后修改时间","备注"],
 			colModel :[
-				{name:'roleId', index:'roleId',align:'center',"sortable":false,width:"100px",
+				{name:'operate_col', index:'operate_col',align:'center',"sortable":false,width:"100px",
 					formatter:function(cellvalue, options, rowObject){
 						   debugger;
 						   debugger;
@@ -28,6 +28,7 @@ $(function(){
 //						   return "<a style='color:blue;' onclick=\"addTabItem('roleTab','roleUpdate','角色修改','/p2p-webapp/page/systemmng/roleUpdate.html','true','/p2p-webapp/js/credit/roleUpdate.js','"+paramsStr+"');\">"+cellvalue+"</a>";
 					}
 				},
+				{name:'roleId', index:'roleId',align:'center',hidden:true},
 				{name:'roleName', index:'roleName',align:'center',"sortable":false},
 				{name:'enable', index:'enable',align:'center',"sortable":false,formatter:"select", editoptions:{value:enableDicObj.jsonStr}},
 				{name:'created_by', index:'created_by',align:'center',"sortable":false},
@@ -85,19 +86,20 @@ $(function(){
        
     //点击用户列表中的删除按钮
     $("[name='delRoleBtn']").click(function(){
-        var request_data=[];
-    	var rowids = $("#roleListGrid").jqGrid('getDataIDs');
-    	for(var i=0;i<rowids.length;i++){
-    		var isChecked = $("#roleListGrid").find("tr[id='"+rowids[i]+"']").find("input[type='checkbox']").is(':checked');
-    		if(isChecked){
-          	    var dataVal = $.trim($("#roleListGrid").find("tr[id='"+rowids[i]+"']").find("a").text());
-          	    request_data.push(dataVal*1);    			
-    		}
-      	}
-    	
-    	if(request_data.length <=0){
-    		return;
-    	}
+    	debugger;
+    	var request_data=[];
+        var grid=$("#roleListGrid");
+        var ids = grid.jqGrid('getGridParam','selarrrow');
+        if(ids && ids.length>0){
+        	for(var i=0;i<ids.length;i++){
+        		var rowData =grid.jqGrid('getRowData',ids[i]);
+        		request_data.push(parseInt(rowData.roleId));
+        	}
+        	
+        }else{
+        	messageBox.createMessageDialog("提示","请选择你要删除的行！","","","warning");
+        	return false;
+        }
 		//调用服务
 		publicSaveAjax("roleService","deleteRoleById",JSON.stringify(request_data),null,null,"#searchRoleListBtn");    	
     });
