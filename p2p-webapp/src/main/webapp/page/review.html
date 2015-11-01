@@ -96,7 +96,7 @@
 	 				</label>
 	 				<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-					 		<span name="apply_state" widget="dropdown" istext="true" dictionary_type="apply_state"></span>
+					 		<span name="apply_state" widget="dropdown" is_cache="true" istext="true" dictionary_type="apply_state"></span>
 						</div>
 	 				</div>
 				</div>
@@ -214,7 +214,7 @@
 	 				</label>
 	 				<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-					 		<select name="thnic_v" widget="dropdown" dictionary_type="d_nation" validtion="required">
+					 		<select name="thnic_v" widget="dropdown" is_cache="true" dictionary_type="d_nation" validtion="required">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -360,7 +360,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select trigger="city_cascade_current" textField="province" valueField="province"  name="current_province_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince">
+							<select trigger="city_cascade_current" is_cache="true" textField="province" valueField="province"  name="current_province_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -686,10 +686,10 @@
 						</label>
 						<div class="col-xs-12 col-sm-7">
 							<div class="credit-input">
-								<select name="mobile_province" widget="dropdown"  trigger="city_cascade_contact_x" textField="province" valueField="province"  widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince" style="width: 48%;">
+								<select name="mobile_province" widget="dropdown" is_cache="true"  trigger="city_cascade_contact_x" textField="province" valueField="province"  widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince" style="width: 48%;">
 									<option value="">请选择</option>
 								</select>
-								<select id="city_cascade_contact_x" name="mobile_city"  textField="city" valueField="city" serviceModule="originPlaceService" serviceMethod="queryCityByProvince" style="width: 48%;">
+								<select id="city_cascade_contact_x" name="mobile_city" is_cache="true"  textField="city" valueField="city" serviceModule="originPlaceService" serviceMethod="queryCityByProvince" style="width: 48%;">
 									<option value="">请选择</option>
 								</select>
 							</div>
@@ -784,7 +784,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<select name="certificate_type_v" widget="dropdown" dictionary_type="d_certificate_type">
+							<select name="certificate_type_v" widget="dropdown" is_cache="true" dictionary_type="d_certificate_type">
 								<option value="">请选择</option>
 							</select>
 						</div>

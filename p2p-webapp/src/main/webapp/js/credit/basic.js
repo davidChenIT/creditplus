@@ -681,20 +681,26 @@ var loadingBox={
 //下拉框组件通过数据字典服务构造选项
 function selectRender(formDivId){
 	$("#"+formDivId).find("[widget='dropdown']").each(function(i,dom){
-		var moduleName=$(dom).attr("servicemodule") || "dictService";
-		var methodName=$(dom).attr("servicemethod") || "getDictItems";
-		var valueField=$(dom).attr("valuefield") || "code";
-		var textField=$(dom).attr("textfield") || "name";
-		var dictionaryType=$(dom).attr("dictionary_type");
+		var moduleName = $(dom).attr("servicemodule") || "dictService";
+		var methodName = $(dom).attr("servicemethod") || "getDictItems";
+		var valueField = $(dom).attr("valuefield") || "code";
+		var textField = $(dom).attr("textfield") || "name";
+		var dictionaryType = $(dom).attr("dictionary_type");
 		var istext=$(dom).attr("istext");
 		var code=$(dom).attr("code");
 		var is_cache=$(dom).attr("is_cache");//是否需要缓存
-		var cacheKey=moduleName+"_"+methodName+"_"+(dictionaryType || "")+"_"+(code || "");
+		//缓存可以ps:模块名_方法名_数据字典key(可选)
+		var cacheKey = moduleName + "_" + methodName + "_" + (dictionaryType || "");
 		var dicDataArray=localStorage[cacheKey]?JSON.parse(localStorage[cacheKey]):[];
-		if(is_cache=="true" && dicDataArray && dicDataArray.length>0){
+		if(is_cache == "true" && dicDataArray && dicDataArray.length>0){
 			if(istext=="true"){
-				$(dom).text(dicDataArray[0][textField]);
-				$(dom).attr("code",dicDataArray[0][valueField]);
+				//span渲染
+				$.each(dicDataArray, function(i){
+					if(code && code == dicDataArray[i].code){
+						$(dom).text(dicDataArray[0][textField]);
+						$(dom).attr("code", dicDataArray[0][valueField]);
+					}
+				});
 			}else{
 				//下拉框填充
 				_setOptions(dom, dicDataArray, textField, valueField, code);
@@ -719,8 +725,13 @@ function selectRender(formDivId){
 				success: function(data){
 					if(data && data.length>0){
 						if(istext=="true"){
-							$(dom).text(data[0][textField]);
-							$(dom).attr("code",data[0][valueField]);
+							//span渲染
+							$.each(dicDataArray, function(i){
+								if(code && code == dicDataArray[i].code){
+									$(dom).text(dicDataArray[0][textField]);
+									$(dom).attr("code", dicDataArray[0][valueField]);
+								}
+							});
 						}else{
 							//下拉框填充
 							_setOptions(dom, data, textField, valueField, code);
