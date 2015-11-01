@@ -28,25 +28,24 @@ public class CommonInfoServiceImpl implements CommonInfoService{
 		return cardMap;
 	}
 
+	
+	/**
+	 * 电话号码格式为0738-6671678
+	 */
 	public Map getPhoneInfoById(String phoneNum) {
 		Map phoneMap=null;
 		if(StringUtils.isNotEmpty(phoneNum)){
-			String area=null;
 			phoneNum=phoneNum.trim();
-			if(phoneNum.length()==11){
+			/*if(phoneNum.length()==11){
 				area=phoneNum.substring(3, 7);
 			}else if(phoneNum.substring(0, 1).equals(0)){
 				area=phoneNum.substring(0,4);
-			}
-			phoneMap=commonInfoDao.getPhoneInfoById(area);
+			}*/
+			String[] area=phoneNum.split("-");
+			phoneMap=commonInfoDao.getPhoneInfoById(area[0]);
 			System.out.println("phoneMap:"+phoneMap);
 		}
 		return phoneMap;
 	}
-	
 
-	public static void main(String[] args) {
-		Map map=new CommonInfoServiceImpl().getCardInfoById("511702198506123795");
-		System.out.println(map);
-	}
 }

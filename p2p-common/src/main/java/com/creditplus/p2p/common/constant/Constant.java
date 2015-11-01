@@ -23,6 +23,7 @@ public class Constant {
 	public static final String USER_ID="user_id";
 	public static final String APPLY_STATE="apply_state";
 	public static final String APPROVE_CONTENT="approve_content";
+	public static final String LAST_UPDATED_BY="last_updated_by";
 	public static final String FIRST_ASSIGN_USER="first_assign_user";
 	public static final String REVIEW_ASSIGN_USER="review_assign_user";
 	public static final String VERSION="version";

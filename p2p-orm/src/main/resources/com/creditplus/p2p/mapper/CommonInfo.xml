@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id="getPhoneInfoById" parameterType="String" resultType="java.util.Map">
-		select concat(province,' ',city) as mobile_address from tel_area_code where area=#{area} limit 1
+		select province as mobile_province,city as mobile_city from tel_area_code where area=#{area} limit 1
 	</select>
 	
 	<select id="executeDonamicSQL" parameterType="java.util.Map" resultType="java.util.Map">

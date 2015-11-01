@@ -30,7 +30,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	ApproveLogService approveLogService;
 	
 	
-	public boolean intercept(Integer user_id,Integer loan_id) {
+	public boolean intercept(Integer user_id,Integer loan_id) throws Exception {
 		boolean checkFlag=false;
 		List<Map> ruleList=getRuleList();
 		if(ruleList!=null && ruleList.size()>0){
@@ -52,6 +52,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 						break;
 					}
 				}
+				checkFlag=false;
 			}
 		}
 		return checkFlag;
@@ -61,8 +62,8 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	private boolean dimensionCheat(List<Map> dismensionList,Integer user_id,Integer loan_id){
 		boolean flag=false;
 		if(dismensionList!=null && dismensionList.size()>0){
-			Map sqlMap=new HashMap();
-			StringBuilder sbSql=new StringBuilder("select count(1) as total_record from user_info u left join customer_info_t c on u.user_id=c.user_id where  ");
+			Map<String, Object> sqlMap=new HashMap<String, Object>();
+			StringBuilder sbSql=new StringBuilder("select count(1) as total_record from user_info u left join loan_list l on u.user_id=l.user_id left join  customer_info_t c on u.user_id=c.user_id  where  ");
 			for(int i=0;i<dismensionList.size();i++){
 				Map dismensionMap=dismensionList.get(i);
 				String column_name=(String) dismensionMap.get("column_name");
@@ -89,8 +90,8 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 		boolean flag=false;
 		if(ruleMap!=null && ruleMap.size()>0){
 			String rule_sql=(String) ruleMap.get("rule_sql");
-			if(StringUtils.isNotEmpty(rule_sql)){
-				Map sqlMap=new HashMap();
+			if(StringUtils.isNotEmpty(rule_sql) && rule_sql.toLowerCase().contains("select")){
+				Map<String, Object> sqlMap=new HashMap<String, Object>();
 				String sql=new StringBuilder("select count(1) as total_record from (").append(rule_sql).append(") xt").toString();
 				sqlMap.put("sql", sql);
 				Integer total_record=executeQuerySql(sqlMap);
@@ -117,7 +118,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	 * @return
 		boolean
 	 * @throws Exception 
-	 */
+	 *//*
 	private boolean executeChectSqlxxx(Map dismensionMap,Integer user_id,Integer loan_id) throws Exception{
 		String tableName=(String) dismensionMap.get("table_name");
 		String column_name=(String) dismensionMap.get("column_name");
@@ -177,37 +178,37 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 			approveLogService.insertApproveLog(approveMap, false);
 		}
 		return checkFlag;
-	}
+	}*/
 	
 	
-	private void CheatProcess(Integer loan_id,String intercept_cause){
+	private void CheatProcess(Integer loan_id,String intercept_cause) throws Exception{
 		String userName=CommonUtil.getCurrentUser();
 		//更新申请单状态
-		Map loanOrderMap=new HashMap();
-		loanOrderMap.put("loan_id", loan_id);
-		loanOrderMap.put("apply_state", 6);
-		loanOrderMap.put("last_updated_by", userName);
+		Map<String, Object> loanOrderMap=new HashMap<String, Object>();
+		loanOrderMap.put(Constant.LOAN_ID, loan_id);
+		loanOrderMap.put(Constant.APPLY_STATE, Constant.S_STOP);
+		loanOrderMap.put(Constant.LAST_UPDATED_BY, userName);
 		loanOrderDao.updateLoanOrderByLoanId(loanOrderMap);
 		
 		//插入拦截日志
-		Map cheatMap=new HashMap();
-		cheatMap.put("loan_id", loan_id);
+		Map<String, Object> cheatMap=new HashMap<String, Object>();
+		cheatMap.put(Constant.LOAN_ID, loan_id);
 		cheatMap.put("intercept_source", "system");
 		cheatMap.put("check_item", intercept_cause);
 		cheatMap.put("intercept_cause", intercept_cause);
-		cheatMap.put("last_updated_by", userName);
+		cheatMap.put(Constant.LAST_UPDATED_BY, userName);
 		cheatInterceptDao.insertBatch(cheatMap);
 		
 		//插入审批日志
-		Map approveMap=new HashMap();
-		approveMap.put("loan_id", loan_id);
-		approveMap.put("apply_state", 6);
-		approveMap.put("approve_content", intercept_cause);
-		approveMap.put("last_updated_by", userName);
+		Map<String, Object> approveMap=new HashMap<String, Object>();
+		approveMap.put(Constant.LOAN_ID, loan_id);
+		approveMap.put(Constant.APPLY_STATE, Constant.S_STOP);
+		approveMap.put(Constant.APPROVE_CONTENT, intercept_cause);
+		approveMap.put(Constant.LAST_UPDATED_BY, userName);
 		try {
 			approveLogService.insertApproveLog(approveMap, false);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Exception(e);
 			//写异常日志表
 		}
 	}

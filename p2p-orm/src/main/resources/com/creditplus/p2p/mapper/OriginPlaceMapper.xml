@@ -6,11 +6,11 @@
 <mapper namespace="com.creditplus.p2p.dao.OriginPlaceDao">
 
 	<select id="queryProvince" resultType="java.util.Map">
-	     select sn as id,province from origin_place group by province
+	     select sn as id,province from tel_area_code group by province
 	</select>
 	
 	<select id="queryCityByProvince" parameterType="String" resultType="java.util.Map">
-		select sn as id,city from origin_place where province=#{type} group by city
+		select sn as id,city from tel_area_code where province=#{type} group by city
 	</select>
 	
 	
