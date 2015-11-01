@@ -6,6 +6,10 @@ $(function(){
 	//查询详细信息，并赋值
 	var queryReviewDetailParmsStr=JSON.stringify({"loan_id":loan_id,"approve_content":"开始复审","apply_state":4});
 	publicQueryInfoAjax("loanOrderService","getCreditReviewDetailByLoanId",queryReviewDetailParmsStr,"review");
+	if(resultData.apply_state == 4){
+		$("[name='reviewBtn']").show();
+		$("[name='rejectBtn']").show();
+	}
 	//查询用户紧急联系人
 	var user_id=paramsObj.user_id || "";
 	var userInfoList=publicQueryInfoAjax("urgentContactorService","getListByUserId",JSON.stringify({"user_id":user_id}));
