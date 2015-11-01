@@ -135,7 +135,7 @@ $(function(){
   
 //查询按钮
   $("[name='rankPollSeachBtn']").click(function(){
-      var request_data={};
+      var request_data = getValue("conditionDiv");
       $("#rankPoolGrid").jqGrid('setGridParam',{  
           datatype:'json',  
           postData:{'request_data':JSON.stringify(request_data)}, //发送数据

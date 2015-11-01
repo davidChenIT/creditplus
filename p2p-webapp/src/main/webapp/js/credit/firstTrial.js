@@ -123,6 +123,7 @@ $(function(){
 			$("div[id='firstTrial']").find("input,select").each(function(i,input){
 				var inputName=$(input).attr("name");
 				var inputValue=$(input).val();
+				//过滤空值
 				if(!isEmptyString(inputValue))
 					request_data[inputName]=inputValue;
 			});

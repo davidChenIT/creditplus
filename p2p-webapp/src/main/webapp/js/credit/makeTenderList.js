@@ -9,7 +9,7 @@ $(function(){
  $("#makeTenderListGrid").jqGrid({
 	 url:serviceAddress,
 		datatype: 'json',
-		postData:{"module":"loanOrderService","method":"getCreditFirstTrialListWithPage","request_data":{}},
+		postData:{"module":"loanOrderService","method":"touBiaoListWithPage","request_data":{}},
 		mtype: 'POST',
 		height:220,
 	autowidth:true,
@@ -66,7 +66,7 @@ $(function(){
  
 //查询按钮
  $("[name='makeTenderSearchBtn']").click(function(){
-     var request_data={};
+     var request_data = getValue("conditionDiv");
      $("#tenderMngListGrid").jqGrid('setGridParam',{  
          datatype:'json',  
          postData:{'request_data':JSON.stringify(request_data)}, //发送数据

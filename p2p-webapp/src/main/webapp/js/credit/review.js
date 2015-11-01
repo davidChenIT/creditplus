@@ -70,11 +70,58 @@ $(function(){
 		debugger;
 		var request_data={"loan_id":$("#review").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"复审完毕","apply_state":5};
 		var checkPass = true;
+		//1. 获取所有的必填项
+		var requiredDoms = $("#review").find("[validtion*='required']");
+		//2. 循环校验
+		if(requiredDoms.length > 0){
+			var isFocusError = false;
+			$.each(requiredDoms,function(i){
+				var validDomName = $(requiredDoms[i]).attr('name');
+				var elementVal = validateRequire(validDomName,"此项为必填！","review");
+				if(elementVal){
+					request_data[validDomName] = elementVal;
+				}else{
+					if(!isFocusError){
+						$(requiredDoms[i]).focus();
+						isFocusError = true;
+					}
+					checkPass = false;
+				}
+			});	
+		}
+		//3. 获取紧急联系人数据
+		var connectionUserDoms = $("div[id*=connectionUserIdx]");
+		var urgentList = [];
+		$.each(connectionUserDoms, function(i){
+			var userObj = {};
+			var valDomTypes = ["input","span","select"];
+			$.each(valDomTypes, function(y){
+				var valDoms = $($(connectionUserDoms)[i]).find(valDomTypes[y]);
+				if(valDoms.length > 0){
+					$.each(valDoms, function(k){
+						var key = $(valDoms[k]).attr('name');
+						switch(valDomTypes[y]){
+						case "span" :
+							userObj[key] = $(valDoms[k]).text();
+							break;
+						default:
+							userObj[key] = $(valDoms[k]).val();
+						}
+					});
+				}
+			});
+			urgentList.push(userObj);
+		});
+		request_data['urgentList'] = urgentList;
+		
+		//4. 校验通过调提交初审服务
 		if(checkPass){
 			$("div[name='firstTrial']").find("input").each(function(i,input){
 				var inputName=$(input).attr("name");
 				var inputValue=$(input).val();
-				request_data[inputName]=inputValue;
+				//过滤空值
+				if(!isEmptyString(inputValue))
+					request_data[inputName]=inputValue;
 			});
 			debugger;
 			//提交
@@ -106,6 +153,10 @@ $(function(){
 		}
 		
 	});
+	/**
+	 * 清空省份下拉框onChange事件
+	 */
+	$("[trigger*=city_cascade_]").unbind('change');
 	/**
 	 * 省份下拉框onChange事件，级联城市数据
 	 */

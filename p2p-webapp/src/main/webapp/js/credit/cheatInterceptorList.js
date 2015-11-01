@@ -15,7 +15,7 @@ $(function(){
 		mtype: 'POST',
 		height:220,
 	autowidth:true,
-	colNames:['操作','申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','状态'],
+	colNames:['操作','申请单编号','申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','状态'],
 	colModel :[
 	    {name:'operate', index:'operate',align:'center',"sortable":false,
 	    	formatter:function(cellvalue, options, rowObject){
@@ -25,15 +25,17 @@ $(function(){
 			}
 	    	
 	    },      
-		{
-			name:'loan_id', index:'loan_id',align:'center',"sortable":false,
+	    {
+			name:'loan_id', index:'loan_id',align:'center',"sortable":false, hidden:true
+		},
+		{	name:'loan_id_render', index:'loan_id', align:'center', "sortable":false,
 			formatter:function(cellvalue, options, rowObject){
-				   debugger;
-				   var paramsStr=JSON.stringify(rowObject);
-				   if(paramsStr){
-					   paramsStr=paramsStr.replace(/"/g,"@#_@#");
-				   }
-				   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','cheatInterceptorDetail','防欺诈详细信息','/p2p-webapp/page/cheatInterceptorDetail.html','false','/p2p-webapp/js/credit/cheatInterceptorDetail.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+			   debugger;
+			   var paramsStr=JSON.stringify(rowObject);
+			   if(paramsStr){
+				   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+			   }
+			   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','rankPoolDetail','排名池详细信息','/p2p-webapp/page/rankPoolDetail.html','false','/p2p-webapp/js/credit/rankPoolDetail.js','"+paramsStr+"');\">"+rowObject.loan_id+"</a>";
 			}
 		},
 		{name:'name', index:'name',align:'center',"sortable":false},
@@ -81,12 +83,24 @@ $(function(){
 		  if(selectedIds && selectedIds.length>0){
 			  var selectRowDataArray=[];
 			  for(var i=0;i<selectedIds.length;i++){
-				  selectRowDataArray.push(grid.jqGrid('getRowData',selectedIds[i]));
+				  var rowData = grid.jqGrid('getRowData',selectedIds[i]);
+				  delete rowData['loan_id_render'];
+				  rowData.apply_state = 1;//黑名单状态
+				  rowData.approve_content = "加入黑名单";
+				  selectRowDataArray.push(rowData);
 			  }
-			  //调用发标服务
-			 /**
-			  * publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeItemId,searchBtnId)
-			  *  */
+			  //调用撤标服务
+			  $.ajax({ 
+					url: serviceAddress,
+					datatype: 'json',
+					method:"post",
+					data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(request_data)},			
+					success: function(data){
+						//removeTabItem("userTab","userCreate");
+						$("[name=cheatInterceptorSearchBtn]").click();
+					},error:function(error){
+					}
+			  });
 			  messageBox.createMessageDialog("提示","加入黑名单成功！","","","warning");
 			  
 		  }else{
