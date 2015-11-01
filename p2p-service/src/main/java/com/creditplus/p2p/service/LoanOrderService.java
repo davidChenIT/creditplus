@@ -2,6 +2,8 @@ package com.creditplus.p2p.service;
 
 import java.util.List;
 import java.util.Map;
+
+import com.creditplus.p2p.common.annotation.ParamName;
 import com.creditplus.p2p.model.PageVO;
 
 public interface LoanOrderService {
@@ -22,6 +24,9 @@ public interface LoanOrderService {
 	 //已发表列表
 	 PageVO faBiaoListWithPage(Map paramMap);
 	 
+	 //投标列表
+	 PageVO touBiaoListWithPage(Map paramMap);
+	 
 	 //加入黑名单
 	 void joinTheBackList(Map paramMap);
 	 
@@ -40,6 +45,8 @@ public interface LoanOrderService {
 	 //复审详情
 	 @SuppressWarnings("rawtypes")
 	 Map getCreditReviewDetailByLoanId(Map paramMap) throws Exception;
+	 
+	 Map getBiaoDetailByLoanId(@ParamName("loan_id")Integer loan_id);
 	 
 	 //复审驳回
 	 @SuppressWarnings("rawtypes")

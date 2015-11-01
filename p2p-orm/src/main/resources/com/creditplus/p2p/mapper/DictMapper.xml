@@ -56,6 +56,9 @@
      	<if test="parentId != null">
      		and parent_id=#{parentId}
      	</if>
+     	<if test="parentId == null">
+     		and parent_id=(select dict_id from dict_t where code=#{code} and type=#{type} limit 1)
+     	</if>
      	order by order_number
      </select>
      

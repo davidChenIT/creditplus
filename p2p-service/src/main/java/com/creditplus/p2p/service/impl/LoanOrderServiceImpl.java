@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.creditplus.p2p.common.annotation.ParamName;
 import com.creditplus.p2p.common.constant.Constant;
 import com.creditplus.p2p.common.util.CheckParamUtil;
 import com.creditplus.p2p.common.util.CommonUtil;
@@ -86,7 +88,10 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		return loanOrderMap;
 	}
 	
-	
+
+	public Map getBiaoDetailByLoanId(Integer loan_id){
+		return loanOrderDao.getBiaoDetailByLoanId(loan_id);
+	}
 	
 	/**
 	 * 初审服务
@@ -282,6 +287,16 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		return pageVo;
 	}
 
+	
+	/* 
+	 * @param paramMap
+	 * @return
+	 */
+	public PageVO touBiaoListWithPage(Map paramMap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	public void joinTheBackList(Map paramMap) {
 		List list=(List) paramMap.get("list");
@@ -327,5 +342,6 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		updateMuiltLoanOrderByLoanId(updateList);
 		approveLogService.batchInsertApproveLog(updateList);
 	}
+
 
 }

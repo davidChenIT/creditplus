@@ -12,6 +12,9 @@ public interface LoanOrderDao {
 	 //复审详情查看服务
 	 Map<?, ?> getCreditReviewDetailByLoanId(Integer loan_id);
 	 
+	 //查看标详情
+	 Map<?,?> getBiaoDetailByLoanId(Integer loan_id);
+	 
 	 //初审列表
 	 List<?> getCreditFirstTrialListWithPage(Map<?, ?> paramMap);
 	 
@@ -26,6 +29,9 @@ public interface LoanOrderDao {
 	 
 	 //已发表列表
 	 List<?> faBiaoListWithPage(Map paramMap);
+	 
+	 //投标列表
+	 List<?> touBiaoListWithPage(Map paramMap);
 	 
 	 //加入黑名单
 	 void joinTheBackList(Map paramMap);
