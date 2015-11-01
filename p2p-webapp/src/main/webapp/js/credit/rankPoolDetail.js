@@ -32,7 +32,7 @@ $(function(){
 		});
 	}
 	//构造grid
-	$("#reviewLogGrid").jqGrid({
+	$("#approveLogGrid").jqGrid({
 		 url:serviceAddress,
 		 datatype: 'json',
 		 postData:{"module":"approveLogService","method":"getAppLogByLoanId","request_data":JSON.stringify({"loan_id":loan_id})},
