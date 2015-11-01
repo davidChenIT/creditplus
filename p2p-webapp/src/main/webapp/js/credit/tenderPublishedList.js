@@ -6,7 +6,7 @@ $(function(){
 	//下拉框数据填充
 	selectRender("tenderPublishedConditionDiv");
 	//构造grid下拉框需要的数据
-	var applyStateSelectObj=gridSelectColRender("","",{},"code","name");
+	var applyStateSelectObj=gridSelectColRender("","",{"type":"apply_state"},"code","name",true);
 	//构造grid
  $("#tenderPublishedGrid").jqGrid({
 	 url:serviceAddress,

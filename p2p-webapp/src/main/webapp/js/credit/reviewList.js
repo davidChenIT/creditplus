@@ -6,7 +6,7 @@ $(function(){
 	//下拉框数据填充
 	selectRender("conditionDiv");
 	//构造grid下拉框需要的数据
-	var applyStateSelectObj=gridSelectColRender("","",{},"code","name");
+	var applyStateSelectObj=gridSelectColRender("","",{"type":"apply_state"},"code","name",true);
 	//构造grid
 	$("#reviewlistGrid").jqGrid({
 			url:serviceAddress,
@@ -36,7 +36,7 @@ $(function(){
 				{name:'modifytime', index:'modifytime',align:'center',"sortable":false},
 				{name:'apply_state', index:'apply_state',align:'center',
 					"sortable":false,
-					edittype:'select',
+					formatter:'select',
 					editoptions:{value:applyStateSelectObj.jsonStr}
 				},
 				{name:'first_assign_user', index:'first_assign_user',align:'center',"sortable":false},
