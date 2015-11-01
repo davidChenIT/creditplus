@@ -1,6 +1,8 @@
 //页面初始化加载函数
 $(function(){
 	debugger;
+	
+	var stateDicObj=gridSelectColRender("","",{"type":"enable"},"code","name",true);
 	//构造grid
     $("#ruleListGrid").jqGrid({
 			url:serviceAddress,
@@ -24,7 +26,7 @@ $(function(){
 				},
 				{name:'rule_id', index:'rule_id',hidden:true,"sortable":false},
 				{name:'rule_name', index:'rule_name',align:'center',"sortable":false},
-				{name:'state', index:'state',align:'center',"sortable":false,formatter:"select", editoptions:{value:"0:不可用;1:可用"}},
+				{name:'state', index:'state',align:'center',"sortable":false,formatter:"select", editoptions:{value:stateDicObj.jsonStr}},
 				{name:'created_by', index:'created_by',align:'center',"sortable":false},
 				{name:'created_date', index:'created_date',align:'center',"sortable":false},
 				{name:'last_updated_by', index:'last_updated_by',align:'center',"sortable":false},
@@ -52,8 +54,12 @@ $(function(){
 		     onPaging:function(pgButton){
 				 debugger;
 				 var rulename = $("div[tabid='ruleList']").find("input[name='rulename']").val();
+				 var request_data={};
+				 if(rulename){
+					 request_data.rule_name=rulename;
+				 }
 				 var  grid=$(this).jqGrid();
-				 gridOnPaging(pgButton,grid,"ruleListPager",{"rule_name":rulename});
+				 gridOnPaging(pgButton,grid,"ruleListPager",request_data);
 			 }	   
 	});
     

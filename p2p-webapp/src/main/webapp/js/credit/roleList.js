@@ -1,6 +1,7 @@
 //页面初始化加载函数
 $(function(){
 	debugger;
+	var enableDicObj=gridSelectColRender("","",{"type":"enable"},"code","name",true);
 	//构造grid
     $("#roleListGrid").jqGrid({
 			url:serviceAddress,
@@ -28,7 +29,7 @@ $(function(){
 					}
 				},
 				{name:'roleName', index:'roleName',align:'center',"sortable":false},
-				{name:'enable', index:'enable',align:'center',"sortable":false,formatter:"select", editoptions:{value:"0:不可用;1:可用"}},
+				{name:'enable', index:'enable',align:'center',"sortable":false,formatter:"select", editoptions:{value:enableDicObj.jsonStr}},
 				{name:'created_by', index:'created_by',align:'center',"sortable":false},
 				{name:'created_date', index:'created_date',align:'center',"sortable":false},
 				{name:'last_updated_by', index:'last_updated_by',align:'center',"sortable":false},

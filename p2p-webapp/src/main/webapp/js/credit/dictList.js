@@ -6,6 +6,8 @@ $(function(){
     var request_data={};
     request_data.parentId = parentId;
     
+    var enableDicObj=gridSelectColRender("","",{"type":"enable"},"code","name",true);
+    
 	//构造grid
     $("#dictListGrid").jqGrid({
 			url:serviceAddress,
@@ -47,7 +49,11 @@ $(function(){
 				{name:'name',  index:'name',align:'center',"sortable":false,editable:true},
 				{name:'code',  index:'code',align:'center',"sortable":false,editable:true},
 				{name:'type',  index:'type',align:'center',"sortable":false,editable:true},
-				{name:'state', index:'state',align:'center',"sortable":false,editable:true},
+				{name:'state', index:'state',align:'center',"sortable":false,editable:true,
+					edittype:'select',
+					formatter:'select',
+					editoptions:{value:enableDicObj.jsonStr}	
+				},
 				{name:'orderNumber', index:'orderNumber',align:'center',"sortable":false,editable:true},
 				{name:'remark', index:'remark',align:'center',"sortable":false,editable:true},				
 				{name:'created_by', index:'created_by',align:'center',"sortable":false},

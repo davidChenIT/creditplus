@@ -382,7 +382,7 @@ function setValues(divId,dataObj,appendHtml){
 			//设置span的值
 			$("#"+divId).find(".credit-input").find("span").each(function(i,dom){
 				var name=$(dom).attr("name");
-				var textValue=dataObj[name] || "";
+				var textValue=(""+dataObj[name]) || "";
 				$(dom).text(textValue);
 				if($(dom).attr("widget") && $(dom).attr("widget")=="dropdown"){
 					$(dom).attr("code",textValue);
@@ -392,21 +392,21 @@ function setValues(divId,dataObj,appendHtml){
 			//设置input的值
 			$("#"+divId).find(".credit-input").find("input").each(function(i,dom){
 				var name=$(dom).attr("name");
-				var inputValue=dataObj[name] || "";
+				var inputValue=(""+dataObj[name]) || "";
 				$(dom).val(inputValue);
 			});
 			
 			//设置textarea的值
 			$("#"+divId).find(".credit-input").find("textarea").each(function(i,dom){
 				var name=$(dom).attr("name");
-				var textareaValue=dataObj[name] || "";
+				var textareaValue=(""+dataObj[name]) || "";
 				$(dom).text(textareaValue);
 			});
 			
 			//下拉框
 			$("#"+divId).find(".credit-input").find("select").each(function(i,dom){
 				var name=$(dom).attr("name");
-				var textareaValue=dataObj[name] || "";
+				var textareaValue=(""+dataObj[name]) || "";
 				var widgetName=$(dom).attr("widget");
 				$(dom).val(textareaValue);
 				//渲染值到下拉框code属性上
@@ -764,6 +764,12 @@ function gridSelectColRender(serviceModuleName,serviceMethodName,requestData,val
 	var methodName=serviceMethodName || "getDictItems";
 	var resltObj={};
 	var cacheKey="grid_select_col_"+moduleName+"_"+moduleName+"_"+(requestData?requestData.type:"");
+	if(requestData && requestData.parent_type){
+		cacheKey+="_"+requestData.parent_type;
+	}
+	if(requestData && requestData.parent_code){
+		cacheKey+="_"+requestData.parent_code;
+	}
 	resltObj.jsonArray=localStorage[cacheKey]?JSON.parse(localStorage[cacheKey]):[];
 	resltObj.jsonStr="";
 	if((is_cache || is_cache=="true") && resltObj.jsonArray && resltObj.jsonArray.length>0){

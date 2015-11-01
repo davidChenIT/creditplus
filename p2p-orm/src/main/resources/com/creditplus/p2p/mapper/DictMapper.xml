@@ -9,6 +9,8 @@
         <result column="code" property="code"/>
         <result column="name" property="name"/> 
         <result column="type" property="type"/>
+        <result column="parent_type" property="parent_type"/>
+        <result column="parent_code" property="parent_code"/>
         <result column="state" property="state"/>
         <result column="order_number" property="orderNumber"/>
         <result column="parent_id" property="parentId"/>
@@ -53,11 +55,8 @@
      	<if test="code != null">
      		and code=#{code}
      	</if>
-     	<if test="parentId != null">
-     		and parent_id=#{parentId}
-     	</if>
-     	<if test="parentId == null">
-     		and parent_id=(select dict_id from dict_t where code=#{code} and type=#{type} limit 1)
+     	<if test="(parent_code != null) and (parent_type != null)">
+     		and parent_id=(select dict_id from dict_t where code=#{parent_code} and type=#{parent_type} limit 1)
      	</if>
      	order by order_number
      </select>

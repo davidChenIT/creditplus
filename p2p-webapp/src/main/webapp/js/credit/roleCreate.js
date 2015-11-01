@@ -1,4 +1,7 @@
-$(function(){    
+$(function(){
+	
+	//下拉框数据填充
+	selectRender("roleCreateForm");
     //新增用户
     $("[name='saveRole4CreateBtn']").click(function(){
     	debugger;

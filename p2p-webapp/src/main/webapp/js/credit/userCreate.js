@@ -18,16 +18,19 @@ $(function(){
 //		debugger;
 //		return $(elem).val();
 //	};
-	var pickdates=function (id) {
-		debugger;
-	    $("#" + id + "_start_date", "#roleList4CreateGrid").datepicker({
-	      dateFormat : "yy-mm-dd"
-	    });
-	    $("#" + id + "_end_date", "#roleList4CreateGrid").datepicker({
-		      dateFormat : "yy-mm-dd"
-		    });
-	  }
-	var lastsel3;
+//	var pickdates=function (id) {
+//		debugger;
+//	    $("#" + id + "_start_date", "#roleList4CreateGrid").datepicker({
+//	      dateFormat : "yy-mm-dd"
+//	    });
+//	    $("#" + id + "_end_date", "#roleList4CreateGrid").datepicker({
+//		      dateFormat : "yy-mm-dd"
+//		    });
+//	  }
+//	var lastsel3;
+	
+	//下拉框数据填充
+	selectRender("userCreateForm");
 	debugger;
 	var roleData = "";
 	var roleJson = {};

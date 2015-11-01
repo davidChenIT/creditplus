@@ -16,7 +16,9 @@ $(function(){
 		success: function(data){
 			data.rolenameupdate = data.roleName;
 			setValues("roleUpdateForm",data,false);
-			$("select[name='enable']").val(data.enable);
+//			$("select[name='enable']").val(data.enable);
+			//下拉框数据填充
+			selectRender("roleUpdateForm");
 			created_by = data.created_by;
 			created_date = data.created_date;
 		},error:function(error){

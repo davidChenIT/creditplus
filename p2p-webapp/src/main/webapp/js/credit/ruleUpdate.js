@@ -10,14 +10,49 @@ $(function(){
 		$("h3[name='customSql4UpdateH3']").find("span").click();
 	}
 	
+	//获取业务对象、语义、且或运算符
+	var tableNameDicObj=gridSelectColRender("","",{"type":"table_name"},"code","name",true);
+	var semantemeDicObj=gridSelectColRender("","",{"type":"semanteme_dic"},"code","name",true);
+	var arithmeticDicDicObj=gridSelectColRender("","",{"type":"arithmetic_dic"},"code","name",true);
+	
+	
+	var  custom_column_name_element=function(value, options) {
+		debugger;
+		var rowData = $('#ruleList4UpdateGrid').jqGrid('getRowData', options.rowId);
+		var table_name=rowData.table_name;
+		var el = document.createElement("select");
+		$(el).append('<option value="">请选择</option>');
+		if(table_name){
+			var tableNameDicObj=gridSelectColRender("","",{"type":"column_name","parent_type":"table_name","parent_code":table_name},"code","name",true);
+			if(tableNameDicObj && tableNameDicObj.jsonArray && tableNameDicObj.jsonArray.length>0){
+				for(var i=0;i<tableNameDicObj.jsonArray.length;i++){
+					$(el).append('<option value="'+tableNameDicObj.jsonArray[i].code+'">'+tableNameDicObj.jsonArray[i].name+'</option>');
+				}
+			}
+			$(el).val(rowData.column_name);
+		}else{
+			$('#ruleList4CreateGrid').jqGrid('setRowData', options.rowId, { column_name: ""});
+		}
+		el.id=options.rowId+"_"+"column_name_text";
+		return el;
+	};
+	var custom_column_name_get_value=function (elem, operation) {
+		debugger;
+		var rowid = $(elem).parents("tr:first").attr("id");
+		$('#ruleList4UpdateGrid').jqGrid('setRowData', rowid, { column_name: elem.val()});
+		return elem.find('option:selected').text() || "";
+	};
+	
+	
 	//构造grid
+	var isFirstLoadGrid=true;
     $("#ruleList4UpdateGrid").jqGrid({
 	    	url:serviceAddress,
 			datatype: 'json',
 			postData:{"module":"ruleService","method":"getDimensionListByRuleId","request_data":JSON.stringify({"rule_id":ruleId})},
 			mtype: 'POST',
 			autowidth:true,
-			colNames:['<input type="checkbox" class="rule-update-selall-cbox">',"<span style='color:red;'>*</span>业务对象","<span style='color:red;'>*</span>字段","<span style='color:red;'>*</span>语义","<span style='color:red;'>*</span>值","<span style='color:red;'>*</span>与或运算"],
+			colNames:['<input type="checkbox" class="rule-update-selall-cbox">',"<span style='color:red;'>*</span>业务对象","column_name","<span style='color:red;'>*</span>字段","<span style='color:red;'>*</span>语义","<span style='color:red;'>*</span>值","<span style='color:red;'>*</span>与或运算"],
 			colModel :[
 			    {
 			    	name:'rule_sel_update',
@@ -37,18 +72,19 @@ $(function(){
 					editable:true,
 					width:"31%",
 					edittype:'select',
-					editrules:{required:true},
-					editoptions:{value:"1:xx;2:aa"}
+					formatter:'select',
+					editoptions:{value:tableNameDicObj.jsonStr}
 				},
-				{name:'column_name',
-					index:'column_name',
+				{ name:'column_name', hidden: true },
+				{name:'column_name_text',
+					index:'column_name_text',
 					align:'center',
 					sortable:false,
 					editable:true,
 					width:"31%",
-					edittype:'select',
 					editrules:{required:true},
-					editoptions:{value:"id:ID;name:name"}
+					edittype:'custom', 
+					editoptions: {custom_element: custom_column_name_element, custom_value: custom_column_name_get_value} 
 				},
 				{name:'semanteme',
 					index:'semanteme',
@@ -57,31 +93,61 @@ $(function(){
 					editable:true,
 					width:"31%",
 					edittype:'select',
-					editrules:{required:true},
-					editoptions:{value:"=:=;like:like"}
+					formatter:'select',
+					editoptions:{value:semantemeDicObj.jsonStr}
 				},
 				{name:'dis_value',
 					index:'dis_value',
 					align:'center',
 					sortable:false,
 					editable:true,
-					width:"31%"
+					editrules:{required:true},
+					width:"31%",
 				},
 				{name:'arithmetic',
 					index:'arithmetic',
 					align:'center',
 					sortable:false,
 					editable:true,
-					width:"31%"
+					width:"31%",
+					edittype:'select',
+					editrules:{required:true},
+					formatter:'select',
+					editoptions:{value:arithmeticDicDicObj.jsonStr}
 				}
 				
 			],
 			cellEdit: true,
 			cellsubmit:"clientArray",
 			sortable:false,
+			afterSaveCell:function(rowid, cellname, value, iRow, iCol){
+				debugger;
+				if(cellname=="table_name"){
+					$('#ruleList4UpdateGrid').jqGrid('setRowData', rowid, { column_name_text:"",column_name:"" });
+				}
+			},
 			gridComplete:function(){
 		    	debugger;
 		    	$("div[name='ruleTab']").find(".rule-update-selall-cbox").parent("div").attr("class","");
+		    	if(isFirstLoadGrid){
+		    		var allRowDatas=$('#ruleList4UpdateGrid').jqGrid().getRowData();
+			    	if(allRowDatas && allRowDatas.length>0){
+			    		var columnNameDicObj=gridSelectColRender("","",{"type":"column_name"},"code","name",true);
+			    		var columnNameDicItemArry=columnNameDicObj.jsonArray;
+			    		for(var i=0;i<allRowDatas.length;i++){
+				    		var column_name=allRowDatas[i].column_name;
+				    		var column_name_text="";
+				    		for(var j=0;j<columnNameDicItemArry.length;j++){
+				    			if(column_name==columnNameDicItemArry[j].code){
+				    				column_name_text=columnNameDicItemArry[j].name;
+				    				break;
+				    			}
+				    		}
+				    		$('#ruleList4UpdateGrid').jqGrid('setRowData', (i+1), { column_name_text: column_name_text });
+				    	}
+			    	}
+		    	}
+		    	isFirstLoadGrid=false;
 		    }
 	});
 	
@@ -202,7 +268,12 @@ $(function(){
       	  $("#ruleList4UpdateGrid").find("tr[id='"+rowids[i]+"']").find("select").each(function(i,select){
       	    var selectName=$(select).attr("name");
       		var selectVal=$(select).val();
-      		rowData[selectName]=selectVal;
+      		if(selectName=="column_name_text"){
+      			rowData[selectName]=$(select).find('option:selected').text();
+      			rowData.column_name=selectVal;
+      		}else{
+      			rowData[selectName]=selectVal;
+      		}
       	  });
       	  grid_data.push(rowData);
       	}    

@@ -2,7 +2,7 @@
 	<div>
 		<!--排名池查询条件开始-->
 		<h3>用户信息</h3>	
-		<div class="row" name="userCreateForm">
+		<div class="row" id="userCreateForm" name="userCreateForm">
 			<div class="credit-spacecontrol col-xs-12 col-sm-6">
 				<div class="row" >
 					<label class="col-xs-12 col-sm-3">
@@ -27,9 +27,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select name="enable">
-								<option value="1" selected="selected">可用</option>
-								<option value="0">不可用</option>
+							<select name="enable" widget="dropdown" is_cache="true" dictionary_type="enable">
 							</select>
 						</div>
 					</div>
