@@ -2083,6 +2083,16 @@ h3{
 	top: 2px;
 	display: inline-block;
 }
+.update-btn:before{
+	content:"";
+	background-position: -65px -110px;
+    background-image: url("/p2p-webapp/css/jqueryui/images/ui-icons_ef8c08_256x240.png");
+    width: 16px;
+    height: 16px;
+	position: relative;
+	top: 2px;
+	display: inline-block;
+}
 .del-btn:before{
 	content:"";
 	background-position: -180px -95px;
@@ -2138,4 +2148,12 @@ h3{
     position: relative;
     top: 5px;
     display: inline-block;
+}
+
+.show-img-span{
+    background-image: url("/p2p-webapp/images/icon.png");
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-position: 0px 2px;
 }

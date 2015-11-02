@@ -153,6 +153,15 @@ $(function(){
 		 $(this).parent().next("div:first").hide();
 		 $(this).attr("class","expand-down");
 	});
+	
+	//给显示图片的span加上点击事件
+	$("#credit_MainPanel").on("click",".show-img-span",function(){
+		 var imgType=$(this).attr("img-type");
+		 var userId=$(this).attr("user-id");
+		 
+		 //显示一个图片层
+		 
+	});
 })
 
 //构造左侧菜单的函数
