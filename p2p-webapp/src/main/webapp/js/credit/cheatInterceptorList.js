@@ -85,7 +85,7 @@ $(function(){
 			  for(var i=0;i<selectedIds.length;i++){
 				  var rowData = grid.jqGrid('getRowData',selectedIds[i]);
 				  delete rowData['loan_id_render'];
-				  rowData.apply_state = 1;//黑名单状态
+				  rowData.apply_state = 11;//黑名单状态
 				  rowData.approve_content = "加入黑名单";
 				  selectRowDataArray.push(rowData);
 			  }
@@ -94,7 +94,7 @@ $(function(){
 					url: serviceAddress,
 					datatype: 'json',
 					method:"post",
-					data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(request_data)},			
+					data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(selectRowDataArray)},			
 					success: function(data){
 						//removeTabItem("userTab","userCreate");
 						$("[name=cheatInterceptorSearchBtn]").click();

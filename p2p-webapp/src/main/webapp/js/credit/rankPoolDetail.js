@@ -13,11 +13,6 @@ $(function(){
 		$.each(userInfoList, function(i){//更新级联key
 			//取模板
 			var userTemplateDiv = $("#applyUserUrgentConnectionUserInfoDiv .connection-user");
-			//更新级联key
-			var triggerKey = $(userTemplateDiv).find("select[name=mobile_city]").attr("id");
-			var newTriggerKey = triggerKey.substring(0, triggerKey.length-1) + i;
-			$(userTemplateDiv).find("select[name=mobile_province]").attr("trigger", newTriggerKey);
-			$(userTemplateDiv).find("select[name=mobile_city]").attr("id", newTriggerKey);
 			var userDom = userTemplateDiv.html();
 			
 			var userDivIdx = "connectionUserIdx" + i;
@@ -27,8 +22,6 @@ $(function(){
 			//移除静态html，循环输出动态列表元素
 			if(i == userInfoList.length-1) 
 				userTemplateDiv.remove();
-			//渲染下拉框
-			selectRender(userDivIdx);
 		});
 	}
 	//构造grid
@@ -67,70 +60,7 @@ $(function(){
 	
 	//提交初审按钮
 	$("[name='reviewBtn']").click(function(){
-		debugger;
-		var request_data={"loan_id":$("#review").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"复审完毕","apply_state":5};
-		var checkPass = true;
-		//1. 获取所有的必填项
-		var requiredDoms = $("#review").find("[validtion*='required']");
-		//2. 循环校验
-		if(requiredDoms.length > 0){
-			var isFocusError = false;
-			$.each(requiredDoms,function(i){
-				var validDomName = $(requiredDoms[i]).attr('name');
-				var elementVal = validateRequire(validDomName,"此项为必填！","rankPoolDetail");
-				if(elementVal){
-					request_data[validDomName] = elementVal;
-				}else{
-					if(!isFocusError){
-						$(requiredDoms[i]).focus();
-						isFocusError = true;
-					}
-					checkPass = false;
-				}
-			});	
-		}
-		//3. 获取紧急联系人数据
-		var connectionUserDoms = $("div[id*=connectionUserIdx]");
-		var urgentList = [];
-		$.each(connectionUserDoms, function(i){
-			var userObj = {};
-			var valDomTypes = ["input","span","select"];
-			$.each(valDomTypes, function(y){
-				var valDoms = $($(connectionUserDoms)[i]).find(valDomTypes[y]);
-				if(valDoms.length > 0){
-					$.each(valDoms, function(k){
-						var key = $(valDoms[k]).attr('name');
-						switch(valDomTypes[y]){
-						case "span" :
-							userObj[key] = $(valDoms[k]).text();
-							break;
-						default:
-							userObj[key] = $(valDoms[k]).val();
-						}
-					});
-				}
-			});
-			urgentList.push(userObj);
-		});
-		request_data['urgentList'] = urgentList;
 		
-		//4. 校验通过调提交初审服务
-		if(checkPass){
-			$("div[name='firstTrial']").find("input").each(function(i,input){
-				var inputName=$(input).attr("name");
-				var inputValue=$(input).val();
-				//过滤空值
-				if(!isEmptyString(inputValue))
-					request_data[inputName]=inputValue;
-			});
-			debugger;
-			//提交
-			publicSaveAjax("loanOrderService","creditReview",JSON.stringify(request_data),"tenderTab","rankPoolDetail","[name='reviewSearchBtn']");
-			
-		}else{
-			messageBox.createMessageDialog("提示","对不起，您有数据录入不正确，请检查并正确录入后再次提交！","","","warning");
-			return false;
-		}
 		
 	});
 	

@@ -69,13 +69,13 @@ $(function(){
 	
 	
 	
-	//提交初审按钮
+	//提交复审按钮
 	$("[name='reviewBtn']").click(function(){
 		debugger;
-		var request_data={"loan_id":$("#review").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"复审完毕","apply_state":5};
+		var request_data={"loan_id":$("#review").find("span[name='loan_id']").text(),"user_id":user_id,"apply_state":5};
 		var checkPass = true;
 		//1. 获取所有的必填项
-		var requiredDoms = $("#review").find("[validtion*='required']");
+		var requiredDoms = $("#review").find("[validation*='required']");
 		//2. 循环校验
 		if(requiredDoms.length > 0){
 			var isFocusError = false;
@@ -121,7 +121,7 @@ $(function(){
 		
 		//4. 校验通过调提交初审服务
 		if(checkPass){
-			$("div[name='firstTrial']").find("input").each(function(i,input){
+			$("#review").find("input,select,textarea").each(function(i,input){
 				var inputName=$(input).attr("name");
 				var inputValue=$(input).val();
 				//过滤空值

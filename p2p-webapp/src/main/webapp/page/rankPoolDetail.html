@@ -130,8 +130,8 @@
 	 				</label>
 	 				<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-					 		正<span name="id_num_pic1"></span>
-					 		反<span name="id_num_pic2"></span>
+					 		正<span name="id_num_pic1" class="show-img-span" style="margin-right: 10px;"></span>
+					 		反<span name="id_num_pic2" class="show-img-span"></span>
 						</div>
 	 				</div>
 				</div>
@@ -209,15 +209,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
  	 				<label class="col-xs-12 col-sm-3">
-						<div class="credit-label label-red">
-							<span style="color:red;">*</span>民族
+						<div class="credit-label">
+							民族
 						</div>
 	 				</label>
 	 				<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-					 		<select name="thnic_v" widget="dropdown" is_cache="true" dictionary_type="d_nation" validtion="required">
-								<option value="">请选择</option>
-							</select>
+					 		<span name="thnic_v" widget="dropdown" is_cache="true" istext="true" dictionary_type="thnic"/>
 						</div>
 	 				</div>
 				</div>
@@ -225,13 +223,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label label-red">
-							<span style="color:red;">*</span>户口所在地
+						<div class="credit-label">
+							户口所在地
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input name="registered_place_v" type="text" validtion="required">
+							<span name="registered_place_v">
 						</div>
 					</div>
 				</div>
@@ -239,13 +237,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label label-red">
-							<span style="color:red;">*</span>电话属地<span class="ip138"></span>
+						<div class="credit-label">
+							电话属地<span class="ip138"></span>
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input name="mobile_place_v" type="text" validtion="required">
+							<span name="mobile_place_v">
 						</div>
 					</div>
 				</div>
@@ -253,13 +251,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label label-red">
-							<span style="color:red;">*</span>身份证验证-姓名
+						<div class="credit-label">
+							身份证验证-姓名
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input name="id_num_name_v" type="text" validtion="required">
+							<span name="id_num_name_v">
 						</div>
 					</div>
 				</div>
@@ -267,13 +265,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label label-red">
-							<span style="color:red;">*</span>身份证验证-号码
+						<div class="credit-label">
+							身份证验证-号码
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input name="id_num_v" type="text" validtion="required">
+							<span name="id_num_v">
 						</div>
 					</div>
 				</div>
@@ -327,7 +325,7 @@
 			<!-- 先隐藏<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label label-red">
+						<div class="credit-label">
 							住址电话
 						</div>
 					</label>
@@ -341,13 +339,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label label-red">
+						<div class="credit-label">
 							住址电话验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="address_phone_v"/>
+							<span name="address_phone_v"/>
 						</div>
 					</div>
 				</div>
@@ -355,15 +353,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							当前居住省份验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select trigger="city_cascade_current" is_cache="true" textField="province" valueField="province"  name="current_province_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince">
-								<option value="">请选择</option>
-							</select>
+							<span name="current_province_v"/>
 						</div>
 					</div>
 				</div>
@@ -371,15 +367,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							当前居住城市验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select id="city_cascade_current"  textField="city" valueField="city" name="current_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince">
-								<option value="">请选择</option>
-							</select>
+							<span name="current_city_v"/>
 						</div>
 					</div>
 				</div>
@@ -387,13 +381,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							当前居住详址验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="current_address_v"/>
+							<span name="current_address_v"/>
 						</div>
 					</div>
 				</div>
@@ -433,13 +427,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							公司电话属地
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="work_tel_place_v"/>
+							<span name="work_tel_place_v"/>
 						</div>
 					</div>
 				</div>
@@ -489,13 +483,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							公司全称验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="company_name_v"/>
+							<span name="company_name_v"/>
 						</div>
 					</div>
 				</div>
@@ -503,13 +497,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							工作姓名验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="work_name_v"/>
+							<span name="work_name_v"/>
 						</div>
 					</div>
 				</div>
@@ -517,13 +511,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							工作联系电话验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="work_tel_v"/>
+							<span name="work_tel_v"/>
 						</div>
 					</div>
 				</div>
@@ -531,13 +525,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							工作职位验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="work_position_v"/>
+							<span name="work_position_v"/>
 						</div>
 					</div>
 				</div>
@@ -605,13 +599,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							收入人姓名验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input name="income_name_v"/>
+							<span name="income_name_v"/>
 						</div>
 					</div>
 				</div>
@@ -619,13 +613,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							收入工资验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input name="income_v" type="text"/>
+							<span name="income_v"/>
 						</div>
 					</div>
 				</div>
@@ -644,7 +638,7 @@
 						</label>
 						<div class="col-xs-12 col-sm-8">
 							<div class="credit-input">
-								<input name="user_id" style="display:none"/>
+								<span name="user_id" style="display:none"/>
 								<span name="name"></span>
 							</div>
 						</div>
@@ -681,18 +675,14 @@
 				<div class="credit-spacecontrol col-xs-12 col-sm-2">
 					<div class="row">
 						<label class="col-xs-12 col-sm-5">
-							<div class="credit-label lable-red-oblique">
+							<div class="credit-label-oblique">
 								联系人电话属地
 							</div>
 						</label>
 						<div class="col-xs-12 col-sm-7">
 							<div class="credit-input">
-								<select name="mobile_province" widget="dropdown" is_cache="true"  trigger="city_cascade_contact_x" textField="province" valueField="province"  widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince" style="width: 48%;">
-									<option value="">请选择</option>
-								</select>
-								<select id="city_cascade_contact_x" name="mobile_city" is_cache="true"  textField="city" valueField="city" serviceModule="originPlaceService" serviceMethod="queryCityByProvince" style="width: 48%;">
-									<option value="">请选择</option>
-								</select>
+								<span name="mobile_province"/>&nbsp;
+								<span name="mobile_city"/>
 							</div>
 						</div>
 					</div>
@@ -719,13 +709,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							芝麻信用分数
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input type="text" name="seasame_score_v"></input>
+							<span name="seasame_score_v"></input>
 						</div>
 					</div>
 				</div>
@@ -747,13 +737,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-5">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							腾讯信用分数
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-7">
 						<div class="credit-input">
-							<input type="text" name="tencent_credit_v"></input>
+							<span name="tencent_credit_v"></input>
 						</div>
 					</div>
 				</div>
@@ -779,15 +769,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label">
 							证书类型
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<select name="certificate_type_v" widget="dropdown" is_cache="true" dictionary_type="d_certificate_type">
-								<option value="">请选择</option>
-							</select>
+							<span name="certificate_type_v" widget="dropdown" is_cache="true" istext="true" dictionary_type="certificate"/>
 						</div>
 					</div>
 				</div>
@@ -795,13 +783,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
-						<div class="credit-label label-red">
+						<div class="credit-label">
 							证书姓名验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input type="text" name="certificate_name_v"></input>
+							<span name="certificate_name_v"></input>
 						</div>
 					</div>
 				</div>
@@ -809,13 +797,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-5">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label">
 							职业等级
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-7">
 						<div class="credit-input">
-							<input type="text" name="profession_grade_v"></input>
+							<span name="profession_grade_v"></input>
 						</div>
 					</div>
 				</div>
@@ -841,13 +829,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							手机验证-姓名
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input name="mobile_name_v" type="text"/>
+							<span name="mobile_name_v"/>
 						</div>
 					</div>
 				</div>
@@ -855,13 +843,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label-oblique">
 							手机在网时长
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input name="mobile_online_time_v" type="text"/>
+							<span name="mobile_online_time_v"/>
 						</div>
 					</div>
 				</div>
@@ -873,13 +861,13 @@
            	<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
-						<div class="credit-label label-red">
-							<span style="color:red;">*</span>证书编号
+						<div class="credit-label">
+							证书编号
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input name=profession_code type="text" validation="required">
+							<span name=profession_code>
 						</div>
 					</div>
 				</div>
@@ -901,13 +889,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
-						<div class="credit-label label-red">
-							<span style="color:red;">*</span>证书网上抓图
+						<div class="credit-label">
+							证书网上抓图
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input name="xxxxxxxxxxxxxxxxx" type="text" validation="required"/>
+							<span name="xxxxxxxxxxxxxxxxx"/>
 						</div>
 					</div>
 				</div>
@@ -943,13 +931,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
-						<div class="credit-label lable-red">
-							毕业学校等级*
+						<div class="credit-label">
+							毕业学校等级
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input name="profession_grade_v" type="text" value="985" validation="required">
+							<span name="profession_grade_v" value="985">
 						</div>
 					</div>
 				</div>
@@ -957,13 +945,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
-						<div class="credit-label label-red">
-							<span style="color:red;">*</span>学历姓名验证
+						<div class="credit-label">
+							学历姓名验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input name="degree_name_v" type="text" validation="required">
+							<span name="degree_name_v">
 						</div>
 					</div>
 				</div>
@@ -971,13 +959,13 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
-						<div class="credit-label label-red">
-							<span style="color:red;">*</span>学历毕业学校
+						<div class="credit-label">
+							学历毕业学校
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input name="school_name_v" type="text" validation="required">
+							<span name="school_name_v">
 						</div>
 					</div>
 				</div>
@@ -985,18 +973,24 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
-						<div class="credit-label label-red">
-							<span style="color:red;">*</span>最高学历
+						<div class="credit-label">
+							最高学历
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input name="highest_degree_v" type="text" validation="required"/>
+							<span name="highest_degree_v"/>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>	
+		<!-- 按鈕区域 -->
+		<div class="credit-toolbar" style="margin-top: 5px;margin-bottom: 30px;">
+			<div style="display: inline-block;">
+				<button class="grid-toobar-btn" name="closeRankPoolBtn" onclick="removeTabItem('tenderTab','rankPoolDetail');" type="button">取消</button>
+			</div>
+		</div>
 		<!-- grid区域开始 -->
 		<h3>历史处理记录<span class="expand-down"></span></h3>
 		<div class="row" style="display:none;">

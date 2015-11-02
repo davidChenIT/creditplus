@@ -130,7 +130,7 @@ $("[name='ofWithdrawalBtn']").click(function(){
 				url: serviceAddress,
 				datatype: 'json',
 				method:"post",
-				data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(request_data)},			
+				data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(selectRowDataArray)},			
 				success: function(data){
 					//removeTabItem("userTab","userCreate");
 					$("[name=cheatInterceptorSearchBtn]").click();

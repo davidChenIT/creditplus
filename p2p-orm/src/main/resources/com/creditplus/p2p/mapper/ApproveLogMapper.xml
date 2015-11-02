@@ -29,8 +29,11 @@
 		</where>
     </select>
     
-    <select id="getCountByLoanId" parameterType="Integer" resultType="Integer">
+    <select id="getCountByParam" parameterType="java.util.Map" resultType="Integer">
     	select count(1) as total_record from approve_log_t  where loan_id = #{loan_id}
+    	<if test="apply_state != null">
+    		and state=#{apply_state}
+    	</if>
     </select>
     
     
