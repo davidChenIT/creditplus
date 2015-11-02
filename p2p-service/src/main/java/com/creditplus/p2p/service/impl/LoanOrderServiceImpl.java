@@ -107,14 +107,14 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE,Constant.USER_ID);
 		Integer user_id=Integer.valueOf(paramMap.get(Constant.USER_ID)+"");
 		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
+		//更新客户信息
+		updateCustomerInfo(paramMap, user_id);
 		//防欺诈拦截
 		boolean checkFlag=cheatInterceptService.intercept(user_id, loan_id);
 		if(checkFlag)
 			return;
 		//出入初审日志
 		approveLogService.insertApproveLog(paramMap,false);
-		//更新客户信息
-		updateCustomerInfo(paramMap, user_id);
 		//更新紧急联系人
 		List urgentList=(List) paramMap.get("urgentList");
 		updateUrgentContactor(urgentList, user_id);
@@ -131,13 +131,13 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE,Constant.USER_ID);
 		Integer user_id=Integer.valueOf(paramMap.get(Constant.USER_ID)+"");
 		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
+		updateCustomerInfo(paramMap, user_id);
 		boolean checkFlag=cheatInterceptService.intercept(user_id, loan_id);
 		if(checkFlag)
 			return;
 		
 		List urgentList=(List) paramMap.get("urgentList");
 		approveLogService.insertApproveLog(paramMap,false);
-		updateCustomerInfo(paramMap, user_id);
 		updateUrgentContactor(urgentList, user_id);
 		//更新状态
 		updateLoanApply(paramMap);
@@ -177,12 +177,14 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 			loanMap.put(Constant.REVIEW_ASSIGN_USER, CommonUtil.getCurrentUser());
 		}
 		
-		Integer total_record=loanOrderDao.getCountByLoanId(loan_id);
+		List<Map> loanAppList=(List<Map>) loanOrderDao.selectLoanApplyList(loanMap); 
+//		Integer total_record=loanOrderDao.getCountByLoanId(loan_id);
 		System.out.println("updateLoanApply===loanMap:"+loanMap);
-		if(total_record==0){
+		if(loanAppList.size()==0){
 			loanOrderDao.insertLoanApply(loanMap);
 		}else{
-			if(apply_state!=2 && apply_state!=4){ //这两个状态开始初审和复审只做插入动作
+			Integer db_apply_state=Integer.valueOf(loanAppList.iterator().next().get(Constant.APPLY_STATE)+"");
+			if(apply_state>db_apply_state){ 			//防止点击初审复审详情时再次更新状态
 				loanOrderDao.updateLoanOrderByLoanId(loanMap);
 			}
 		}

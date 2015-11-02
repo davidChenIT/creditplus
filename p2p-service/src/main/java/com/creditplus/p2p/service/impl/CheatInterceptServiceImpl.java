@@ -39,7 +39,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 				Integer rule_id=Integer.valueOf(ruleMap.get(Constant.RULE_ID)+"");
 				checkFlag=ruleSqlCheat(ruleMap, loan_id);
 				if(checkFlag){
-					CheatProcess(loan_id, "检查规则sql");
+					CheatProcess(loan_id, new StringBuilder("检查规则 '").append(rule_name).append("' sql不通过").toString());
 					break;
 				}
 					
@@ -48,7 +48,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 				if(dimensionList!=null && dimensionList.size()>0){
 					checkFlag=dimensionCheat(dimensionList, user_id,loan_id);
 					if(checkFlag){
-						CheatProcess(loan_id, "检查规则维度项");
+						CheatProcess(loan_id, new StringBuilder("检查规则 '").append(rule_name).append("' 维度不通过").toString());
 						break;
 					}
 				}

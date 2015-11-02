@@ -93,7 +93,7 @@ $(function(){
 				}
 			});	
 		}
-		checkPass=true;
+		
 		//3. 获取紧急联系人数据
 		var connectionUserDoms = $("div[id*=connectionUserIdx]");
 		var urgentList = [];
@@ -141,7 +141,7 @@ $(function(){
 	
 	$("[name='rejectBtn']").click(function(){
 		debugger;
-		var request_data={"loan_id":$("#review").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"驳回，用户身份证不正确","apply_state":2};
+		var request_data={"loan_id":$("#review").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"驳回，用户身份信息不正确","apply_state":2};
 		var checkPass = true;
 		if(checkPass){
 			$("div[name='firstTrial']").find("input").each(function(i,input){
