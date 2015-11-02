@@ -32,8 +32,7 @@ public class ApproveLogServiceImpl  implements ApproveLogService{
 //		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state");
 		System.out.println("paramMap:"+paramMap);
 		if(flag){
-			Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
-			Integer total_record=approveLogDao.getCountByLoanId(loan_id);
+			Integer total_record=approveLogDao.getCountByParam(paramMap);
 			if(total_record==0)
 				approveLogDao.insertApproveLog(paramMap);
 		}else{
