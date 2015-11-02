@@ -171,12 +171,10 @@
 								        <!--投标查询条件结束-->
 									    
 									    <!--投标按钮区域开始-->
-										<div hw_id="_hw_8138" widget="toolbar" class="creditRendered center credit-toolbar" id="Toolbar_65545051">
-											<div hw_id="_hw_8139" widget="button" class="search-y-btn creditRendered" id="Button_84127684" style="display: inline-block;">
-												<button class=" credit-btn " name="makeTenderSearchBtn" type="button" >查询</button>
-											</div>
-											<div id="restBtn" hw_id="_hw_8140" widget="button" class="clear-y-btn creditRendered" style="display: inline-block;">
-												<button class=" credit-btn " name="clearMakeTenderConditionBtn" type="button">重置</button>
+										<div class="credit-toolbar">
+											<div style="display: inline-block;">
+												<button class="grid-toobar-btn search-btn" name="makeTenderSearchBtn" type="button">查询</button>
+												<button class="grid-toobar-btn clear-btn" name="clearMakeTenderConditionBtn" type="button">重置</button>
 											</div>
 										</div>
 							            <!--投标按钮区域结束-->

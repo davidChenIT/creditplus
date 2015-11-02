@@ -8,7 +8,7 @@ $(function(){
 			postData:{"module":"catalogService","method":"getCatalogListWithPage"},
 			mtype: 'POST',
 			autowidth:true,
-			height:290,
+			height:285,
 			colNames:['<input type="checkbox" class="catalog-create-selall-cbox">',
 			           "操作",
 			           "<span style='color:red;'>*</span>栏目名称",

@@ -13,7 +13,7 @@ $(function(){
 			datatype: 'json',
 			postData:{"module":"loanOrderService","method":"getCreditFirstTrialListWithPage","request_data":{}},
 			mtype: 'POST',
-			height:220,
+			height:205,
 			autowidth:true,
 			colNames:["申请编号","申请人姓名","申请人身份证号","金额","期次","时长","申请时间","申请单状态","初审人","复审人"],
 			colModel :[

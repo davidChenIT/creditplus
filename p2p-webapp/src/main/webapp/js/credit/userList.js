@@ -9,7 +9,7 @@ $(function(){
 			postData:{"module":"userService","method":"getUserListWithPage"},
 			mtype: 'POST',
 			autowidth:true,
-			height:290,
+			height:285,
 			colNames:["操作","用户名称","是否可用","创建人","创建时间","最后修改人","最后修改时间","备注"],
 			colModel :[
 				{name:'userId', index:'userId',align:'center',"sortable":false,width:"100px",

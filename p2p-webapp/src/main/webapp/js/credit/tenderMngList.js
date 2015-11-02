@@ -11,7 +11,7 @@ $(function(){
 			datatype: 'json',
 			postData:{"module":"loanOrderService","method":"rankingPoolListWithPage","request_data":{}},
 			mtype: 'POST',
-			height:220,
+			height:205,
 			autowidth:true,
 			colNames:['申请单编号','申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','信用分1','信用分2','排名'],
 			colModel :[

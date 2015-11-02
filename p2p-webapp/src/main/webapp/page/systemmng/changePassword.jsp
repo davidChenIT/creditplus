@@ -103,9 +103,11 @@
 															&nbsp;
 														</div>
 													</label>												
-													<div class="search-y-btn creditRendered" style="display: inline-block;">
-														<button class="credit-btn" id="changePasswordBtn" type="button">修改密码</button>
-													</div>	
+													<div class="credit-toolbar" style="display: inline-block;">
+														<div >
+															<button class="grid-toobar-btn" id="changePasswordBtn" type="button">修改密码</button>
+														</div>
+													</div>
 												</div>																								
 											</div>												
 										</div>

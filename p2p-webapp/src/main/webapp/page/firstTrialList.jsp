@@ -168,13 +168,11 @@
 											</div>										
 										</div>
 										<!-- 条件区域结束 -->
-										<!--按钮区域开始-->
-										<div class="creditRendered center credit-toolbar">
-											<div class="search-y-btn creditRendered" style="display: inline-block;">
-												<button class="credit-btn" name="firstTrialSearhBtn" type="button">查询</button>
-											</div>
-											<div class="clear-y-btn creditRendered" style="display: inline-block;">
-												<button class="credit-btn" name="firstTrialClearBtn" type="button">重置</button>
+										<!-- 按鈕区域 -->
+										<div class="credit-toolbar">
+											<div style="display: inline-block;">
+												<button class="grid-toobar-btn search-btn" name="firstTrialSearhBtn" type="button">查询</button>
+												<button class="grid-toobar-btn clear-btn" name="firstTrialClearBtn" type="button">重置</button>
 											</div>
 										</div>
 										<!--按钮区域结束-->

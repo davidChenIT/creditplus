@@ -9,7 +9,7 @@ $(function(){
 			postData:{"module":"roleService","method":"getRoleListWithPage"},
 			mtype: 'POST',
 			autowidth:true,
-			height:290,
+			height:285,
 			colNames:["操作","角色id","角色名称","是否可用","创建人","创建时间","最后修改人","最后修改时间","备注"],
 			colModel :[
 				{name:'operate_col', index:'operate_col',align:'center',"sortable":false,width:"100px",

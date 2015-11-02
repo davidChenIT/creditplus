@@ -61,9 +61,14 @@
 													</div>
 												</div>
 											</div>
-											<div class="search-y-btn creditRendered" style="display: inline-block;">
+											<!-- <div class="search-y-btn creditRendered" style="display: inline-block;">
 												<button class="credit-btn" id="searchCatalogListBtn" type="button">查询</button>
-											</div>	
+											</div>	 -->
+											<div class="credit-toolbar" style="display: inline-block;">
+												<div >
+													<button class="grid-toobar-btn search-btn" id="searchCatalogListBtn" type="button">查询</button>
+												</div>
+											</div>
 										</div>	
 									
 									    <!-- grid按钮区域 -->

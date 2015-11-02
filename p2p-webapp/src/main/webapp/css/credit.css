@@ -1080,7 +1080,7 @@ label {
     border: 1px solid #e5e9ea;
 	border-radius: 3px;
 	font-size: 1em;
-    height: auto;
+    height: 32px;
     padding: 3px 6px;
 }
 .layout-equalheight {
@@ -1899,7 +1899,7 @@ input[type="text"]:focus {
     padding-top: 0;
 }
 input[type="text"] {
-    height: 26px;
+    height: 32px;
     padding: 0 10px;
 }
 
@@ -2001,6 +2001,29 @@ h3{
 
 /**按钮样式**/
 /**添加按钮*/
+.search-btn:before{
+	content: "";
+	display: inline-block;
+	background-image: url("/p2p-webapp/css/jqueryui/images/ui-icons_ef8c08_256x240.png");
+	width: 16px;
+	height: 16px;
+	position: relative;
+	background-position: -163px -113px;
+	top: 2px;
+	-webkit-transform: rotate(-90deg);
+}
+
+.clear-btn:before{
+	content:"";
+	background-position: -160px -61px;
+    background-image: url("/p2p-webapp/css/jqueryui/images/ui-icons_ef8c08_256x240.png");
+    width: 16px;
+    height: 16px;
+	position: relative;
+	top: 2px;
+	display: inline-block;
+}
+
 .ui-icon-add{
     background-position: -20px -128px;
     background-image: url("/p2p-webapp/css/jqueryui/images/ui-icons_ef8c08_256x240.png");
