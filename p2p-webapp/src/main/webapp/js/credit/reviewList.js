@@ -11,7 +11,7 @@ $(function(){
 	$("#reviewlistGrid").jqGrid({
 			url:serviceAddress,
 			datatype: 'json',
-			postData:{"module":"loanOrderService","method":"getCreditReviewListWithPage","request_data":{}},
+			postData:{"module":"loanOrderService","method":"getCreditReviewListWithPage","request_data":{apply_state:3}},
 			mtype: 'POST',
 			height:205,
 			autowidth:true,
@@ -70,7 +70,8 @@ $(function(){
 	
 	//查询按钮
     $("[name='reviewSearchBtn']").click(function(){
-        var request_data={};
+    	debugger;
+    	var request_data = getValue("conditionDiv");
         $("#reviewlistGrid").jqGrid('setGridParam',{  
             datatype:'json',  
             postData:{'request_data':JSON.stringify(request_data)}, //发送数据
