@@ -206,7 +206,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 		approveMap.put(Constant.APPROVE_CONTENT, intercept_cause);
 		approveMap.put(Constant.LAST_UPDATED_BY, userName);
 		try {
-			approveLogService.insertApproveLog(approveMap, false);
+			approveLogService.insertApproveLog(approveMap);
 		} catch (Exception e) {
 			throw new Exception(e);
 			//写异常日志表

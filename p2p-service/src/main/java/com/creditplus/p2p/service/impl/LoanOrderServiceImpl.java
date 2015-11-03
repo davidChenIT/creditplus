@@ -51,7 +51,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		paramMap=initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE);
 		
-		approveLogService.insertApproveLog(paramMap, true);
+		//更新申请单状态并且插入日志
 		updateLoanApply(paramMap);
 		Map loanOrderMap= loanOrderDao.getCreditFirstTrialDetailByLoanId(Integer.valueOf(paramMap.get(Constant.LOAN_ID)+""));
 		//根据身份证号算出身份证相关信息
@@ -77,7 +77,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		paramMap=initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE);
 		
-		approveLogService.insertApproveLog(paramMap,true);
+		//更新申请单状态并且插入日志
 		updateLoanApply(paramMap);
 		Map loanOrderMap=loanOrderDao.getCreditReviewDetailByLoanId(Integer.valueOf(paramMap.get(Constant.LOAN_ID)+""));
 		if(loanOrderMap!=null && loanOrderMap.size()>0){
@@ -88,10 +88,16 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		return loanOrderMap;
 	}
 	
-
 	public Map getBiaoDetailByLoanId(Integer loan_id){
-		return loanOrderDao.getBiaoDetailByLoanId(loan_id);
+		Map loanOrderMap = loanOrderDao.getBiaoDetailByLoanId(loan_id);
+		if(loanOrderMap!=null && loanOrderMap.size()>0){
+			Map cardInfo=commonInfoService.getCardInfoById(loanOrderMap.get(Constant.ID_NUM)+"");
+			if(cardInfo!=null && cardInfo.size()>0)
+				loanOrderMap.putAll(cardInfo);
+		}
+		return loanOrderMap;
 	}
+
 	
 	/**
 	 * 初审服务
@@ -113,12 +119,10 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		boolean checkFlag=cheatInterceptService.intercept(user_id, loan_id);
 		if(checkFlag)
 			return;
-		//出入初审日志
-		approveLogService.insertApproveLog(paramMap,false);
 		//更新紧急联系人
 		List urgentList=(List) paramMap.get("urgentList");
 		updateUrgentContactor(urgentList, user_id);
-		//更新申请单状态
+		//更新申请单状态并且插入日志
 		updateLoanApply(paramMap);
 	}
 	
@@ -137,9 +141,8 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 			return;
 		
 		List urgentList=(List) paramMap.get("urgentList");
-		approveLogService.insertApproveLog(paramMap,false);
 		updateUrgentContactor(urgentList, user_id);
-		//更新状态
+		//更新申请单状态并且插入日志
 		updateLoanApply(paramMap);
 	}
 	
@@ -155,7 +158,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE);
 		
 		loanOrderDao.creditReviewRejectUpdate(paramMap);
-		approveLogService.insertApproveLog(paramMap, false);
+		approveLogService.insertApproveLog(paramMap);
 	}
 	
 	
@@ -164,7 +167,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 * 初审复审更新状态,并且插入审核日志
 	 * @param paramMap
 	 */
-	public void updateLoanApply(Map paramMap){
+	private void updateLoanApply(Map paramMap){
 		Map loanMap=new HashMap(paramMap);
 		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
 		Integer apply_state=Integer.valueOf(loanMap.get(Constant.APPLY_STATE)+"");
@@ -182,16 +185,18 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		System.out.println("updateLoanApply===loanMap:"+loanMap);
 		if(loanAppList.size()==0){
 			loanOrderDao.insertLoanApply(loanMap);
+			approveLogService.insertApproveLog(paramMap);
 		}else{
 			Integer db_apply_state=Integer.valueOf(loanAppList.iterator().next().get(Constant.APPLY_STATE)+"");
-			if(apply_state>db_apply_state){ 			//防止点击初审复审详情时再次更新状态
+			if(apply_state>db_apply_state || db_apply_state==2){ 			//防止点击初审复审详情时再次更新状态  
 				loanOrderDao.updateLoanOrderByLoanId(loanMap);
+				approveLogService.insertApproveLog(paramMap);
 			}
 		}
 	}
 	
 	//更新紧急联系人
-	public void updateUrgentContactor(List<Map> insertList,int user_id){
+	private void updateUrgentContactor(List<Map> insertList,int user_id){
 		if(insertList!=null){
 			for(Map map:insertList){
 				map.putAll(getPublicInfoMap());
@@ -295,8 +300,18 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 * @return
 	 */
 	public PageVO touBiaoListWithPage(Map paramMap) {
-		// TODO Auto-generated method stub
-		return null;
+		paramMap=initParamMap(paramMap);
+		int currentPage=1,pageSize=20;
+		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
+			currentPage=Integer.valueOf(paramMap.get(Constant.CURRPAGE)+"");
+			pageSize=Integer.valueOf(paramMap.get(Constant.ROWNUM)+"");
+		}
+		//初始化分页信息
+		PageUtil.initPageInfo(currentPage, pageSize);
+		loanOrderDao.touBiaoListWithPage(paramMap);
+		//得到分页VO
+		PageVO pageVo=PageUtil.getPageVO();
+		return pageVo;
 	}
 
 

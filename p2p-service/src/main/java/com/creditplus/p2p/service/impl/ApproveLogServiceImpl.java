@@ -27,17 +27,11 @@ public class ApproveLogServiceImpl  implements ApproveLogService{
 	/**
 	 * 日志插入
 	 */
-	public void insertApproveLog(Map paramMap,boolean flag) throws Exception {
+	public void insertApproveLog(Map paramMap) {
 		//判断是否已插入日志
 //		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state");
 		System.out.println("paramMap:"+paramMap);
-		if(flag){
-			Integer total_record=approveLogDao.getCountByParam(paramMap);
-			if(total_record==0)
-				approveLogDao.insertApproveLog(paramMap);
-		}else{
-			approveLogDao.insertApproveLog(paramMap);
-		}
+		approveLogDao.insertApproveLog(paramMap);
 	}
 
 

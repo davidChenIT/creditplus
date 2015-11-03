@@ -119,7 +119,7 @@ create table customer_info_t(
    profession_code      varchar(200)	comment '证书编号',
    degree_name_v		varchar(200)    comment '学历验证姓名',
    school_name_v		varchar(200)    comment '学校验证全称',
-   highest_degree_v     int				comment '最高学历',
+   highest_degree_v     varchar(100)	comment '最高学历',
   created_by 			varchar(200)  NOT NULL COMMENT '创建人',
   created_date 			timestamp NOT NULL COMMENT  '创建时间',
   last_updated_by  		varchar(200)  NOT NULL,
@@ -563,6 +563,10 @@ INSERT INTO `dict_t` VALUES (1,'1','提单','apply_state',1,0,1,'test','2015-10-
 (25,'province','省份','column_name',1,23,1,'test','2015-10-31 10:29:59','test','2015-10-31 18:30:06','维度中的某个业务对象下的字段'),(26,'city','城市','column_name',1,23,2,'test','2015-10-31 10:29:59','test','2015-10-31 18:30:06','维度中的某个业务对象下的字段'),(27,'address','住址','column_name',1,23,3,'test','2015-10-31 10:29:59','test','2015-10-31 18:30:06','维度中的某个业务对象下的字段'),(28,'registered_place_v','户口所在地','column_name',1,24,2,'test','2015-10-31 18:33:09','test','2015-10-31 18:33:08','维度下业务对象客户表中的字段'),(29,'thnic_v','名族','column_name',1,24,1,'test','2015-10-31 18:33:09','test','2015-10-31 18:33:08','维度下业务对象客户表中的字段'),(30,'loan_money','借款金额','column_name',1,27,1,'test','2015-10-31 18:36:18','test','2015-10-31 18:36:17','维度中的申请表的字段'),(31,'loan_day','借款天数','column_name',1,27,2,'test','2015-10-31 18:36:18','test','2015-10-31 18:36:17','维度中的申请表的字段'),(32,'like','like','semanteme_dic',1,0,4,'test','2015-10-31 02:39:56','test','2015-11-01 03:37:19','维度配置中的语义'),(33,'<','小于','semanteme_dic',1,0,3,'test','2015-10-31 02:39:56','test','2015-11-01 03:37:19','维度配置中的语义'),(34,'>','大于','semanteme_dic',1,0,2,'test','2015-10-31 02:39:56','test','2015-11-01 03:37:19','维度配置中的语义'),(35,'=','等于','semanteme_dic',1,0,1,'test','2015-10-31 02:39:56','test','2015-11-01 03:37:19','维度配置中的语义'),(36,'and','且','arithmetic_dic',1,0,1,'test','2015-10-31 02:42:00','test','2015-11-01 03:37:19','维度中的与或运算符'),(37,'or','或','arithmetic_dic',1,0,2,'test','2015-10-31 02:42:00','test','2015-11-01 03:37:19','维度中的与或运算符'),(38,'0','不可用','enable',1,0,2,'test','2015-10-31 19:36:21','test','2015-11-01 03:37:19','系统中是否可用的下拉框需要的字典'),(39,'1','可用','enable',1,0,1,'test','2015-10-31 19:36:21','test','2015-11-01 03:37:19','系统中是否可用的下拉框需要的字典');
 
 
+
+
+insert into attach_pic(user_id,type,url)values(4,1,'D:\\aobama\\positive.jpg');
+insert into attach_pic(user_id,type,url)values(4,2,'D:\\aobama\\obverse.jpg');
 
 
 

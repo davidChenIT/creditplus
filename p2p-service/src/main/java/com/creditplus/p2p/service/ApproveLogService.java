@@ -8,7 +8,7 @@ public interface ApproveLogService {
 	@SuppressWarnings("rawtypes")
 	Map getAppLogByLoanId(Map<?, ?> paramMap) throws Exception;
 
-	void insertApproveLog(Map<?, ?> paramMap,boolean flag) throws Exception;
+	void insertApproveLog(Map<?, ?> paramMap);
 	
 	void batchInsertApproveLog(List<Map> list);
 }
