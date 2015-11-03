@@ -10,4 +10,6 @@ public interface CommonInfoDao {
 	Map getPhoneInfoById(String area);
 	
 	List executeDonamicSQL(Map sqlMap);
+	
+	Map getPictureSrcByUserIdAndType(Map paramsMap);
 }

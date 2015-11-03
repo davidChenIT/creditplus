@@ -11,6 +11,7 @@ $(function(){
 	}
 	//查询用户紧急联系人
 	var user_id=paramsObj.user_id || "";
+	$(".show-img-span").attr("user-id",user_id);
 	var userInfoList=publicQueryInfoAjax("urgentContactorService","getListByUserId",JSON.stringify({"user_id":user_id}));
 	if(userInfoList){
 		debugger;

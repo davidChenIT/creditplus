@@ -16,4 +16,9 @@
 	<select id="executeDonamicSQL" parameterType="java.util.Map" resultType="java.util.Map">
 		${sql}
 	</select>
+	
+	
+	<select id="getPictureSrcByUserIdAndType" parameterType="String" resultType="java.util.Map">
+		select url as imgPath from attach_pic where user_id=#{userId} and type=#{imgType}
+	</select>
 </mapper>

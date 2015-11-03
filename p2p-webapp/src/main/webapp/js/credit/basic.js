@@ -6,10 +6,12 @@ $(function(){
 		gridResize("credit_Main");
 		messageBox.resetMessageDialogDiv();
 		loadingBox.resetLoadingDiv();
+		showImgDialog.resetImgDialogDiv();
 	});
 	$(window).scroll(function(){
 		messageBox.resetMessageDialogDiv();
 		loadingBox.resetLoadingDiv();
+		showImgDialog.resetImgDialogDiv();
 	});
 	//注册window的onpopstate事件
 	window.onpopstate = function(e) {  
@@ -158,9 +160,10 @@ $(function(){
 	$("#credit_MainPanel").on("click",".show-img-span",function(){
 		 var imgType=$(this).attr("img-type");
 		 var userId=$(this).attr("user-id");
+		 var imgTitle=$(this).attr("img-title");
 		 
 		 //显示一个图片层
-		 
+		 showImgDialog.createImgDialog(imgType,userId,imgTitle)
 	});
 })
 
@@ -559,6 +562,44 @@ function publicSaveAjax(moduleName,methodName,requestDataStr,removeTabId,removeI
 	});
 }
 
+
+//显示图片弹出框
+var showImgDialog={
+    createImgDialog:function(imgType,userId,dialogTitle){
+    	debugger;
+    	showImgDialog.removeImgDialogDiv();
+    	var servletUrl="";
+    	if(imgType && userId){
+    		servletUrl="http://"+window.location.host+"/p2p-webapp/ShowPicture?imgType="+imgType+"&userId="+userId;
+    	}
+		var temp='<div style="line-height:25px;padding-left: 5px;padding-right: 5px;border-bottom: 1px solid #CCC;"><span style="font-weight: bold;">'+(dialogTitle || "")+'</span><span style="float: right;" class="img-dialog-close"><a style="text-decoration: underline;color: blue;">关闭</a></span></div>'
+				+'<div style="padding: 20px;"><img src="'+servletUrl+'" style="max-width: 500px;max-height:500px;"></div>';
+		
+		//创建弹出层
+		$("body").append("<div id='showImgDialogDiv'></div>");
+		var showImgDialogDiv=$("#showImgDialogDiv");
+		showImgDialogDiv.attr("style","position:absolute;overflow:visible;z-index:1990;border:1px solid #CCC;background-color: #F3F7F8;min-width: 500px;min-height: 300px;");
+		showImgDialogDiv.html(temp);
+		var left=($(window).width()-500)/2+"px";
+		//var top=(($(window).height()-showImgDialogDiv.height())/2+document.body.scrollTop)+"px";
+		showImgDialogDiv.css({'left':left,'top':"15%"});
+		//关闭图片层
+		showImgDialogDiv.find(".img-dialog-close").click(function(){
+			showImgDialog.removeImgDialogDiv();
+		});
+    	
+    },
+    //删除loading层
+    removeImgDialogDiv:function(){
+    	$("#showImgDialogDiv").remove();
+    },
+    resetImgDialogDiv:function(){
+    	var showImgDialogDiv=$("#showImgDialogDiv");
+		var left=($(window).width()-showImgDialogDiv.width())/2+"px";
+		var top=(($(window).height()-showImgDialogDiv.height())/2+document.body.scrollTop)+"px";
+		showImgDialogDiv.css({'left':left,'top':top});
+    }
+}
 
 //自定义alert、confirm框
 var messageBox={

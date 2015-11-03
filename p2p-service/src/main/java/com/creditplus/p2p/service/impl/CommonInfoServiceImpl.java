@@ -47,5 +47,15 @@ public class CommonInfoServiceImpl implements CommonInfoService{
 		}
 		return phoneMap;
 	}
+	
+	public String getPictureSrcByUserIdAndType(Map paramsMap){
+		Map resultMap=commonInfoDao.getPictureSrcByUserIdAndType(paramsMap);
+		System.out.println("resultMap:"+resultMap);
+		if(resultMap!=null){
+			return (String)resultMap.get("imgPath");
+		}else{
+			return "";
+		}
+	}
 
 }

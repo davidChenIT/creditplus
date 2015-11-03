@@ -7,4 +7,6 @@ public interface CommonInfoService {
 	Map getCardInfoById(String cardNo);
 	
 	Map getPhoneInfoById(String phoneNum);
+	
+	String getPictureSrcByUserIdAndType(Map paramsMap);
 }
