@@ -948,10 +948,10 @@ function _setOptions(dom, data, textField, valueField, code){
 		for(var i=0;i<data.length;i++){
 			if(!isEmptyString(code) && code == data[i][valueField]){
 				$(dom).append('<option value="'+data[i][valueField]+'"  selected="selected">'+data[i][textField]+'</option>');
-				//下拉框（如果是省份，则触发change事件，级联城市）
+				// 下拉框（如果是省份，则触发change事件，级联城市）
 				var triggerKey = $(dom).attr('trigger');
 				if(triggerKey != null && triggerKey.indexOf("city_cascade_") != -1){
-					$(dom).change();
+					cascadeCity(dom, code);
 				}
 			}else{
 				$(dom).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');

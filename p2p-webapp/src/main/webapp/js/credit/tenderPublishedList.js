@@ -137,6 +137,8 @@ $("[name='ofWithdrawalBtn']").click(function(){
 				},error:function(error){
 				}
 		  });
+		  var ofWithdrawalMoneySpan=$("div[tabid='tenderPublished']").find("span[name='ofWithdrawalMoney']");
+		  $(ofWithdrawalMoneySpan).text('0');
 		  messageBox.createMessageDialog("提示","撤标！","","","warning");
 		  
 	  }else{

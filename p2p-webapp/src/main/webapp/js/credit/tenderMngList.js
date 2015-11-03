@@ -124,6 +124,8 @@ $(function(){
 				},error:function(error){
 				}
 		  });
+		  var publishTenderMoneySpan=$("div[tabid='rankPool']").find("span[name='publishTenderMoney']");
+		  $(publishTenderMoneySpan).text('0');
 		  messageBox.createMessageDialog("提示","发标！","","","warning");
 		  
 	  }else{
