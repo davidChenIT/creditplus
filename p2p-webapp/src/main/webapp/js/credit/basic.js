@@ -985,3 +985,27 @@ function _setOptions(dom, data, textField, valueField, code){
 		}
 	}
 }
+
+/**
+ * 上传图片
+ */
+function ajaxFileUpload() {  
+	debugger;
+	loadingBox.showLoading();
+	$.ajaxFileUpload({  
+		url : "http://"+window.location.host+"/p2p-webapp/UploadPicture",// servlet请求路径  
+		secureuri : false,  
+		fileElementId : 'profession_img_v',// 上传控件的id  
+		dataType : 'jsonp',  
+		success : function(data, status) {  
+			loadingBox.hideLoading();
+			debugger;
+//			if(data.msg) {  
+//				alert(data.msg);  
+//			}  
+		},  
+		error : function(data, status, e) {  
+			messageBox.createMessageDialog("提示", e, "", "", "error");
+		}  
+	});  
+} 

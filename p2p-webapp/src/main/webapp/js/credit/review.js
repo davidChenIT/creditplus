@@ -168,4 +168,8 @@ $(function(){
 	$("[trigger*=city_cascade_]").change(function(e){
 		cascadeCity(e.target, $(e.target).val());
 	});
+	
+	
+
+  
 });
