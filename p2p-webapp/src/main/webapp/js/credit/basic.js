@@ -165,6 +165,25 @@ $(function(){
 		 //显示一个图片层
 		 showImgDialog.createImgDialog(imgType,userId,imgTitle)
 	});
+	
+	//给所有的.drag的div绑定拖拽事件
+	var _move=false;//移动标记  
+	var _x,_y;//鼠标离控件左上角的相对位置  
+	$("body").on("mousedown",".drag",function(e){
+		_move=true;  
+		_x=e.pageX-parseInt($(".drag").css("left"));  
+		_y=e.pageY-parseInt($(".drag").css("top"));
+	});
+	$("body").on("mousemove",".drag",function(e){
+		if(_move){  
+			var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置  
+			var y=e.pageY-_y;  
+			$(".drag").css({top:y,left:x});//控件新位置  
+		}
+	});
+	$("body").on("mouseup",".drag",function(e){
+		_move=false; 
+	});
 })
 
 //构造左侧菜单的函数
@@ -572,11 +591,18 @@ var showImgDialog={
     	if(imgType && userId){
     		servletUrl="http://"+window.location.host+"/p2p-webapp/ShowPicture?imgType="+imgType+"&userId="+userId;
     	}
+    	var showHtml="";
+    	if(servletUrl){
+    		showHtml='<img src="'+servletUrl+'" style="max-width: 500px;max-height:500px;">';
+    	}else{
+    		showHtml='<span style="font-size: 20px;font-weight: bold;margin-top: 100px;display: inline-block;">没有图片！</span>';
+    		
+    	}
 		var temp='<div style="line-height:25px;padding-left: 5px;padding-right: 5px;border-bottom: 1px solid #CCC;"><span style="font-weight: bold;">'+(dialogTitle || "")+'</span><span style="float: right;" class="img-dialog-close"><a style="text-decoration: underline;color: blue;">关闭</a></span></div>'
-				+'<div style="padding: 20px;"><img src="'+servletUrl+'" style="max-width: 500px;max-height:500px;"></div>';
+				+'<div style="padding: 20px;text-align: center;">'+showHtml+'</div>';
 		
 		//创建弹出层
-		$("body").append("<div id='showImgDialogDiv'></div>");
+		$("body").append("<div id='showImgDialogDiv' class='drag'></div>");
 		var showImgDialogDiv=$("#showImgDialogDiv");
 		showImgDialogDiv.attr("style","position:absolute;overflow:visible;z-index:1990;border:1px solid #CCC;background-color: #F3F7F8;min-width: 500px;min-height: 300px;");
 		showImgDialogDiv.html(temp);
@@ -632,7 +658,7 @@ var messageBox={
 		temp+="</div></div>";
 		
 		//创建弹出层
-		$("body").append("<div id='messageDialogDiv'></div>");
+		$("body").append("<div id='messageDialogDiv' class='drag'></div>");
 		var messageDialogDiv=$("#messageDialogDiv");
 		messageDialogDiv.attr("style","position:absolute;width:400px;overflow:visible;z-index:2001");
 		messageDialogDiv.html(temp);
