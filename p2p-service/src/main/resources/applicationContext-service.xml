@@ -48,4 +48,5 @@
     <bean id="cheatInterceptService" class="com.creditplus.p2p.service.impl.CheatInterceptServiceImpl" />     
     <bean id="ruleService" class="com.creditplus.p2p.service.impl.RuleServiceImpl" />     
     <bean id="originPlaceService" class="com.creditplus.p2p.service.impl.OriginPlaceServiceImpl" />     
+    <bean id="creditScoreService" class="com.creditplus.p2p.service.impl.CreditScoreServiceImpl" />     
 </beans>

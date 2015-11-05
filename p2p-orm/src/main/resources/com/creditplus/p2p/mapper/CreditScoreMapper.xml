@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.creditplus.p2p.dao.CreditScoreDao">
+	
+	<select id="getCreditScoreList" resultType="java.util.Map">
+		select t.score_id,t.model_name,t.dimension,t.proportion,t.created_by,t.created_date,t.last_updated_by,t.last_updaExpressionted_date,t.remark from credit_score_t t 
+	</select>
+	
+	<select id="getCreditItemById" parameterType="Integer" resultType="java.util.Map">
+		select item_id,score_id,main_table,child_table,relevance_colum,expression,score,created_by,created_date,last_updated_by,last_updated_date,remark from credit_item_t t where score_id = #{score_id}
+	</select>
+	
+</mapper>
