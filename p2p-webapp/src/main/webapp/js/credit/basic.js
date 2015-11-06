@@ -996,7 +996,8 @@ function ajaxFileUpload() {
 		url : "http://"+window.location.host+"/p2p-webapp/UploadPicture",// servlet请求路径  
 		secureuri : false,  
 		fileElementId : 'profession_img_v',// 上传控件的id  
-		dataType : 'jsonp',  
+		dataType : 'json', 
+		data : {username : $("#username").val()},
 		success : function(data, status) {  
 			loadingBox.hideLoading();
 			debugger;
@@ -1005,7 +1006,8 @@ function ajaxFileUpload() {
 //			}  
 		},  
 		error : function(data, status, e) {  
-			messageBox.createMessageDialog("提示", e, "", "", "error");
+			loadingBox.hideLoading();
+//			messageBox.createMessageDialog("提示", e, "", "", "error");
 		}  
 	});  
 } 
