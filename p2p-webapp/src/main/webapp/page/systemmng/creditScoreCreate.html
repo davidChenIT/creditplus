@@ -1,0 +1,84 @@
+<div tabid="creditScoreCreate" class="tabs-body-item creditPageContext credit-validator">
+	<div>
+		<h3>规则信息</h3>	
+		<div class="row" id="creditScoreCreateForm">
+			<div class="credit-spacecontrol col-xs-12 col-sm-6">
+				<div class="row" >
+					<label class="col-xs-12 col-sm-3">
+						<div class="credit-label">
+							<span style="color:red;">*</span>模型名称
+						</div>
+					</label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="credit-input">
+							<input type="text" name="model_name" validtion='required'>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="credit-spacecontrol col-xs-12 col-sm-6">
+				<div class="row" >
+					<label class="col-xs-12 col-sm-3">
+						<div class="credit-label">
+							<span style="color:red;">*</span>维度
+						</div>
+					</label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="credit-input">
+							<input type="text" name="dimension_name" validtion='required'>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="credit-spacecontrol col-xs-12 col-sm-6">
+				<div class="row">
+					<label class="col-xs-12 col-sm-3">
+						<div class="credit-label">
+							<span style="color:red;">*</span>权重
+						</div>
+					</label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="credit-input">
+							<input type="text" name="proportion" validtion='required'>						
+						</div>
+					</div>
+				</div>
+			</div>							
+			<div class="credit-spacecontrol col-xs-12 col-sm-4" style="width:100%;">
+				<div class="row">
+					<label class="col-xs-12 col-sm-3" style="width:15%;">
+						<div class="credit-label">
+							备注
+						</div>
+					</label>
+					<div class="col-xs-12 col-sm-9" style="width:85%;">
+						<div class="credit-input">
+							<textarea  name="remark"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+	    <!-- 维度grid区域开始 -->
+		<h3>信用评分项</h3>
+		<!-- grid按钮区域 -->
+	    <div style="display: inline-block;margin-top: -15px;">
+			<button class="grid-toobar-btn add-btn" name="addCreditScoreItem4CreateBtn" type="button">新增</button>
+			<button class="grid-toobar-btn del-btn" name="delCreditScoreItem4CreateBtn" type="button">删除</button>
+		</div>
+		<div class="row">
+			 <table id="creditScoreItemList4CreateGrid"></table> 
+		</div>
+		<!-- 维度grid区域结束 -->	
+		
+		<div class="credit-toolbar" style="margin-top: 5px;margin-bottom: 30px;">
+			<div style="display: inline-block;">
+				<button class="grid-toobar-btn" name="saveCreditScore4CreateBtn" type="button">保存</button>
+				<button class="grid-toobar-btn" name="closeCreditScore4CreateBtn" onclick="removeTabItem('creditScoreTab','creditScoreCreate');" type="button">取消</button>
+			</div>
+		</div>
+			
+	</div>
+</div>

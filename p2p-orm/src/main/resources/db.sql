@@ -468,7 +468,7 @@ create table credit_score_t(
     last_updated_date timestamp NOT NULL ,
 	remark varchar(1024)  COMMENT '描述',  
 	PRIMARY KEY (score_id),
-	UNIQUE KEY `dimension_UNIQUE` (`dimension`)	
+	UNIQUE KEY `dimension_name_UNIQUE` (`dimension_name`)
 )COMMENT='信用评分';
 
 create table  credit_score_item_t(

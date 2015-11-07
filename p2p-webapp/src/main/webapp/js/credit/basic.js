@@ -607,7 +607,7 @@ var showImgDialog={
 		showImgDialogDiv.attr("style","position:absolute;overflow:visible;z-index:1990;border:1px solid #CCC;background-color: #F3F7F8;min-width: 500px;min-height: 300px;");
 		showImgDialogDiv.html(temp);
 		var left=($(window).width()-500)/2+"px";
-		//var top=(($(window).height()-showImgDialogDiv.height())/2+document.body.scrollTop)+"px";
+		var top=(($(window).height()-500)/2+document.body.scrollTop)+"px";
 		showImgDialogDiv.css({'left':left,'top':"15%"});
 		//关闭图片层
 		showImgDialogDiv.find(".img-dialog-close").click(function(){
