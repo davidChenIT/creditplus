@@ -37,7 +37,6 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	CheatInterceptService cheatInterceptService;
 
 	
-	
 	/**
 	 * 初审详情查看
 	 * 1.先插入初审日志
@@ -59,6 +58,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 			Map cardInfo=commonInfoService.getCardInfoById(loanOrderMap.get(Constant.ID_NUM)+"");
 			if(cardInfo!=null && cardInfo.size()>0)
 				loanOrderMap.putAll(cardInfo);
+			filterColumnByRole(loanOrderMap);
 		}
 		return loanOrderMap;
 	}
@@ -361,4 +361,15 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	}
 
 
+	private void filterColumnByRole(Map dataMap){
+		if(dataMap!=null && dataMap.size()>0){
+			if(!CommonUtil.isSuperUser()){
+				for(int i=0;i<adminKey.length;i++){
+					String key=adminKey[i];
+					dataMap.remove(key);
+				}
+			}
+		}
+	}
+	private String []adminKey={"thnic_v","registered_place_v","address_phone","address_phone_v","current_province_v","current_city_v","current_address_v","id_num_name_v","id_num_v","mobile_place_v","company_name_v","work_tel_v","work_tel_place_v","work_name_v","work_position_v","income_v","income_name_v","seasame_score_v","tencent_credit_v","certificate_type_v","certificate_name_v","profession_grade_v","mobile_name_v","mobile_online_time_v","profession_code","degree_name_v","school_name_v","highest_degree_v"};
 }

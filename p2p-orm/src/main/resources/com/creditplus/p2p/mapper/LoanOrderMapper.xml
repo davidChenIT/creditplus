@@ -204,7 +204,7 @@
 		    u.seasame_score,
 		    u.mobile_ser_code,
 		    u.is_done,
-	       <!--  c.thnic_v,
+	        c.thnic_v,
 			c.registered_place_v,
 			c.address_phone,
 			c.address_phone_v,
@@ -231,7 +231,7 @@
 			c.profession_code,
 			c.degree_name_v,
 			c.school_name_v,
-			c.highest_degree_v, -->
+			c.highest_degree_v,
 			t.loan_full_id,
 			t.loan_money,
 			t.loan_day,
@@ -260,7 +260,7 @@
 	    from loan_list t
 		left join loan_apply_t a on t.loan_id=a.loan_id
 		left join user_info u on t.user_id=u.user_id
-		<!--  left join customer_info_t c on t.user_id=c.user_id -->
+		 left join customer_info_t c on t.user_id=c.user_id
 		where t.loan_id=#{loan_id}
 	</select>
 
