@@ -76,6 +76,9 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 				if(i<dismensionList.size()-1)
 					sbSql.append(arithmetic);
 			}
+			sbSql.append(" and u.user_id=#{").append("user_id} and l.loan_id=#{").append("loan_id}");
+			sqlMap.put("user_id", user_id);
+			sqlMap.put("loan_id", loan_id);
 			sqlMap.put("sql", sbSql);
 			Integer total_record=executeQuerySql(sqlMap);
 			flag=total_record>0?true:false;
