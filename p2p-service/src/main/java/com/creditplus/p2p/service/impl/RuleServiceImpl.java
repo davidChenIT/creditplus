@@ -63,7 +63,7 @@ public class RuleServiceImpl implements RuleService{
 	 */
 	public void insertRule(Map ruleMap, List dimensionList) {
 		if(ruleMap!=null && ruleMap.size()>0){
-			initParamMap(ruleMap);
+			CheckParamUtil.initParamMap(ruleMap);
 			ruleDao.insertRule(ruleMap);
 		}
 		
@@ -85,7 +85,7 @@ public class RuleServiceImpl implements RuleService{
 			throw new Exception("规则已删除！");
 		CheckParamUtil.checkKey(ruleMap, Constant.RULE_ID);
 		Integer rule_id=(Integer) ruleMap.get(Constant.RULE_ID);
-		initParamMap(ruleMap);
+		CheckParamUtil.initParamMap(ruleMap);
 		ruleDao.updateRule(ruleMap);
 		if(dimensionList!=null && dimensionList.size()>0){
 			this.saveDimension(rule_id, dimensionList);
@@ -117,18 +117,6 @@ public class RuleServiceImpl implements RuleService{
 		}
 	}
 
-	public Map initParamMap(Map paramMap){
-		if(paramMap==null)
-			paramMap=new HashMap();
-		paramMap.putAll(getPublicInfoMap());
-		return paramMap;
-	}
-	
-	private Map getPublicInfoMap(){
-		Map publicMap=new HashMap();
-		publicMap.put("last_updated_by", CommonUtil.getCurrentUser());
-		return publicMap;
-	}
 
 	
 }

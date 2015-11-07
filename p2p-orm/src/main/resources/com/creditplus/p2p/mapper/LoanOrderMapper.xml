@@ -322,7 +322,8 @@
 				AND loan_money = #{loan_money}
 			</if>
 			<if test="modifytime != null">
-				AND modifytime = #{modifytime}
+				<!-- AND modifytime = STR_TO_DATE(modifytime,'%Y-%m-%d') -->
+				and modifytime &lt; STR_TO_DATE(concat(#{modifytime},' 23:59:59') ,'%Y-%m-%d %H:%i:%s') and modifytime &gt; STR_TO_DATE(concat(#{modifytime},' 00:00:00') ,'%Y-%m-%d %H:%i:%s')
 			</if>
 			<if test="name != null">
 				AND name = #{name,jdbcType=VARCHAR}
@@ -398,7 +399,7 @@
 				AND loan_money = #{loan_money}
 			</if>
 			<if test="modifytime != null">
-				AND modifytime = #{modifytime}
+				and modifytime &lt; STR_TO_DATE(concat(#{modifytime},' 23:59:59') ,'%Y-%m-%d %H:%i:%s') and modifytime &gt; STR_TO_DATE(concat(#{modifytime},' 00:00:00') ,'%Y-%m-%d %H:%i:%s')
 			</if>
 			<if test="name != null">
 				AND name = #{name,jdbcType=VARCHAR}
@@ -474,7 +475,7 @@
 				AND loan_money = #{loan_money}
 			</if>
 			<if test="modifytime != null">
-				AND modifytime = #{modifytime}
+				and modifytime &lt; STR_TO_DATE(concat(#{modifytime},' 23:59:59') ,'%Y-%m-%d %H:%i:%s') and modifytime &gt; STR_TO_DATE(concat(#{modifytime},' 00:00:00') ,'%Y-%m-%d %H:%i:%s')
 			</if>
 			<if test="name != null">
 				AND name = #{name,jdbcType=VARCHAR}
@@ -550,7 +551,7 @@
 				AND loan_money = #{loan_money}
 			</if>
 			<if test="modifytime != null">
-				AND modifytime = #{modifytime}
+				and modifytime &lt; STR_TO_DATE(concat(#{modifytime},' 23:59:59') ,'%Y-%m-%d %H:%i:%s') and modifytime &gt; STR_TO_DATE(concat(#{modifytime},' 00:00:00') ,'%Y-%m-%d %H:%i:%s')
 			</if>
 			<if test="name != null">
 				AND name = #{name,jdbcType=VARCHAR}
@@ -626,7 +627,7 @@
 				AND loan_money = #{loan_money}
 			</if>
 			<if test="modifytime != null">
-				AND modifytime = #{modifytime}
+				and modifytime &lt; STR_TO_DATE(concat(#{modifytime},' 23:59:59') ,'%Y-%m-%d %H:%i:%s') and modifytime &gt; STR_TO_DATE(concat(#{modifytime},' 00:00:00') ,'%Y-%m-%d %H:%i:%s')
 			</if>
 			<if test="name != null">
 				AND name = #{name,jdbcType=VARCHAR}
@@ -701,7 +702,7 @@
 				AND loan_money = #{loan_money}
 			</if>
 			<if test="modifytime != null">
-				AND modifytime = #{modifytime}
+				and modifytime &lt; STR_TO_DATE(concat(#{modifytime},' 23:59:59') ,'%Y-%m-%d %H:%i:%s') and modifytime &gt; STR_TO_DATE(concat(#{modifytime},' 00:00:00') ,'%Y-%m-%d %H:%i:%s')
 			</if>
 			<if test="name != null">
 				AND name = #{name,jdbcType=VARCHAR}

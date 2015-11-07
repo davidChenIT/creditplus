@@ -165,7 +165,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 	 */
 	public void insertCreditScore(Map creditMap,List itemsList) {
 		if(creditMap!=null && creditMap.size()>0){
-			initParamMap(creditMap);
+			CheckParamUtil.initParamMap(creditMap);
 			creditScoreDao.insertCreditScore(creditMap);
 			
 			if(itemsList!=null && itemsList.size()>0){
@@ -192,18 +192,6 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 	}
 	
 	
-	public Map initParamMap(Map paramMap){
-		if(paramMap==null)
-			paramMap=new HashMap();
-		paramMap.putAll(getPublicInfoMap());
-		return paramMap;
-	}
-	
-	private Map getPublicInfoMap(){
-		Map publicMap=new HashMap();
-		publicMap.put("last_updated_by", CommonUtil.getCurrentUser());
-		return publicMap;
-	}
 
 	/* 
 	 * @param dataMap
@@ -212,7 +200,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		if(dataMap!=null && dataMap.size()>0){
 			CheckParamUtil.checkKey(dataMap, "score_id");
 			Integer score_id=Integer.valueOf(dataMap.get("score_id")+"");
-			initParamMap(dataMap);
+			CheckParamUtil.initParamMap(dataMap);
 			creditScoreDao.updateCreditScore(dataMap);
 			if(itemsList!=null && itemsList.size()>0){
 				this.saveCreditItems(score_id, itemsList);

@@ -1,5 +1,6 @@
 package com.creditplus.p2p.common.util;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class CheckParamUtil {
@@ -13,4 +14,17 @@ public class CheckParamUtil {
 			}
 	}
 	
+	
+	public static Map initParamMap(Map paramMap){
+		if(paramMap==null)
+			paramMap=new HashMap();
+		paramMap.putAll(getPublicInfoMap());
+		return paramMap;
+	}
+	
+	public static Map getPublicInfoMap(){
+		Map publicMap=new HashMap();
+		publicMap.put("last_updated_by", CommonUtil.getCurrentUser());
+		return publicMap;
+	}
 }

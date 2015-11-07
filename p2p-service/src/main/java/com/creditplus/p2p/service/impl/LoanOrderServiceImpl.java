@@ -47,7 +47,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 * @throws Exception 
 	 */
 	public Map getCreditFirstTrialDetailByLoanId(Map paramMap) throws Exception {
-		paramMap=initParamMap(paramMap);
+		paramMap=CheckParamUtil.initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE);
 		
 		//更新申请单状态并且插入日志
@@ -74,7 +74,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 * @throws Exception 
 	 */
 	public Map getCreditReviewDetailByLoanId(Map paramMap) throws Exception {
-		paramMap=initParamMap(paramMap);
+		paramMap=CheckParamUtil.initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE);
 		
 		//更新申请单状态并且插入日志
@@ -109,7 +109,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 * @throws Exception 
 	 */
 	public void creditFirstTrial(Map paramMap) throws Exception{
-		paramMap=initParamMap(paramMap);
+		paramMap=CheckParamUtil.initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE,Constant.USER_ID);
 		Integer user_id=Integer.valueOf(paramMap.get(Constant.USER_ID)+"");
 		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
@@ -131,7 +131,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 * 信用复审服务
 	 */
 	public void creditReview(Map paramMap) throws Exception{
-		paramMap=initParamMap(paramMap);
+		paramMap=CheckParamUtil.initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE,Constant.USER_ID);
 		Integer user_id=Integer.valueOf(paramMap.get(Constant.USER_ID)+"");
 		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
@@ -154,7 +154,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 * @throws Exception 
 	 */
 	public void creditReviewReject(Map paramMap) throws Exception {
-		paramMap=initParamMap(paramMap);
+		paramMap=CheckParamUtil.initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE);
 		
 		loanOrderDao.creditReviewRejectUpdate(paramMap);
@@ -199,7 +199,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	private void updateUrgentContactor(List<Map> insertList,int user_id){
 		if(insertList!=null){
 			for(Map map:insertList){
-				map.putAll(getPublicInfoMap());
+				map.putAll(CheckParamUtil.getPublicInfoMap());
 				map.put(Constant.USER_ID, user_id);
 			}
 			urgentContactorService.deleteByUserId(user_id);
@@ -216,7 +216,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	
 	
 	public PageVO getCreditFirstTrialListWithPage(Map paramMap) {
-		paramMap=initParamMap(paramMap);
+		paramMap=CheckParamUtil.initParamMap(paramMap);
 		int currentPage=1,pageSize=10;
 		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
 			currentPage=Integer.valueOf(paramMap.get(Constant.CURRPAGE)+"");
@@ -231,7 +231,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	}
 
 	public PageVO getCreditReviewListWithPage(Map paramMap) {
-		paramMap=initParamMap(paramMap);
+		paramMap=CheckParamUtil.initParamMap(paramMap);
 		int currentPage=1,pageSize=20;
 		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
 			currentPage=Integer.valueOf(paramMap.get(Constant.CURRPAGE)+"");
@@ -248,7 +248,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	
 	
 	public PageVO rankingPoolListWithPage(Map paramMap) {
-		paramMap=initParamMap(paramMap);
+		paramMap=CheckParamUtil.initParamMap(paramMap);
 		int currentPage=1,pageSize=20;
 		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
 			currentPage=Integer.valueOf(paramMap.get(Constant.CURRPAGE)+"");
@@ -264,7 +264,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 
 	
 	public PageVO checkInterceptListWithPage(Map paramMap){
-		paramMap=initParamMap(paramMap);
+		paramMap=CheckParamUtil.initParamMap(paramMap);
 		int currentPage=1,pageSize=20;
 		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
 			currentPage=Integer.valueOf(paramMap.get(Constant.CURRPAGE)+"");
@@ -280,7 +280,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	
 	
 	public PageVO faBiaoListWithPage(Map paramMap) {
-		paramMap=initParamMap(paramMap);
+		paramMap=CheckParamUtil.initParamMap(paramMap);
 		int currentPage=1,pageSize=20;
 		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
 			currentPage=Integer.valueOf(paramMap.get(Constant.CURRPAGE)+"");
@@ -300,7 +300,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	 * @return
 	 */
 	public PageVO touBiaoListWithPage(Map paramMap) {
-		paramMap=initParamMap(paramMap);
+		paramMap=CheckParamUtil.initParamMap(paramMap);
 		int currentPage=1,pageSize=20;
 		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
 			currentPage=Integer.valueOf(paramMap.get(Constant.CURRPAGE)+"");
@@ -324,18 +324,6 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	
 	
 	
-	public Map initParamMap(Map paramMap){
-		if(paramMap==null)
-			paramMap=new HashMap();
-		paramMap.putAll(getPublicInfoMap());
-		return paramMap;
-	}
-	
-	private Map getPublicInfoMap(){
-		Map publicMap=new HashMap();
-		publicMap.put("last_updated_by", CommonUtil.getCurrentUser());
-		return publicMap;
-	}
 	
 	public void updateMuiltLoanOrderByLoanId(List<Map> updateList){
 		if(updateList!=null && updateList.size()>0){
@@ -353,7 +341,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		if(updateList!=null && updateList.size()>0){
 			for(Map map:updateList){
 				CheckParamUtil.checkKey(map, Constant.LOAN_ID,Constant.APPLY_STATE,Constant.APPROVE_CONTENT);
-				initParamMap(map);
+				CheckParamUtil.initParamMap(map);
 			}
 		}
 		updateMuiltLoanOrderByLoanId(updateList);
