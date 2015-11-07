@@ -208,5 +208,13 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		}
 	}
 
+	/* 
+	 * @param score_id
+	 * @return
+	 */
+	public Map getCreditScoreById(Integer score_id) {
+		return creditScoreDao.getCreditScoreById(score_id);
+	}
+
 
 }

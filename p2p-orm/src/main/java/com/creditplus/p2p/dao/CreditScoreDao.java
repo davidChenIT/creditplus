@@ -17,6 +17,8 @@ public interface CreditScoreDao {
 	
 	void deleteCreditScore(List<Integer> idList);
 	
+	Map getCreditScoreById(Integer score_id);
+	
 	List<Map> getCreditItemById(Integer score_id);
 	
 	void deleteCreditItem(List<Integer> idList);

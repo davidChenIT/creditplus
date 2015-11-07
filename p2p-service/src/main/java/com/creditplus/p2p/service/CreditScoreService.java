@@ -15,7 +15,9 @@ public interface CreditScoreService {
 	
 	void deleteCreditScore(List<Integer> idList);
 	
-	List<Map> getCreditItemById(Integer score_id);
+	Map getCreditScoreById(@ParamName("score_id")Integer score_id);
+	
+	List<Map> getCreditItemById(@ParamName("score_id")Integer score_id);
 	
 	void deleteCreditItem(List<Integer> idList);
 	

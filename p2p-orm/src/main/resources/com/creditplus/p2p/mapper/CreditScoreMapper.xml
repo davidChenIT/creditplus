@@ -16,6 +16,10 @@
 		</if> 
 	</select>
 	
+	<select id="getCreditScoreById" parameterType="Integer" resultType="java.util.Map">
+		select score_id,model_name,dimension_name,proportion,created_by,created_date,last_updated_by,last_updated_date,remark from credit_score_t where score_id=#{score_id}
+	</select>
+	
 	<select id="getCreditItemById" parameterType="Integer" resultType="java.util.Map">
 		select item_id,score_id,main_table,child_table,relevance_colum,expression,score,created_by,created_date,last_updated_by,last_updated_date,remark from credit_score_item_t where score_id = #{score_id}
 	</select>
