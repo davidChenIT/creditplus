@@ -188,7 +188,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 			approveLogService.insertApproveLog(paramMap);
 		}else{
 			Integer db_apply_state=Integer.valueOf(loanAppList.iterator().next().get(Constant.APPLY_STATE)+"");
-			if(apply_state>db_apply_state || db_apply_state==2){ 			//防止点击初审复审详情时再次更新状态  
+			if(apply_state>db_apply_state){ 			//防止点击初审复审详情时再次更新状态  
 				loanOrderDao.updateLoanOrderByLoanId(loanMap);
 				approveLogService.insertApproveLog(paramMap);
 			}
