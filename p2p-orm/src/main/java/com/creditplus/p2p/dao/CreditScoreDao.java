@@ -13,7 +13,21 @@ import java.util.Map;
  */
 public interface CreditScoreDao {
 
-	List<Map> getCreditScoreList();
+	List<Map> getCreditScoreList(Map dataMap);
+	
+	void deleteCreditScore(List<Integer> idList);
 	
 	List<Map> getCreditItemById(Integer score_id);
+	
+	void deleteCreditItem(List<Integer> idList);
+	
+	void deleteCreditItemBySid(Integer score_id);
+	
+	void insertCreditScore(Map dataMap);
+	
+	void insertCreditItems(Map<String, Object> dataMap);
+	
+	void updateCreditScore(Map dataMap);
+	
+	Integer findByName(String dimension_name);
 }

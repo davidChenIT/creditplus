@@ -29,6 +29,8 @@ DROP TABLE IF EXISTS catalog_t;
 drop table if exists rule_t;
 drop table if exists dimension_t;
 drop table if exists cheat_intercept_t;
+DROP TABLE IF EXISTS credit_score_t;
+DROP TABLE IF EXISTS credit_score_item_t;
 
 
 create table user_info
@@ -117,6 +119,7 @@ create table customer_info_t(
    mobile_name_v		varchar(200)	comment '手机验证姓名',
    mobile_online_time_v float			comment '手机在网时长',
    profession_code      varchar(200)	comment '证书编号',
+   profession_img_v		varchar(200)	comment '证书网站抓图',
    degree_name_v		varchar(200)    comment '学历验证姓名',
    school_name_v		varchar(200)    comment '学校验证全称',
    highest_degree_v     varchar(100)	comment '最高学历',
@@ -453,6 +456,36 @@ CREATE TABLE catalog_t (
   PRIMARY KEY (catalog_id)
 )  COMMENT='栏目表';
 
+
+create table credit_score_t(
+	score_id 	 int 	 NOT NULL AUTO_INCREMENT,
+	model_name   int   comment '模型名称',
+	dimension_name	varchar(200)   comment '维度名',
+	proportion	varchar(20)   comment '权重',
+	created_by  varchar(200)  NOT NULL COMMENT '创建人',
+    created_date timestamp NOT NULL COMMENT '创建时间',
+    last_updated_by  varchar(200)  NOT NULL,
+    last_updated_date timestamp NOT NULL ,
+	remark varchar(1024)  COMMENT '描述',  
+	PRIMARY KEY (score_id),
+	UNIQUE KEY `dimension_UNIQUE` (`dimension`)	
+)COMMENT='信用评分';
+
+create table  credit_score_item_t(
+	item_id 	 int 	 NOT NULL AUTO_INCREMENT,
+	score_id     int     not null comment '信用评分id',
+	main_table   varchar(50) not null comment '主表',
+	child_table	 varchar(50)  comment '子表',
+	relevance_colum varchar(50) comment '关联字段',
+	expression	varchar(200)   comment '分数计算表达式',
+	score		int NOT NULL  comment '分数',
+	created_by  varchar(200)  NOT NULL COMMENT '创建人',
+    created_date timestamp NOT NULL COMMENT '创建时间',
+    last_updated_by  varchar(200)  NOT NULL,
+    last_updated_date timestamp NOT NULL ,
+	remark varchar(1024)  COMMENT '描述',  
+	PRIMARY KEY (item_id)
+)COMMENT='信用评分项';
 
 create table rule_t(
 	rule_id 	int 	 NOT NULL AUTO_INCREMENT,

@@ -11,9 +11,13 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.creditplus.p2p.common.constant.Constant;
+import com.creditplus.p2p.common.util.CheckParamUtil;
 import com.creditplus.p2p.common.util.CommonUtil;
 import com.creditplus.p2p.dao.CommonInfoDao;
 import com.creditplus.p2p.dao.CreditScoreDao;
+import com.creditplus.p2p.model.PageVO;
+import com.creditplus.p2p.page.PageUtil;
 import com.creditplus.p2p.service.CreditScoreService;
 
 /**
@@ -26,34 +30,47 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 	CreditScoreDao creditScoreDao;
 	@Autowired
 	CommonInfoDao commonInfoDao;
-	/* 
-	 * @param user_id
-	 * @param loan_id
-	 * @return
-	 */
+
+	
 	public Map creditScore(Integer user_id, Integer loan_id) {
 		return getCreditScore(user_id);
 	}
 	
 	private Map getCreditScore(Integer user_id){
-		List<Map> creditScores=creditScoreDao.getCreditScoreList();
+		List<Map> creditScores=creditScoreDao.getCreditScoreList(new HashMap());
 		Map scoreMap=new HashMap();
+		Map<String,Integer> score1=new HashMap<String,Integer>();
+		Map<String,Integer> score2=new HashMap<String,Integer>();
 		if(creditScores!=null && creditScores.size()>0){
+			Integer total1=0,total2=0;
 			for(Map cs:creditScores){
 				Integer score_id=(Integer) cs.get("score_id");
-				String model_name=(String) cs.get("model_name");
+				Integer model_name=(Integer) cs.get("model_name");
+				String dimension_name=(String) cs.get("dimension_name");
 				List<Map> itemList=creditScoreDao.getCreditItemById(score_id);
 				if(itemList!=null && itemList.size()>0){
 					for(Map itemMap:itemList){
 						Integer score=getItemResultSet(itemMap, user_id);
+						if(model_name==1){
+							score1.put(dimension_name, score);
+							total1+=score;
+						}
+						if(model_name==2){
+							score2.put(dimension_name, score);
+							total2+=score;
+						}
 						if(score>0){
-							scoreMap.put(model_name, score);
 							break;
 						}
 					}
 				}
 			}
+			score1.put("total", total1);
+			score2.put("total", total2);
+			
 		}
+		scoreMap.put("score1", score1);
+		scoreMap.put("score2", score2);
 		return scoreMap;
 	}
 	
@@ -63,11 +80,13 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		String relevance_colum=(String) credit_item.get("relevance_colum");
 		String expression=(String) credit_item.get("expression");
 		Integer score=Integer.valueOf(credit_item.get("score")+"");
-		StringBuilder sbSql=new StringBuilder("select * from ").append(main_table).append(" t ");
+		StringBuilder sbSql=new StringBuilder();
 		if(StringUtils.isNotEmpty(child_table) && StringUtils.isNotEmpty(relevance_colum)){
-			sbSql.append("left join ").append(child_table).append(" c on t.").append(relevance_colum).append(" = c.").append(relevance_colum);
+			sbSql.append("select z.*,c.* from ").append(main_table).append(" z left join ").append(child_table).append(" c on z.").append(relevance_colum).append(" = c.").append(relevance_colum);
+		}else{
+			sbSql.append("select * from ").append(main_table);
 		}
-		sbSql.append(" where user_id = ").append("#{user_id}");
+		sbSql.append(" where user_id = ").append("#{user_id}) t");
 		
 		Map sqlMap=new HashMap();
 		sqlMap.put("user_id", user_id);
@@ -95,5 +114,111 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		map.put("expression", "#city#='深圳'");
 		new CreditScoreServiceImpl().getItemResultSet(map, 13);
 	}
+
+	/* 
+	 * @return
+	 */
+	public PageVO getCreditScoreListWithPage(Map paramMap) {
+		int currentPage=1,pageSize=10;
+		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
+			currentPage=Integer.valueOf(paramMap.get(Constant.CURRPAGE)+"");
+			pageSize=Integer.valueOf(paramMap.get(Constant.ROWNUM)+"");
+		}
+		//初始化分页信息
+		PageUtil.initPageInfo(currentPage, pageSize);
+		creditScoreDao.getCreditScoreList(paramMap);
+		//得到分页VO
+		PageVO pageVo=PageUtil.getPageVO();
+		return pageVo;
+	}
+
+	/* 
+	 * @param idList
+	 */
+	public void deleteCreditScore(List<Integer> idList) {
+		if(idList!=null && idList.size()>0){
+			creditScoreDao.deleteCreditScore(idList);
+			for(int i=0;i<idList.size();i++){
+				creditScoreDao.deleteCreditItemBySid(idList.get(i));
+			}
+		}
+	}
+
+	/* 
+	 * @param score_id
+	 * @return
+	 */
+	public List<Map> getCreditItemById(Integer score_id) {
+		return creditScoreDao.getCreditItemById(score_id);
+	}
+
+	/* 
+	 * @param idList
+	 */
+	public void deleteCreditItem(List<Integer> idList) {
+		if(idList!=null && idList.size()>0)
+			creditScoreDao.deleteCreditItem(idList);
+	}
+
+	/* 
+	 * @param dataMap
+	 */
+	public void insertCreditScore(Map creditMap,List itemsList) {
+		if(creditMap!=null && creditMap.size()>0){
+			initParamMap(creditMap);
+			creditScoreDao.insertCreditScore(creditMap);
+			
+			if(itemsList!=null && itemsList.size()>0){
+				Integer score_id=creditScoreDao.findByName(creditMap.get("dimension_name")+"");
+				saveCreditItems(score_id, itemsList);
+			}
+		}
+		
+	}
+
+	
+	private void saveCreditItems(Integer score_id,List<Map> dataList){
+		creditScoreDao.deleteCreditItemBySid(score_id);
+		if(dataList!=null && dataList.size()>0){
+			String currentUser=CommonUtil.getCurrentUser();
+			for(Map dataMap:dataList){
+				dataMap.put("last_updated_by",currentUser);
+				dataMap.put("score_id", score_id);
+			}
+			Map creditItemMap=new HashMap();
+			creditItemMap.put("list", dataList);
+			creditScoreDao.insertCreditItems(creditItemMap);
+		}
+	}
+	
+	
+	public Map initParamMap(Map paramMap){
+		if(paramMap==null)
+			paramMap=new HashMap();
+		paramMap.putAll(getPublicInfoMap());
+		return paramMap;
+	}
+	
+	private Map getPublicInfoMap(){
+		Map publicMap=new HashMap();
+		publicMap.put("last_updated_by", CommonUtil.getCurrentUser());
+		return publicMap;
+	}
+
+	/* 
+	 * @param dataMap
+	 */
+	public void updateCreditScore(Map dataMap,List<Map> itemsList) throws Exception {
+		if(dataMap!=null && dataMap.size()>0){
+			CheckParamUtil.checkKey(dataMap, "score_id");
+			Integer score_id=Integer.valueOf(dataMap.get("score_id")+"");
+			initParamMap(dataMap);
+			creditScoreDao.updateCreditScore(dataMap);
+			if(itemsList!=null && itemsList.size()>0){
+				this.saveCreditItems(score_id, itemsList);
+			}
+		}
+	}
+
 
 }
