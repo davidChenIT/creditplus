@@ -767,14 +767,17 @@ function selectRender(formDivId){
 		var is_cache=$(dom).attr("is_cache");//是否需要缓存
 		//缓存可以ps:模块名_方法名_数据字典key(可选)
 		var cacheKey = moduleName + "_" + methodName + "_" + (dictionaryType || "");
+		if(code){
+			cacheKey+="_"+code;
+		}
 		var dicDataArray=localStorage[cacheKey]?JSON.parse(localStorage[cacheKey]):[];
 		if(is_cache == "true" && dicDataArray && dicDataArray.length>0){
 			if(istext=="true"){
 				//span渲染
 				$.each(dicDataArray, function(i){
 					if(code && code == dicDataArray[i].code){
-						$(dom).text(dicDataArray[0][textField]);
-						$(dom).attr("code", dicDataArray[0][valueField]);
+						$(dom).text(dicDataArray[i][textField]);
+						$(dom).attr("code", dicDataArray[i][valueField]);
 					}
 				});
 			}else{
@@ -802,10 +805,10 @@ function selectRender(formDivId){
 					if(data && data.length>0){
 						if(istext=="true"){
 							//span渲染
-							$.each(dicDataArray, function(i){
-								if(code && code == dicDataArray[i].code){
-									$(dom).text(dicDataArray[0][textField]);
-									$(dom).attr("code", dicDataArray[0][valueField]);
+							$.each(data, function(i){
+								if(code && code == data[i].code){
+									$(dom).text(data[i][textField]);
+									$(dom).attr("code", data[i][valueField]);
 								}
 							});
 						}else{
