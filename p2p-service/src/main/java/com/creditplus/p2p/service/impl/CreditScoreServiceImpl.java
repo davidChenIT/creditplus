@@ -86,7 +86,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		}else{
 			sbSql.append("select * from ").append(main_table);
 		}
-		sbSql.append(" where user_id = ").append("#{user_id}) t");
+		sbSql.append(" where user_id = ").append("#{user_id}");
 		
 		Map sqlMap=new HashMap();
 		sqlMap.put("user_id", user_id);

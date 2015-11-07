@@ -105,6 +105,8 @@ public class CommonUtil {
 	}
 	
 	private static Map parseExpressionVariable(String jsExpression,Map paramMap){
+		if(paramMap==null)
+			paramMap=new HashMap();
 		Map variableMap=new HashMap();
 		Pattern p=Pattern.compile("(#.+?#)");
 		Matcher m=p.matcher(jsExpression);
