@@ -2,11 +2,12 @@
 $(function(){
 	
 	debugger;
-	
+	//下拉框数据填充
+	selectRender("creditScoreCreateForm");
 	//构造grid
     $("#creditScoreItemList4CreateGrid").jqGrid({
 			autowidth:true,
-			colNames:['<input type="checkbox" class="credit-score-create-selall-cbox">',"<span style='color:red;'>*</span>主表","<span style='color:red;'>*</span>子表","<span style='color:red;'>*</span>关联字段","<span style='color:red;'>*</span>分数计算表达式","<span style='color:red;'>*</span>分数"],
+			colNames:['<input type="checkbox" class="credit-score-create-selall-cbox">',"<span style='color:red;'>*</span>主表","子表","<span style='color:red;'>*</span>关联字段","<span style='color:red;'>*</span>分数计算表达式","<span style='color:red;'>*</span>分数"],
 			colModel :[
 			    {
 			    	name:'rule_sel_create',

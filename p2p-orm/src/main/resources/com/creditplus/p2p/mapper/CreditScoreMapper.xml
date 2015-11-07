@@ -59,6 +59,9 @@
    			<if test="proportion != null">
     			 proportion=#{proportion},
     		</if> 
+    		<if test="remark != null">
+    			 remark=#{remark},
+    		</if> 
     		 last_updated_by = #{last_updated_by}, last_updated_date = sysdate()
     	where score_id = #{score_id}
 	</update>

@@ -3,6 +3,9 @@ $(function(){
 	debugger;
 	
 	//构造grid
+	var modelNameDicObj=gridSelectColRender("","",{"type":"model_name"},"code","name",true);
+	var dimensionNameDicObj=gridSelectColRender("","",{"type":"dimension_name"},"code","name",true);
+	
     $("#creditScoreListGrid").jqGrid({
 			url:serviceAddress,
 			datatype: 'json',
@@ -20,12 +23,11 @@ $(function(){
 						   paramsStr=paramsStr.replace(/"/g,"@#_@#");
 					   }
 					   return "<span name='creditScoreEditSpan' class='ui-icon-edit' onclick=\"addTabItem('creditScoreTab','creditScoreUpdate','信用评分修改','/p2p-webapp/page/systemmng/creditScoreUpdate.html','true','/p2p-webapp/js/credit/creditScoreUpdate.js','"+paramsStr+"');\"></span>";
-					   
 					}
 				},
 				{name:'score_id', index:'score_id',hidden:true,"sortable":false},
-				{name:'model_name', index:'model_name',align:'center',"sortable":false},
-				{name:'dimension_name', index:'dimension_name',align:'center',"sortable":false},
+				{name:'model_name', index:'model_name',align:'center',"sortable":false,formatter:"select", editoptions:{value:modelNameDicObj.jsonStr}},
+				{name:'dimension_name', index:'dimension_name',align:'center',"sortable":false,formatter:"select", editoptions:{value:dimensionNameDicObj.jsonStr}},
 				{name:'proportion', index:'proportion',align:'center',"sortable":false},
 				{name:'created_by', index:'created_by',align:'center',"sortable":false},
 				{name:'created_date', index:'created_date',align:'center',"sortable":false},
@@ -93,7 +95,7 @@ $(function(){
         if(ids && ids.length>0){
         	for(var i=0;i<ids.length;i++){
         		var rowData =grid.jqGrid('getRowData',ids[i]);
-        		request_data.push(parseInt(rowData.rule_id));
+        		request_data.push(parseInt(rowData.score_id));
         	}
         	
         }else{

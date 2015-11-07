@@ -1,6 +1,6 @@
 <div tabid="creditScoreCreate" class="tabs-body-item creditPageContext credit-validator">
 	<div>
-		<h3>规则信息</h3>	
+		<h3>基本信息</h3>	
 		<div class="row" id="creditScoreCreateForm">
 			<div class="credit-spacecontrol col-xs-12 col-sm-6">
 				<div class="row" >
@@ -11,7 +11,8 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="model_name" validtion='required'>
+							<select name="model_name" validtion='required' widget="dropdown" is_cache="true" dictionary_type="model_name">
+							</select>
 						</div>
 					</div>
 				</div>
@@ -25,7 +26,8 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="dimension_name" validtion='required'>
+							<select name="dimension_name" validtion='required' widget="dropdown" is_cache="true" dictionary_type="dimension_name">
+							</select>
 						</div>
 					</div>
 				</div>
