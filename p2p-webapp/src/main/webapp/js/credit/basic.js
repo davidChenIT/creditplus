@@ -138,8 +138,11 @@ $(function(){
 	//跳转到ip138查询
 	$("#credit_MainPanel").on("click",".ip138",function(){
 		var ip138Address="http://www.ip138.com:8080/search.asp?action=mobile&mobile=";
-		var phoneNumber=$(this).parent().parent().siblings().find("input").val() || $(this).parent().parent().siblings().find("span").text();
-		ip138Address+=phoneNumber;
+		var mobileElement=$(this).attr("mobile");
+		if(mobileElement){
+			var phoneNumber=$(this).parent().find("[name='"+mobileElement+"']").val() || $(this).parent().find("[name='"+mobileElement+"']").text();
+			ip138Address+=phoneNumber;
+		}
 		window.open(ip138Address);  
 	});
 
