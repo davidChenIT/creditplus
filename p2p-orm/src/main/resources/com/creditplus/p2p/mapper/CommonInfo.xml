@@ -6,7 +6,7 @@
 <mapper namespace="com.creditplus.p2p.dao.CommonInfoDao">
 	
 	<select id="getCardInfoById" parameterType="String" resultType="java.util.Map">
-		select province as id_province,concat(city,' ',district)  as id_city,district as id_district from p2p.origin_place where id_last_num=#{id_first_num} limit 1
+		select province as id_province,concat(city,' ',district)  as id_city,concat(province,city,district)  as id_address,district as id_district from origin_place where id_last_num=#{id_first_num} limit 1
 	</select>
 	
 	<select id="getPhoneInfoById" parameterType="String" resultType="java.util.Map">

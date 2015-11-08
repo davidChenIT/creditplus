@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface CheatInterceptDao {
 
-	List<?> getCheatInfoListByLoanId(Integer loan_id);
+	List<Map> getCheatInfoListByLoanId(Integer loan_id);
 	
 	void insertBatch(Map cheatMap);
 }
