@@ -225,4 +225,13 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 		return ruleDao.getDimensionListByRuleId(rule_id);
 	}
 
+
+	/* 
+	 * @param loan_id
+	 * @return
+	 */
+	public List<Map> getCheatLogByLoanId(Integer loan_id) {
+		return cheatInterceptDao.getCheatInfoListByLoanId(loan_id);
+	}
+
 }
