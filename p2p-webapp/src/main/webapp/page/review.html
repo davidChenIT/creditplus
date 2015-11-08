@@ -148,7 +148,49 @@
 						</div>
 	 				</div>
 				</div>
-			</div>								
+			</div>	
+			<div class="credit-spacecontrol col-xs-12 col-sm-4">
+				<div class="row">
+							<label class="col-xs-12 col-sm-3">
+						<div class="credit-label">
+							身份证地址
+						</div>
+						</label>
+						<div class="col-xs-12 col-sm-9">
+						<div class="credit-input">
+					 		<span name="address"></span>
+						</div>
+						</div>
+				</div>
+			</div>	
+			<div class="credit-spacecontrol col-xs-12 col-sm-4">
+				<div class="row">
+							<label class="col-xs-12 col-sm-3">
+						<div class="credit-label">
+							状态
+						</div>
+						</label>
+						<div class="col-xs-12 col-sm-9">
+						<div class="credit-input">
+					 		<span name="address" widget="dropdown" istext="true" is_cache="true" dictionary_type="valid_state"></span>
+						</div>
+						</div>
+				</div>
+			</div>
+			<div class="credit-spacecontrol col-xs-12 col-sm-4">
+				<div class="row">
+							<label class="col-xs-12 col-sm-3">
+						<div class="credit-label">
+							借款人联系电话
+						</div>
+						</label>
+						<div class="col-xs-12 col-sm-9">
+						<div class="credit-input">
+					 		<span name="mobile"></span><span class="ip138" mobile="mobile"></span>
+						</div>
+						</div>
+				</div>
+			</div>							
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
  	 				<label class="col-xs-12 col-sm-3">
@@ -230,7 +272,12 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input name="registered_place_v" type="text" validation="required">
+							<select style="width: 48%;" trigger="city_cascade_registered_place" textField="province" valueField="province"  name="registered_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
+								<option value="">请选择</option>
+							</select>
+							<select style="width: 48%;" id="city_cascade_registered_place" textField="city" valueField="city" name="registered_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
+								<option value="">请选择</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -244,7 +291,12 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input name="mobile_place_v" type="text" validation="required">
+							<select style="width: 48%;" trigger="city_cascade_mobile_place" textField="province" valueField="province"  name="mobile_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
+								<option value="">请选择</option>
+							</select>
+							<select style="width: 48%;" id="city_cascade_mobile_place" textField="city" valueField="city" name="mobile_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
+								<option value="">请选择</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -424,7 +476,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<span name="work_tel"></span><span class="ip138"></span>
+							<span name="work_tel"></span><span class="ip138" mobile="work_tel"></span>
 						</div>
 					</div>
 				</div>
@@ -438,7 +490,12 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="work_tel_place_v"/>
+							<select style="width: 48%;" trigger="city_cascade_tel_place" textField="province" valueField="province"  name="work_tel_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
+								<option value="">请选择</option>
+							</select>
+							<select style="width: 48%;" id="city_cascade_tel_place" textField="city" valueField="city" name="work_tel_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
+								<option value="">请选择</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -610,7 +667,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input name="income_name_v"/>
+							<input name="income_name_v" type="text"/>
 						</div>
 					</div>
 				</div>
@@ -672,7 +729,7 @@
 						</label>
 						<div class="col-xs-12 col-sm-8">
 							<div class="credit-input">
-								<span name="mobile"></span><span class="ip138"></span>
+								<span name="mobile"></span><span class="ip138" mobile="mobile"></span>
 							</div>
 						</div>
 					</div>
@@ -942,13 +999,15 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-2">
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
-						<div class="credit-label lable-red">
-							毕业学校等级*
+						<div class="credit-label label-red">
+							*毕业学校等级
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input name="profession_grade_v" type="text" value="985" validation="required">
+							<select name="profession_grade_v" widget="dropdown" is_cache="true" dictionary_type="school_level" validation="required">
+								<option value="">请选择</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -985,12 +1044,14 @@
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
 						<div class="credit-label label-red">
-							<span style="color:red;">*</span>最高学历
+							<span style="color:red;">*</span>最高学历验证
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input name="highest_degree_v" type="text" validation="required">
+							<select name="highest_degree_v" widget="dropdown" is_cache="true" dictionary_type="highest_degree" validation="required">
+								<option value="">请选择</option>
+							</select>
 						</div>
 					</div>
 				</div>
