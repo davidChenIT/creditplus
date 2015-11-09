@@ -632,23 +632,36 @@ var showImgDialog={
 
 //上传文件弹出框
 var uploadDialog={
+		img_path:"",
+		img_name:"",
+		uploadElement:"",
 		//创建弹出框
-	    createUploadDialog:function(fileAddressElement){
+	    createUploadDialog:function(uploadElement,img_path,img_name){
 	    	$("#uploadDialogDiv").remove();
 	    	uploadDialog.removeMaskDiv();
 	    	uploadDialog.createMaskDiv();
-			var temp="<div style=\"border:2px solid #37B6D1;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
-					+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">图片上传</div>"
+    		uploadDialog.uploadElement=uploadElement || "";
+    		uploadDialog.img_path=img_path || "";
+    		uploadDialog.img_name=img_name || "";
+    		var tdHtml="";
+    		if(uploadDialog.img_path){
+    			tdHtml="<img style='max-width: 430px;max-height:280px;' src='"+uploadDialog.img_path+"' />";
+    		}else{
+    			tdHtml="点击上传按钮选择图片！";
+    		}
+			var temp="<form name='uploadImgForm' method='post' enctype='multipart/form-data' target='hidden_frame'><div style=\"border:2px solid #37B6D1;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
+					+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">图片上传(类型：jpg、png、bmp)</div>"
 					+"<table width=\"500px\" height=\"300px\" cellspacing=\"0\" border=\"0\"><tr>" 
-					+"<td style=\" padding:0px 0px 0px 20px;align:center;font-size: 20px;\" align=\"center\">点击添加按钮选择图片！</td>"
+					+"<td  style=\" padding:0px 0px 0px 20px;align:center;font-size: 20px;\" align=\"center\">"+tdHtml+"</td>"
 					+"</tr></table>"
-					+"<div style=\"display:none;\"><input type=\"file\"/> </div>"
-					+"<div style=\"text-align:center; padding:0px 0px 20px;background-color: #fff;\"><input type='button'  class=\"grid-toobar-btn\" value='添加'id=\"addBtn\"  onclick=\"uploadDialog.addFunc();\">"
+					+"<div style=\"display:none;\"><input id='imgFile' name='imgFile' type=\"file\"/> </div>"
+					+"<div style=\"text-align:center; padding:0px 0px 20px;background-color: #fff;\">" 
+//					+"<input type='button'  class=\"grid-toobar-btn\" value='添加'id=\"addBtn\"  onclick=\"uploadDialog.addFunc();\">"
 					+"&nbsp;&nbsp;&nbsp;<input type='button' class=\"grid-toobar-btn\" value='上传'  id=\"uploadBtn\"   onClick='uploadDialog.uploadFunc();'>"
-				    +"&nbsp;&nbsp;&nbsp;<input type='button' class=\"grid-toobar-btn\" value='取消'  id=\"closeBtn\"   onClick='uploadDialog.cancelFunc();'>"
-				    +"</div></div>";
+				    +"&nbsp;&nbsp;&nbsp;<input type='button' class=\"grid-toobar-btn\" value='关闭'  id=\"closeBtn\"   onClick='uploadDialog.cancelFunc();'>"
+				    +"</div></div><iframe name='hidden_frame' id='hidden_frame' style='display:none;'></iframe> </form>";
 			
-			//创建弹出层
+			//创建弹出层style='display:none'
 			$("body").append("<div id='uploadDialogDiv' class='drag'></div>");
 			var uploadDialogDiv=$("#uploadDialogDiv");
 			uploadDialogDiv.attr("style","position:absolute;width: 500px;height: 300px;overflow:visible;z-index:1993");
@@ -656,19 +669,42 @@ var uploadDialog={
 			var left=($(window).width()-uploadDialogDiv.width())/2+"px";
 			var top=(($(window).height()-uploadDialogDiv.height())/2+document.body.scrollTop)+"px";
 			uploadDialogDiv.css({'left':left,'top':top});
+			
+			$("#uploadDialogDiv").find("input[type='file']").change(function(){
+				debugger;
+				var imgUrl=$(this).val();
+				var imgSuffix=imgUrl.substring(imgUrl.lastIndexOf(".")+1);
+				if(imgSuffix && imgSuffix.toLowerCase()!="jpg" && imgSuffix.toLowerCase()!="png" && imgSuffix.toLowerCase()!="bmp"){
+					$("#uploadDialogDiv").find("td").html("<span style='color:red;'>只能上传jpg、png、bmp类型的图片！</span>");
+					return false;
+				}
+				loadingBox.showLoading();
+				var uploadImgForm=$("#uploadDialogDiv").find("form[name='uploadImgForm']");
+				uploadImgForm[0].action="http://"+window.location.host+"/p2p-webapp/UploadPicture";
+				uploadImgForm.submit();
+			});
 	    },
 	    //取消
 	    cancelFunc:function(){
+	    	$("span[name='"+uploadDialog.uploadElement+"']").attr("img_path",uploadDialog.img_path);
+	    	$("span[name='"+uploadDialog.uploadElement+"']").text(uploadDialog.img_name);
 	    	$("#uploadDialogDiv").remove();
 	    	uploadDialog.removeMaskDiv();
 	    },
-	    //添加图片
-	    addFunc:function(){
-	    	$("#uploadDialogDiv").find("input[type='file']").click();
+	    //上传成功的回调函数
+	    uploadCallBack:function(data){
+	    	debugger;
+	    	if(data){
+	    		var resultObj=JSON.parse(data);
+	    		$("#uploadDialogDiv").find("td").html("<img style='max-width: 430px;max-height:280px;' src='"+resultObj.img_path+"' />");
+	    		uploadDialog.img_path=resultObj.img_path;
+	    		uploadDialog.img_name=resultObj.img_name;
+	    	}
+	    	loadingBox.hideLoading();
 	    },
 	    //上传图片
         uploadFunc:function(){
-        	alert("上传图片");
+        	$("#uploadDialogDiv").find("input[type='file']").click();
 	    },
 	    //创建遮罩层
 	    createMaskDiv:function(){
