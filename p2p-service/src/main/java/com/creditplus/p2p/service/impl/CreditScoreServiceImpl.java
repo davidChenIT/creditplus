@@ -36,17 +36,16 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		return getCreditScore(user_id);
 	}
 	
-	private Map getCreditScore(Integer user_id){
+/*	private Map getCreditScore(Integer user_id){ 
 		List<Map> creditScores=creditScoreDao.getCreditScoreList(new HashMap());
-		Map scoreMap=new HashMap();
 		Map<String,Integer> score1=new HashMap<String,Integer>();
 		Map<String,Integer> score2=new HashMap<String,Integer>();
 		if(creditScores!=null && creditScores.size()>0){
 			Integer total1=0,total2=0;
-			for(Map cs:creditScores){
-				Integer score_id=(Integer) cs.get("score_id");
-				Integer model_name=(Integer) cs.get("model_name");
-				String dimension_name=(String) cs.get("dimension_name");
+			for(Map creditMap:creditScores){
+				Integer score_id=(Integer) creditMap.get("score_id");
+				Integer model_name=(Integer) creditMap.get("model_name");
+				String dimension_name=(String) creditMap.get("dimension_name");
 				List<Map> itemList=creditScoreDao.getCreditItemById(score_id);
 				if(itemList!=null && itemList.size()>0){
 					for(Map itemMap:itemList){
@@ -69,10 +68,70 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 			score2.put("total", total2);
 			
 		}
+		
+		Map scoreMap=new HashMap();
+		scoreMap.put("score1", score1);
+		scoreMap.put("score2", score2);
+		return scoreMap;
+	}*/
+	
+	private Map getCreditScore(Integer user_id){
+		List<Map> creditScores=creditScoreDao.getCreditScoreList(new HashMap());
+		Map<String,Integer> score1=new HashMap<String,Integer>();
+		Map<String,Integer> score2=new HashMap<String,Integer>();
+		Integer total1=0,total2=0;     //信用总分，模型1，明星2
+		if(creditScores!=null && creditScores.size()>0){
+			
+			for(Map creditMap:creditScores){
+				String fact_table=(String) creditMap.get("fact_table");
+				String fact_column=(String) creditMap.get("fact_column");
+				Integer model_name= (Integer) creditMap.get("model_name");
+				String dimension_name=(String) creditMap.get("dimension_name");
+				Integer score_id=(Integer) creditMap.get("score_id");
+				List<Map> itemsList=creditScoreDao.getCreditItemById(score_id);
+				if(itemsList!=null && itemsList.size()>0){
+					
+					//查询得到需要评分字段的值
+					StringBuilder sbSql=new StringBuilder("select ").append(fact_column).append(" from ").append(fact_table).append(" where user_id=#{user_id}");
+					Map sqlMap=new HashMap();
+					sqlMap.put("user_id", user_id);
+					sqlMap.put("sql", sbSql.toString());
+					List<Map> result=commonInfoDao.executeDonamicSQL(sqlMap);
+					System.out.println("=====result:"+result);
+					Object value=null;
+					if(result!=null && result.size()>0)
+						value=result.iterator().next().get(fact_column);
+					Map valueMap=new HashMap();
+					valueMap.put(fact_column, value);
+					
+					for(Map itemMap:itemsList){
+						String arithmetic=(String) itemMap.get("arithmetic");
+						String dimension_value=(String) itemMap.get("dimension_value");
+						Integer score=Integer.valueOf(itemMap.get("score")+"");
+						StringBuilder expression=new StringBuilder(fact_column).append(arithmetic).append("'").append(dimension_value).append("'");
+						boolean flag=CommonUtil.exeExpression(expression.toString(), valueMap);
+						if(flag){
+							if(model_name==1){
+								score1.put(dimension_name, score);
+								total1+=score;
+							}else if(model_name==2){
+								score2.put(dimension_name, score);
+								total2+=score;
+							}
+							break;
+						}
+					}
+				}
+			}
+			
+		}
+		
+		Map scoreMap=new HashMap();
 		scoreMap.put("score1", score1);
 		scoreMap.put("score2", score2);
 		return scoreMap;
 	}
+	
 	
 	private Integer getItemResultSet(Map credit_item,Integer user_id){
 		String main_table=(String) credit_item.get("main_table");

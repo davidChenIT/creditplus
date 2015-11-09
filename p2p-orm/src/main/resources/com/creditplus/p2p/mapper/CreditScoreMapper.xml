@@ -6,7 +6,7 @@
 <mapper namespace="com.creditplus.p2p.dao.CreditScoreDao">
 	
 	<select id="getCreditScoreList" resultType="java.util.Map" parameterType="java.util.Map">
-		select score_id,model_name,dimension_name,proportion,created_by,created_date,last_updated_by,last_updated_date,remark from credit_score_t
+		select score_id,dimension_name,proportion,model_name,dimension_table,dimension_column,fact_table,fact_column,created_by,created_date,last_updated_by,last_updated_date,remark from credit_score_t  
 		where 1=1
 		<if test="model_name !=null">
 			and model_name=#{model_name}
@@ -14,14 +14,21 @@
 		<if test="dimension_name !=null">
 			and dimension_name=#{dimension_name}
 		</if> 
+		<if test="dimension_table !=null">
+			and dimension_table=#{dimension_table}
+		</if> 
+		<if test="fact_table !=null">
+			and fact_table=#{fact_table}
+		</if> 
+		order by model_name,last_updated_date
 	</select>
 	
 	<select id="getCreditScoreById" parameterType="Integer" resultType="java.util.Map">
-		select score_id,model_name,dimension_name,proportion,created_by,created_date,last_updated_by,last_updated_date,remark from credit_score_t where score_id=#{score_id}
+		select score_id,dimension_name,proportion,model_name,dimension_table,dimension_column,fact_table,fact_column,created_by,created_date,last_updated_by,last_updated_date,remark from credit_score_t where score_id=#{score_id}
 	</select>
 	
 	<select id="getCreditItemById" parameterType="Integer" resultType="java.util.Map">
-		select item_id,score_id,main_table,child_table,relevance_colum,expression,score,created_by,created_date,last_updated_by,last_updated_date,remark from credit_score_item_t where score_id = #{score_id}
+		select item_id,score_id,sequence_num,arithmetic,dimension_value,score,created_by,created_date,last_updated_by,last_updated_date,remark from credit_score_item_t t where  score_id = #{score_id} order by sequence_num
 	</select>
 	
 	<select id="findByName" parameterType="String" resultType="Integer">
@@ -50,31 +57,43 @@
 	
 	<update id="updateCreditScore" parameterType="java.util.Map">
 		update credit_score_t  set  
-    		<if test="model_name != null">
-    			model_name = #{model_name},
-    		</if> 
-   			<if test="dimension_name != null">
-    			dimension_name = #{dimension_name},
-    		</if> 
+   			<if test="model_name !=null">
+				model_name=#{model_name},
+			</if> 
+			<if test="dimension_name !=null">
+				dimension_name=#{dimension_name},
+			</if> 
+			<if test="dimension_table !=null">
+				dimension_table=#{dimension_table},
+			</if> 
+			<if test="dimension_column !=null">
+				dimension_column=#{dimension_column},
+			</if> 
+			<if test="fact_table !=null">
+				fact_table=#{fact_table},
+			</if> 
+			<if test="fact_column !=null">
+				fact_column=#{fact_column},
+			</if> 
    			<if test="proportion != null">
-    			 proportion=#{proportion},
+    			proportion=#{proportion},
     		</if> 
     		<if test="remark != null">
-    			 remark=#{remark},
+    			remark=#{remark},
     		</if> 
     		 last_updated_by = #{last_updated_by}, last_updated_date = sysdate()
     	where score_id = #{score_id}
 	</update>
 	
 	<insert id="insertCreditScore" parameterType="java.util.Map">
-		insert into credit_score_t(score_id,model_name,dimension_name,proportion,created_by,created_date,last_updated_by,last_updated_date,remark)values(#{score_id},#{model_name},#{dimension_name},#{proportion},#{last_updated_by},sysdate(),#{last_updated_by},sysdate(),#{remark})
+		insert into credit_score_t(score_id,dimension_name,proportion,model_name,dimension_table,dimension_column,fact_table,fact_column,created_by,created_date,last_updated_by,last_updated_date,remark)values(#{score_id},#{dimension_name},#{proportion},#{model_name},#{dimension_table},#{dimension_column},#{fact_table},#{fact_column},#{last_updated_by},sysdate(),#{last_updated_by},sysdate(),#{remark})
 	</insert>
 	
 	<insert id="insertCreditItems" parameterType="java.util.Map">
-		insert into credit_score_item_t(item_id,score_id,main_table,child_table,relevance_colum,expression,score,created_by,created_date,last_updated_by,last_updated_date,remark)
-       	values
+		insert into credit_score_item_t(item_id,score_id,sequence_num,arithmetic,dimension_value,score,created_by,created_date,last_updated_by,last_updated_date,remark)
+		values
 	    <foreach collection="list" item="item" index="index" separator="," >  
-	      (#{item.item_id},#{item.score_id},#{item.main_table},#{item.child_table},#{item.relevance_colum},#{item.expression},#{item.score},#{item.last_updated_by},sysdate(),#{item.last_updated_by},sysdate(),#{remark})
+	      (#{item.item_id},#{item.score_id},#{item.sequence_num},#{item.arithmetic},#{item.dimension_value},#{item.score},#{item.last_updated_by},sysdate(),#{item.last_updated_by},sysdate(),#{remark})
 	    </foreach>
 	</insert>
 </mapper>

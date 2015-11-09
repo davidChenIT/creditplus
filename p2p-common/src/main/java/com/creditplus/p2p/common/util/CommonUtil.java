@@ -18,6 +18,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
+import com.creditplus.p2p.common.json.JSONTools;
+
 public class CommonUtil {
 	
 	private static final String ADMINISTRATOR="admin";
@@ -78,8 +80,33 @@ public class CommonUtil {
 		
 	}
 	
-	
 	public static boolean exeExpression(String jsExpression,Map<String,Object> paramMap) {
+		boolean flag=false;
+		if(!StringUtils.isEmpty(jsExpression)){
+			ScriptEngineManager factory = new ScriptEngineManager();
+			ScriptEngine engine=factory.getEngineByName("js");
+			if(paramMap!=null && paramMap.size()>0){
+				for(Iterator<String> iterator=paramMap.keySet().iterator();iterator.hasNext();){
+					String key=iterator.next();
+					Object value=paramMap.get(key);
+					engine.put(key, value);
+				}
+			}
+			try {
+				System.out.println("exeute expression: "+jsExpression);
+				Object result=engine.eval(jsExpression);
+				if(result instanceof Boolean)
+					flag=(Boolean) result;
+			} catch (ScriptException e) {
+				System.out.println("exeExpression error:"+e);
+			}
+			
+		}
+		return flag;
+	}
+	
+	
+	/*public static boolean exeExpression(String jsExpression,Map<String,Object> paramMap) {
 		boolean flag=false;
 		if(StringUtils.isEmpty(jsExpression))
 			return false;
@@ -118,15 +145,25 @@ public class CommonUtil {
 		}
 		System.out.println(variableMap);
 		return variableMap;
-	}
+	}*/
 	
 	public static void main(String[] args) throws ScriptException {
 		 String js="(#a#>#c# && #a#<2000) && #b#=='中国'";
 		 Map variable=new HashMap();
 		 variable.put("a", "1001.5");
 		 variable.put("b", "中国");
-		 variable.put("c", 1000);
-		 System.out.println(exeExpression(js, variable));
+		 variable.put("c", 2001);
+		 variable.put("xxx", 2002);
+//		 System.out.println(exeExpression(js, variable));
+		
+		 String jsex="xxx<'"+variable.get("c")+"'";
+		 ScriptEngineManager factory = new ScriptEngineManager();
+		 ScriptEngine engine=factory.getEngineByName("js");
+		 engine.put("xxx", 2000);
+		 Object result=engine.eval(jsex);
+		 System.out.println(result);
+		 
+		 exeExpression(jsex, variable);
 		 
 	}
 

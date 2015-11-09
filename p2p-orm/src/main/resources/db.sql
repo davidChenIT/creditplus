@@ -33,7 +33,7 @@ CREATE TABLE `approve_log_t` (
   `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='审批日志';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='审批日志';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `approve_log_t` (
 
 LOCK TABLES `approve_log_t` WRITE;
 /*!40000 ALTER TABLE `approve_log_t` DISABLE KEYS */;
-INSERT INTO `approve_log_t` VALUES (1,24,'test','开始初审',2,'test','2015-11-08 14:53:02','test','2015-11-08 14:53:02'),(2,24,'test','初审完毕',3,'test','2015-11-08 15:12:56','test','2015-11-08 15:12:56');
+INSERT INTO `approve_log_t` VALUES (1,24,'test','开始初审',2,'test','2015-11-08 14:53:02','test','2015-11-08 14:53:02'),(2,24,'test','初审完毕',3,'test','2015-11-08 15:12:56','test','2015-11-08 15:12:56'),(3,24,'test','开始复审',4,'test','2015-11-08 15:31:13','test','2015-11-08 15:31:13');
 /*!40000 ALTER TABLE `approve_log_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +61,7 @@ CREATE TABLE `attach_pic` (
   `current` enum('Y','N') DEFAULT 'N',
   `modifytime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`pic_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8 COMMENT='ç”¨æˆ·ä¸Šä¼ å›¾ç‰‡èµ„æ–™';
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COMMENT='ç”¨æˆ·ä¸Šä¼ å›¾ç‰‡èµ„æ–™';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,6 +205,7 @@ CREATE TABLE `credit_score_item_t` (
   `score_id` int(11) NOT NULL COMMENT '信用评分id',
   `sequence_num` int(11) DEFAULT NULL COMMENT '序号',
   `arithmetic` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '运算符',
+  `dimension_value` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '维度列值',
   `score` int(11) NOT NULL COMMENT '得分',
   `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -212,7 +213,7 @@ CREATE TABLE `credit_score_item_t` (
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `remark` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='信用评分项';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='信用评分项';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,6 +222,7 @@ CREATE TABLE `credit_score_item_t` (
 
 LOCK TABLES `credit_score_item_t` WRITE;
 /*!40000 ALTER TABLE `credit_score_item_t` DISABLE KEYS */;
+INSERT INTO `credit_score_item_t` VALUES (2,5,1,'>','4900',20,'test','2015-11-09 12:48:30','test','2015-11-09 12:48:30',NULL);
 /*!40000 ALTER TABLE `credit_score_item_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,7 +249,7 @@ CREATE TABLE `credit_score_t` (
   `remark` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`score_id`),
   UNIQUE KEY `dimension_name_UNIQUE` (`dimension_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='信用评分';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='信用评分';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -256,6 +258,7 @@ CREATE TABLE `credit_score_t` (
 
 LOCK TABLES `credit_score_t` WRITE;
 /*!40000 ALTER TABLE `credit_score_t` DISABLE KEYS */;
+INSERT INTO `credit_score_t` VALUES (5,'xinzi','20%',1,'test','test_column','loan_list','loan_money','test','2015-11-09 12:48:30','test','2015-11-09 12:48:30',NULL);
 /*!40000 ALTER TABLE `credit_score_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -495,7 +498,7 @@ CREATE TABLE `loan_apply_t` (
 
 LOCK TABLES `loan_apply_t` WRITE;
 /*!40000 ALTER TABLE `loan_apply_t` DISABLE KEYS */;
-INSERT INTO `loan_apply_t` VALUES (1,24,1.0,3,'test',NULL,'2015-11-08 15:12:56');
+INSERT INTO `loan_apply_t` VALUES (1,24,1.0,4,'test','test','2015-11-08 15:31:13');
 /*!40000 ALTER TABLE `loan_apply_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -524,7 +527,7 @@ CREATE TABLE `loan_list` (
   `period` int(11) DEFAULT '1',
   `modifytime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`loan_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -552,7 +555,7 @@ CREATE TABLE `loan_state_list` (
   `error_msg` varchar(200) DEFAULT NULL COMMENT 'é”™è¯¯ä¿¡æ¯',
   `modifytime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`sn`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1014,4 +1017,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-08 23:26:29
+-- Dump completed on 2015-11-09 20:50:45
