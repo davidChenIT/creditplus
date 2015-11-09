@@ -33,7 +33,7 @@ CREATE TABLE `approve_log_t` (
   `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='审批日志';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='审批日志';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `approve_log_t` (
 
 LOCK TABLES `approve_log_t` WRITE;
 /*!40000 ALTER TABLE `approve_log_t` DISABLE KEYS */;
-INSERT INTO `approve_log_t` VALUES (1,24,'test','开始初审',2,'test','2015-11-08 14:53:02','test','2015-11-08 14:53:02'),(2,24,'test','初审完毕',3,'test','2015-11-08 15:12:56','test','2015-11-08 15:12:56');
+INSERT INTO `approve_log_t` VALUES (1,24,'test','开始初审',2,'test','2015-11-08 14:53:02','test','2015-11-08 14:53:02'),(2,24,'test','初审完毕',3,'test','2015-11-08 15:12:56','test','2015-11-08 15:12:56'),(3,24,'test','开始复审',4,'test','2015-11-08 15:31:13','test','2015-11-08 15:31:13');
 /*!40000 ALTER TABLE `approve_log_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +61,7 @@ CREATE TABLE `attach_pic` (
   `current` enum('Y','N') DEFAULT 'N',
   `modifytime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`pic_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8 COMMENT='ç”¨æˆ·ä¸Šä¼ å›¾ç‰‡èµ„æ–™';
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COMMENT='ç”¨æˆ·ä¸Šä¼ å›¾ç‰‡èµ„æ–™';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,6 +205,7 @@ CREATE TABLE `credit_score_item_t` (
   `score_id` int(11) NOT NULL COMMENT '信用评分id',
   `sequence_num` int(11) DEFAULT NULL COMMENT '序号',
   `arithmetic` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '运算符',
+  `dimension_value` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '维度列值',
   `score` int(11) NOT NULL COMMENT '得分',
   `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -212,7 +213,7 @@ CREATE TABLE `credit_score_item_t` (
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `remark` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='信用评分项';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='信用评分项';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,6 +222,7 @@ CREATE TABLE `credit_score_item_t` (
 
 LOCK TABLES `credit_score_item_t` WRITE;
 /*!40000 ALTER TABLE `credit_score_item_t` DISABLE KEYS */;
+INSERT INTO `credit_score_item_t` VALUES (2,5,1,'>','4900',20,'test','2015-11-09 12:48:30','test','2015-11-09 12:48:30',NULL);
 /*!40000 ALTER TABLE `credit_score_item_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,7 +249,7 @@ CREATE TABLE `credit_score_t` (
   `remark` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`score_id`),
   UNIQUE KEY `dimension_name_UNIQUE` (`dimension_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='信用评分';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='信用评分';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -256,6 +258,7 @@ CREATE TABLE `credit_score_t` (
 
 LOCK TABLES `credit_score_t` WRITE;
 /*!40000 ALTER TABLE `credit_score_t` DISABLE KEYS */;
+INSERT INTO `credit_score_t` VALUES (5,'xinzi','20%',1,'test','test_column','loan_list','loan_money','test','2015-11-09 12:48:30','test','2015-11-09 12:48:30',NULL);
 /*!40000 ALTER TABLE `credit_score_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,7 +352,9 @@ CREATE TABLE `dict_t` (
 
 LOCK TABLES `dict_t` WRITE;
 /*!40000 ALTER TABLE `dict_t` DISABLE KEYS */;
-INSERT INTO `dict_t` VALUES (1,'1','提单','apply_state',1,0,1,'test','2015-10-21 21:53:02','test','2015-10-22 22:55:58',''),(2,'5','复审完成','apply_state',1,0,5,'test','2015-10-22 14:52:27','test','2015-10-22 22:55:58',''),(3,'4','开始复审','apply_state',1,0,4,'test','2015-10-22 14:52:27','test','2015-10-22 22:55:58',''),(4,'3','初审完成','apply_state',1,0,3,'test','2015-10-22 14:52:27','test','2015-10-22 22:55:58',''),(5,'2','开始初审','apply_state',1,0,2,'test','2015-10-22 14:52:27','test','2015-10-22 22:55:58',''),(6,'11','黑名单','apply_state',1,0,11,'test','2015-10-22 22:55:58','test','2015-10-22 22:55:58',''),(7,'10','关闭','apply_state',1,0,10,'test','2015-10-22 22:55:58','test','2015-10-22 22:55:58',''),(8,'9','生成合同','apply_state',1,0,9,'test','2015-10-22 22:55:58','test','2015-10-22 22:55:58',''),(9,'8','撤标','apply_state',1,0,8,'test','2015-10-22 22:55:58','test','2015-10-22 22:55:58',''),(10,'7','发标','apply_state',1,0,7,'test','2015-10-22 22:55:58','test','2015-10-22 22:55:58',''),(11,'6','停止','apply_state',1,0,6,'test','2015-10-22 22:55:58','test','2015-10-22 22:55:58',''),(12,'维吾尔族','维吾尔族','thnic',1,16,2,'test','2015-10-31 14:01:36','test','2015-10-31 14:01:36',''),(13,'汉族','汉族','thnic',1,16,1,'test','2015-10-31 14:01:36','test','2015-10-31 14:01:36',''),(14,'5','芝麻信用','certificate',1,0,5,'test','2015-10-31 06:05:17','test','2015-10-31 14:06:13',''),(15,'4','学历证书','certificate',1,0,4,'test','2015-10-31 06:05:17','test','2015-10-31 14:06:13',''),(16,'3','工牌照','certificate',1,0,3,'test','2015-10-31 06:05:17','test','2015-10-31 14:06:13',''),(17,'2','身份证背面','certificate',1,0,2,'test','2015-10-31 06:05:17','test','2015-10-31 14:06:13',''),(18,'1','身份证正面','certificate',1,0,1,'test','2015-10-31 06:05:17','test','2015-10-31 14:06:13',''),(19,'9','住址证明','certificate',1,0,9,'test','2015-10-31 14:06:13','test','2015-10-31 14:06:13',''),(20,'8','职业证书','certificate',1,0,8,'test','2015-10-31 14:06:13','test','2015-10-31 14:06:13',''),(21,'7','银行流水','certificate',1,0,7,'test','2015-10-31 14:06:13','test','2015-10-31 14:06:13',''),(22,'6','工资单','certificate',1,0,6,'test','2015-10-31 14:06:13','test','2015-10-31 14:06:13',''),(23,'user_info','用户表','table_name',1,0,1,'test','2015-10-30 02:18:23','test','2015-10-31 19:37:19','规则维度中的业务对象'),(24,'loan_list','申请单表','table_name',1,0,3,'test','2015-10-31 02:20:57','test','2015-10-31 15:42:06','规则维度中的业务对象'),(25,'province','省份','column_name',1,23,1,'test','2015-10-31 02:29:59','test','2015-10-31 10:30:06','维度中的某个业务对象下的字段'),(26,'city','城市','column_name',1,23,2,'test','2015-10-31 02:29:59','test','2015-10-31 10:30:06','维度中的某个业务对象下的字段'),(27,'address','住址','column_name',1,23,3,'test','2015-10-31 02:29:59','test','2015-10-31 10:30:06','维度中的某个业务对象下的字段'),(28,'registered_place_v','户口所在地','column_name',1,24,2,'test','2015-10-31 10:33:09','test','2015-10-31 10:33:08','维度下业务对象客户表中的字段'),(29,'thnic_v','名族','column_name',1,24,1,'test','2015-10-31 10:33:09','test','2015-10-31 10:33:08','维度下业务对象客户表中的字段'),(30,'loan_money','借款金额','column_name',1,27,1,'test','2015-10-31 10:36:18','test','2015-10-31 10:36:17','维度中的申请表的字段'),(31,'loan_day','借款天数','column_name',1,27,2,'test','2015-10-31 10:36:18','test','2015-10-31 10:36:17','维度中的申请表的字段'),(32,'like','like','semanteme_dic',1,0,4,'test','2015-10-30 18:39:56','test','2015-10-31 19:37:19','维度配置中的语义'),(33,'<','小于','semanteme_dic',1,0,3,'test','2015-10-30 18:39:56','test','2015-10-31 19:37:19','维度配置中的语义'),(34,'>','大于','semanteme_dic',1,0,2,'test','2015-10-30 18:39:56','test','2015-10-31 19:37:19','维度配置中的语义'),(35,'=','等于','semanteme_dic',1,0,1,'test','2015-10-30 18:39:56','test','2015-10-31 19:37:19','维度配置中的语义'),(36,'and','且','arithmetic_dic',1,0,1,'test','2015-10-30 18:42:00','test','2015-10-31 19:37:19','维度中的与或运算符'),(37,'or','或','arithmetic_dic',1,0,2,'test','2015-10-30 18:42:00','test','2015-10-31 19:37:19','维度中的与或运算符'),(38,'0','不可用','enable',1,0,2,'test','2015-10-31 11:36:21','test','2015-10-31 19:37:19','系统中是否可用的下拉框需要的字典'),(39,'1','可用','enable',1,0,1,'test','2015-10-31 11:36:21','test','2015-10-31 19:37:19','系统中是否可用的下拉框需要的字典');
+INSERT INTO `dict_t` VALUES (1,'1','提单','apply_state',1,0,1,'test','2015-10-21 21:53:02','test','2015-10-22 22:55:58',''),(2,'5','复审完成','apply_state',1,0,5,'test','2015-10-22 14:52:27','test','2015-10-22 22:55:58',''),(3,'4','开始复审','apply_state',1,0,4,'test','2015-10-22 14:52:27','test','2015-10-22 22:55:58',''),(4,'3','初审完成','apply_state',1,0,3,'test','2015-10-22 14:52:27','test','2015-10-22 22:55:58',''),(5,'2','开始初审','apply_state',1,0,2,'test','2015-10-22 14:52:27','test','2015-10-22 22:55:58',''),(6,'11','黑名单','apply_state',1,0,11,'test','2015-10-22 22:55:58','test','2015-10-22 22:55:58',''),(7,'10','关闭','apply_state',1,0,10,'test','2015-10-22 22:55:58','test','2015-10-22 22:55:58',''),(8,'9','生成合同','apply_state',1,0,9,'test','2015-10-22 22:55:58','test','2015-10-22 22:55:58',''),(9,'8','撤标','apply_state',1,0,8,'test','2015-10-22 22:55:58','test','2015-10-22 22:55:58',''),(10,'7','发标','apply_state',1,0,7,'test','2015-10-22 22:55:58','test','2015-10-22 22:55:58',''),(11,'6','停止','apply_state',1,0,6,'test','2015-10-22 22:55:58','test','2015-10-22 22:55:58',''),(12,'维吾尔族','维吾尔族','thnic',1,16,2,'test','2015-10-31 14:01:36','test','2015-10-31 14:01:36',''),(13,'汉族','汉族','thnic',1,16,1,'test','2015-10-31 14:01:36','test','2015-10-31 14:01:36',''),(14,'5','芝麻信用','certificate',1,0,5,'test','2015-10-31 06:05:17','test','2015-10-31 14:06:13',''),(15,'4','学历证书','certificate',1,0,4,'test','2015-10-31 06:05:17','test','2015-10-31 14:06:13',''),(16,'3','工牌照','certificate',1,0,3,'test','2015-10-31 06:05:17','test','2015-10-31 14:06:13',''),(17,'2','身份证背面','certificate',1,0,2,'test','2015-10-31 06:05:17','test','2015-10-31 14:06:13',''),(18,'1','身份证正面','certificate',1,0,1,'test','2015-10-31 06:05:17','test','2015-10-31 14:06:13',''),(19,'9','住址证明','certificate',1,0,9,'test','2015-10-31 14:06:13','test','2015-10-31 14:06:13',''),(20,'8','职业证书','certificate',1,0,8,'test','2015-10-31 14:06:13','test','2015-10-31 14:06:13',''),(21,'7','银行流水','certificate',1,0,7,'test','2015-10-31 14:06:13','test','2015-10-31 14:06:13',''),(22,'6','工资单','certificate',1,0,6,'test','2015-10-31 14:06:13','test','2015-10-31 14:06:13',''),(23,'user_info','用户表','table_name',1,0,1,'test','2015-10-30 02:18:23','test','2015-10-31 19:37:19','规则维度中的业务对象'),(24,'loan_list','申请单表','table_name',1,0,3,'test','2015-10-31 02:20:57','test','2015-10-31 15:42:06','规则维度中的业务对象'),(25,'province','省份','column_name',1,23,1,'test','2015-10-31 02:29:59','test','2015-10-31 10:30:06','维度中的某个业务对象下的字段'),(26,'city','城市','column_name',1,23,2,'test','2015-10-31 02:29:59','test','2015-10-31 10:30:06','维度中的某个业务对象下的字段'),(27,'address','住址','column_name',1,23,3,'test','2015-10-31 02:29:59','test','2015-10-31 10:30:06','维度中的某个业务对象下的字段'),(28,'registered_place_v','户口所在地','column_name',1,24,2,'test','2015-10-31 10:33:09','test','2015-10-31 10:33:08','维度下业务对象客户表中的字段'),(29,'thnic_v','名族','column_name',1,24,1,'test','2015-10-31 10:33:09','test','2015-10-31 10:33:08','维度下业务对象客户表中的字段'),(30,'loan_money','借款金额','column_name',1,27,1,'test','2015-10-31 10:36:18','test','2015-10-31 10:36:17','维度中的申请表的字段'),(31,'loan_day','借款天数','column_name',1,27,2,'test','2015-10-31 10:36:18','test','2015-10-31 10:36:17','维度中的申请表的字段'),(32,'like','like','semanteme_dic',1,0,4,'test','2015-10-30 18:39:56','test','2015-10-31 19:37:19','维度配置中的语义'),(33,'<','小于','semanteme_dic',1,0,3,'test','2015-10-30 18:39:56','test','2015-10-31 19:37:19','维度配置中的语义'),(34,'>','大于','semanteme_dic',1,0,2,'test','2015-10-30 18:39:56','test','2015-10-31 19:37:19','维度配置中的语义'),(35,'=','等于','semanteme_dic',1,0,1,'test','2015-10-30 18:39:56','test','2015-10-31 19:37:19','维度配置中的语义'),(36,'and','且','arithmetic_dic',1,0,1,'test','2015-10-30 18:42:00','test','2015-10-31 19:37:19','维度中的与或运算符'),(37,'or','或','arithmetic_dic',1,0,2,'test','2015-10-30 18:42:00','test','2015-10-31 19:37:19','维度中的与或运算符'),(38,'0','不可用','enable',1,0,2,'test','2015-10-31 11:36:21','test','2015-10-31 19:37:19','系统中是否可用的下拉框需要的字典'),(39,'1','可用','enable',1,0,1,'test','2015-10-31 11:36:21','test','2015-10-31 19:37:19','系统中是否可用的下拉框需要的字典'),(40,'1','有效','valid_state',1,0,3,'test','2015-10-31 10:20:57','test','2015-10-31 23:42:06',''),(41,'0','无效','valid_state',1,0,4,'test','2015-10-31 10:20:57','test','2015-10-31 23:42:06',''),
+(42,'1','高中','highest_degree',1,0,1,'test','2015-10-31 10:20:57','test','2015-10-31 23:42:06',''),(43,'2','大专','highest_degree',1,0,1,'test','2015-10-31 10:20:57','test','2015-10-31 23:42:06',''),(44,'3','大学','highest_degree',1,0,1,'test','2015-10-31 10:20:57','test','2015-10-31 23:42:06',''),(45,'4','硕士','highest_degree',1,0,1,'test','2015-10-31 10:20:57','test','2015-10-31 23:42:06',''),(46,'1','博士','highest_degree',1,0,1,'test','2015-10-31 10:20:57','test','2015-10-31 23:42:06',''),
+(47,'985','985','school_level',1,0,3,'test','2015-10-31 10:20:57','test','2015-10-31 23:42:06',''),(48,'211','211','school_level',1,0,4,'test','2015-10-31 10:20:57','test','2015-10-31 23:42:06','');
 /*!40000 ALTER TABLE `dict_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -495,7 +500,7 @@ CREATE TABLE `loan_apply_t` (
 
 LOCK TABLES `loan_apply_t` WRITE;
 /*!40000 ALTER TABLE `loan_apply_t` DISABLE KEYS */;
-INSERT INTO `loan_apply_t` VALUES (1,24,1.0,3,'test',NULL,'2015-11-08 15:12:56');
+INSERT INTO `loan_apply_t` VALUES (1,24,1.0,4,'test','test','2015-11-08 15:31:13');
 /*!40000 ALTER TABLE `loan_apply_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -524,7 +529,7 @@ CREATE TABLE `loan_list` (
   `period` int(11) DEFAULT '1',
   `modifytime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`loan_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -552,7 +557,7 @@ CREATE TABLE `loan_state_list` (
   `error_msg` varchar(200) DEFAULT NULL COMMENT 'é”™è¯¯ä¿¡æ¯',
   `modifytime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`sn`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1014,4 +1019,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-08 23:26:29
+-- Dump completed on 2015-11-09 20:50:45
