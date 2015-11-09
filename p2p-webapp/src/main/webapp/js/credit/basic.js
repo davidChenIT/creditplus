@@ -611,7 +611,7 @@ var showImgDialog={
 		showImgDialogDiv.html(temp);
 		var left=($(window).width()-500)/2+"px";
 		var top=(($(window).height()-500)/2+document.body.scrollTop)+"px";
-		showImgDialogDiv.css({'left':left,'top':"15%"});
+		showImgDialogDiv.css({'left':left,'top':top});
 		//关闭图片层
 		showImgDialogDiv.find(".img-dialog-close").click(function(){
 			showImgDialog.removeImgDialogDiv();
@@ -629,6 +629,62 @@ var showImgDialog={
 		showImgDialogDiv.css({'left':left,'top':top});
     }
 }
+
+//上传文件弹出框
+var uploadDialog={
+		//创建弹出框
+	    createUploadDialog:function(fileAddressElement){
+	    	$("#uploadDialogDiv").remove();
+	    	uploadDialog.removeMaskDiv();
+	    	uploadDialog.createMaskDiv();
+			var temp="<div style=\"border:2px solid #37B6D1;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
+					+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">图片上传</div>"
+					+"<table width=\"500px\" height=\"300px\" cellspacing=\"0\" border=\"0\"><tr>" 
+					+"<td style=\" padding:0px 0px 0px 20px;align:center;font-size: 20px;\" align=\"center\">点击添加按钮选择图片！</td>"
+					+"</tr></table>"
+					+"<div style=\"display:none;\"><input type=\"file\"/> </div>"
+					+"<div style=\"text-align:center; padding:0px 0px 20px;background-color: #fff;\"><input type='button'  class=\"grid-toobar-btn\" value='添加'id=\"addBtn\"  onclick=\"uploadDialog.addFunc();\">"
+					+"&nbsp;&nbsp;&nbsp;<input type='button' class=\"grid-toobar-btn\" value='上传'  id=\"uploadBtn\"   onClick='uploadDialog.uploadFunc();'>"
+				    +"&nbsp;&nbsp;&nbsp;<input type='button' class=\"grid-toobar-btn\" value='取消'  id=\"closeBtn\"   onClick='uploadDialog.cancelFunc();'>"
+				    +"</div></div>";
+			
+			//创建弹出层
+			$("body").append("<div id='uploadDialogDiv' class='drag'></div>");
+			var uploadDialogDiv=$("#uploadDialogDiv");
+			uploadDialogDiv.attr("style","position:absolute;width: 500px;height: 300px;overflow:visible;z-index:1993");
+			uploadDialogDiv.html(temp);
+			var left=($(window).width()-uploadDialogDiv.width())/2+"px";
+			var top=(($(window).height()-uploadDialogDiv.height())/2+document.body.scrollTop)+"px";
+			uploadDialogDiv.css({'left':left,'top':top});
+	    },
+	    //取消
+	    cancelFunc:function(){
+	    	$("#uploadDialogDiv").remove();
+	    	uploadDialog.removeMaskDiv();
+	    },
+	    //添加图片
+	    addFunc:function(){
+	    	$("#uploadDialogDiv").find("input[type='file']").click();
+	    },
+	    //上传图片
+        uploadFunc:function(){
+        	alert("上传图片");
+	    },
+	    //创建遮罩层
+	    createMaskDiv:function(){
+	    	var uploadDialogMaskDivHtml='<div id="uploadDialogMaskDiv" unselectable="on" style="background:#000;filter:alpha(opacity=10);opacity:.1;left:0px;top:0px;position:fixed;height:100%;width:100%;overflow:hidden;z-index:1992;"></div>';
+	        $("body").append(uploadDialogMaskDivHtml);
+	    },
+	    removeMaskDiv:function(){
+	    	$("body").find("#uploadDialogMaskDiv").remove();
+	    },
+	    resetUploadDialogDiv:function(){
+	    	var uploadDialogDiv=$("#uploadDialogDiv");
+			var left=($(window).width()-uploadDialogDiv.width())/2+"px";
+			var top=(($(window).height()-uploadDialogDiv.height())/2+document.body.scrollTop)+"px";
+			uploadDialogDiv.css({'left':left,'top':top});
+	    }
+};
 
 //自定义alert、confirm框
 var messageBox={
