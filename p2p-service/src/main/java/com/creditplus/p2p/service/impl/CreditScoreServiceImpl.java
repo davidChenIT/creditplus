@@ -126,9 +126,12 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 			
 		}
 		
+		score1.put("credit_total_score", total1);
+		score2.put("credit_total_score", total2);
 		Map scoreMap=new HashMap();
 		scoreMap.put("score1", score1);
 		scoreMap.put("score2", score2);
+		scoreMap.put("credit_total_score", (total1+total2));
 		return scoreMap;
 	}
 	
@@ -165,18 +168,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		return 0;
 	}
 	
-	public static void main(String[] args) {
-		Map map=new HashMap();
-		map.put("main_table", "user_info");
-		map.put("child_table", "approve_log_t");
-		map.put("relevance_colum", "user_id");
-		map.put("expression", "#city#='深圳'");
-		new CreditScoreServiceImpl().getItemResultSet(map, 13);
-	}
 
-	/* 
-	 * @return
-	 */
 	public PageVO getCreditScoreListWithPage(Map paramMap) {
 		int currentPage=1,pageSize=10;
 		if(paramMap!=null && (paramMap.get(Constant.CURRPAGE)!=null || paramMap.get(Constant.ROWNUM)!=null)){
