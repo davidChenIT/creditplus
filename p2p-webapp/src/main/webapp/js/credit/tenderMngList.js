@@ -34,8 +34,8 @@ $(function(){
 				{name:'dateCount', index:'dateCount',align:'center',"sortable":false},
 				{name:'loan_day', index:'loan_day',align:'center',"sortable":false},
 				{name:'modifytime', index:'modifytime',align:'center',"sortable":false},
-				{name:'creditFraction1', index:'creditFraction1',align:'center',"sortable":false},
-				{name:'creditFraction2', index:'creditFraction2',align:'center',"sortable":false},
+				{name:'credit_score1', index:'credit_score1',align:'center',"sortable":false},
+				{name:'credit_score2', index:'credit_score2',align:'center',"sortable":false},
 				{name:'rank', index:'rank',align:'center',"sortable":false}
 			],
 			pager: '#rankPoolPager',

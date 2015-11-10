@@ -9,7 +9,7 @@ import com.creditplus.p2p.model.PageVO;
 
 public interface CreditScoreService {
 
-	Map creditScore(@ParamName("user_id")Integer user_id,@ParamName("loan_id")Integer loan_id);
+	Map getCreditScore(@ParamName("user_id")Integer user_id,@ParamName("loan_id")Integer loan_id);
 	
 	PageVO getCreditScoreListWithPage(Map paramMap);
 	

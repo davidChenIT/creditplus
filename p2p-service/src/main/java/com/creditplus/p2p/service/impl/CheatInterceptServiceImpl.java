@@ -113,76 +113,6 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	}
 
 	
-	/**
-	 * 校验单个维度
-	 * @param dismensionMap
-	 * @param user_id
-	 * @param loan_id
-	 * @return
-		boolean
-	 * @throws Exception 
-	 *//*
-	private boolean executeChectSqlxxx(Map dismensionMap,Integer user_id,Integer loan_id) throws Exception{
-		String tableName=(String) dismensionMap.get("table_name");
-		String column_name=(String) dismensionMap.get("column_name");
-		String semanteme=(String) dismensionMap.get("semanteme");
-		String value=(String) dismensionMap.get("value");
-		StringBuilder sbSql=new StringBuilder("select count(1) as total_record from ").append(tableName).append(" where ")
-				.append(column_name).append(semanteme).append("#{value} and ").append("user_id = #{user_id}");
-		
-		Map sqlMap=new HashMap();
-		sqlMap.put(sqlMap, sbSql.toString());
-		sqlMap.put("sql", sbSql.toString());
-		sqlMap.put("value", value);
-		sqlMap.put("user_id", user_id);
-		
-		System.out.println("rule check sql"+sbSql);
-		List<Map> list=commonInfoDao.executeDonamicSQL(sqlMap);
-		Integer total_record=0;
-		if(list!=null && list.size()>0)
-			total_record=Integer.valueOf(list.iterator().next().get("total_record")+"");
-		
-		System.out.println("total_record===="+total_record);
-		boolean checkFlag=false;
-		if(semanteme.contains("!=")){
-			checkFlag=total_record==0?true:false;
-		}else if(semanteme.contains(">")){
-			checkFlag=total_record==0?true:false;
-		}else if(semanteme.contains("<")){
-			checkFlag=total_record==0?false:true;
-		}
-		
-		if(checkFlag){
-			System.out.println("有欺诈=============");
-			
-			//更新申请单状态
-			String userName=CommonUtil.getCurrentUser();
-			Map loanOrderMap=new HashMap();
-			loanOrderMap.put("loan_id", loan_id);
-			loanOrderMap.put("apply_state", 6);
-			loanOrderMap.put("last_updated_by", userName);
-			loanOrderDao.updateLoanOrderByLoanId(loanOrderMap);
-			
-			//插入拦截日志
-			Map cheatMap=new HashMap();
-			cheatMap.put("loan_id", loan_id);
-			cheatMap.put("intercept_source", "system");
-			cheatMap.put("check_item", dismensionMap.get("rule_name"));
-			cheatMap.put("intercept_cause", "检查 "+dismensionMap.get("column_name")+" 不通过");
-			cheatMap.put("last_updated_by", userName);
-			cheatInterceptDao.insertBatch(cheatMap);
-			
-			//插入审批日志
-			Map approveMap=new HashMap();
-			approveMap.put("loan_id", loan_id);
-			approveMap.put("apply_state", 6);
-			approveMap.put("approve_content", dismensionMap.get("rule_name")+"检查 "+dismensionMap.get("column_name")+" 不通过");
-			approveMap.put("last_updated_by", userName);
-			approveLogService.insertApproveLog(approveMap, false);
-		}
-		return checkFlag;
-	}*/
-	
 	
 	private void CheatProcess(Integer loan_id,String intercept_cause) throws Exception{
 		String userName=CommonUtil.getCurrentUser();
@@ -211,7 +141,8 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 		try {
 			approveLogService.insertApproveLog(approveMap);
 		} catch (Exception e) {
-			throw new Exception(e);
+			System.out.println(e);
+			//throw new Exception(e);
 			//写异常日志表
 		}
 	}

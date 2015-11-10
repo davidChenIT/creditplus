@@ -17,6 +17,7 @@ import com.creditplus.p2p.page.PageUtil;
 import com.creditplus.p2p.service.ApproveLogService;
 import com.creditplus.p2p.service.CheatInterceptService;
 import com.creditplus.p2p.service.CommonInfoService;
+import com.creditplus.p2p.service.CreditScoreService;
 import com.creditplus.p2p.service.LoanOrderService;
 import com.creditplus.p2p.service.UrgentContactorService;
 
@@ -35,6 +36,8 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	private CommonInfoService commonInfoService;
 	@Autowired
 	CheatInterceptService cheatInterceptService;
+	@Autowired
+	CreditScoreService creditScoreService;
 
 	
 	/**
@@ -142,6 +145,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		
 		List urgentList=(List) paramMap.get("urgentList");
 		updateUrgentContactor(urgentList, user_id);
+		//计算信用分
+		Map creditMap=creditScoreService.getCreditScore(user_id, loan_id);
+		paramMap.putAll(creditMap);
 		//更新申请单状态并且插入日志
 		updateLoanApply(paramMap);
 	}

@@ -32,8 +32,8 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 	CommonInfoDao commonInfoDao;
 
 	
-	public Map creditScore(Integer user_id, Integer loan_id) {
-		return getCreditScore(user_id);
+	public Map getCreditScore(Integer user_id, Integer loan_id) {
+		return getCreditScoreMap(user_id,loan_id);
 	}
 	
 /*	private Map getCreditScore(Integer user_id){ 
@@ -75,7 +75,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		return scoreMap;
 	}*/
 	
-	private Map getCreditScore(Integer user_id){
+	private Map getCreditScoreMap(Integer user_id,Integer loan_id){
 		List<Map> creditScores=creditScoreDao.getCreditScoreList(new HashMap());
 		Map<String,Integer> score1=new HashMap<String,Integer>();
 		Map<String,Integer> score2=new HashMap<String,Integer>();
@@ -92,9 +92,10 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 				if(itemsList!=null && itemsList.size()>0){
 					
 					//查询得到需要评分字段的值
-					StringBuilder sbSql=new StringBuilder("select ").append(fact_column).append(" from ").append(fact_table).append(" where user_id=#{user_id}");
+					StringBuilder sbSql=new StringBuilder("select t.").append(fact_column).append(" from ").append(fact_table).append(" t left join loan_list l on t.user_id=l.user_id where l.user_id=#{user_id} and l.loan_id=#{loan_id}");
 					Map sqlMap=new HashMap();
 					sqlMap.put("user_id", user_id);
+					sqlMap.put("loan_id", loan_id);
 					sqlMap.put("sql", sbSql.toString());
 					List<Map> result=commonInfoDao.executeDonamicSQL(sqlMap);
 					System.out.println("=====result:"+result);
@@ -131,7 +132,9 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		Map scoreMap=new HashMap();
 		scoreMap.put("score1", score1);
 		scoreMap.put("score2", score2);
-		scoreMap.put("credit_total_score", (total1+total2));
+		scoreMap.put("credit_score1", total1);
+		scoreMap.put("credit_score2", total2);
+		scoreMap.put("credit_score_total", (total1+total2));
 		return scoreMap;
 	}
 	

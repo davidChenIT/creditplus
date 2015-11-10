@@ -469,6 +469,9 @@
 		    ifnull(apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
+			a.credit_score1,
+			a.credit_score2,
+			a.credit_score_total,
 		    concat(a.version,'') as version
 	    from (select * from loan_list where loan_id in( select loan_id from loan_apply_t where apply_state=5)) t
 		left join loan_apply_t a on t.loan_id=a.loan_id
@@ -746,7 +749,16 @@
 				review_assign_user=#{review_assign_user},
 			</if>
 			<if test="version != null">
-				version=#{version}
+				version=#{version},
+			</if>
+			<if test="credit_score1 != null">
+				credit_score1=#{credit_score1},
+			</if>
+			<if test="credit_score2 != null">
+				credit_score2=#{credit_score2},
+			</if>
+			<if test="credit_score_total != null">
+				credit_score_total=#{credit_score_total},
 			</if>
 		</set>
 		where loan_id = #{loan_id}
@@ -771,6 +783,7 @@
 	<update id="creditReviewRejectUpdate" parameterType="java.util.Map">
 		update loan_apply_t set modifytime=sysdate(),apply_state=2,review_assign_user=null,version=(version+0.1) where loan_id = #{loan_id}
 	</update>
+	
 
 	<delete id="deleteByLoanId" parameterType="Integer">
 		delete from	loan_apply_t t where t.loan_id = #{loan_id}
