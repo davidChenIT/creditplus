@@ -126,7 +126,7 @@ public class UploadPicture extends HttpServlet {
 			
 //			Map<String, String> map = new HashMap<String, String>();  
 //            map.put("path", "/images/upload" + saveName); 
-            String resultStr="{\"img_path\":\"/p2p-webapp/images/upload/"+saveName+"\",\"img_name\":\""+saveName+"\"}";
+            String resultStr="{\"img_path\":\"/p2p-webapp/images/upload/"+saveName+"\",\"img_name\":\""+filename+"\"}";
             PrintWriter out = response.getWriter();  
             out.print("<script type='text/javascript'>window.parent.uploadDialog.uploadCallBack('"+resultStr+"');</script>"); 
 			writer.close();

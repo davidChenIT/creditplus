@@ -187,6 +187,15 @@ $(function(){
 	$("body").on("mouseup",".drag",function(e){
 		_move=false; 
 	});
+	
+	$("#credit_MainPanel").on("click",".upLoadBtn",function(){
+		debugger;
+		var uploadElement=$(this).siblings("span:first").attr("name");
+		 var img_path=$(this).siblings("span:first").attr("img_path");
+		 var img_name=$(this).siblings("span:first").text();
+		 //弹出文件选择框
+		 uploadDialog.createUploadDialog(uploadElement,img_path,img_name);
+	});
 })
 
 //构造左侧菜单的函数
@@ -686,8 +695,6 @@ var uploadDialog={
 	    },
 	    //取消
 	    cancelFunc:function(){
-	    	$("span[name='"+uploadDialog.uploadElement+"']").attr("img_path",uploadDialog.img_path);
-	    	$("span[name='"+uploadDialog.uploadElement+"']").text(uploadDialog.img_name);
 	    	$("#uploadDialogDiv").remove();
 	    	uploadDialog.removeMaskDiv();
 	    },
@@ -699,6 +706,8 @@ var uploadDialog={
 	    		$("#uploadDialogDiv").find("td").html("<img style='max-width: 430px;max-height:280px;' src='"+resultObj.img_path+"' />");
 	    		uploadDialog.img_path=resultObj.img_path;
 	    		uploadDialog.img_name=resultObj.img_name;
+	    		$("span[name='"+uploadDialog.uploadElement+"']").text(resultObj.img_name);
+	    		$("span[name='"+uploadDialog.uploadElement+"']").attr("img_path",resultObj.img_path);
 	    	}
 	    	loadingBox.hideLoading();
 	    },
