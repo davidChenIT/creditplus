@@ -4,56 +4,61 @@ $(function(){
 	debugger;
 	//下拉框数据填充
 	selectRender("creditScoreCreateForm");
+	
+	
+	//grid中的数据字典
+	var semantemeDicObj=gridSelectColRender("","",{"type":"semanteme_dic"},"code","name",true);
+	var incomeIntervalDicObj=gridSelectColRender("","",{"type":"income_interval"},"code","name",true);
+	
 	//构造grid
     $("#creditScoreItemList4CreateGrid").jqGrid({
 			autowidth:true,
-			colNames:['<input type="checkbox" class="credit-score-create-selall-cbox">',"<span style='color:red;'>*</span>主表","子表","<span style='color:red;'>*</span>关联字段","<span style='color:red;'>*</span>分数计算表达式","<span style='color:red;'>*</span>分数"],
+			colNames:['<input type="checkbox" class="credit-score-create-selall-cbox">',"<span style='color:red;'>*</span>序号","<span style='color:red;'>*</span>运算符","<span style='color:red;'>*</span>刻度描述","<span style='color:red;'>*</span>分数"],
 			colModel :[
 			    {
 			    	name:'rule_sel_create',
 					index:'rule_sel_create',
 					align:'center',
-					width:"7%",
+					width:"5%",
 					sortable:false,
 			    	formatter:function(cellvalue, options, rowObject){
 						   debugger;
 						   return '<input type="checkbox" class="credit-score-create-sel-cbox">';
 						}
 			    },
-				{name:'main_table',
-					index:'main_table',
+			    {name:'sequence_num',
+					index:'sequence_num',
 					align:'center',
 					sortable:false,
 					editable:true,
-					width:"31%"
+					width:"15%"
 				},
-				{name:'child_table',
-					index:'child_table',
+				{name:'arithmetic',
+					index:'arithmetic',
 					align:'center',
 					sortable:false,
 					editable:true,
-					width:"31%"
+					width:"25%",
+					edittype:'select',
+					formatter:'select',
+					editoptions:{value:semantemeDicObj.jsonStr}
 				},
-				{name:'relevance_colum',
-					index:'relevance_colum',
+				{name:'dimension_value',
+					index:'dimension_value',
 					align:'center',
 					sortable:false,
 					editable:true,
-					width:"31%"
-				},
-				{name:'expression',
-					index:'expression',
-					align:'center',
-					sortable:false,
-					editable:true,
-					width:"31%"
+					width:"30%",
+					edittype:'select',
+					formatter:'select',
+					editoptions:{value:incomeIntervalDicObj.jsonStr}
 				},
 				{name:'score',
 					index:'score',
 					align:'center',
 					sortable:false,
 					editable:true,
-					width:"31%",
+					width:"25%"
 				}
 			],
 			cellEdit: true,
