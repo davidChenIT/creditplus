@@ -1,8 +1,8 @@
 $(function(){
 	//获取tab页传入的参数，并调用服务
 	debugger;
-	var paramsObj=$("div[name='firstTrialTab']").find("li[tabid='firstTrial']").data();
-	var loan_id=paramsObj.loan_id || "";
+	var paramsObj = $("div[name='firstTrialTab']").find("li[tabid='firstTrial']").data();
+	var loan_id = paramsObj.loan_id || "";
 	//查询详细信息，并赋值
 	var queryFirstTrialDetaiParmsStr=JSON.stringify({"loan_id":loan_id,"approve_content":"开始初审","apply_state":2});
 	var resultData = publicQueryInfoAjax("loanOrderService","getCreditFirstTrialDetailByLoanId",queryFirstTrialDetaiParmsStr,"firstTrial");
@@ -10,7 +10,7 @@ $(function(){
 		$("[name='firstTrialBtn']").show();
 	}
 	//查询用户紧急联系人
-	var user_id=paramsObj.user_id || "";
+	var user_id = paramsObj.user_id || "";
 	$(".show-img-span").attr("user-id",user_id);
 	var userInfoList=publicQueryInfoAjax("urgentContactorService","getListByUserId",JSON.stringify({"user_id":user_id}));
 	if(userInfoList){

@@ -272,10 +272,10 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select style="width: 48%;" trigger="city_cascade_registered_place" textField="province" valueField="province"  name="registered_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
+							<select style="width: 48%;" is_cache="true" trigger="city_cascade_registered_place" textField="province" valueField="province"  name="registered_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
 								<option value="">请选择</option>
 							</select>
-							<select style="width: 48%;" id="city_cascade_registered_place" textField="city" valueField="city" name="registered_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
+							<select style="width: 48%;" is_cache="true" id="city_cascade_registered_place" textField="city" valueField="city" name="registered_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -291,10 +291,10 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select style="width: 48%;" trigger="city_cascade_mobile_place" textField="province" valueField="province"  name="mobile_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
+							<select style="width: 48%;" is_cache="true" trigger="city_cascade_mobile_place" textField="province" valueField="province"  name="mobile_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
 								<option value="">请选择</option>
 							</select>
-							<select style="width: 48%;" id="city_cascade_mobile_place" textField="city" valueField="city" name="mobile_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
+							<select style="width: 48%;" is_cache="true" id="city_cascade_mobile_place" textField="city" valueField="city" name="mobile_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -428,7 +428,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select id="city_cascade_current"  textField="city" valueField="city" name="current_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince">
+							<select id="city_cascade_current" is_cache="true"  textField="city" valueField="city" name="current_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -490,10 +490,10 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select style="width: 48%;" trigger="city_cascade_tel_place" textField="province" valueField="province"  name="work_tel_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
+							<select style="width: 48%;" is_cache="true" trigger="city_cascade_tel_place" textField="province" valueField="province"  name="work_tel_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
 								<option value="">请选择</option>
 							</select>
-							<select style="width: 48%;" id="city_cascade_tel_place" textField="city" valueField="city" name="work_tel_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
+							<select style="width: 48%;" is_cache="true" id="city_cascade_tel_place" textField="city" valueField="city" name="work_tel_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -537,7 +537,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<span name="work_pic"></span>
+							<span name="work_pic" class="show-img-span" img-type="3" user-id="" img-title="工作证明"></span>
 						</div>
 					</div>
 				</div>
@@ -827,7 +827,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<span name="certificate_pic"></span>
+							<span name="certificate_pic" class="show-img-span" img-type="8" user-id="" img-title="职业证书照片"></span>
 						</div>
 					</div>
 				</div>
@@ -965,7 +965,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<span name="degree_pic"></span>
+							<span name="degree_pic" class="show-img-span" img-type="4" user-id="" img-title="学历证书照片"></span>
 						</div>
 					</div>
 				</div>
@@ -979,7 +979,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-						    <span name="profession_img_v" img_path=""></span>
+						    <span name="profession_img_v" img_path="" width="50" validation="required"></span>
 						    <button class="upLoadBtn" type="button">上传图片</button>
 						</div>
 					</div>
@@ -1010,7 +1010,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<select name="profession_grade_v" widget="dropdown" is_cache="true" dictionary_type="highest_degree" validation="required">
+							<select name="grad_school_level_v" widget="dropdown" is_cache="true" dictionary_type="school_level" validation="required">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -1054,7 +1054,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<select name="highest_degree_v" widget="dropdown" is_cache="true" dictionary_type="school_level" validation="required">
+							<select name="highest_degree_v" widget="dropdown" is_cache="true" dictionary_type="highest_degree" validation="required">
 								<option value="">请选择</option>
 							</select>
 						</div>
