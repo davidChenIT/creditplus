@@ -1062,6 +1062,52 @@
 				</div>
 			</div>
 		</div>
+		<!-- 互联网授权 -->
+		<div class="row">
+			<h3>互联网授权</h3>
+           	<div class="credit-spacecontrol col-xs-12 col-sm-4">
+				<div class="row">
+					<label class="col-xs-12 col-sm-4">
+						<div class="credit-label">
+							淘宝授权
+						</div>
+					</label>
+					<div class="col-xs-12 col-sm-8">
+						<div class="credit-input label-red">
+							<span>未通过</span>
+						</div>
+					</div>
+				</div>
+			</div>
+           	<div class="credit-spacecontrol col-xs-12 col-sm-4">
+				<div class="row">
+					<label class="col-xs-12 col-sm-4">
+						<div class="credit-label">
+							微信号
+						</div>
+					</label>
+					<div class="col-xs-12 col-sm-8">
+						<div class="credit-input">
+							<span>未通过</span>
+						</div>
+					</div>
+				</div>
+			</div>
+           	<div class="credit-spacecontrol col-xs-12 col-sm-4">
+				<div class="row">
+					<label class="col-xs-12 col-sm-4">
+						<div class="credit-label">
+							QQ号
+						</div>
+					</label>
+					<div class="col-xs-12 col-sm-8">
+						<div class="credit-input">
+							<span>未通过</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>		
 		<!-- 授信与评级 -->
 		<div class="row">
 			<h3>授信与评级</h3>
@@ -1261,11 +1307,28 @@
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>	
+		<!-- 审核信息 -->
+		<div class="row" id="dealWithUserInfoDiv">
+			<h3>审核信息</h3>
+			<div class="credit-spacecontrol col-xs-12 col-sm-3">
+				<div class="row">
+					<label class="col-xs-12 col-sm-3">
+						<div class="credit-label label-red">
+							<span style="color:red;">*</span>处理意见
+						</div>
+					</label>
+					<div class="col-xs-12 col-sm-9">
+						<textarea name="approve_content" cols="145" validation="required"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>	
 		<!-- 按鈕区域 -->
 		<div class="credit-toolbar" style="margin-top: 5px;margin-bottom: 30px;">
 			<div style="display: inline-block;">
-				<button class="grid-toobar-btn" name="closeRankPoolBtn" onclick="removeTabItem('tenderTab','rankPoolDetail');" type="button">取消</button>
+				<button class="grid-toobar-btn" name="tenderNowBtn" type="button">立即发标</button>
+				<button class="grid-toobar-btn" name="stopBtn" type="button">婉拒</button>
 			</div>
 		</div>
 		<!-- grid区域开始 -->

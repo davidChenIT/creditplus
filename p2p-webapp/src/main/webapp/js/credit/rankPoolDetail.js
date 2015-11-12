@@ -33,7 +33,6 @@ $(function(){
 				$(userTemplateDiv).find("select[name=mobile_province]").attr("trigger", triggerKey);
 				$(userTemplateDiv).find("select[name=mobile_city]").attr("id", triggerKey);
 			}
-				
 			//渲染下拉框
 			selectRender(userDivIdx);
 		});
@@ -70,32 +69,49 @@ $(function(){
 		    }
 	});
 	
-	
-	
-	//提交初审按钮
-	$("[name='reviewBtn']").click(function(){
-		
-		
+	/**
+	 * 立即发标
+	 */
+	$("[name='tenderNowBtn']").click(function(){
+		updApplyState('7');
 	});
 	
-	$("[name='rejectBtn']").click(function(){
-//		debugger;
-//		var request_data={"loan_id":$("#review").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"驳回，用户身份证不正确","apply_state":2};
-//		var checkPass = true;
-//		if(checkPass){
-//			$("div[name='firstTrial']").find("input").each(function(i,input){
-//				var inputName=$(input).attr("name");
-//				var inputValue=$(input).val();
-//				request_data[inputName]=inputValue;
-//			});
-//			debugger;
-//			//提交
-//			publicSaveAjax("loanOrderService","creditReviewReject",JSON.stringify(request_data),"tenderTab","rankPoolDetail","[name='reviewSearchBtn']");
-//		}else{
-//			messageBox.createMessageDialog("提示","对不起，您有数据录入不正确，请检查并正确录入后再次提交！","","","warning");
-//			return false;
-//		}
-		
+	/**
+	 * 婉拒
+	 */
+	$("[name='stopBtn']").click(function(){
+		updApplyState('10');
 	});
+	
+	/**
+	 * 修改状态
+	 */
+	function updApplyState(apply_state){
+		//校验必填
+		var approve_content = $("#rankPoolDetail [name=approve_content]").val();
+		if(isEmptyString(approve_content))
+			messageBox.createMessageDialog("提示","处理意见不能为空！","","","warning");
+		else{
+			//参数
+			var request_data = {};
+			request_data.loan_id = loan_id;
+			request_data.apply_state = apply_state;
+			request_data.approve_content = approve_content;
+			//调用发标服务
+		    $.ajax({
+				url: serviceAddress,
+				datatype: 'json',
+				method:"post",
+				data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(request_data)},			
+				success: function(data){
+					removeTabItem("tenderTab","rankPoolDetail");
+					messageBox.createMessageDialog("提示", "操作成功！", "", "","warning");
+					$("[name=rankPollSeachBtn]").click();
+				},error:function(error){
+					messageBox.createMessageDialog("提示", error, "", "", "error");
+				}
+		    });
+		}
+	}
 	
 });

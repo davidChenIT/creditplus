@@ -213,4 +213,16 @@ $(function(){
     	
 		publicSaveAjax("creditScoreService","insertCreditScore",JSON.stringify(request_data),"creditScoreTab","creditScoreCreate","#searchCreditScoreListBtn");
     });    
+    
+    
+    /**
+	 * 清空省份下拉框onChange事件
+	 */
+	$("#creditScoreCreateForm").find("[trigger*=_cascade]").unbind('change');
+	/**
+	 * 省份下拉框onChange事件，级联城市数据
+	 */
+	$("#creditScoreCreateForm").find("[trigger*=_cascade]").change(function(e){
+		elementCascade(e.target, $(e.target).val());
+	});
 })

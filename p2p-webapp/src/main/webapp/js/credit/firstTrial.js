@@ -138,6 +138,6 @@ $(function(){
 	 * 省份下拉框onChange事件，级联城市数据
 	 */
 	$("[trigger*=city_cascade_]").change(function(e){
-		cascadeCity(e.target, $(e.target).val());
+		elementCascade(e.target, $(e.target).val());
 	});
 });
