@@ -97,8 +97,9 @@ $(function(){
 			 onPaging:function(pgButton){
 				 debugger;
 				 var dictName = $("input[name='dictName']").val();
+				 var type = $("input[name='type']").val();
 				 var  grid=$(this).jqGrid();
-				 gridOnPaging(pgButton,grid,"dictListPager",{"name":dictName});
+				 gridOnPaging(pgButton,grid,"dictListPager",{"name":dictName,"type":type});
 			 }	     
 	});
     
@@ -202,12 +203,16 @@ $(function(){
     //输入用户名称，点击按钮进行过滤
     $("#searchDictListBtn").click(function(){
         var dictName = $("input[name='dictName']").val();
+        var type = $("input[name='type']").val();
     	var parentId = $("#parentArea").find("a:last").attr("href").replace("#","");
     	parentId = parentId==""?0:parentId;
         var request_data={};
         request_data.parentId = parentId;
         if(dictName){
         	request_data.name=dictName;
+        }
+        if(type){
+        	request_data.type=type;
         }
         
         $("#dictListGrid").jqGrid('setGridParam',{  
