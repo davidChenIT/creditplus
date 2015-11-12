@@ -31,7 +31,7 @@ $(function(){
 					align:'center',
 					sortable:false,
 					editable:true,
-					width:"15%"
+					width:"15%"  
 				},
 				{name:'arithmetic',
 					index:'arithmetic',
@@ -185,20 +185,20 @@ $(function(){
     		var isTrue=true;
     		for(var i=0;i<grid_data.length;i++){
     			var rowObj=grid_data[i];
-    			if(!rowObj.main_table){
-    				messageBox.createMessageDialog("提示","信用评分项中的第"+(i+1)+"行的“主表”不能为空！","","","warning");
+    			if(!rowObj.sequence_num){
+    				messageBox.createMessageDialog("提示","刻度配置信息中的第"+(i+1)+"行的“序号”不能为空！","","","warning");
     				isTrue=false;
     				break;    
-    			}else if(!rowObj.relevance_colum){
-    				messageBox.createMessageDialog("提示","信用评分项中的第"+(i+1)+"行的“关联字段”不能为空！","","","warning");
+    			}else if(!rowObj.arithmetic){      
+    				messageBox.createMessageDialog("提示","刻度配置信息中的第"+(i+1)+"行的“运算符”不能为空！","","","warning");
     				isTrue=false;
     				break;
-    			}else if(!rowObj.expression){
-    				messageBox.createMessageDialog("提示","信用评分项中的第"+(i+1)+"行的“分数计算表达式”不能为空！","","","warning");
+    			}else if(!rowObj.dimension_value){
+    				messageBox.createMessageDialog("提示","刻度配置信息中的第"+(i+1)+"行的“刻度描述”不能为空！","","","warning");
     				isTrue=false;
     				break;
     			}else if(!rowObj.score){
-    				messageBox.createMessageDialog("提示","信用评分项中的第"+(i+1)+"行的“分数”不能为空！","","","warning");
+    				messageBox.createMessageDialog("提示","刻度配置信息中的第"+(i+1)+"行的“分数”不能为空！","","","warning");
     				isTrue=false;
     				break;
     			}
@@ -225,4 +225,21 @@ $(function(){
 	$("#creditScoreCreateForm").find("[trigger*=_cascade]").change(function(e){
 		elementCascade(e.target, $(e.target).val());
 	});
+	
+	
+	//切换选择维度列值，对应将grid中选择过的刻度描述值清空
+	$("#dimension_column_4create_cascade").change(function(){
+		debugger;
+		var thisValue=$(this).val();
+		var grid=$("#creditScoreItemList4CreateGrid");
+		//获取grid的所有行的id
+		var ids =  grid.jqGrid('getDataIDs');
+		if(ids && ids.length>0){
+			for(var i=0;i<ids.length;i++){
+				grid.jqGrid('setRowData', ids[i], { dimension_value:""});
+			}
+		}
+	});
+	
+	
 })
