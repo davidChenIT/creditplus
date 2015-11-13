@@ -495,8 +495,11 @@ function validateRequire(elemName,tip,parantsDivId){
 	}else{
 		elementDom=$("[name='"+ elemName +"']");
 	}
-	var elemVal = elementDom.val();
-    if(!elemVal || !$.trim(elemVal)){
+	var elemVal = $(elementDom).val();
+	//取span的值
+	var domType = $(elementDom).get(0).tagName;
+	if(domType == "SPAN") elemVal = $(elementDom).attr("code");
+    if(!isEmptyString(elemVal)){
 		  var elemNameTipLength=$("span[name='" + elemName + "Tip']").length;
 		  if(elemNameTipLength==0){
 			  elementDom.parent().after("<span name='" + elemName + "Tip' style='color:red;'>" + tip + "</span>");
