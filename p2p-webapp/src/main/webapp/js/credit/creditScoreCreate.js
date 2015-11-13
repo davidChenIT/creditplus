@@ -8,7 +8,7 @@ $(function(){
 	
 	//grid中的数据字典
 	var semantemeDicObj=gridSelectColRender("","",{"type":"semanteme_dic"},"code","name",true);
-	var incomeIntervalDicObj=gridSelectColRender("","",{"type":"income_interval"},"code","name",true);
+	var incomeIntervalDicObj={"jsonArray":[],"jsonStr":""};
 	
 	//构造grid
     $("#creditScoreItemList4CreateGrid").jqGrid({
@@ -230,7 +230,8 @@ $(function(){
 	//切换选择维度列值，对应将grid中选择过的刻度描述值清空
 	$("#dimension_column_4create_cascade").change(function(){
 		debugger;
-		var thisValue=$(this).val();
+		var parent_code=$(this).val();
+		var parent_id=$(this).find("option:selected").attr("item-val");
 		var grid=$("#creditScoreItemList4CreateGrid");
 		//获取grid的所有行的id
 		var ids =  grid.jqGrid('getDataIDs');
@@ -239,6 +240,12 @@ $(function(){
 				grid.jqGrid('setRowData', ids[i], { dimension_value:""});
 			}
 		}
+		if(parent_id && parent_code){
+			incomeIntervalDicObj=gridSelectColRender("","",{"type":"dimension_value","parent_type":"dimension_column","parent_code":parent_code,"parent_id":parent_id},"code","name",true);
+		}else{
+			incomeIntervalDicObj={"jsonArray":[],"jsonStr":""};
+		}
+		
 	});
 	
 	

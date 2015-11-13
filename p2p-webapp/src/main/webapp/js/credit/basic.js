@@ -495,8 +495,11 @@ function validateRequire(elemName,tip,parantsDivId){
 	}else{
 		elementDom=$("[name='"+ elemName +"']");
 	}
-	var elemVal = elementDom.val();
-    if(!elemVal || !$.trim(elemVal)){
+	var elemVal = $(elementDom).val();
+	//取span的值
+	var domType = $(elementDom).get(0).tagName;
+	if(domType == "SPAN") elemVal = $(elementDom).attr("code");
+    if(!isEmptyString(elemVal)){
 		  var elemNameTipLength=$("span[name='" + elemName + "Tip']").length;
 		  if(elemNameTipLength==0){
 			  elementDom.parent().after("<span name='" + elemName + "Tip' style='color:red;'>" + tip + "</span>");
@@ -953,6 +956,9 @@ function gridSelectColRender(serviceModuleName,serviceMethodName,requestData,val
 	if(requestData && requestData.parent_code){
 		cacheKey+="_"+requestData.parent_code;
 	}
+	if(requestData && requestData.parent_id){
+		cacheKey+="_"+requestData.parent_id;
+	}
 	resltObj.jsonArray=localStorage[cacheKey]?JSON.parse(localStorage[cacheKey]):[];
 	resltObj.jsonStr="";
 	if((is_cache || is_cache=="true") && resltObj.jsonArray && resltObj.jsonArray.length>0){
@@ -1030,6 +1036,7 @@ function elementCascade(e, value){
 	var params_key = $(triggerDom).attr("params_key") || "type";
 	var dictionary_type=$(triggerDom).attr("dictionary_type");
 	var parent_type=$(triggerDom).attr("parent_type");
+	var parent_id=$(e).find("option:selected").attr("item-val");
 	var code=$(triggerDom).attr("code");
 	var paramsObj = {};
 	//参数
@@ -1038,9 +1045,10 @@ function elementCascade(e, value){
 		paramsObj.type=dictionary_type;
 	}
 	paramsObj.parent_type=parent_type || "";
+	paramsObj.parent_id=parent_id || "";
 	paramsObj.parent_code=value;
 	//获取缓存里面的数据
-	var cacheKey="cascade_city"+"_"+moduleName+"_"+methodName+"_"+value+"_"+(parent_type || "")+"_"+(dictionary_type || "");
+	var cacheKey="cascade_city"+"_"+moduleName+"_"+methodName+"_"+value+"_"+parent_type+"_"+(dictionary_type || "")+"_"+parent_id;
 	var elementDataArray=localStorage[cacheKey]?JSON.parse(localStorage[cacheKey]):[];
 	if(elementDataArray && elementDataArray.length>0){
 		//清空下拉框
@@ -1089,14 +1097,14 @@ function _setOptions(dom, data, textField, valueField, code){
 	if(data && data.length>0){
 		for(var i=0;i<data.length;i++){
 			if(!isEmptyString(code) && code == data[i][valueField]){
-				$(dom).append('<option value="'+data[i][valueField]+'"  selected="selected">'+data[i][textField]+'</option>');
+				$(dom).append('<option item-val="'+data[i].dictId+'" value="'+data[i][valueField]+'"  selected="selected">'+data[i][textField]+'</option>');
 				// 下拉框（如果是省份，则触发change事件，级联城市）
 				var triggerKey = $(dom).attr('trigger');
 				if(triggerKey != null && triggerKey.indexOf("city_cascade_") != -1){
 					elementCascade(dom, code);
 				}
 			}else{
-				$(dom).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
+				$(dom).append('<option item-val="'+data[i].dictId+'" value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
 			}
 		}
 	}
