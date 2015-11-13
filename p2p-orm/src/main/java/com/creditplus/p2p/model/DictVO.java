@@ -22,7 +22,16 @@ public class DictVO  extends BaseVO {
 	private String parent_type;
 	
 	private String parent_code;
+	private String parent_id;
 	
+	public String getParent_id() {
+		return parent_id;
+	}
+
+	public void setParent_id(String parent_id) {
+		this.parent_id = parent_id;
+	}
+
 	public String getParent_type() {
 		return parent_type;
 	}

@@ -14,6 +14,7 @@
         <result column="state" property="state"/>
         <result column="order_number" property="orderNumber"/>
         <result column="parent_id" property="parentId"/>
+        <result column="parent_id" property="parent_id"/>
         <result column="remark"   property="remark"/>        
         <result column="created_by" property="created_by"/>          
         <result column="created_date" property="created_date"/>          
@@ -58,6 +59,9 @@
      	select * from p2p.dict_t where state=1 and type=#{type} 
      	<if test="code != null">
      		and code=#{code}
+     	</if>
+     	<if test="parent_id != null">
+     		and parent_id=#{parent_id}
      	</if>
      	<if test="(parent_code != null) and (parent_type != null)">
      		and parent_id=(select dict_id from dict_t where code=#{parent_code} and type=#{parent_type} limit 1)
