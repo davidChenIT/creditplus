@@ -5,7 +5,7 @@
 
 <mapper namespace="com.creditplus.p2p.dao.LoanOrderDao">
 
-  	<!-- pic_type 1 身份证正面 2 身份证背面 3 工牌照片 4 学历证书 5 芝麻信用   6 工资单 7 银行流水 8 职业证书 9 住址证明材料 -->
+  	<!-- pic_type 1 身份证正面 2 身份证背面 3 工牌照片 4 学历证书 5 芝麻信用   6 工资单 7 银行流水 8 职业证书 9 住址证明材料  11 证书网上抓图-->
 	<select id="getCreditReviewDetailByLoanId" parameterType="Integer" resultType="java.util.Map">
 		select 		
 		     t.user_id,
@@ -60,6 +60,7 @@
 			c.mobile_name_v,
 			c.mobile_online_time_v,
 			c.profession_code,
+			c.profession_img_v,
 			c.degree_name_v,
 			c.school_name_v,
 			c.highest_degree_v,
@@ -149,6 +150,7 @@
 			c.mobile_name_v,
 			c.mobile_online_time_v,
 			c.profession_code,
+			c.profession_img_v,
 			c.degree_name_v,
 			c.school_name_v,
 			c.highest_degree_v,
@@ -238,6 +240,7 @@
 			c.mobile_name_v,
 			c.mobile_online_time_v,
 			c.profession_code,
+			c.profession_img_v,
 			c.degree_name_v,
 			c.school_name_v,
 			c.highest_degree_v,

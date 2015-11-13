@@ -9,4 +9,7 @@ public interface CommonInfoService {
 	Map getPhoneInfoById(String phoneNum);
 	
 	String getPictureSrcByUserIdAndType(Map paramsMap);
+	
+	void savePic(Map paramMap);
+	
 }

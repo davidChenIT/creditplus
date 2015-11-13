@@ -12,4 +12,8 @@ public interface CommonInfoDao {
 	List executeDonamicSQL(Map sqlMap);
 	
 	Map getPictureSrcByUserIdAndType(Map paramsMap);
+	
+	void savePic(Map paramMap);
+	
+	void deletePic(Map paramMap);
 }

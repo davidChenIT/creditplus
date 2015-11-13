@@ -3,6 +3,8 @@ package com.creditplus.p2p.service.impl;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.creditplus.p2p.common.util.CheckParamUtil;
 import com.creditplus.p2p.common.util.IDCardUtil;
 import com.creditplus.p2p.dao.CommonInfoDao;
 import com.creditplus.p2p.service.CommonInfoService;
@@ -16,9 +18,7 @@ public class CommonInfoServiceImpl implements CommonInfoService{
 		Map cardMap=IDCardUtil.getCardInfo(cardNo);
 		System.out.println("cardMap:"+cardMap);
 		if("1".equals(cardMap.get("id_state")+"")){
-			System.out.println("========true=======");
 			String id_first_6num=(String) cardMap.get("id_6");
-			System.out.println(id_first_6num);
 			Map dbCardInfo=commonInfoDao.getCardInfoById(id_first_6num);
 			System.out.println("dbCardInfo:"+dbCardInfo);
 			if(dbCardInfo!=null && dbCardInfo.size()>0)
@@ -57,5 +57,13 @@ public class CommonInfoServiceImpl implements CommonInfoService{
 			return "";
 		}
 	}
+
+
+	public void savePic(Map paramMap) {
+		//CheckParamUtil.checkKey(paramMap, "user_id","type","url");
+		commonInfoDao.deletePic(paramMap);
+		commonInfoDao.savePic(paramMap);
+	}
+
 
 }

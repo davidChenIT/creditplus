@@ -36,44 +36,6 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		return getCreditScoreMap(user_id,loan_id);
 	}
 	
-/*	private Map getCreditScore(Integer user_id){ 
-		List<Map> creditScores=creditScoreDao.getCreditScoreList(new HashMap());
-		Map<String,Integer> score1=new HashMap<String,Integer>();
-		Map<String,Integer> score2=new HashMap<String,Integer>();
-		if(creditScores!=null && creditScores.size()>0){
-			Integer total1=0,total2=0;
-			for(Map creditMap:creditScores){
-				Integer score_id=(Integer) creditMap.get("score_id");
-				Integer model_name=(Integer) creditMap.get("model_name");
-				String dimension_name=(String) creditMap.get("dimension_name");
-				List<Map> itemList=creditScoreDao.getCreditItemById(score_id);
-				if(itemList!=null && itemList.size()>0){
-					for(Map itemMap:itemList){
-						Integer score=getItemResultSet(itemMap, user_id);
-						if(model_name==1){
-							score1.put(dimension_name, score);
-							total1+=score;
-						}
-						if(model_name==2){
-							score2.put(dimension_name, score);
-							total2+=score;
-						}
-						if(score>0){
-							break;
-						}
-					}
-				}
-			}
-			score1.put("total", total1);
-			score2.put("total", total2);
-			
-		}
-		
-		Map scoreMap=new HashMap();
-		scoreMap.put("score1", score1);
-		scoreMap.put("score2", score2);
-		return scoreMap;
-	}*/
 	
 	private Map getCreditScoreMap(Integer user_id,Integer loan_id){
 		List<Map> creditScores=creditScoreDao.getCreditScoreList(new HashMap());
@@ -87,6 +49,8 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 				String fact_column=(String) creditMap.get("fact_column");
 				Integer model_name= (Integer) creditMap.get("model_name");
 				String dimension_name=(String) creditMap.get("dimension_name");
+				String proportion=(String) creditMap.get("proportion");
+				Integer baifenbi=Integer.valueOf(proportion.substring(0, proportion.indexOf("%")).trim());
 				Integer score_id=(Integer) creditMap.get("score_id");
 				List<Map> itemsList=creditScoreDao.getCreditItemById(score_id);
 				if(itemsList!=null && itemsList.size()>0){
@@ -112,6 +76,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 						StringBuilder expression=new StringBuilder(fact_column).append(arithmetic).append("'").append(dimension_value).append("'");
 						boolean flag=CommonUtil.exeExpression(expression.toString(), valueMap);
 						if(flag){
+							score=score*baifenbi/100;
 							if(model_name==1){
 								score1.put(dimension_name, score);
 								total1+=score;
@@ -269,6 +234,13 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 	public Map getCreditScoreById(Integer score_id) {
 		return creditScoreDao.getCreditScoreById(score_id);
 	}
-
+	
+	public static void main(String[] args) {
+		Integer i=40;
+		String proportion="12%";
+		Integer baifenbi=Integer.valueOf(proportion.substring(0, proportion.indexOf("%")).trim());
+		System.out.println(i*baifenbi/100);
+	}
+	
 
 }

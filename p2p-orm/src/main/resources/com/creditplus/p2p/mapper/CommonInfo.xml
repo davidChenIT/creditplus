@@ -21,4 +21,12 @@
 	<select id="getPictureSrcByUserIdAndType" parameterType="String" resultType="java.util.Map">
 		select url as imgPath from attach_pic where user_id=#{userId} and type=#{imgType}
 	</select>
+	
+	<insert id="savePic" parameterType="java.util.Map">
+		insert into attach_pic(pic_id,user_id,type,url,current,modifytime)values(#{pic_id},#{user_id},#{type},#{url},#{current},sysdate())
+	</insert>
+	
+	<delete id="deletePic" parameterType="java.util.Map">
+		delete from attach_pic  where user_id = #{user_id} and type = #{type}
+	</delete>
 </mapper>

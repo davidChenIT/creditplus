@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.creditplus.p2p.common.annotation.ParamName;
@@ -138,6 +139,21 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE,Constant.USER_ID);
 		Integer user_id=Integer.valueOf(paramMap.get(Constant.USER_ID)+"");
 		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
+		//增加信用维度工作可验证参数
+		String company_name_v=(String) paramMap.get("company_name_v");
+		String profession_img_v=(String) paramMap.get("profession_img_v");
+		Integer work_verify=0;
+		if(StringUtils.isNotEmpty(company_name_v))
+			work_verify=1;
+		paramMap.put("work_verify", work_verify);
+		//保存上传的证书图片
+		if(StringUtils.isNotEmpty(profession_img_v)){
+			paramMap.put("type", 11);
+			paramMap.put("url", profession_img_v);
+			commonInfoService.savePic(paramMap);
+		}
+		
+		
 		updateCustomerInfo(paramMap, user_id);
 		boolean checkFlag=cheatInterceptService.intercept(user_id, loan_id);
 		if(checkFlag)
