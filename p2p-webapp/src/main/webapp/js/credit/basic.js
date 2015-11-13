@@ -187,6 +187,15 @@ $(function(){
 	$("body").on("mouseup",".drag",function(e){
 		_move=false; 
 	});
+	
+	$("#credit_MainPanel").on("click",".upLoadBtn",function(){
+		debugger;
+		var uploadElement=$(this).siblings("span:first").attr("name");
+		 var img_path=$(this).siblings("span:first").attr("img_path");
+		 var img_name=$(this).siblings("span:first").text();
+		 //弹出文件选择框
+		 uploadDialog.createUploadDialog(uploadElement,img_path,img_name);
+	});
 })
 
 //构造左侧菜单的函数
@@ -632,23 +641,36 @@ var showImgDialog={
 
 //上传文件弹出框
 var uploadDialog={
+		img_path:"",
+		img_name:"",
+		uploadElement:"",
 		//创建弹出框
-	    createUploadDialog:function(fileAddressElement){
+	    createUploadDialog:function(uploadElement,img_path,img_name){
 	    	$("#uploadDialogDiv").remove();
 	    	uploadDialog.removeMaskDiv();
 	    	uploadDialog.createMaskDiv();
-			var temp="<div style=\"border:2px solid #37B6D1;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
-					+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">图片上传</div>"
+    		uploadDialog.uploadElement=uploadElement || "";
+    		uploadDialog.img_path=img_path || "";
+    		uploadDialog.img_name=img_name || "";
+    		var tdHtml="";
+    		if(uploadDialog.img_path){
+    			tdHtml="<img style='max-width: 430px;max-height:280px;' src='"+uploadDialog.img_path+"' />";
+    		}else{
+    			tdHtml="点击上传按钮选择图片！";
+    		}
+			var temp="<form name='uploadImgForm' method='post' enctype='multipart/form-data' target='hidden_frame'><div style=\"border:2px solid #37B6D1;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
+					+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">图片上传(类型：jpg、png、bmp)</div>"
 					+"<table width=\"500px\" height=\"300px\" cellspacing=\"0\" border=\"0\"><tr>" 
-					+"<td style=\" padding:0px 0px 0px 20px;align:center;font-size: 20px;\" align=\"center\">点击添加按钮选择图片！</td>"
+					+"<td  style=\" padding:0px 0px 0px 20px;align:center;font-size: 20px;\" align=\"center\">"+tdHtml+"</td>"
 					+"</tr></table>"
-					+"<div style=\"display:none;\"><input type=\"file\"/> </div>"
-					+"<div style=\"text-align:center; padding:0px 0px 20px;background-color: #fff;\"><input type='button'  class=\"grid-toobar-btn\" value='添加'id=\"addBtn\"  onclick=\"uploadDialog.addFunc();\">"
+					+"<div style=\"display:none;\"><input id='imgFile' name='imgFile' type=\"file\"/> </div>"
+					+"<div style=\"text-align:center; padding:0px 0px 20px;background-color: #fff;\">" 
+//					+"<input type='button'  class=\"grid-toobar-btn\" value='添加'id=\"addBtn\"  onclick=\"uploadDialog.addFunc();\">"
 					+"&nbsp;&nbsp;&nbsp;<input type='button' class=\"grid-toobar-btn\" value='上传'  id=\"uploadBtn\"   onClick='uploadDialog.uploadFunc();'>"
-				    +"&nbsp;&nbsp;&nbsp;<input type='button' class=\"grid-toobar-btn\" value='取消'  id=\"closeBtn\"   onClick='uploadDialog.cancelFunc();'>"
-				    +"</div></div>";
+				    +"&nbsp;&nbsp;&nbsp;<input type='button' class=\"grid-toobar-btn\" value='关闭'  id=\"closeBtn\"   onClick='uploadDialog.cancelFunc();'>"
+				    +"</div></div><iframe name='hidden_frame' id='hidden_frame' style='display:none;'></iframe> </form>";
 			
-			//创建弹出层
+			//创建弹出层style='display:none'
 			$("body").append("<div id='uploadDialogDiv' class='drag'></div>");
 			var uploadDialogDiv=$("#uploadDialogDiv");
 			uploadDialogDiv.attr("style","position:absolute;width: 500px;height: 300px;overflow:visible;z-index:1993");
@@ -656,19 +678,42 @@ var uploadDialog={
 			var left=($(window).width()-uploadDialogDiv.width())/2+"px";
 			var top=(($(window).height()-uploadDialogDiv.height())/2+document.body.scrollTop)+"px";
 			uploadDialogDiv.css({'left':left,'top':top});
+			
+			$("#uploadDialogDiv").find("input[type='file']").change(function(){
+				debugger;
+				var imgUrl=$(this).val();
+				var imgSuffix=imgUrl.substring(imgUrl.lastIndexOf(".")+1);
+				if(imgSuffix && imgSuffix.toLowerCase()!="jpg" && imgSuffix.toLowerCase()!="png" && imgSuffix.toLowerCase()!="bmp"){
+					$("#uploadDialogDiv").find("td").html("<span style='color:red;'>只能上传jpg、png、bmp类型的图片！</span>");
+					return false;
+				}
+				loadingBox.showLoading();
+				var uploadImgForm=$("#uploadDialogDiv").find("form[name='uploadImgForm']");
+				uploadImgForm[0].action="http://"+window.location.host+"/p2p-webapp/UploadPicture";
+				uploadImgForm.submit();
+			});
 	    },
 	    //取消
 	    cancelFunc:function(){
 	    	$("#uploadDialogDiv").remove();
 	    	uploadDialog.removeMaskDiv();
 	    },
-	    //添加图片
-	    addFunc:function(){
-	    	$("#uploadDialogDiv").find("input[type='file']").click();
+	    //上传成功的回调函数
+	    uploadCallBack:function(data){
+	    	debugger;
+	    	if(data){
+	    		var resultObj=JSON.parse(data);
+	    		$("#uploadDialogDiv").find("td").html("<img style='max-width: 430px;max-height:280px;' src='"+resultObj.img_path+"' />");
+	    		uploadDialog.img_path=resultObj.img_path;
+	    		uploadDialog.img_name=resultObj.img_name;
+	    		$("span[name='"+uploadDialog.uploadElement+"']").text(resultObj.img_name);
+	    		$("span[name='"+uploadDialog.uploadElement+"']").attr("img_path",resultObj.img_path);
+	    	}
+	    	loadingBox.hideLoading();
 	    },
 	    //上传图片
         uploadFunc:function(){
-        	alert("上传图片");
+        	$("#uploadDialogDiv").find("input[type='file']").click();
 	    },
 	    //创建遮罩层
 	    createMaskDiv:function(){
@@ -969,31 +1014,40 @@ function gridOnPaging(pgButton,grid,pagerDiv,request_data){
 
 
 /**
- * 城市级联数据服务请求
- * @param e 省下拉框
- * @param value 下拉框值
+ * 级联数据服务请求
+ * @param e 促发拉框
+ * @param value 促发下拉框值
  */
-function cascadeCity(e, value){
+function elementCascade(e, value){
+	debugger;
 	var trigger = $(e).attr("trigger");
 	//city dom
-	var cityDrop = $("#"+trigger);
-	var moduleName = $(cityDrop).attr("serviceModule");
-	var methodName = $(cityDrop).attr("serviceMethod");
-	var valueField = $(cityDrop).attr("valueField");
-	var textField = $(cityDrop).attr("textField");
-	var code=$(cityDrop).attr("code");
+	var triggerDom = $("#"+trigger);
+	var moduleName = $(triggerDom).attr("serviceModule") || "dictService";
+	var methodName = $(triggerDom).attr("serviceMethod") || "getDictItems";
+	var valueField = $(triggerDom).attr("valueField") || "code";
+	var textField = $(triggerDom).attr("textField") || "name";
+	var params_key = $(triggerDom).attr("params_key") || "type";
+	var dictionary_type=$(triggerDom).attr("dictionary_type");
+	var parent_type=$(triggerDom).attr("parent_type");
+	var code=$(triggerDom).attr("code");
 	var paramsObj = {};
 	//参数
-	paramsObj.type = value;
+	paramsObj[params_key] = value;
+	if(dictionary_type){
+		paramsObj.type=dictionary_type;
+	}
+	paramsObj.parent_type=parent_type || "";
+	paramsObj.parent_code=value;
 	//获取缓存里面的数据
-	var cacheKey="cascade_city"+"_"+moduleName+"_"+methodName+"_"+value;
-	var cityDataArray=localStorage[cacheKey]?JSON.parse(localStorage[cacheKey]):[];
-	if(cityDataArray && cityDataArray.length>0){
+	var cacheKey="cascade_city"+"_"+moduleName+"_"+methodName+"_"+value+"_"+(parent_type || "")+"_"+(dictionary_type || "");
+	var elementDataArray=localStorage[cacheKey]?JSON.parse(localStorage[cacheKey]):[];
+	if(elementDataArray && elementDataArray.length>0){
 		//清空下拉框
-		$(cityDrop).empty();
-		$(cityDrop).append('<option value="">请选择</option>');
+		$(triggerDom).empty();
+		$(triggerDom).append('<option value="">请选择</option>');
 		//赋值
-		_setOptions(cityDrop, cityDataArray, textField, valueField, code);
+		_setOptions(triggerDom, elementDataArray, textField, valueField, code);
 	}else{
 		//调用数据字典服务
 		$.ajax({ 
@@ -1006,11 +1060,11 @@ function cascadeCity(e, value){
 			},
 			success: function(data){
 				//清空下拉框
-				$(cityDrop).empty();
-				$(cityDrop).append('<option value="">请选择</option>');
+				$(triggerDom).empty();
+				$(triggerDom).append('<option value="">请选择</option>');
 				//赋值
 				if(data && data.length>0){
-					_setOptions(cityDrop, data, textField, valueField, code)
+					_setOptions(triggerDom, data, textField, valueField, code)
 				}
 				//加入缓存
 				localStorage[cacheKey]=JSON.stringify(data);
@@ -1039,7 +1093,7 @@ function _setOptions(dom, data, textField, valueField, code){
 				// 下拉框（如果是省份，则触发change事件，级联城市）
 				var triggerKey = $(dom).attr('trigger');
 				if(triggerKey != null && triggerKey.indexOf("city_cascade_") != -1){
-					cascadeCity(dom, code);
+					elementCascade(dom, code);
 				}
 			}else{
 				$(dom).append('<option value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');

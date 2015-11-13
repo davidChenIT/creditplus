@@ -5,8 +5,9 @@ $(function(){
 	var score_id=paramsObj.score_id || "";
 	//查询详细信息，并赋值
 	publicQueryInfoAjax("creditScoreService","getCreditScoreById",JSON.stringify({"score_id":score_id}),"creditScoreUpdateForm");
-	
-	
+	//grid中的数据字典
+	var semantemeDicObj=gridSelectColRender("","",{"type":"semanteme_dic"},"code","name",true);
+	var incomeIntervalDicObj=gridSelectColRender("","",{"type":"income_interval"},"code","name",true);
 	//构造grid
     $("#creditScoreItemList4UpdateGrid").jqGrid({
 	    	url:serviceAddress,
@@ -14,53 +15,52 @@ $(function(){
 			postData:{"module":"creditScoreService","method":"getCreditItemById","request_data":JSON.stringify({"score_id":score_id})},
 			mtype: 'POST',
 			autowidth:true,
-			colNames:['<input type="checkbox" class="credit-score-update-selall-cbox">',"<span style='color:red;'>*</span>主表","子表","<span style='color:red;'>*</span>关联字段","<span style='color:red;'>*</span>分数计算表达式","<span style='color:red;'>*</span>分数"],
+			colNames:['<input type="checkbox" class="credit-score-update-selall-cbox">',"<span style='color:red;'>*</span>序号","<span style='color:red;'>*</span>运算符","<span style='color:red;'>*</span>刻度描述","<span style='color:red;'>*</span>分数"],
 			colModel :[
 			    {
 			    	name:'rule_sel_create',
 					index:'rule_sel_create',
 					align:'center',
-					width:"7%",
+					width:"5%",
 					sortable:false,
 			    	formatter:function(cellvalue, options, rowObject){
 						   debugger;
 						   return '<input type="checkbox" class="credit-score-update-sel-cbox">';
 						}
 			    },
-				{name:'main_table',
-					index:'main_table',
+				{name:'sequence_num',
+					index:'sequence_num',
 					align:'center',
 					sortable:false,
 					editable:true,
-					width:"31%"
+					width:"15%"
 				},
-				{name:'child_table',
-					index:'child_table',
+				{name:'arithmetic',
+					index:'arithmetic',
 					align:'center',
 					sortable:false,
 					editable:true,
-					width:"31%"
+					width:"25%",
+					edittype:'select',
+					formatter:'select',
+					editoptions:{value:semantemeDicObj.jsonStr}
 				},
-				{name:'relevance_colum',
-					index:'relevance_colum',
+				{name:'dimension_value',
+					index:'dimension_value',
 					align:'center',
 					sortable:false,
 					editable:true,
-					width:"31%"
-				},
-				{name:'expression',
-					index:'expression',
-					align:'center',
-					sortable:false,
-					editable:true,
-					width:"31%"
+					width:"30%",
+					edittype:'select',
+					formatter:'select',
+					editoptions:{value:incomeIntervalDicObj.jsonStr}
 				},
 				{name:'score',
 					index:'score',
 					align:'center',
 					sortable:false,
 					editable:true,
-					width:"31%",
+					width:"25%"
 				}
 				
 			],
@@ -192,20 +192,20 @@ $(function(){
     		var isTrue=true;
     		for(var i=0;i<grid_data.length;i++){
     			var rowObj=grid_data[i];
-    			if(!rowObj.main_table){
-    				messageBox.createMessageDialog("提示","信用评分项中的第"+(i+1)+"行的“主表”不能为空！","","","warning");
+    			if(!rowObj.sequence_num){
+    				messageBox.createMessageDialog("提示","刻度配置信息中的第"+(i+1)+"行的“序号”不能为空！","","","warning");
     				isTrue=false;
     				break;    
-    			}else if(!rowObj.relevance_colum){
-    				messageBox.createMessageDialog("提示","信用评分项中的第"+(i+1)+"行的“关联字段”不能为空！","","","warning");
+    			}else if(!rowObj.arithmetic){      
+    				messageBox.createMessageDialog("提示","刻度配置信息中的第"+(i+1)+"行的“运算符”不能为空！","","","warning");
     				isTrue=false;
     				break;
-    			}else if(!rowObj.expression){
-    				messageBox.createMessageDialog("提示","信用评分项中的第"+(i+1)+"行的“分数计算表达式”不能为空！","","","warning");
+    			}else if(!rowObj.dimension_value){
+    				messageBox.createMessageDialog("提示","刻度配置信息中的第"+(i+1)+"行的“刻度描述”不能为空！","","","warning");
     				isTrue=false;
     				break;
     			}else if(!rowObj.score){
-    				messageBox.createMessageDialog("提示","信用评分项中的第"+(i+1)+"行的“分数”不能为空！","","","warning");
+    				messageBox.createMessageDialog("提示","刻度配置信息中的第"+(i+1)+"行的“分数”不能为空！","","","warning");
     				isTrue=false;
     				break;
     			}
@@ -219,5 +219,30 @@ $(function(){
     	publicSaveAjax("creditScoreService","updateCreditScore",JSON.stringify(request_data),"creditScoreTab","creditScoreUpdate","#searchCreditScoreListBtn");
     });   
     
+    
+    /**
+	 * 清空省份下拉框onChange事件
+	 */
+	$("#creditScoreUpdateForm").find("[trigger*=_cascade]").unbind('change');
+	/**
+	 * 省份下拉框onChange事件，级联城市数据
+	 */
+	$("#creditScoreUpdateForm").find("[trigger*=_cascade]").change(function(e){
+		elementCascade(e.target, $(e.target).val());
+	});
+	
+	//切换选择维度列值，对应将grid中选择过的刻度描述值清空
+	$("#dimension_column_4update_cascade").change(function(){
+		debugger;
+		var thisValue=$(this).val();
+		var grid=$("#creditScoreItemList4UpdateGrid");
+		//获取grid的所有行的id
+		var ids =  grid.jqGrid('getDataIDs');
+		if(ids && ids.length>0){
+			for(var i=0;i<ids.length;i++){
+				grid.jqGrid('setRowData', ids[i], { dimension_value:""});
+			}
+		}
+	});
 	
 })

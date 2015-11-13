@@ -1,8 +1,8 @@
 
 $(function(){
 	debugger;
-	var paramsObj=$("div[name='reviewTab']").find("li[tabid='review']").data();
-	var loan_id=paramsObj.loan_id || "";
+	var paramsObj = $("div[name='reviewTab']").find("li[tabid='review']").data();
+	var loan_id = paramsObj.loan_id || "";
 	//查询详细信息，并赋值
 	var queryReviewDetailParmsStr=JSON.stringify({"loan_id":loan_id,"approve_content":"开始复审","apply_state":4});
 	var resultData = publicQueryInfoAjax("loanOrderService","getCreditReviewDetailByLoanId",queryReviewDetailParmsStr,"review");
@@ -11,7 +11,8 @@ $(function(){
 		$("[name='rejectBtn']").show();
 	}
 	//查询用户紧急联系人
-	var user_id=paramsObj.user_id || "";
+	var user_id = paramsObj.user_id || "";
+	$(".show-img-span").attr("user-id",user_id);
 	var userInfoList=publicQueryInfoAjax("urgentContactorService","getListByUserId",JSON.stringify({"user_id":user_id}));
 	if(userInfoList){
 		$.each(userInfoList, function(i){//更新级联key
@@ -31,6 +32,12 @@ $(function(){
 			//移除静态html，循环输出动态列表元素
 			if(i == userInfoList.length-1) 
 				userTemplateDiv.remove();
+			else{
+				//triggerKey还原
+				$(userTemplateDiv).find("select[name=mobile_province]").attr("trigger", triggerKey);
+				$(userTemplateDiv).find("select[name=mobile_city]").attr("id", triggerKey);
+			}
+				
 			//渲染下拉框
 			selectRender(userDivIdx);
 		});
@@ -126,8 +133,10 @@ $(function(){
 				var inputValue=$(input).val();
 				//过滤空值
 				if(!isEmptyString(inputValue))
-					request_data[inputName]=inputValue;
+					request_data[inputName] = inputValue;
 			});
+			//上传控件值
+			request_data.profession_img_v = $("[name=profession_img_v]").attr('img_path');
 			debugger;
 			//提交
 			publicSaveAjax("loanOrderService","creditReview",JSON.stringify(request_data),"reviewTab","review","[name='reviewSearchBtn']");
@@ -166,7 +175,7 @@ $(function(){
 	 * 省份下拉框onChange事件，级联城市数据
 	 */
 	$("[trigger*=city_cascade_]").change(function(e){
-		cascadeCity(e.target, $(e.target).val());
+		elementCascade(e.target, $(e.target).val());
 	});
 	
 	

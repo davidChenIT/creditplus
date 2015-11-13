@@ -46,7 +46,11 @@
     	</if>                  
  		<if test="name !=null " >  
                  and lower(d.name) LIKE CONCAT(CONCAT('%', lower(#{name,jdbcType=VARCHAR})),'%')  
-    	</if>   
+    	</if> 
+    	
+    	<if test="type !=null " >  
+                 and lower(d.type) LIKE CONCAT(CONCAT('%', lower(#{type,jdbcType=VARCHAR})),'%')  
+    	</if>  
     	order by type,order_number     
      </select>
      

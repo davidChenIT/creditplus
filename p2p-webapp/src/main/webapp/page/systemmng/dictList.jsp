@@ -61,6 +61,20 @@
 													</div>
 												</div>
 											</div>
+											<div class="credit-spacecontrol col-xs-12 col-sm-4">
+												<div class="row">
+													<label class="col-xs-12 col-sm-3">
+														<div class="credit-label">
+															数据字典类型
+														</div>
+													</label>
+													<div class="col-xs-12 col-sm-9">
+														<div class="credit-input">
+															<input type="text" name="type" >
+														</div>
+													</div>
+												</div>
+											</div>
 											<div class="credit-toolbar" style="display: inline-block;">
 												<div >
 													<button class="grid-toobar-btn search-btn" id="searchDictListBtn" type="button">查询</button>

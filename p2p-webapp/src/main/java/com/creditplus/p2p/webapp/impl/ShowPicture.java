@@ -68,11 +68,14 @@ public class ShowPicture extends HttpServlet {
 		String imgType = request.getParameter("imgType");//图片类型
 		logger.info("imgType:"+imgType);
 		String userId = request.getParameter("userId");//图片类型
+		String imgPath = request.getParameter("imgPath");//图片地址
 		logger.info("userId:"+userId);
 		Map paramsMap=new HashMap();
 		paramsMap.put("imgType", imgType);
 		paramsMap.put("userId", userId);
-		String imgPath=commonInfoService.getPictureSrcByUserIdAndType(paramsMap);
+		if(imgPath==null || "".equals(imgPath)){
+			imgPath=commonInfoService.getPictureSrcByUserIdAndType(paramsMap);
+		}
 		logger.info("imgPath1:"+imgPath);
 		String imgSuffix = imgPath.substring(imgPath.lastIndexOf(".")+1);
 		if(null != imgPath && !"".equals(imgPath.trim())) {
