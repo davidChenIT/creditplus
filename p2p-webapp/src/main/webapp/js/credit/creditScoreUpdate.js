@@ -7,15 +7,49 @@ $(function(){
 	publicQueryInfoAjax("creditScoreService","getCreditScoreById",JSON.stringify({"score_id":score_id}),"creditScoreUpdateForm");
 	//grid中的数据字典
 	var semantemeDicObj=gridSelectColRender("","",{"type":"semanteme_dic"},"code","name",true);
-	var incomeIntervalDicObj=gridSelectColRender("","",{"type":"income_interval"},"code","name",true);
+	var incomeIntervalDicObj={"jsonArray":[],"jsonStr":""};
+	var  custom_dimension_value_element=function(value, options) {
+		debugger;
+		var rowData = $('#creditScoreItemList4UpdateGrid').jqGrid('getRowData', options.rowId);
+		var dimension_column=$("#dimension_column_4update_cascade").find("option:selected").val();
+		var el = document.createElement("select");
+		$(el).append('<option value="">请选择</option>');
+		if(dimension_column){
+			var parent_code=$("#dimension_column_4update_cascade").val();
+    		var parent_id=$("#dimension_column_4update_cascade").find("option:selected").attr("item-val");
+    		if(parent_id && parent_code){
+    			incomeIntervalDicObj=gridSelectColRender("","",{"type":"dimension_value","parent_type":"dimension_column","parent_code":parent_code,"parent_id":parent_id},"code","name",true);
+    		}else{
+    			incomeIntervalDicObj={"jsonArray":[],"jsonStr":""};
+    		}
+			if(incomeIntervalDicObj && incomeIntervalDicObj.jsonArray && incomeIntervalDicObj.jsonArray.length>0){
+				for(var i=0;i<incomeIntervalDicObj.jsonArray.length;i++){
+					$(el).append('<option value="'+incomeIntervalDicObj.jsonArray[i].code+'">'+incomeIntervalDicObj.jsonArray[i].name+'</option>');
+				}
+			}
+			$(el).val(rowData.dimension_value);
+		}else{
+			$('#creditScoreItemList4UpdateGrid').jqGrid('setRowData', options.rowId, { dimension_value: ""});
+		}
+		el.id=options.rowId+"_"+"dimension_value_text";
+		return el;
+	};
+	var custom_dimension_value_get_value=function (elem, operation) {
+		debugger;
+		var rowid = $(elem).parents("tr:first").attr("id");
+		$('#creditScoreItemList4UpdateGrid').jqGrid('setRowData', rowid, { dimension_value: elem.val()});
+		var optionText=elem.find('option:selected').text();
+		return optionText!="请选择"?optionText:"";
+	};
 	//构造grid
+	var isFirstLoadGrid=true;
     $("#creditScoreItemList4UpdateGrid").jqGrid({
 	    	url:serviceAddress,
 			datatype: 'json',
 			postData:{"module":"creditScoreService","method":"getCreditItemById","request_data":JSON.stringify({"score_id":score_id})},
 			mtype: 'POST',
 			autowidth:true,
-			colNames:['<input type="checkbox" class="credit-score-update-selall-cbox">',"<span style='color:red;'>*</span>序号","<span style='color:red;'>*</span>运算符","<span style='color:red;'>*</span>刻度描述","<span style='color:red;'>*</span>分数"],
+			colNames:['<input type="checkbox" class="credit-score-update-selall-cbox">',"<span style='color:red;'>*</span>序号","<span style='color:red;'>*</span>运算符","","<span style='color:red;'>*</span>刻度描述","<span style='color:red;'>*</span>分数"],
 			colModel :[
 			    {
 			    	name:'rule_sel_create',
@@ -49,11 +83,16 @@ $(function(){
 					index:'dimension_value',
 					align:'center',
 					sortable:false,
+					hidden:true
+				},
+				{name:'dimension_value_text',
+					index:'dimension_value_text',
+					align:'center',
+					sortable:false,
 					editable:true,
 					width:"30%",
-					edittype:'select',
-					formatter:'select',
-					editoptions:{value:incomeIntervalDicObj.jsonStr}
+					edittype:'custom', 
+					editoptions: {custom_element: custom_dimension_value_element, custom_value: custom_dimension_value_get_value}
 				},
 				{name:'score',
 					index:'score',
@@ -70,6 +109,27 @@ $(function(){
 			gridComplete:function(){
 		    	debugger;
 		    	$("div[name='creditScoreTab']").find(".credit-score-update-selall-cbox").parent("div").attr("class","");
+		    	if(isFirstLoadGrid){
+		    		var parent_code=$("#dimension_column_4update_cascade").val();
+		    		var parent_id=$("#dimension_column_4update_cascade").find("option:selected").attr("item-val");
+		    		var allRowDatas=$('#creditScoreItemList4UpdateGrid').jqGrid().getRowData();
+			    	if(allRowDatas && allRowDatas.length>0){
+			    		var dimensionValueDicObj=gridSelectColRender("","",{"type":"dimension_value","parent_type":"dimension_column","parent_code":parent_code,"parent_id":parent_id},"code","name",true);
+			    		var dimensionValueDicArray=dimensionValueDicObj.jsonArray;
+			    		for(var i=0;i<allRowDatas.length;i++){
+				    		var dimension_value=allRowDatas[i].dimension_value;
+				    		var dimension_value_text="";
+				    		for(var j=0;j<dimensionValueDicArray.length;j++){
+				    			if(dimension_value==dimensionValueDicArray[j].code){
+				    				dimension_value_text=dimensionValueDicArray[j].name;
+				    				break;
+				    			}
+				    		}
+				    		$('#creditScoreItemList4UpdateGrid').jqGrid('setRowData', (i+1), { dimension_value_text: dimension_value_text });
+				    	}
+			    	}
+		    	}
+		    	isFirstLoadGrid=false;
 		    }
 	});
 	
@@ -172,8 +232,7 @@ $(function(){
 			});	
 		}
 		if(!checkPass){return false;}
-		creditInfo.remark=$("#creditScoreUpdateForm").find("[name='remark']").text();
-		creditInfo.model_name=$("#creditScoreUpdateForm").find("[name='model_name']").attr("code");
+		creditInfo.remark=$("#creditScoreUpdateForm").find("[name='remark']").val();
 		creditInfo.score_id=score_id;
 		request_data.creditInfo=creditInfo;
         //校验grid的数据		
@@ -185,6 +244,17 @@ $(function(){
       	    var inputName=$(input).attr("name");
       		var inputVal=$(input).val();
       		rowData[inputName]=inputVal;
+      	  });
+      	  $("#creditScoreItemList4UpdateGrid").find("tr[id='"+rowids[i]+"']").find("select").each(function(i,select){
+      		debugger;
+      	    var selectName=$(select).attr("name");
+      		var selectVal=$(select).val();
+      		if(selectName=="dimension_value_text"){
+      			rowData[selectName]=$(select).find('option:selected').text();
+      			rowData.dimension_value=selectVal;
+      		}else{
+      			rowData[selectName]=selectVal;
+      		}
       	  });
       	  grid_data.push(rowData);
       	}    
@@ -234,15 +304,21 @@ $(function(){
 	//切换选择维度列值，对应将grid中选择过的刻度描述值清空
 	$("#dimension_column_4update_cascade").change(function(){
 		debugger;
-		var thisValue=$(this).val();
+//		var parent_code=$(this).val();
+//		var parent_id=$(this).find("option:selected").attr("item-val");
 		var grid=$("#creditScoreItemList4UpdateGrid");
 		//获取grid的所有行的id
 		var ids =  grid.jqGrid('getDataIDs');
 		if(ids && ids.length>0){
 			for(var i=0;i<ids.length;i++){
-				grid.jqGrid('setRowData', ids[i], { dimension_value:""});
+				grid.jqGrid('setRowData', ids[i], { dimension_value:"",dimension_value_text:""});
 			}
 		}
+//		if(parent_id && parent_code){
+//			incomeIntervalDicObj=gridSelectColRender("","",{"type":"dimension_value","parent_type":"dimension_column","parent_code":parent_code,"parent_id":parent_id},"code","name",true);
+//		}else{
+//			incomeIntervalDicObj={"jsonArray":[],"jsonStr":""};
+//		}
 	});
 	
 })

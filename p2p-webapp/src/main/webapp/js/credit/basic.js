@@ -500,6 +500,8 @@ function validateRequire(elemName,tip,parantsDivId){
 	var domType = $(elementDom).get(0).tagName;
 	if(domType == "SPAN") elemVal = $(elementDom).attr("code");
     if(!isEmptyString(elemVal)){
+    	  return elemVal;
+	}else{
 		  var elemNameTipLength=$("span[name='" + elemName + "Tip']").length;
 		  if(elemNameTipLength==0){
 			  elementDom.parent().after("<span name='" + elemName + "Tip' style='color:red;'>" + tip + "</span>");
@@ -508,9 +510,9 @@ function validateRequire(elemName,tip,parantsDivId){
 			  $("span[name='" + elemName + "Tip']").remove();
 			  $(this).unbind(e);
 		  });
-		  return;
+		  return "";
 	}
-    return elemVal;
+    
 }
 
 

@@ -10,10 +10,38 @@ $(function(){
 	var semantemeDicObj=gridSelectColRender("","",{"type":"semanteme_dic"},"code","name",true);
 	var incomeIntervalDicObj={"jsonArray":[],"jsonStr":""};
 	
+	
+	var  custom_dimension_value_element=function(value, options) {
+		debugger;
+		var rowData = $('#creditScoreItemList4CreateGrid').jqGrid('getRowData', options.rowId);
+		var dimension_column=$("#dimension_column_4create_cascade").find("option:selected").val();
+		var el = document.createElement("select");
+		$(el).append('<option value="">请选择</option>');
+		if(dimension_column){
+			if(incomeIntervalDicObj && incomeIntervalDicObj.jsonArray && incomeIntervalDicObj.jsonArray.length>0){
+				for(var i=0;i<incomeIntervalDicObj.jsonArray.length;i++){
+					$(el).append('<option value="'+incomeIntervalDicObj.jsonArray[i].code+'">'+incomeIntervalDicObj.jsonArray[i].name+'</option>');
+				}
+			}
+			$(el).val(rowData.dimension_value);
+		}else{
+			$('#creditScoreItemList4CreateGrid').jqGrid('setRowData', options.rowId, { dimension_value: ""});
+		}
+		el.id=options.rowId+"_"+"dimension_value_text";
+		return el;
+	};
+	var custom_dimension_value_get_value=function (elem, operation) {
+		debugger;
+		var rowid = $(elem).parents("tr:first").attr("id");
+		$('#creditScoreItemList4CreateGrid').jqGrid('setRowData', rowid, { dimension_value: elem.val()});
+		var optionText=elem.find('option:selected').text();
+		return optionText!="请选择"?optionText:"";
+	};
+	
 	//构造grid
     $("#creditScoreItemList4CreateGrid").jqGrid({
 			autowidth:true,
-			colNames:['<input type="checkbox" class="credit-score-create-selall-cbox">',"<span style='color:red;'>*</span>序号","<span style='color:red;'>*</span>运算符","<span style='color:red;'>*</span>刻度描述","<span style='color:red;'>*</span>分数"],
+			colNames:['<input type="checkbox" class="credit-score-create-selall-cbox">',"<span style='color:red;'>*</span>序号","<span style='color:red;'>*</span>运算符","","<span style='color:red;'>*</span>刻度描述","<span style='color:red;'>*</span>分数"],
 			colModel :[
 			    {
 			    	name:'rule_sel_create',
@@ -47,11 +75,16 @@ $(function(){
 					index:'dimension_value',
 					align:'center',
 					sortable:false,
+					hidden:true
+				},
+				{name:'dimension_value_text',
+					index:'dimension_value_text',
+					align:'center',
+					sortable:false,
 					editable:true,
 					width:"30%",
-					edittype:'select',
-					formatter:'select',
-					editoptions:{value:incomeIntervalDicObj.jsonStr}
+					edittype:'custom', 
+					editoptions: {custom_element: custom_dimension_value_element, custom_value: custom_dimension_value_get_value}
 				},
 				{name:'score',
 					index:'score',
@@ -179,6 +212,17 @@ $(function(){
       		var inputVal=$(input).val();
       		rowData[inputName]=inputVal;
       	  });
+      	  $("#creditScoreItemList4CreateGrid").find("tr[id='"+rowids[i]+"']").find("select").each(function(i,select){
+      		debugger;
+      	    var selectName=$(select).attr("name");
+      		var selectVal=$(select).val();
+      		if(selectName=="dimension_value_text"){
+      			rowData[selectName]=$(select).find('option:selected').text();
+      			rowData.dimension_value=selectVal;
+      		}else{
+      			rowData[selectName]=selectVal;
+      		}
+      	  });
       	  grid_data.push(rowData);
       	}    
     	if(grid_data && grid_data.length>0){
@@ -237,7 +281,7 @@ $(function(){
 		var ids =  grid.jqGrid('getDataIDs');
 		if(ids && ids.length>0){
 			for(var i=0;i<ids.length;i++){
-				grid.jqGrid('setRowData', ids[i], { dimension_value:""});
+				grid.jqGrid('setRowData', ids[i], { dimension_value:"",dimension_value_text:""});
 			}
 		}
 		if(parent_id && parent_code){
