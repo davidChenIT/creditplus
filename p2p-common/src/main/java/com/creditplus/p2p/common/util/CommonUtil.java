@@ -93,77 +93,33 @@ public class CommonUtil {
 				}
 			}
 			try {
-				System.out.println("exeute expression: "+jsExpression);
+				System.out.println("exeute expression: "+jsExpression+"  paramMap:"+JSONTools.Object2Json(paramMap));
 				Object result=engine.eval(jsExpression);
-				if(result instanceof Boolean)
+				if(result instanceof Boolean)				//js逻辑运算
 					flag=(Boolean) result;
+				if(result instanceof Integer)				//js indexOf函数
+					flag=((Integer)result!=-1)?true:false;
 			} catch (ScriptException e) {
 				System.out.println("exeExpression error:"+e);
-			}
-			
-		}
-		return flag;
-	}
-	
-	
-	/*public static boolean exeExpression(String jsExpression,Map<String,Object> paramMap) {
-		boolean flag=false;
-		if(StringUtils.isEmpty(jsExpression))
-			return false;
-		ScriptEngineManager factory = new ScriptEngineManager();
-		ScriptEngine engine=factory.getEngineByName("js");
-		Map variableMap=parseExpressionVariable(jsExpression, paramMap);
-		if(variableMap!=null && variableMap.size()>0){
-			jsExpression=jsExpression.replaceAll("#(.+?)#", "$1");
-			for(Iterator<String> iterator=variableMap.keySet().iterator();iterator.hasNext();){
-				String key=iterator.next();
-				Object value=variableMap.get(key);
-				engine.put(key, value);
-			}
-			try {
-				Object result = engine.eval(jsExpression);
-				if(result instanceof Boolean)
-					flag=(Boolean) result;
-			} catch (ScriptException e) {
+			} catch (Exception e) {
 				System.out.println(e);
 			}
+			System.out.println("exeute result: "+flag);
 		}
 		return flag;
 	}
 	
-	private static Map parseExpressionVariable(String jsExpression,Map paramMap){
-		if(paramMap==null)
-			paramMap=new HashMap();
-		Map variableMap=new HashMap();
-		Pattern p=Pattern.compile("(#.+?#)");
-		Matcher m=p.matcher(jsExpression);
-		while(m.find()){
-			String group=m.group();
-			String key=group.replaceAll("#(.+?)#", "$1");
-			Object value=paramMap.get(key);
-			variableMap.put(key, value);
-		}
-		System.out.println(variableMap);
-		return variableMap;
-	}*/
 	
 	public static void main(String[] args) throws ScriptException {
-		 String js="(#a#>#c# && #a#<2000) && #b#=='中国'";
-		 Map variable=new HashMap();
-		 variable.put("a", "1001.5");
-		 variable.put("b", "中国");
-		 variable.put("c", 2001);
-		 variable.put("xxx", 2002);
-//		 System.out.println(exeExpression(js, variable));
-		
-		 String jsex="xxx<'"+variable.get("c")+"'";
+		 String jsex="income==1";
 		 ScriptEngineManager factory = new ScriptEngineManager();
 		 ScriptEngine engine=factory.getEngineByName("js");
-		 engine.put("xxx", 2000);
+		 engine.put("income", 1);
 		 Object result=engine.eval(jsex);
 		 System.out.println(result);
-		 
-		 exeExpression(jsex, variable);
+		 Map paramMap=new HashMap();
+		 paramMap.put("income", 1);
+		 exeExpression(jsex, paramMap); 
 		 
 	}
 

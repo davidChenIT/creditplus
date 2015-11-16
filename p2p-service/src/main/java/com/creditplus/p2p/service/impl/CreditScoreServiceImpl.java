@@ -7,6 +7,8 @@ package com.creditplus.p2p.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +75,16 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 						String arithmetic=(String) itemMap.get("arithmetic");
 						String dimension_value=(String) itemMap.get("dimension_value");
 						Integer score=Integer.valueOf(itemMap.get("score")+"");
-						StringBuilder expression=new StringBuilder(fact_column).append(arithmetic).append("'").append(dimension_value).append("'");
+						StringBuilder expression=new StringBuilder(fact_column);
+						if("like".equalsIgnoreCase(arithmetic.trim())){
+							expression.append(".indexOf('").append(dimension_value).append("')");
+						}else{
+							if(isNumber(dimension_value))
+								expression.append(arithmetic).append(dimension_value);
+							else
+								expression.append(arithmetic).append("'").append(dimension_value).append("'");
+						}
+						
 						boolean flag=CommonUtil.exeExpression(expression.toString(), valueMap);
 						if(flag){
 							score=score*baifenbi/100;
@@ -136,6 +147,12 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		return 0;
 	}
 	
+	
+	private boolean isNumber(String value){
+		 Pattern p=Pattern.compile("\\d+(\\.\\d+)?");
+		 Matcher m=p.matcher(value);
+		 return m.matches();
+	}
 
 	public PageVO getCreditScoreListWithPage(Map paramMap) {
 		int currentPage=1,pageSize=10;
@@ -240,6 +257,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		String proportion="12%";
 		Integer baifenbi=Integer.valueOf(proportion.substring(0, proportion.indexOf("%")).trim());
 		System.out.println(i*baifenbi/100);
+		System.out.println(new CreditScoreServiceImpl().isNumber("1"));
 	}
 	
 
