@@ -670,7 +670,6 @@ var uploadDialog={
 					+"</tr></table>"
 					+"<div style=\"display:none;\"><input id='imgFile' name='imgFile' type=\"file\"/> </div>"
 					+"<div style=\"text-align:center; padding:0px 0px 20px;background-color: #fff;\">" 
-//					+"<input type='button'  class=\"grid-toobar-btn\" value='添加'id=\"addBtn\"  onclick=\"uploadDialog.addFunc();\">"
 					+"&nbsp;&nbsp;&nbsp;<input type='button' class=\"grid-toobar-btn\" value='上传'  id=\"uploadBtn\"   onClick='uploadDialog.uploadFunc();'>"
 				    +"&nbsp;&nbsp;&nbsp;<input type='button' class=\"grid-toobar-btn\" value='关闭'  id=\"closeBtn\"   onClick='uploadDialog.cancelFunc();'>"
 				    +"</div></div><iframe name='hidden_frame' id='hidden_frame' style='display:none;'></iframe> </form>";
@@ -687,15 +686,23 @@ var uploadDialog={
 			$("#uploadDialogDiv").find("input[type='file']").change(function(){
 				debugger;
 				var imgUrl=$(this).val();
-				var imgSuffix=imgUrl.substring(imgUrl.lastIndexOf(".")+1);
-				if(imgSuffix && imgSuffix.toLowerCase()!="jpg" && imgSuffix.toLowerCase()!="png" && imgSuffix.toLowerCase()!="bmp"){
-					$("#uploadDialogDiv").find("td").html("<span style='color:red;'>只能上传jpg、png、bmp类型的图片！</span>");
-					return false;
+				if(imgUrl){
+					var imgSuffix=imgUrl.substring(imgUrl.lastIndexOf(".")+1);
+					if(imgSuffix && imgSuffix.toLowerCase()!="jpg" && imgSuffix.toLowerCase()!="png" && imgSuffix.toLowerCase()!="bmp"){
+						$("#uploadDialogDiv").find("td").html("<span style='color:red;'>只能上传jpg、png、bmp类型的图片！</span>");
+						return false;
+					}
+					loadingBox.showLoading();
+					var uploadImgForm=$("#uploadDialogDiv").find("form[name='uploadImgForm']");
+					uploadImgForm[0].action="http://"+window.location.host+"/p2p-webapp/UploadPicture";
+					uploadImgForm.submit();
+				}else{
+					$("#uploadDialogDiv").find("td").html("点击上传按钮选择图片！");
+		    		uploadDialog.img_path="";
+		    		uploadDialog.img_name="";
+		    		$("span[name='"+uploadDialog.uploadElement+"']").text("");
+		    		$("span[name='"+uploadDialog.uploadElement+"']").attr("img_path","");
 				}
-				loadingBox.showLoading();
-				var uploadImgForm=$("#uploadDialogDiv").find("form[name='uploadImgForm']");
-				uploadImgForm[0].action="http://"+window.location.host+"/p2p-webapp/UploadPicture";
-				uploadImgForm.submit();
 			});
 	    },
 	    //取消
