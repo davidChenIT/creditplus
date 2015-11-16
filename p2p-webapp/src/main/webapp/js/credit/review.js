@@ -137,6 +137,7 @@ $(function(){
 			});
 			//上传控件值
 			request_data.profession_img_v = $("[name=profession_img_v]").attr('img_path');
+			request_data.id_sex=$("[name=id_sex]").val();
 			debugger;
 			//提交
 			publicSaveAjax("loanOrderService","creditReview",JSON.stringify(request_data),"reviewTab","review","[name='reviewSearchBtn']");
