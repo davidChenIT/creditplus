@@ -22,6 +22,6 @@
 	</delete>
 	
 	<select id="getUrgentListByUserId" parameterType="Integer" resultType="java.util.Map">
-		select sn,user_id,name,relation,mobile,modifytime from p2p.urgent_list where user_id = #{user_id}
+		select sn,user_id,name,relation,mobile,modifytime from urgent_list where user_id = #{user_id}
 	</select>  
 </mapper>
