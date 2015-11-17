@@ -66,8 +66,11 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 					List<Map> result=commonInfoDao.executeDonamicSQL(sqlMap);
 					System.out.println("=====result:"+result);
 					Object value=null;
-					if(result!=null && result.size()>0)
-						value=result.iterator().next().get(fact_column);
+					if(result!=null && result.size()>0){
+						Map resultMap=result.get(0);
+						if(resultMap!=null && resultMap.size()>0)
+							value=result.iterator().next().get(fact_column);
+					}
 					Map valueMap=new HashMap();
 					valueMap.put(fact_column, value);
 					
@@ -95,6 +98,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 								score2.put(dimension_name, score);
 								total2+=score;
 							}
+							System.out.println("score:"+score);
 							break;
 						}
 					}

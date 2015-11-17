@@ -111,14 +111,14 @@ public class CommonUtil {
 	
 	
 	public static void main(String[] args) throws ScriptException {
-		 String jsex="income==1";
+		 String jsex="certificate_type_v=1";
 		 ScriptEngineManager factory = new ScriptEngineManager();
 		 ScriptEngine engine=factory.getEngineByName("js");
-		 engine.put("income", 1);
+		 engine.put("certificate_type_v", 4);
 		 Object result=engine.eval(jsex);
 		 System.out.println(result);
 		 Map paramMap=new HashMap();
-		 paramMap.put("income", 1);
+		 paramMap.put("certificate_type_v", 4);
 		 exeExpression(jsex, paramMap); 
 		 
 	}
