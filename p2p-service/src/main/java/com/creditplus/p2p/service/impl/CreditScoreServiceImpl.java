@@ -57,7 +57,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 				List<Map> itemsList=creditScoreDao.getCreditItemById(score_id);
 				if(itemsList!=null && itemsList.size()>0){
 					
-					//查询得到需要评分字段的值
+					//查询评分维度字段值
 					StringBuilder sbSql=new StringBuilder("select t.").append(fact_column).append(" from ").append(fact_table).append(" t left join loan_list l on t.user_id=l.user_id where l.user_id=#{user_id} and l.loan_id=#{loan_id}");
 					Map sqlMap=new HashMap();
 					sqlMap.put("user_id", user_id);
@@ -74,6 +74,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 					Map valueMap=new HashMap();
 					valueMap.put(fact_column, value);
 					
+					Integer dimesion_score=0;
 					for(Map itemMap:itemsList){
 						String arithmetic=(String) itemMap.get("arithmetic");
 						String dimension_value=(String) itemMap.get("dimension_value");
@@ -82,25 +83,28 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 						if("like".equalsIgnoreCase(arithmetic.trim())){
 							expression.append(".indexOf('").append(dimension_value).append("')");
 						}else{
-							if(isNumber(dimension_value))
+							if(CommonUtil.isNumber(dimension_value))
 								expression.append(arithmetic).append(dimension_value);
 							else
 								expression.append(arithmetic).append("'").append(dimension_value).append("'");
 						}
 						
+						//执行维度评分逻辑表达式
 						boolean flag=CommonUtil.exeExpression(expression.toString(), valueMap);
 						if(flag){
-							score=score*baifenbi/100;
-							if(model_name==1){
-								score1.put(dimension_name, score);
-								total1+=score;
-							}else if(model_name==2){
-								score2.put(dimension_name, score);
-								total2+=score;
-							}
+							dimesion_score=score*baifenbi/100;
 							System.out.println("score:"+score);
-							break;
 						}
+						
+						if(model_name==1){
+							score1.put(dimension_name, dimesion_score);
+							total1+=dimesion_score;
+						}else if(model_name==2){
+							score2.put(dimension_name, dimesion_score);
+							total2+=dimesion_score;
+						}
+						if(flag)
+							break;
 					}
 				}
 			}
@@ -152,11 +156,6 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 	}
 	
 	
-	private boolean isNumber(String value){
-		 Pattern p=Pattern.compile("\\d+(\\.\\d+)?");
-		 Matcher m=p.matcher(value);
-		 return m.matches();
-	}
 
 	public PageVO getCreditScoreListWithPage(Map paramMap) {
 		int currentPage=1,pageSize=10;
@@ -261,7 +260,6 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		String proportion="12%";
 		Integer baifenbi=Integer.valueOf(proportion.substring(0, proportion.indexOf("%")).trim());
 		System.out.println(i*baifenbi/100);
-		System.out.println(new CreditScoreServiceImpl().isNumber("1"));
 	}
 	
 

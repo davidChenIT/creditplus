@@ -1,5 +1,6 @@
 package com.creditplus.p2p.common.util;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -110,17 +111,37 @@ public class CommonUtil {
 	}
 	
 	
+	public static boolean isNumber(String value){
+		if(StringUtils.isEmpty(value))
+			return false;
+		 Pattern p=Pattern.compile("\\d+(\\.\\d+)?");
+		 Matcher m=p.matcher(value);
+		 return m.matches();
+	}
+	
+	public static String formatDouble(double num){
+		 java.text.DecimalFormat myformat=new java.text.DecimalFormat("0.0");
+		 return myformat.format(num);
+	}
+	
 	public static void main(String[] args) throws ScriptException {
-		 String jsex="certificate_type_v=1";
+		 String jsex="certificate_type_v>0.5";
 		 ScriptEngineManager factory = new ScriptEngineManager();
 		 ScriptEngine engine=factory.getEngineByName("js");
-		 engine.put("certificate_type_v", 4);
+		 engine.put("certificate_type_v", 0.0);
 		 Object result=engine.eval(jsex);
 		 System.out.println(result);
 		 Map paramMap=new HashMap();
-		 paramMap.put("certificate_type_v", 4);
+		 paramMap.put("certificate_type_v", 0.0);
 		 exeExpression(jsex, paramMap); 
 		 
+		 BigDecimal b=new BigDecimal(7.5);
+		 System.out.println(b.doubleValue());
+		 System.out.println(b.intValue());
+		 double c=(7.5);
+		 java.text.DecimalFormat myformat=new java.text.DecimalFormat("0.0");
+		 String str = myformat.format(c); 
+		 System.out.println(str);
 	}
 
 }
