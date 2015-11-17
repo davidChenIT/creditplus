@@ -136,8 +136,13 @@ $(function(){
 					request_data[inputName] = inputValue;
 			});
 			//上传控件值
-			request_data.profession_img_v = $("[name=profession_img_v]").attr('img_path');
-			request_data.id_sex=$("[name=id_sex]").val();
+			var  profession_img_v = $("[name=profession_img_v]").attr('img_path');
+			if(!isEmptyString(profession_img_v))
+				request_data.profession_img_v = $("[name=profession_img_v]").attr('img_path');
+			else{
+				messageBox.createMessageDialog("提示","证书网上抓图不能为空","","","warning");
+				return false;
+			}
 			debugger;
 			//提交
 			publicSaveAjax("loanOrderService","creditReview",JSON.stringify(request_data),"reviewTab","review","[name='reviewSearchBtn']");
