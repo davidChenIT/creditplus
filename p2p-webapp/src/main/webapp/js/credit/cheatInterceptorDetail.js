@@ -37,6 +37,35 @@ $(function(){
 			selectRender(userDivIdx);
 		});
 	}
+	//查询信用积分列表
+	var creditScoreObj = publicQueryInfoAjax("creditScoreService","getCreditScore",JSON.stringify({"loan_id":loan_id}));
+	if(creditScoreObj){
+		//1. 获取信用评分key，并排序
+		var keySortArr = [];
+		for(var key in creditScoreObj){
+			var val = creditScoreObj[key];
+			//信用评分对象
+			if(!(typeof val == "number")) keySortArr.push(key);
+		}
+		//排序
+		keySortArr.sort();
+		//循环输出
+		for(var i = 0; i < keySortArr.length; i++){
+			//信用评分对象
+			var creditObj = creditScoreObj[keySortArr[i]];
+			var templateDiv = $("#creditScoreDiv .credit_temp");
+			$(templateDiv).find(".credit-score-title").html(("信用评分"+(i+1)));
+			var tempDom = templateDiv.html();
+			var divIdx = "creditScoreIdx" + i;
+			var creditTemplate = '<div id="' + divIdx + '">' + tempDom + '</div>';
+			//输出Dom
+			setValues("creditScoreDiv", creditObj, creditTemplate);
+			setValues(divIdx, creditObj);
+			//移除静态html，循环输出动态列表元素
+			if(i == userInfoList.length-1)  templateDiv.remove();
+		}
+	}
+	
 	//构造grid
 	$("#interceptorLogGrid").jqGrid({
 		 url:serviceAddress,
