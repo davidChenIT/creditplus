@@ -142,10 +142,16 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		//增加信用维度工作可验证参数
 		String company_name_v=(String) paramMap.get("company_name_v");
 		String profession_img_v=(String) paramMap.get("profession_img_v");
+		//手机在线时长，除365得到手机年龄
+		String mobile_online_time_v=(String) paramMap.get("mobile_online_time_v");  
 		Integer work_verify=0;
 		if(StringUtils.isNotEmpty(company_name_v))
 			work_verify=1;
 		paramMap.put("work_verify", work_verify);
+		if(CommonUtil.isNumber(mobile_online_time_v)){
+			String mobile_age=CommonUtil.formatDouble(Double.valueOf(mobile_online_time_v)/365);
+			paramMap.put("mobile_age", mobile_age);
+		}
 		//保存上传的证书图片
 		if(StringUtils.isNotEmpty(profession_img_v)){
 			paramMap.put("type", 11);
@@ -153,18 +159,20 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 			commonInfoService.savePic(paramMap);
 		}
 		
-		
+		//更新客户表信息
 		updateCustomerInfo(paramMap, user_id);
+		//防欺诈拦截
 		boolean checkFlag=cheatInterceptService.intercept(user_id, loan_id);
 		if(checkFlag)
 			return;
 		
+		//更新紧急联系人信息
 		List urgentList=(List) paramMap.get("urgentList");
 		updateUrgentContactor(urgentList, user_id);
 		//计算信用分
 		Map creditMap=creditScoreService.getCreditScore(user_id, loan_id);
 		paramMap.putAll(creditMap);
-		//更新申请单状态并且插入日志
+		//更新申请单状态并且插入日志并更新信用评分
 		updateLoanApply(paramMap);
 	}
 	
