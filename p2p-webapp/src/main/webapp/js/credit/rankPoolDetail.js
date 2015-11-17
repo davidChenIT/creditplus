@@ -39,7 +39,7 @@ $(function(){
 	}
 	
 	//查询信用积分列表
-	var creditScoreObj = publicQueryInfoAjax("creditScoreService","getCreditScore",JSON.stringify({"user_id":user_id}));
+	var creditScoreObj = publicQueryInfoAjax("creditScoreService","getCreditScore",JSON.stringify({"loan_id":loan_id}));
 	if(creditScoreObj){
 		//1. 获取信用评分key，并排序
 		var keySortArr = [];
