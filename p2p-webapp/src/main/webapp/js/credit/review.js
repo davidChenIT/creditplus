@@ -82,7 +82,7 @@ $(function(){
 		var request_data={"loan_id":$("#review").find("span[name='loan_id']").text(),"user_id":user_id,"apply_state":5};
 		var checkPass = true;
 		//1. 获取所有的必填项
-		var requiredDoms = $("#review").find("[validation*='requireds']");
+		var requiredDoms = $("#review").find("[validation*='required']");
 		//2. 循环校验
 		if(requiredDoms.length > 0){
 			var isFocusError = false;

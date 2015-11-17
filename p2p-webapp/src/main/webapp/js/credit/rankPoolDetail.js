@@ -37,6 +37,36 @@ $(function(){
 			selectRender(userDivIdx);
 		});
 	}
+	
+	//查询信用积分列表
+	var creditScoreObj = publicQueryInfoAjax("creditScoreService","getCreditScore",JSON.stringify({"user_id":user_id}));
+	if(creditScoreObj){
+		//1. 获取信用评分key，并排序
+		var keySortArr = [];
+		for(var key in creditScoreObj){
+			var val = creditScoreObj[key];
+			//信用评分对象
+			if(!(typeof val == "number")) keySortArr.push(key);
+		}
+		//排序
+		keySortArr.sort();
+		//循环输出
+		for(var i = 0; i < keySortArr.length; i++){
+			//信用评分对象
+			var creditObj = creditScoreObj[keySortArr[i]];
+			var templateDiv = $("#creditScoreDiv .credit_temp");
+			$(templateDiv).find(".credit-score-title").html(("信用评分"+(i+1)));
+			var tempDom = templateDiv.html();
+			var divIdx = "creditScoreIdx" + i;
+			var creditTemplate = '<div id="' + divIdx + '">' + tempDom + '</div>';
+			//输出Dom
+			setValues("creditScoreDiv", creditObj, creditTemplate);
+			setValues(divIdx, creditObj);
+			//移除静态html，循环输出动态列表元素
+			if(i == userInfoList.length-1)  templateDiv.remove();
+		}
+	}
+	
 	//构造grid
 	$("#approveLogGrid").jqGrid({
 		 url:serviceAddress,
@@ -93,16 +123,18 @@ $(function(){
 			messageBox.createMessageDialog("提示","处理意见不能为空！","","","warning");
 		else{
 			//参数
+			var datas = [];
 			var request_data = {};
 			request_data.loan_id = loan_id;
 			request_data.apply_state = apply_state;
 			request_data.approve_content = approve_content;
+			datas.push(request_data);
 			//调用发标服务
 		    $.ajax({
 				url: serviceAddress,
 				datatype: 'json',
 				method:"post",
-				data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(request_data)},			
+				data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(datas)},			
 				success: function(data){
 					removeTabItem("tenderTab","rankPoolDetail");
 					messageBox.createMessageDialog("提示", "操作成功！", "", "","warning");
