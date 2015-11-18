@@ -24,7 +24,8 @@
             <tx:method name="delete*" propagation="REQUIRED" /> 
             <tx:method name="update*" propagation="REQUIRED" /> 
             <tx:method name="insert*" propagation="REQUIRED" /> 
-            <tx:method name="*credit*" propagation="REQUIRED" /> 
+            <tx:method name="getCredit*" propagation="REQUIRED" /> 
+            <tx:method name="credit*" propagation="REQUIRED" /> 
         </tx:attributes>
     </tx:advice> 
  

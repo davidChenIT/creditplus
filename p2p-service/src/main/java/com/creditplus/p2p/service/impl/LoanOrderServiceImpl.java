@@ -11,6 +11,7 @@ import com.creditplus.p2p.common.annotation.ParamName;
 import com.creditplus.p2p.common.constant.Constant;
 import com.creditplus.p2p.common.util.CheckParamUtil;
 import com.creditplus.p2p.common.util.CommonUtil;
+import com.creditplus.p2p.common.util.IDCardUtil;
 import com.creditplus.p2p.dao.CustomerInfoDao;
 import com.creditplus.p2p.dao.LoanOrderDao;
 import com.creditplus.p2p.model.PageVO;
@@ -115,6 +116,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	public void creditFirstTrial(Map paramMap) throws Exception{
 		paramMap=CheckParamUtil.initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE,Constant.USER_ID);
+		checkParam(paramMap);
 		Integer user_id=Integer.valueOf(paramMap.get(Constant.USER_ID)+"");
 		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
 		//更新客户信息
@@ -137,6 +139,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	public void creditReview(Map paramMap) throws Exception{
 		paramMap=CheckParamUtil.initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE,Constant.USER_ID);
+		checkParam(paramMap);
 		Integer user_id=Integer.valueOf(paramMap.get(Constant.USER_ID)+"");
 		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
 		//增加信用维度工作可验证参数
@@ -148,7 +151,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		if(StringUtils.isNotEmpty(company_name_v))
 			work_verify=1;
 		paramMap.put("work_verify", work_verify);
-		if(CommonUtil.isNumber(mobile_online_time_v)){
+		if(CheckParamUtil.isNumber(mobile_online_time_v)){
 			String mobile_age=CommonUtil.formatDouble(Double.valueOf(mobile_online_time_v)/365);
 			paramMap.put("mobile_age", mobile_age);
 		}
@@ -376,6 +379,17 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		}
 		updateMuiltLoanOrderByLoanId(updateList);
 		approveLogService.batchInsertApproveLog(updateList);
+	}
+	
+	
+	private void checkParam(Map paramMap) throws Exception{
+		String[] key={"seasame_score_v","tencent_credit_v","certificate_type_v"};
+		String[] message={"芝麻信用分数","腾讯信用分数","证书类型"};
+		CheckParamUtil.checkParamIsNumr(paramMap, key,message);
+		String id_num_v=(String) paramMap.get("id_num_v");
+		if(!IDCardUtil.isIDCard(id_num_v))
+			throw new Exception("身份证验证号码不合法!");
+			
 	}
 
 

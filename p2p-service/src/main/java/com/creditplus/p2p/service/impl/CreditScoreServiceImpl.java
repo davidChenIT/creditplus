@@ -7,12 +7,8 @@ package com.creditplus.p2p.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.creditplus.p2p.common.constant.Constant;
 import com.creditplus.p2p.common.util.CheckParamUtil;
 import com.creditplus.p2p.common.util.CommonUtil;
@@ -83,7 +79,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 						if("like".equalsIgnoreCase(arithmetic.trim())){
 							expression.append(".indexOf('").append(dimension_value).append("')");
 						}else{
-							if(CommonUtil.isNumber(dimension_value))
+							if(CheckParamUtil.isNumber(dimension_value))
 								expression.append(arithmetic).append(dimension_value);
 							else
 								expression.append(arithmetic).append("'").append(dimension_value).append("'");

@@ -124,6 +124,7 @@ public class IDCardUtil {
         	int age=(Calendar.getInstance().get(Calendar.YEAR)-Integer.valueOf(year));
 //        	String sex=Integer.valueOf(cardNo.substring(cardNo.length()-2, cardNo.length()-1))%2==1?"男":"女";
         	Integer sex=Integer.valueOf(cardNo.substring(cardNo.length()-2, cardNo.length()-1))%2;
+        	System.out.println(cardNo.substring(cardNo.length()-2, cardNo.length()-1));
         	card_map.put("id_year", year);
         	card_map.put("id_province", zoneNum.get(province_code));
         	card_map.put("id_age", age);

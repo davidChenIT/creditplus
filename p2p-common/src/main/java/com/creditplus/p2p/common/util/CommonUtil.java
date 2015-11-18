@@ -9,11 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -110,14 +108,6 @@ public class CommonUtil {
 		return flag;
 	}
 	
-	
-	public static boolean isNumber(String value){
-		if(StringUtils.isEmpty(value))
-			return false;
-		 Pattern p=Pattern.compile("\\d+(\\.\\d+)?");
-		 Matcher m=p.matcher(value);
-		 return m.matches();
-	}
 	
 	public static String formatDouble(double num){
 		 java.text.DecimalFormat myformat=new java.text.DecimalFormat("0.0");
