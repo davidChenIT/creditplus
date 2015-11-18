@@ -73,21 +73,26 @@ $(function(){
 	//提交初审按钮
 	$("[name='firstTrialBtn']").click(function(){
 		debugger;
-		var request_data={"loan_id":$("#firstTrial").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"初审完毕","apply_state":3};
+		var request_data = {
+				"loan_id" : $("#firstTrial").find("span[name='loan_id']").text(),
+				"user_id" : user_id,
+				"approve_content" : "初审完毕",
+				"apply_state" : 3
+		};
 		var checkPass = true;
 		//1. 获取所有的必填项
-		var requiredDoms = $("#firstTrial").find("[validation*='required']");
+		var validDoms = $("#firstTrial").find("[validation]");
 		//2. 循环校验
-		if(requiredDoms.length > 0){
+		if(validDoms.length > 0){
 			var isFocusError = false;
-			$.each(requiredDoms,function(i){
-				var validDomName = $(requiredDoms[i]).attr('name');
-				var elementVal = validateRequire(validDomName,"此项为必填！","firstTrial");
+			$.each(validDoms,function(i){
+				var validDomName = $(validDoms[i]).attr('name');
+				var elementVal = validateDom(validDomName, "firstTrial");
 				if(elementVal){
 					request_data[validDomName] = elementVal;
 				}else{
 					if(!isFocusError){
-						$(requiredDoms[i]).focus();
+						$(validDoms[i]).focus();
 						isFocusError = true;
 					}
 					checkPass = false;

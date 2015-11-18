@@ -483,38 +483,96 @@ function getValue(divId){
  */
 function isEmptyString(value){
 	var result = false;
-	if(value == null || value == "") result = true;
+	if(value == null || value.replace(/^\s+|\s+$/g,'') == "") result = true;
 	return result;
 }
 
-//公共校验函数
-function validateRequire(elemName,tip,parantsDivId){
-	var elementDom;
-	if(parantsDivId){
-		elementDom=$("#"+parantsDivId).find("[name='"+elemName+"']");
-	}else{
-		elementDom=$("[name='"+ elemName +"']");
+/**
+ * 检验规则
+ */
+var domValid = {
+    required : function(value){
+    	if(!isEmptyString(value)) return true;
+    	else return false;
+	},
+    number : function(value){
+    	if(isEmptyString(value)) return true;
+    	return /^[0-9]*$/.test(value);
+	},	
+    id_card : function(value){
+    	if(isEmptyString(value)) return true;
+    	return /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(value);
 	}
-	var elemVal = $(elementDom).val();
-	//取span的值
-	var domType = $(elementDom).get(0).tagName;
-	if(domType == "SPAN") elemVal = $(elementDom).attr("code");
-    if(!isEmptyString(elemVal)){
-    	  return elemVal;
-	}else{
-		  var elemNameTipLength=$("span[name='" + elemName + "Tip']").length;
-		  if(elemNameTipLength==0){
-			  elementDom.parent().after("<span name='" + elemName + "Tip' style='color:red;'>" + tip + "</span>");
-		  }
-		  elementDom.change(function(e){
-			  $("span[name='" + elemName + "Tip']").remove();
-			  $(this).unbind(e);
-		  });
-		  return "";
-	}
-    
 }
 
+
+/**
+ * 校验公共函数
+ * @param elemName
+ * @param tip
+ * @param parantsDivId
+ * @param rules
+ */
+function validateDom(elemName, parantsDivId){
+	var value = "";
+	var tip = "";
+	var result = true;
+	//取dom
+	var elementDom;
+	if(parantsDivId){
+		elementDom = $("#"+parantsDivId).find("[name='"+elemName+"']");
+	}else{
+		elementDom = $("[name='"+ elemName +"']");
+	}
+	value = $(elementDom).val();
+	//取span的值
+	var domType = $(elementDom).get(0).tagName;
+	if(domType == "SPAN") 
+		value = $(elementDom).attr("code");
+	//取校验规则
+	var rules = $(elementDom).attr("validation").split(" ");
+	//循环校验
+	for(var i = 0; i < rules.length; i++){
+		var rule = rules[i];
+		switch(rule){
+			case 'required':
+				result = domValid.required(value);
+				tip = "此项为必填！";
+				break;
+			case 'number':
+				result = domValid.number(value);
+				tip = "无效数字！";
+				break;
+			case 'id_card':
+				result = domValid.id_card(value);
+				tip = "无效身份证号码！";
+				break;
+		}
+		//校验失败， value重置为空
+		if(!result){
+			value = "";
+			validErrorTip(elemName, elementDom, tip);
+			break;
+		}
+	}
+	return value;
+}
+
+/**
+ * 校验失败tip提示
+ * @param elemName
+ * @param content
+ */
+function validErrorTip(elemName, elementDom, tip){
+	var elemNameTipLength = $("span[name='" + elemName + "Tip']").length;
+    if(elemNameTipLength == 0){
+	    elementDom.parent().after("<span name='" + elemName + "Tip' style='color:red;'>" + tip + "</span>");
+    }
+    elementDom.change(function(e){
+  	    $("span[name='" + elemName + "Tip']").remove();
+	    $(this).unbind(e);
+    });
+}
 
 //公共重置函数
 function clearDomVal(areaDivId){
