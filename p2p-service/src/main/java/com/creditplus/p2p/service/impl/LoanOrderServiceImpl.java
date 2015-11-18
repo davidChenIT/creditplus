@@ -378,7 +378,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 			}
 		}
 		updateMuiltLoanOrderByLoanId(updateList);
-		approveLogService.batchInsertApproveLog(updateList);
+		approveLogService.batchInsertApproveLog(updateList); 
 	}
 	
 	
