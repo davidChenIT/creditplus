@@ -109,14 +109,13 @@ $(function(){
 			cellEdit: true,
 			cellsubmit:"clientArray",
 			sortable:false,
-			afterSaveCell:function(rowid, cellname, value, iRow, iCol){
-				debugger;
-				if(cellname=="table_name"){
-					$('#ruleList4CreateGrid').jqGrid('setRowData', rowid, { column_name_text:"",column_name:"" });
-				}
-			},
+//			下面有其他代码实现了
+//			afterSaveCell:function(rowid, cellname, value, iRow, iCol){
+//				if(cellname=="table_name"){
+//					$('#ruleList4CreateGrid').jqGrid('setRowData', rowid, { column_name_text:"",column_name:"" });
+//				}
+//			},
 			gridComplete:function(){
-		    	debugger;
 		    	$("div[name='ruleTab']").find(".rule-create-selall-cbox").parent("div").attr("class","");
 		    }
 	});
@@ -125,7 +124,6 @@ $(function(){
     
     //维度新增行
     $("[name='addRule4CreateBtn']").click(function(){
-    	debugger;
     	var ids = $("#ruleList4CreateGrid").jqGrid('getDataIDs');
     	
     	//获得当前最大行号（数据编号）  
@@ -142,9 +140,17 @@ $(function(){
         $("#ruleList4CreateGrid").jqGrid("addRowData", newrowid, dataRow, "first");
     });
     
+    
+  //grid里面的业务对象改变
+    $("div[tabid='ruleCreate']").on("change","select[name='table_name']",function(){
+    	var rowid=$(this).parents("tr:first").attr("id");
+    	if(rowid){
+    		$('#ruleList4CreateGrid').jqGrid('setRowData', rowid, { column_name_text:"",column_name:"" });
+    	}
+    });
+    
     //grid里面的复选框
     $("div[name='ruleTab']").on("click",".rule-create-sel-cbox",function(){
-    	debugger;
     	var isSelAll=true;
     	$("div[name='ruleTab']").find(".rule-create-sel-cbox").each(function(i,cbox){
     		var ischecked=$(cbox)[0].checked;
