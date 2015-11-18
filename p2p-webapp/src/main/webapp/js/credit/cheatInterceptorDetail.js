@@ -37,6 +37,7 @@ $(function(){
 			selectRender(userDivIdx);
 		});
 	}
+	/*
 	//查询信用积分列表
 	var creditScoreObj = publicQueryInfoAjax("creditScoreService","getCreditScore",JSON.stringify({"loan_id":loan_id}));
 	if(creditScoreObj){
@@ -65,7 +66,7 @@ $(function(){
 			if(i == userInfoList.length-1)  templateDiv.remove();
 		}
 	}
-	
+	*/
 	//构造grid
 	$("#interceptorLogGrid").jqGrid({
 		 url:serviceAddress,
