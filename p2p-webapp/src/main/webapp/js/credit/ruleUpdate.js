@@ -120,12 +120,13 @@ $(function(){
 			cellEdit: true,
 			cellsubmit:"clientArray",
 			sortable:false,
-			afterSaveCell:function(rowid, cellname, value, iRow, iCol){
-				debugger;
-				if(cellname=="table_name"){
-					$('#ruleList4UpdateGrid').jqGrid('setRowData', rowid, { column_name_text:"",column_name:"" });
-				}
-			},
+//			下面有其他代码实现了
+//			afterSaveCell:function(rowid, cellname, value, iRow, iCol){
+//				debugger;
+//				if(cellname=="table_name"){
+//					$('#ruleList4UpdateGrid').jqGrid('setRowData', rowid, { column_name_text:"",column_name:"" });
+//				}
+//			},
 			gridComplete:function(){
 		    	debugger;
 		    	$("div[name='ruleTab']").find(".rule-update-selall-cbox").parent("div").attr("class","");
@@ -174,7 +175,16 @@ $(function(){
     });
     
     
-  //grid里面的复选框
+    //grid里面的业务对象改变
+    $("div[tabid='ruleUpdate']").on("change","select[name='table_name']",function(){
+    	debugger;
+    	var rowid=$(this).parents("tr:first").attr("id");
+    	if(rowid){
+    		$('#ruleList4UpdateGrid').jqGrid('setRowData', rowid, { column_name_text:"",column_name:"" });
+    	}
+    });
+    
+    //grid里面的复选框
     $("div[name='ruleTab']").on("click",".rule-update-sel-cbox",function(){
     	debugger;
     	var isSelAll=true;
