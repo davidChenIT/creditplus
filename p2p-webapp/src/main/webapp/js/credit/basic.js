@@ -668,24 +668,29 @@ var showImgDialog={
     	}
     	var showHtml="";
     	if(servletUrl){
-    		showHtml='<img src="'+servletUrl+'" style="max-width: 500px;max-height:500px;">';
+    		showHtml='<img src="'+servletUrl+'" style="max-width: 430px;max-height:280px;">';
     	}else{
-    		showHtml='<span style="font-size: 20px;font-weight: bold;margin-top: 100px;display: inline-block;">没有图片！</span>';
+    		showHtml='<span style="display: inline-block;">没有图片！</span>';
     		
     	}
-		var temp='<div style="line-height:25px;padding-left: 5px;padding-right: 5px;border-bottom: 1px solid #CCC;"><span style="font-weight: bold;">'+(dialogTitle || "")+'</span><span style="float: right;" class="img-dialog-close"><a style="text-decoration: underline;color: blue;">关闭</a></span></div>'
-				+'<div style="padding: 20px;text-align: center;">'+showHtml+'</div>';
+    	var temp="<div style=\"border:2px solid #37B6D1;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
+			+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">"+(dialogTitle || "")+"<span style=\"float: right;\" class=\"img-dialog-close\"><a style=\"text-decoration: underline;color: blue;\">关闭</a></span></div>"
+			+"<table width=\"500px\" height=\"300px\" cellspacing=\"0\" border=\"0\"><tr>" 
+			+"<td  style=\" padding:0px 0px 0px 20px;align:center;font-size: 20px;\" align=\"center\">"+showHtml+"</td>"
+			+"</tr></table>"
+			+"</div>";
 		
 		//创建弹出层
 		$("body").append("<div id='showImgDialogDiv' class='drag'></div>");
 		var showImgDialogDiv=$("#showImgDialogDiv");
-		showImgDialogDiv.attr("style","position:absolute;overflow:visible;z-index:1990;border:1px solid #CCC;background-color: #F3F7F8;min-width: 500px;min-height: 300px;");
+		showImgDialogDiv.attr("style","position:absolute;width: 500px;height: 300px;overflow:visible;z-index:1990;");
 		showImgDialogDiv.html(temp);
-		var left=($(window).width()-500)/2+"px";
-		var top=(($(window).height()-500)/2+document.body.scrollTop)+"px";
+		var left=($(window).width()-showImgDialogDiv.width())/2+"px";
+		var top=(($(window).height()-showImgDialogDiv.height())/2+document.body.scrollTop)+"px";
 		showImgDialogDiv.css({'left':left,'top':top});
 		//关闭图片层
 		showImgDialogDiv.find(".img-dialog-close").click(function(){
+			//删除图片显示层
 			showImgDialog.removeImgDialogDiv();
 		});
     	
@@ -722,7 +727,7 @@ var uploadDialog={
     			tdHtml="点击上传按钮选择图片！";
     		}
 			var temp="<form name='uploadImgForm' method='post' enctype='multipart/form-data' target='hidden_frame'><div style=\"border:2px solid #37B6D1;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
-					+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">图片上传(类型：jpg、png、bmp)</div>"
+					+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">图片上传(类型：jpg、png、bmp)<span style=\"float: right;\" class=\"img-dialog-close\"><a style=\"text-decoration: underline;color: blue;\">关闭</a></span></div>"
 					+"<table width=\"500px\" height=\"300px\" cellspacing=\"0\" border=\"0\"><tr>" 
 					+"<td  style=\" padding:0px 0px 0px 20px;align:center;font-size: 20px;\" align=\"center\">"+tdHtml+"</td>"
 					+"</tr></table>"
@@ -740,7 +745,10 @@ var uploadDialog={
 			var left=($(window).width()-uploadDialogDiv.width())/2+"px";
 			var top=(($(window).height()-uploadDialogDiv.height())/2+document.body.scrollTop)+"px";
 			uploadDialogDiv.css({'left':left,'top':top});
-			
+			//关闭图片上传弹出框
+			uploadDialogDiv.find(".img-dialog-close").click(function(){
+				uploadDialog.cancelFunc();
+			});
 			$("#uploadDialogDiv").find("input[type='file']").change(function(){
 				debugger;
 				var imgUrl=$(this).val();
@@ -821,7 +829,7 @@ var messageBox={
 		*/	
 		icon="/p2p-webapp/images/msgbox_"+icon+".png";
 		var temp="<div style=\"width:400px;border:2px solid #37B6D1;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
-				+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">"+title+"</div>"
+				+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">"+title+"<span style=\"float: right;\" class=\"img-dialog-close\"><a style=\"text-decoration: underline;color: blue;\">关闭</a></span></div>"
 				+"<table  cellspacing=\"0\" border=\"0\"><tr><td style=\" padding:0px 0px 0px 20px;vertical-align: text-top; \"><img src=\""+icon+"\" width=\"64\" height=\"64\"></td>"
 				+"<td ><div style=\"background-color: #fff; font-weight: bold;font-size: 12px;padding:20px 0px ; text-align:left;word-break: break-all;\">"+content
 				+"</div></td></tr></table>"
@@ -841,6 +849,10 @@ var messageBox={
 		var left=($(window).width()-messageDialogDiv.width())/2+"px";
 		var top=(($(window).height()-messageDialogDiv.height())/2+document.body.scrollTop)+"px";
 		messageDialogDiv.css({'left':left,'top':top});
+		//关闭弹出框提示层
+		messageDialogDiv.find(".img-dialog-close").click(function(){
+			messageBox.removeMessageDialogDiv();
+		});
 		if(focus==0||focus=="0"||null==focus){
 			$("#msgDialogConfirmBtn").focus();
 		}else if(focus==1||focus=="1"){
