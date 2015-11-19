@@ -1,11 +1,11 @@
 
 $(function(){
 	debugger;
-	var paramsObj = $("div[name='tenderTab']").find("li[tabid='tenderPublishedDetail']").data();
+	var paramsObj = $("div[name='tenderTab']").find("li[tabid='cheatInterceptorDetail']").data();
 	var loan_id = paramsObj.loan_id || "";
 	//查询详细信息，并赋值
 	var queryBiaoDetailParmsStr=JSON.stringify({"loan_id":loan_id,"apply_state":paramsObj.apply_state});
-	publicQueryInfoAjax("loanOrderService","getBiaoDetailByLoanId",queryBiaoDetailParmsStr,"tenderPublishedDetail");
+	publicQueryInfoAjax("loanOrderService","getBiaoDetailByLoanId",queryBiaoDetailParmsStr,"cheatInterceptorDetail");
 	//查询用户紧急联系人
 	var user_id = paramsObj.user_id || "";
 	$(".show-img-span").attr("user-id", user_id);
