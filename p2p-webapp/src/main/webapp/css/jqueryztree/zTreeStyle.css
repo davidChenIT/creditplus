@@ -2,19 +2,17 @@
 zTree Style
 
 version:	3.4
-author:		Hunter.z
-email:		hunter.z@263.net
-website:	http://code.google.com/p/jquerytree/
 
 -------------------------------------*/
 
-.ztree * {padding:0; margin:0; font-size:18px; font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif}
-/**修改ztree左边的间距*/
-.ztree {margin:5px; padding:5px; color:#333}
-.ztree li{padding:6px; margin:0; list-style:none; line-height:14px; text-align:left; white-space:nowrap; outline:0}
+.ztree * {padding:0; margin:0; font-size:18px;}
+/**修改ztree左边的间距margin:5px; padding:5px; */
+.ztree {color:#333}
+/**font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif*/
+.ztree li{padding:10px; margin:0; list-style:none; line-height:14px; text-align:left; white-space:nowrap; outline:0}
 .ztree li ul{ margin:0; padding:0 0 0 18px}
 .ztree li ul.line{ background:url(./img/line_conn.gif) 0 0 repeat-y;}
-
+.ztree-li-selected{background-color: #F3F7F8;border-left: solid 3px #3E89D4;border-top: 1px solid #d8e8f0;border-bottom: 1px solid #d8e8f0;}
 /**修改树节点的a标签鼠标浮动改变背景颜色#3e89d4*/
 .ztree li a:hover{color:blue;text-decoration:none;}
 .ztree li a:link{color:blue;text-decoration:none;}
