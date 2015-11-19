@@ -353,9 +353,16 @@ function createCatalogTree(){
 				}
 			}
 			checkAllParents1(curentTreeNode);
+			//设置选中菜单区域对应的背景色
+			var currentSelSpanId=curentTreeNode.tId+"_span";
+			$("#"+currentSelSpanId).attr("class","credit-span-blue");
+			if(curentTreeNode.tId=="menu_ztree_1"){
+				$("#"+currentSelSpanId).parents("li:last").attr("style","border-top: none;");
+			}
+			$("#"+currentSelSpanId).parents("li:last").addClass("ztree-li-selected");
 			//设置面包屑
 			$(".credit-breadcrumb").html(liHtml);
-			$(".credit-breadcrumb").find("li:last").find("a").attr("style","class:blue;");
+			$(".credit-breadcrumb").find("li:last").find("a").attr("style","color:blue;");
 			loadingBox.hideLoading();
 		},error:function(error){
 		    loadingBox.hideLoading();
@@ -1194,29 +1201,3 @@ function _setOptions(dom, data, textField, valueField, code){
 		}
 	}
 }
-
-/**
- * 上传图片
- */
-function ajaxFileUpload() {  
-	debugger;
-	loadingBox.showLoading();
-	$.ajaxFileUpload({  
-		url : "http://"+window.location.host+"/p2p-webapp/UploadPicture",// servlet请求路径  
-		secureuri : false,  
-		fileElementId : 'profession_img_v',// 上传控件的id  
-		dataType : 'json', 
-		data : {username : $("#username").val()},
-		success : function(data, status) {  
-			loadingBox.hideLoading();
-			debugger;
-//			if(data.msg) {  
-//				alert(data.msg);  
-//			}  
-		},  
-		error : function(data, status, e) {  
-			loadingBox.hideLoading();
-//			messageBox.createMessageDialog("提示", e, "", "", "error");
-		}  
-	});  
-} 
