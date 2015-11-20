@@ -172,7 +172,7 @@
 										<!--按钮区域开始-->
 										<div class="credit-toolbar">
 											<div style="display: inline-block;">
-												<button class="grid-toobar-btn search-btn" name="reviewSearchBtn" type="button">查询</button>
+												<button class="grid-toobar-btn search-btn guide-btn" name="reviewSearchBtn" type="button">查询</button>
 												<button class="grid-toobar-btn clear-btn" name="reviewClearBtn" type="button">重置</button>
 											</div>
 										</div>

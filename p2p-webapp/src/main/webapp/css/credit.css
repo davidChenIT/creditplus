@@ -2054,7 +2054,7 @@ h3{
 
 
 
-/**grid头上的按钮**/
+/**所有按钮颜色**/
 .grid-toobar-btn{
 	background: #fff;
 	color: #666;
@@ -2069,6 +2069,14 @@ h3{
 	font-weight: bold;
 	border-radius: 4px;
 }
+
+/**引导按钮的背景颜色和字体**/
+.guide-btn{
+    background-color: #3e89d4;
+    border-color: #3e89d4;
+    color:#fff;
+}
+
 .add-btn{
     margin-left: -5px;
 }

@@ -175,7 +175,7 @@
 										<!--按钮区域开始-->
 										<div class="credit-toolbar">
 											<div style="display: inline-block;">
-												<button class="grid-toobar-btn search-btn" name="rankPollSeachBtn" type="button">查询</button>
+												<button class="grid-toobar-btn search-btn guide-btn" name="rankPollSeachBtn" type="button">查询</button>
 												<button class="grid-toobar-btn clear-btn" name="clearRankPollConditionBtn" type="button">重置</button>
 											</div>
 										</div>
@@ -183,7 +183,7 @@
 								
 										<!-- 排名池grid区域开始 -->
 										<div style="display: inline-block;margin-top: -40px;">
-											<button class="grid-toobar-btn" name="publishTenderBtn" type="button" style="margin-left: -5px;">发 标</button>
+											<button class="grid-toobar-btn guide-btn" name="publishTenderBtn" type="button" style="margin-left: -5px;">发 标</button>
 											<span style="margin-left: 20px;">标的金额：</span><span name="publishTenderMoney">0</span>
 										</div>
 										<div class="row">

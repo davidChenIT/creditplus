@@ -63,7 +63,7 @@
 											</div>
 											<div class="credit-toolbar" style="display: inline-block;">
 												<div>
-													<button class="grid-toobar-btn search-btn" id="searchRoleListBtn" type="button">查询</button>
+													<button class="grid-toobar-btn search-btn guide-btn" id="searchRoleListBtn" type="button">查询</button>
 												</div>
 											</div>
 										</div>	

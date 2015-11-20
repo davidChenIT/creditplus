@@ -171,7 +171,7 @@
 										<!-- 按鈕区域 -->
 										<div class="credit-toolbar">
 											<div style="display: inline-block;">
-												<button class="grid-toobar-btn search-btn" name="firstTrialSearhBtn" type="button">查询</button>
+												<button class="grid-toobar-btn search-btn guide-btn" name="firstTrialSearhBtn" type="button">查询</button>
 												<button class="grid-toobar-btn clear-btn" name="firstTrialClearBtn" type="button">重置</button>
 											</div>
 										</div>

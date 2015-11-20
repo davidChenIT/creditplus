@@ -105,7 +105,7 @@
 													</label>												
 													<div class="credit-toolbar" style="display: inline-block;">
 														<div >
-															<button class="grid-toobar-btn update-btn" id="changePasswordBtn" type="button">修改密码</button>
+															<button class="grid-toobar-btn update-btn guide-btn" id="changePasswordBtn" type="button">修改密码</button>
 														</div>
 													</div>
 												</div>																								

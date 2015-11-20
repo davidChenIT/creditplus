@@ -593,6 +593,10 @@ function clearDomVal(areaDivId){
 		$(input).val("");
 	});
 	
+	$("#"+areaDivId).find("select").each(function(i,select){
+		$(select).val("");
+	});
+	
 	$("#"+areaDivId).find("textarea").each(function(i,textarea){
 		$(textarea).text("");
 	});
