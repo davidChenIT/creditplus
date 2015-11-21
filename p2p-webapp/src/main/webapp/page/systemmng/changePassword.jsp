@@ -44,8 +44,8 @@
 							<!-- 内容区域start -->
 							<div class="tabs-body">
 								<!-- 页签1 -->
-								<div tabid="userPassWord" class="tabs-body-item creditPageContext credit-validator" creditpagecontextid="page_85823101">
-									<div>
+								<div  tabid="userPassWord" class="tabs-body-item creditPageContext credit-validator" creditpagecontextid="page_85823101">
+									<div id="changeUserPassWordDiv">
 									    <!-- 条件区域开始 -->
 										<div class="row">
 											<div class="credit-spacecontrol col-xs-12 col-sm-4">
@@ -57,7 +57,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="password" name="oldPassword" >
+															<input type="password" name="oldPassword" validation="required">
 														</div>
 													</div>
 												</div>
@@ -73,7 +73,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="password" name="password" >
+															<input type="password" name="password" validation="required">
 														</div>
 													</div>
 												</div>
@@ -89,7 +89,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="password" name="checkPassword" >
+															<input type="password" name="checkPassword" validation="required">
 														</div>
 													</div>
 												</div>																								

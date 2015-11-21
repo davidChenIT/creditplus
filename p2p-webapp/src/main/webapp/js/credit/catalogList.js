@@ -252,13 +252,27 @@ $(function(){
     		}
     		
     		if(!item.catalogName || !$.trim(item.catalogName)){
-    			messageBox.createMessageDialog("提示","第" + i + "行名称不能为空！","","","warning");
+    			messageBox.createMessageDialog("提示","第" + (i+1) + "行的“栏目名称”不能为空！","","","warning");
     			checkFlag = false;
+    			return false;
     		}
+    		
+    		if(!item.orderNumber || !$.trim(item.orderNumber)){
+    			messageBox.createMessageDialog("提示","第" + (i+1) + "行的“顺序”不能为空！","","","warning");
+    			checkFlag = false;
+    			return false;
+    		}else{
+    			if(!domValid.number(item.orderNumber)){
+    				messageBox.createMessageDialog("提示","第" + (i+1) + "行的“顺序”只能输入整数！","","","warning");
+    				checkFlag = false;
+    				return false;
+    			}
+    		}
+    		
     	});
     	
     	if(!checkFlag){
-    		return;
+    		return false;
     	}
     	
     	var request_data={};

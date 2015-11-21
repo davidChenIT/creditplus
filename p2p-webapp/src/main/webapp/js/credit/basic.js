@@ -523,17 +523,17 @@ var domValid = {
  * 校验公共函数
  * @param elemName
  * @param tip
- * @param parantsDivId
+ * @param parentDivId
  * @param rules
  */
-function validateDom(elemName, parantsDivId){
+function validateDom(elemName, parentDivId){
 	var value = "";
 	var tip = "";
 	var result = true;
 	//取dom
 	var elementDom;
-	if(parantsDivId){
-		elementDom = $("#"+parantsDivId).find("[name='"+elemName+"']");
+	if(parentDivId){
+		elementDom = $("#"+parentDivId).find("[name='"+elemName+"']");
 	}else{
 		elementDom = $("[name='"+ elemName +"']");
 	}
@@ -564,7 +564,7 @@ function validateDom(elemName, parantsDivId){
 		//校验失败， value重置为空
 		if(!result){
 			value = "";
-			validErrorTip(elemName, elementDom, tip);
+			validErrorTip(elemName, elementDom, tip,parentDivId);
 			break;
 		}
 	}
@@ -576,13 +576,22 @@ function validateDom(elemName, parantsDivId){
  * @param elemName
  * @param content
  */
-function validErrorTip(elemName, elementDom, tip){
-	var elemNameTipLength = $("span[name='" + elemName + "Tip']").length;
+function validErrorTip(elemName, elementDom, tip,parentDivId){
+	var elemNameTipLength;
+	if(parentDivId){
+		elemNameTipLength=$("#"+parentDivId).find("span[name='" + elemName + "Tip']").length;
+	}else{
+		elemNameTipLength=$("span[name='" + elemName + "Tip']").length;
+	}
     if(elemNameTipLength == 0){
 	    elementDom.parent().after("<span name='" + elemName + "Tip' style='color:red;'>" + tip + "</span>");
     }
     elementDom.change(function(e){
-  	    $("span[name='" + elemName + "Tip']").remove();
+    	if(parentDivId){
+    		$("#"+parentDivId).find("span[name='" + elemName + "Tip']").remove();
+    	}else{
+    		$("span[name='" + elemName + "Tip']").remove();
+    	}
 	    $(this).unbind(e);
     });
 }

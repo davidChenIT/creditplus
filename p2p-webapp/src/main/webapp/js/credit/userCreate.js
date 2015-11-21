@@ -32,15 +32,11 @@ $(function(){
 	//下拉框数据填充
 	selectRender("userCreateForm");
 	debugger;
-	var roleData = "";
-	var roleJson = {};
 	var roleSelectObj=gridSelectColRender("roleService","getRoleList",{},"roleId","roleName");
-	roleData=roleSelectObj.jsonStr;
-	roleJson=roleSelectObj.jsonArray;
 	//构造grid
     $("#roleList4CreateGrid").jqGrid({
 			autowidth:true,
-			colNames:['<input type="checkbox" class="role-create-selall-cbox">',"角色","开始时间","结束时间"],
+			colNames:['<input type="checkbox" class="role-create-selall-cbox">',"<span style='color:red;'>*</span>角色","<span style='color:red;'>*</span>开始时间","<span style='color:red;'>*</span>结束时间"],
 			colModel :[
 			    {
 			    	name:'role_sel_create',
@@ -53,15 +49,16 @@ $(function(){
 						   return '<input type="checkbox" class="role-create-sel-cbox">';
 						}
 			    },
-				{name:'roleName',
-					index:'roleName',
+				{name:'roleId',
+					index:'roleId',
 					align:'center',
 					sortable:false,
 					editable:true,
 					width:"31%",
 					edittype:'select',
+					formatter:'select',
 					editrules:{required:true},
-					editoptions:{value:roleData}
+					editoptions:{value:roleSelectObj.jsonStr}
 					
 				},
 				{name:'start_date', 
@@ -126,7 +123,7 @@ $(function(){
         //获得新添加行的行号（数据编号）  
         var newrowid = rowid+1;  
         var dataRow = {    
-        	rolename: "",  
+        	roleName: "",  
         	start_date:"",  
         	end_date:''
         };      
@@ -190,36 +187,38 @@ $(function(){
     	debugger;
     	var checkPass = true;
         var request_data={};
-        var username = validateRequire("usernamecreate","请输入用户名！");
-		if(username){			
-        	request_data.username=username;
-        }else{
-        	checkPass = false;
-        }
-		
-    	request_data.enable=$("select[name='enable']").val();
-        var password = validateRequire("password","请输入密码！");
-		if(password){			
-        	request_data.password=password;
-        }else{
-        	checkPass = false;
-        }
-		
-        var checkPassword = validateRequire("checkPassword","请确认密码！");
-		if(password!=checkPassword){
-	        $("input[name='checkPassword']").val("");
-	        validateRequire("checkPassword","请密码与确认密码不一致！");
-	        $("input[name='checkPassword']").val(checkPassword);
-	        checkPass = false;
-        }
-		
-		var remark = $("textarea[name='remark']").val();
-		if(remark && $.trim(remark)){
-        	request_data.remark=remark;
+        
+        //1. 获取所有的必填项
+		var validDoms = $("#userCreateForm").find("[validation]");
+		//2. 循环校验
+		if(validDoms.length > 0){
+			var isFocusError = false;
+			$.each(validDoms,function(i){
+				var validDomName = $(validDoms[i]).attr('name');
+				var elementVal = validateDom(validDomName, "userCreateForm");
+				if(elementVal){
+					request_data[validDomName] = elementVal;
+				}else{
+					if(!isFocusError){
+						$(validDoms[i]).focus();
+						isFocusError = true;
+					}
+					checkPass = false;
+				}
+			});	
+		}
+		if(!checkPass){
+			return false;
+		}else{
+			if(request_data.password!=request_data.checkPassword){
+				validErrorTip("checkPassword", $("#userCreateForm").find("[name='checkPassword']"),"密码与确认密码不一致！","userCreateForm")
+		        return false;
+	        }
 		}
 		
-		if(!checkPass){
-			return;
+		var remark = $("#userCreateForm").find("textarea[name='remark']").val();
+		if(remark && $.trim(remark)){
+        	request_data.remark=remark;
 		}
 		
     	var rowids = $("#roleList4CreateGrid").jqGrid('getDataIDs');
@@ -231,21 +230,52 @@ $(function(){
       		var inputVal=$(input).val();
       		rowData[inputName]=inputVal;
       	  });
+      	  
+      	  $("#roleList4CreateGrid").find("tr[id='"+rowids[i]+"']").find("select").each(function(i,select){
+      	    var selectName=$(select).attr("name");
+      		var selectVal=$(select).val();
+      		rowData[selectName]=selectVal;
+      	  });
+      	  
       	  $("#roleList4CreateGrid").find("tr[id='"+rowids[i]+"']").find("textarea").each(function(i,textarea){
       	    var textareaName=$(textarea).attr("name");
       		var textareaVal=$(textarea).val();
       		rowData[textareaName]=textareaVal;
       	  });
       	  
-		  $.each(roleJson,function(i,item){
-			  if(item.roleName == rowData.roleName){
-				  rowData.roleId = item.roleId;
-				  return true;
-			  }
-		  });
       	  rowData.ur_id = null;
       	  grid_data.push(rowData);
       	}    	
+    	
+    	$.each(grid_data,function(i,item){
+    		if(!item.roleId || !$.trim(item.roleId)){
+    			messageBox.createMessageDialog("提示","角色信息中的第" + (i+1) + "行的“角色”不能为空！","","","warning");
+    			checkPass = false;
+    			return false;
+    		}
+    		
+    		if(!item.start_date || !$.trim(item.start_date)){
+    			messageBox.createMessageDialog("提示","角色信息中的第" + (i+1) + "行的“开始时间”不能为空！","","","warning");
+    			checkPass = false;
+    			return false;
+    		}
+    		if(!item.end_date || !$.trim(item.end_date)){
+    			messageBox.createMessageDialog("提示","角色信息中的第" + (i+1) + "行的“结束时间”不能为空！","","","warning");
+    			checkPass = false;
+    			return false;
+    		}
+    		
+    		if((new Date(item.start_date))>(new Date(item.end_date))){
+    			messageBox.createMessageDialog("提示","角色信息中的第" + (i+1) + "行的“开始时间”必须小于“结束时间”！","","","warning");
+    			checkPass = false;
+    			return false;
+    		}
+    	});
+    	
+    	if(!checkPass){
+    		return false;
+    	}
+    	
     	request_data.griddata = grid_data;
 		publicSaveAjax("userService","addUser",JSON.stringify(request_data),"userTab","userCreate","#searchUserListBtn");
     });    

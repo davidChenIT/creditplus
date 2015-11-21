@@ -16,7 +16,6 @@ $(function(){
 		success: function(data){
 			data.checkPassword = data.password;
 			setValues("userUpdateForm",data,false);
-//			$("select[name='enable']").val(data.enable);
 			//下拉框数据填充
 			selectRender("userUpdateForm");
 			created_by = data.created_by;
@@ -27,31 +26,7 @@ $(function(){
 	});
 	debugger;
 	
-	var roleData = "";
-	var roleJson = {};
 	var roleSelectObj=gridSelectColRender("roleService","getRoleList",{},"roleId","roleName");
-	roleData=roleSelectObj.jsonStr;
-	roleJson=roleSelectObj.jsonArray;
-//	$.ajax({ 
-//		url: serviceAddress,
-//		datatype:'json',
-//		method:"post",
-//	    async:false,
-//		data:{"module":"roleService",
-//			  "method":"getRoleList",
-//			  "request_data":JSON.stringify({"userId":userId})
-//		},			
-//		success: function(data){
-//			roleJson = data;
-//			$.each(data,function(i,item){
-//				roleData += item.roleId + ":" + item.roleName + ";";
-//			});
-//			roleData = roleData.substring(0,roleData.length -1);
-//		},error:function(error){
-//			messageBox.createMessageDialog("提示",jQuery.parseJSON(error.responseText).cause.message,"","","error");
-//		}
-//	});
-
 	//构造grid
     $("#roleList4UpdateGrid").jqGrid({
 		url:serviceAddress,
@@ -75,15 +50,16 @@ $(function(){
 					   return '<input type="checkbox" class="role-update-sel-cbox">';
 					}
 		    },
-			{name:'role_name',
-			 index:'role_name',
+			{name:'roleId',
+			 index:'roleId',
 			 align:'center',
 			 sortable:false,
 			 editable:true,
 			 width:"31%",
 			 edittype:'select',
+			 formatter:'select',
 			 editrules:{required:true},
-			 editoptions:{value:roleData}
+			 editoptions:{value:roleSelectObj.jsonStr}
 			},
 			{name:'start_date', 
 			 index:'start_date',
@@ -128,7 +104,7 @@ $(function(){
         //获得新添加行的行号（数据编号）  
         var newrowid = rowid+1;  
         var dataRow = {    
-        	rolename: "",  
+        	role_name: "",  
         	start_date:"",  
         	end_date:''
         };      
@@ -190,35 +166,43 @@ $(function(){
     $("[name='saveUser4UpdateBtn']").click(function(){
      	var checkPass = true;
         var request_data={};
-        var username = $("span[name='username']").text();
-            request_data.userId=userId;
-        	request_data.username=username;	
-        	request_data.enable=$("select[name='enable']").val();
-        	request_data.created_by = created_by;
-        	request_data.created_date = created_date;
+        var username = $("#userUpdateForm").find("span[name='username']").text();
+        request_data.userId=userId;
+    	request_data.username=username;	
+    	request_data.created_by = created_by;
+    	request_data.created_date = created_date;
 
-        var password = validateRequire("password","请输入密码！");
-		if(password){			
-        	request_data.password=password;
-        }else{
-        	checkPass = false;
-        }
-		
-        var checkPassword = validateRequire("checkPassword","请确认密码！");
-		if(password!=checkPassword){
-	        $("input[name='checkPassword']").val("");
-	        validateRequire("checkPassword","请密码与确认密码不一致！");
-	        $("input[name='checkPassword']").val(checkPassword);
-	        checkPass = false;
-        }
-		
-		var remark = $("textarea[name='remark']").val();
+    	//1. 获取所有的必填项
+		var validDoms = $("#userUpdateForm").find("[validation]");
+		//2. 循环校验
+		if(validDoms.length > 0){
+			var isFocusError = false;
+			$.each(validDoms,function(i){
+				var validDomName = $(validDoms[i]).attr('name');
+				var elementVal = validateDom(validDomName, "userUpdateForm");
+				if(elementVal){
+					request_data[validDomName] = elementVal;
+				}else{
+					if(!isFocusError){
+						$(validDoms[i]).focus();
+						isFocusError = true;
+					}
+					checkPass = false;
+				}
+			});	
+		}
+		if(!checkPass){
+			return false;
+		}else{
+			if(request_data.password!=request_data.checkPassword){
+				validErrorTip("checkPassword", $("#userUpdateForm").find("[name='checkPassword']"),"密码与确认密码不一致！","userUpdateForm")
+		        return false;
+	        }
+		}
+    		
+		var remark = $("#userUpdateForm").find("textarea[name='remark']").val();
 		if(remark && $.trim(remark)){
         	request_data.remark=remark;
-		}
-		
-		if(!checkPass){
-			return;
 		}
 		
     	var rowids = $("#roleList4UpdateGrid").jqGrid('getDataIDs');
@@ -230,20 +214,48 @@ $(function(){
       		var inputVal=$(input).val();
       		rowData[inputName]=inputVal;
       	  });
+      	  $("#roleList4UpdateGrid").find("tr[id='"+rowids[i]+"']").find("select").each(function(i,select){
+      	    var selectName=$(select).attr("name");
+      		var selectVal=$(select).val();
+      		rowData[selectName]=selectVal;
+      	  });
       	  $("#roleList4UpdateGrid").find("tr[id='"+rowids[i]+"']").find("textarea").each(function(i,textarea){
       	    var textareaName=$(textarea).attr("name");
       		var textareaVal=$(textarea).val();
       		rowData[textareaName]=textareaVal;
       	  });
-		  $.each(roleJson,function(i,item){
-			  if(item.roleName == rowData.role_name){
-				  rowData.roleId = item.roleId;
-				  return true;
-			  }
-		  });
       	  rowData.ur_id = null;
       	  grid_data.push(rowData);
       	}    	
+    	
+    	$.each(grid_data,function(i,item){
+    		if(!item.roleId || !$.trim(item.roleId)){
+    			messageBox.createMessageDialog("提示","角色信息中的第" + (i+1) + "行的“角色”不能为空！","","","warning");
+    			checkPass = false;
+    			return false;
+    		}
+    		
+    		if(!item.start_date || !$.trim(item.start_date)){
+    			messageBox.createMessageDialog("提示","角色信息中的第" + (i+1) + "行的“开始时间”不能为空！","","","warning");
+    			checkPass = false;
+    			return false;
+    		}
+    		if(!item.end_date || !$.trim(item.end_date)){
+    			messageBox.createMessageDialog("提示","角色信息中的第" + (i+1) + "行的“结束时间”不能为空！","","","warning");
+    			checkPass = false;
+    			return false;
+    		}
+    		
+    		if((new Date(item.start_date))>(new Date(item.end_date))){
+    			messageBox.createMessageDialog("提示","角色信息中的第" + (i+1) + "行的“开始时间”必须小于“结束时间”！","","","warning");
+    			checkPass = false;
+    			return false;
+    		}
+    	});
+    	
+    	if(!checkPass){
+    		return false;
+    	}
 		
     	request_data.griddata = grid_data;
 		publicSaveAjax("userService","updateUser",JSON.stringify(request_data),"userTab","userUpdate","#searchUserListBtn");

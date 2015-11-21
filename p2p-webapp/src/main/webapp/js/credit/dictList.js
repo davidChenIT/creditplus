@@ -260,6 +260,13 @@ $(function(){
     		var inputVal=$(input).val();
     		rowData[inputName]=inputVal;
     	  });
+    	  
+    	  $("#dictListGrid").find("tr[id='"+rowids[i]+"']").find("select").each(function(i,select){
+      	    var selectName=$(select).attr("name");
+      		var selectVal=$(select).val();
+      		rowData[selectName]=selectVal;
+      	  });
+    	  
     	  $("#dictListGrid").find("tr[id='"+rowids[i]+"']").find("textarea").each(function(i,textarea){
     	    var textareaName=$(textarea).attr("name");
     		var textareaVal=$(textarea).val();
@@ -276,15 +283,42 @@ $(function(){
     		}else{
     			item.dictId = dictId * 1;
     		}
-    		
+    		var rowId=i+1;
     		if(!item.name || !$.trim(item.name)){
-    			messageBox.createMessageDialog("提示","第" + i + "行名称不能为空！","","","warning");
+    			messageBox.createMessageDialog("提示","第" + rowId + "行的“名称”不能为空！","","","warning");
     			checkFlag = false;
+    			return false;
     		}
+    		if(!item.code || !$.trim(item.code)){
+    			messageBox.createMessageDialog("提示","第" +rowId+ "行的“编码”不能为空！","","","warning");
+    			checkFlag = false;
+    			return false;
+    		}
+			if(!item.type || !$.trim(item.type)){
+				messageBox.createMessageDialog("提示","第" +rowId+ "行的“类型”不能为空！","","","warning");
+				checkFlag = false;
+				return false;
+			}
+			if(!item.state || !$.trim(item.state)){
+				messageBox.createMessageDialog("提示","第" +rowId+ "行的“状态”不能为空！","","","warning");
+				checkFlag = false;
+				return false;
+			}
+			if(!item.orderNumber || !$.trim(item.orderNumber)){
+				messageBox.createMessageDialog("提示","第" +rowId+ "行的“顺序”不能为空！","","","warning");
+				checkFlag = false;
+				return false;
+			}else{
+				if(!domValid.number(item.orderNumber)){
+    				messageBox.createMessageDialog("提示","第" + (i+1) + "行的“顺序”只能输入整数！","","","warning");
+    				checkFlag = false;
+    				return false;
+    			}
+			}
     	});
     	
     	if(!checkFlag){
-    		return;
+    		return false;
     	}
     	
     	var request_data={};

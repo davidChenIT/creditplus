@@ -5,35 +5,32 @@ $(function(){
     	debugger;
     	var checkPass = true;
         var request_data={};
-        var oldPassword = validateRequire("oldPassword","请输入旧密码！");
-		if(oldPassword){			
-        	request_data.oldPassword=oldPassword;
-        }else{
-        	checkPass = false;
-        }
-		
-        var password = validateRequire("password","请输入新密码！");
-		if(password){			
-        	request_data.password=password;
-        }else{
-        	checkPass = false;
-        }
-		
-        var checkPassword = validateRequire("checkPassword","请确认新密码！");
-		if(password!=checkPassword){
-	        $("input[name='checkPassword']").val("");
-	        validateRequire("checkPassword","输入密码与确认密码不一致！");
-	        $("input[name='checkPassword']").val(checkPassword);
-	        checkPass = false;
-        }
-		
-		var remark = $("textarea[name='remark']").val();
-		if(remark && $.trim(remark)){
-        	request_data.remark=remark;
+		//1. 获取所有的必填项
+		var validDoms = $("#changeUserPassWordDiv").find("[validation]");
+		//2. 循环校验
+		if(validDoms.length > 0){
+			var isFocusError = false;
+			$.each(validDoms,function(i){
+				var validDomName = $(validDoms[i]).attr('name');
+				var elementVal = validateDom(validDomName, "changeUserPassWordDiv");
+				if(elementVal){
+					request_data[validDomName] = elementVal;
+				}else{
+					if(!isFocusError){
+						$(validDoms[i]).focus();
+						isFocusError = true;
+					}
+					checkPass = false;
+				}
+			});	
 		}
-		
 		if(!checkPass){
-			return;
+			return false;
+		}else{
+			if(request_data.password!=request_data.checkPassword){
+				validErrorTip("checkPassword", $("#changeUserPassWordDiv").find("[name='checkPassword']"),"新密码与确认密码不一致！","changeUserPassWordDiv")
+		        return false;
+	        }
 		}
 		//调用服务
 		publicSaveAjax("userService","changePassword",JSON.stringify(request_data),"","","","修改密码成功！",function(){setValues("userPassWordTab",{});});
