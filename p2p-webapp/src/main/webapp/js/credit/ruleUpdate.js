@@ -239,20 +239,20 @@ $(function(){
     	debugger;
     	var request_data={};
 		var checkPass = true;
-    	//1. 获取所有的必填项
-		var requiredDoms = $("#ruleUpdateForm").find("[validtion*='required']");
 		var ruleInfo={};
+		//1. 获取所有的必填项
+		var validDoms = $("#ruleUpdateForm").find("[validation]");
 		//2. 循环校验
-		if(requiredDoms.length > 0){
+		if(validDoms.length > 0){
 			var isFocusError = false;
-			$.each(requiredDoms,function(i,dom){
-				var validDomName = $(dom).attr('name');
-				var elementVal = validateRequire(validDomName,"此项为必填！","ruleUpdateForm");
+			$.each(validDoms,function(i){
+				var validDomName = $(validDoms[i]).attr('name');
+				var elementVal = validateDom(validDomName, "ruleUpdateForm");
 				if(elementVal){
 					ruleInfo[validDomName] = elementVal;
 				}else{
 					if(!isFocusError){
-						$(dom).focus();
+						$(validDoms[i]).focus();
 						isFocusError = true;
 					}
 					checkPass = false;

@@ -211,20 +211,21 @@ $(function(){
     	debugger;
     	var request_data={};
 		var checkPass = true;
-    	//1. 获取所有的必填项
-		var requiredDoms = $("#creditScoreUpdateForm").find("[validtion*='required']");
+		//1. 获取所有的必填项
 		var creditInfo={};
+		//1. 获取所有的必填项
+		var validDoms = $("#creditScoreUpdateForm").find("[validation]");
 		//2. 循环校验
-		if(requiredDoms.length > 0){
+		if(validDoms.length > 0){
 			var isFocusError = false;
-			$.each(requiredDoms,function(i,dom){
-				var validDomName = $(dom).attr('name');
-				var elementVal = validateRequire(validDomName,"此项为必填！","creditScoreUpdateForm");
+			$.each(validDoms,function(i){
+				var validDomName = $(validDoms[i]).attr('name');
+				var elementVal = validateDom(validDomName, "creditScoreUpdateForm");
 				if(elementVal){
 					creditInfo[validDomName] = elementVal;
 				}else{
 					if(!isFocusError){
-						$(dom).focus();
+						$(validDoms[i]).focus();
 						isFocusError = true;
 					}
 					checkPass = false;
@@ -266,6 +267,10 @@ $(function(){
     				messageBox.createMessageDialog("提示","刻度配置信息中的第"+(i+1)+"行的“序号”不能为空！","","","warning");
     				isTrue=false;
     				break;    
+    			}else if(!domValid.number(rowObj.sequence_num)){
+    				messageBox.createMessageDialog("提示","刻度配置信息中的第"+(i+1)+"行的“序号”必须是整数！","","","warning");
+    				isTrue=false;
+    				break;
     			}else if(!rowObj.arithmetic){      
     				messageBox.createMessageDialog("提示","刻度配置信息中的第"+(i+1)+"行的“运算符”不能为空！","","","warning");
     				isTrue=false;
@@ -276,6 +281,10 @@ $(function(){
     				break;
     			}else if(!rowObj.score){
     				messageBox.createMessageDialog("提示","刻度配置信息中的第"+(i+1)+"行的“分数”不能为空！","","","warning");
+    				isTrue=false;
+    				break;
+    			}else if(!domValid.number(rowObj.score)){
+    				messageBox.createMessageDialog("提示","刻度配置信息中的第"+(i+1)+"行的“分数”必须是整数！","","","warning");
     				isTrue=false;
     				break;
     			}

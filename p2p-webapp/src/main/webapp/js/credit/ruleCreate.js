@@ -203,20 +203,20 @@ $(function(){
     	debugger;
     	var request_data={};
 		var checkPass = true;
-    	//1. 获取所有的必填项
-		var requiredDoms = $("#ruleCreateForm").find("[validtion*='required']");
 		var ruleInfo={};
+		//1. 获取所有的必填项
+		var validDoms = $("#ruleCreateForm").find("[validation]");
 		//2. 循环校验
-		if(requiredDoms.length > 0){
+		if(validDoms.length > 0){
 			var isFocusError = false;
-			$.each(requiredDoms,function(i,dom){
-				var validDomName = $(dom).attr('name');
-				var elementVal = validateRequire(validDomName,"此项为必填！","ruleCreateForm");
+			$.each(validDoms,function(i){
+				var validDomName = $(validDoms[i]).attr('name');
+				var elementVal = validateDom(validDomName, "ruleCreateForm");
 				if(elementVal){
 					ruleInfo[validDomName] = elementVal;
 				}else{
 					if(!isFocusError){
-						$(dom).focus();
+						$(validDoms[i]).focus();
 						isFocusError = true;
 					}
 					checkPass = false;
@@ -271,7 +271,8 @@ $(function(){
     				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“值”不能为空！","","","warning");
     				isTrue=false;
     				break;
-    			}else if(!rowObj.arithmetic){
+    			}
+    			else if(!rowObj.arithmetic){
     				messageBox.createMessageDialog("提示","维度信息中的第"+(i+1)+"行的“与或运算”不能为空！","","","warning");
     				isTrue=false;
     				break;

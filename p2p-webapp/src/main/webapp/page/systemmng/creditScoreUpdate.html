@@ -11,7 +11,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select name="dimension_name" validtion='required' widget="dropdown" is_cache="true" dictionary_type="dimension_name">
+							<select name="dimension_name" validation='required' widget="dropdown" is_cache="true" dictionary_type="dimension_name">
 							<option value="">请选择</option>
 							</select>
 						</div>
@@ -28,7 +28,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select name="model_name" validtion='required' widget="dropdown" is_cache="true" dictionary_type="model_name">
+							<select name="model_name" validation='required' widget="dropdown" is_cache="true" dictionary_type="model_name">
 							<option value="">请选择</option>
 							</select>
 						</div>
@@ -45,7 +45,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="proportion" validtion='required'>						
+							<input type="text" name="proportion" validation='required number'>						
 						</div>
 					</div>
 				</div>
@@ -61,7 +61,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select name="dimension_table" validtion='required' widget="dropdown" is_cache="true" dictionary_type="dimension_table" trigger="dimension_column_4update_cascade">
+							<select name="dimension_table" validation='required' widget="dropdown" is_cache="true" dictionary_type="dimension_table" trigger="dimension_column_4update_cascade">
 							<option value="">请选择</option>
 							</select>					
 						</div>
@@ -78,7 +78,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select name="dimension_column" id="dimension_column_4update_cascade" params_key="parent_code" parent_type="dimension_table" validtion='required' widget="dropdown" is_cache="true" dictionary_type="dimension_column">
+							<select name="dimension_column" id="dimension_column_4update_cascade" params_key="parent_code" parent_type="dimension_table" validation='required' widget="dropdown" is_cache="true" dictionary_type="dimension_column">
 							<option value="">请选择</option>
 							</select>					
 						</div>
@@ -95,7 +95,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select name="fact_table" validtion='required' widget="dropdown" is_cache="true" dictionary_type="fact_table" trigger="fact_column_4update_cascade">
+							<select name="fact_table" validation='required' widget="dropdown" is_cache="true" dictionary_type="fact_table" trigger="fact_column_4update_cascade">
 							<option value="">请选择</option>
 							</select>					
 						</div>
@@ -112,7 +112,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select name="fact_column" validtion='required' widget="dropdown" is_cache="true" dictionary_type="fact_column"
+							<select name="fact_column" validation='required' widget="dropdown" is_cache="true" dictionary_type="fact_column"
 							id="fact_column_4update_cascade" params_key="parent_code" parent_type="fact_table">
 							<option value="">请选择</option>
 							</select>					
