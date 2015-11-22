@@ -88,13 +88,7 @@ $(function(){
 				}else{
 				   treeObj.expandNode(treeNode, true, false, false,false);
 				}
-			},
-			//勾选节点事件
-			onCheck:function(event, treeId, treeNode){
-				debugger;
 			}
-			
-			
 		}
 
 	},zTreeNodes = resList;
@@ -105,22 +99,32 @@ $(function(){
      	var checkPass = true;
         var request_data={};
             request_data.roleId=roleId;
-        	request_data.enable=$("select[name='enable']").val();
         	request_data.created_by = created_by;
         	request_data.created_date = created_date;
 
-        var roleName = validateRequire("rolenameupdate","请输入密码！");
-		if(roleName){			
-        	request_data.roleName=roleName;	
-        }else{
-        	checkPass = false;
-        }
-
-		if(!checkPass){
-			return;
+    	//1. 获取所有的必填项
+		var validDoms = $("#roleUpdateForm").find("[validation]");
+		//2. 循环校验
+		if(validDoms.length > 0){
+			var isFocusError = false;
+			$.each(validDoms,function(i){
+				var validDomName = $(validDoms[i]).attr('name');
+				var elementVal = validateDom(validDomName, "roleUpdateForm");
+				if(elementVal){
+					request_data[validDomName] = elementVal;
+				}else{
+					if(!isFocusError){
+						$(validDoms[i]).focus();
+						isFocusError = true;
+					}
+					checkPass = false;
+				}
+			});	
 		}
-		
-		var remark = $("textarea[name='remark']").val();
+		if(!checkPass){
+			return false;
+		}
+		var remark = $("#roleUpdateForm").find("textarea[name='remark']").val();
 		if(remark && $.trim(remark)){
         	request_data.remark=remark;
 		}

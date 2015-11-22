@@ -12,7 +12,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="rolenameupdate" >
+							<input type="text" name="roleName" validation="required">
 						</div>
 					</div>
 				</div>
@@ -26,7 +26,8 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select name="enable" widget="dropdown" is_cache="true" dictionary_type="enable">
+							<select name="enable" widget="dropdown" is_cache="true" dictionary_type="enable" validation="required">
+							<option value="">请选择</option>
 							</select>						
 						</div>
 					</div>
@@ -46,16 +47,19 @@
 					</div>
 				</div>
 			</div>
-			<h3>权限点</h3>	
-			<div id="catalog_ztree_role_update" class="ztree" style="width: 100%;border: 1px solid #F3F7F8;">
-				
-			</div>			
-			<div class="credit-toolbar" style="margin-top: 5px;margin-bottom: 30px;">
-				<div style="display: inline-block;">
-					<button class="grid-toobar-btn guide-btn" name="saveRole4UpdateBtn" type="button">保存</button>
-					<button class="grid-toobar-btn" name="closeRole4UpdateBtn" onclick="removeTabItem('roleTab','roleUpdate');" type="button">取消</button>
-				</div>
-			</div>														
 		</div>
+		<h3>权限点</h3>
+		<div class="row">
+		    <div id="catalog_ztree_role_update" class="ztree" style="width: 100%;border: 1px solid #F3F7F8;">
+				
+			</div>	
+		</div>
+		
+		<div class="credit-toolbar" style="margin-top: 5px;margin-bottom: 30px;">
+			<div style="display: inline-block;">
+				<button class="grid-toobar-btn guide-btn" name="saveRole4UpdateBtn" type="button">保存</button>
+				<button class="grid-toobar-btn" name="closeRole4UpdateBtn" onclick="removeTabItem('roleTab','roleUpdate');" type="button">取消</button>
+			</div>
+		</div>	
 	</div>
 </div>

@@ -12,7 +12,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input type="text" name="rolenamecreate" >
+							<input type="text" name="roleName" validation="required">
 						</div>
 					</div>
 				</div>
@@ -26,7 +26,8 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select name="enable" widget="dropdown" is_cache="true" dictionary_type="enable">
+							<select name="enable" widget="dropdown" is_cache="true" dictionary_type="enable" validation="required">
+							<option value="">请选择</option>
 							</select>						
 						</div>
 					</div>
@@ -47,10 +48,11 @@
 				</div>
 			</div>
 		</div>
-	    <!-- 左侧栏目树区域 -->
-		<h3>权限点</h3>	
-		<div id="catalog_ztree_role_create" class="ztree" style="width: 100%;border: 1px solid #F3F7F8;">
-		
+		<h3>权限点</h3>
+		<div class="row">	
+			<div id="catalog_ztree_role_create" class="ztree" style="width: 100%;border: 1px solid #F3F7F8;">
+			
+			</div>
 		</div>
 		<div class="credit-toolbar" style="margin-top: 5px;margin-bottom: 30px;">
 			<div style="display: inline-block;">
