@@ -14,9 +14,11 @@ $(function(){
 			var isFocusError = false;
 			$.each(validDoms,function(i){
 				var validDomName = $(validDoms[i]).attr('name');
-				var elementVal = validateDom(validDomName, "roleCreateForm");
-				if(elementVal){
-					request_data[validDomName] = elementVal;
+				var resultObj = validateDom(validDomName, "roleCreateForm");
+				if(resultObj && resultObj.is_pass){
+					if(resultObj.value){
+						request_data[validDomName] = resultObj.value;
+					}
 				}else{
 					if(!isFocusError){
 						$(validDoms[i]).focus();

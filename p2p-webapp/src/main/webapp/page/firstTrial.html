@@ -491,10 +491,11 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select is_cache="true" style="width: 48%;" trigger="city_cascade_tel_place" textField="province" valueField="province"  name="work_tel_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
+							<select is_cache="true" style="width: 48%;" trigger="city_cascade_tel_place" textField="province" valueField="province"  name="work_tel_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  >
 								<option value="">请选择</option>
 							</select>
-							<select is_cache="true" style="width: 48%;" id="city_cascade_tel_place" textField="city" valueField="city" name="work_tel_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
+							<!-- validation="required" -->
+							<select is_cache="true" style="width: 48%;" id="city_cascade_tel_place" textField="city" valueField="city" name="work_tel_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" >
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -739,15 +740,15 @@
 					<div class="row">
 						<label class="col-xs-12 col-sm-5">
 							<div class="credit-label lable-red-oblique">
-								联系人电话属地
+								<span style="color:red;">*</span>联系人电话属地
 							</div>
 						</label>
 						<div class="col-xs-12 col-sm-7">
 							<div class="credit-input">
-								<select is_cache="true" name="mobile_province" widget="dropdown" is_cache="true"  trigger="city_cascade_contact_x" textField="province" valueField="province"  widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince" style="width: 48%;">
+								<select is_cache="true" validation="required" name="mobile_province" widget="dropdown" is_cache="true"  trigger="city_cascade_contact_x" textField="province" valueField="province"  widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince" style="width: 48%;">
 									<option value="">请选择</option>
 								</select>
-								<select is_cache="true" id="city_cascade_contact_x" name="mobile_city" textField="city" valueField="city" serviceModule="originPlaceService" serviceMethod="queryCityByProvince" style="width: 48%;">
+								<select is_cache="true" validation="required" id="city_cascade_contact_x" name="mobile_city" textField="city" valueField="city" serviceModule="originPlaceService" serviceMethod="queryCityByProvince" style="width: 48%;">
 									<option value="">请选择</option>
 								</select>
 							</div>

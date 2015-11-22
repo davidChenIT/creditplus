@@ -527,6 +527,7 @@ var domValid = {
  * @param rules
  */
 function validateDom(elemName, parentDivId){
+	debugger;
 	var value = "";
 	var tip = "";
 	var result = true;
@@ -568,7 +569,7 @@ function validateDom(elemName, parentDivId){
 			break;
 		}
 	}
-	return value;
+	return {value:value,is_pass:result};
 }
 
 /**

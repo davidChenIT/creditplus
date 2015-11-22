@@ -247,9 +247,11 @@ $(function(){
 			var isFocusError = false;
 			$.each(validDoms,function(i){
 				var validDomName = $(validDoms[i]).attr('name');
-				var elementVal = validateDom(validDomName, "ruleUpdateForm");
-				if(elementVal){
-					ruleInfo[validDomName] = elementVal;
+				var resultObj = validateDom(validDomName, "ruleUpdateForm");
+				if(resultObj && resultObj.is_pass){
+					if(resultObj.value){
+						ruleInfo[validDomName] = resultObj.value;
+					}
 				}else{
 					if(!isFocusError){
 						$(validDoms[i]).focus();

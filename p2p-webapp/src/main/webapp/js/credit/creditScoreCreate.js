@@ -188,9 +188,11 @@ $(function(){
 			var isFocusError = false;
 			$.each(validDoms,function(i){
 				var validDomName = $(validDoms[i]).attr('name');
-				var elementVal = validateDom(validDomName, "creditScoreCreateForm");
-				if(elementVal){
-					creditInfo[validDomName] = elementVal;
+				var resultObj = validateDom(validDomName, "creditScoreCreateForm");
+				if(resultObj && resultObj.is_pass){
+					if(resultObj.value){
+						creditInfo[validDomName] = resultObj.value;
+					}
 				}else{
 					if(!isFocusError){
 						$(validDoms[i]).focus();

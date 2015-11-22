@@ -22,9 +22,11 @@ public class CheckParamUtil {
 	public static void checkParamIsNumr(Map paramMap,String []key,String []message) throws Exception{
 		if(paramMap!=null && key!=null && key.length>0 && message!=null && message.length==key.length){
 			for(int i=0;i<key.length;i++){
-				String value=paramMap.get(key[i])+"";
-				if(!isNumber(value)){
-					throw new Exception(new StringBuilder("'").append(message[i]).append("' 不是有效数字!").toString());
+				String value=(String)paramMap.get(key[i]);
+				if(value!=null && !"".equals(value.trim())){
+					if(!isNumber(value)){
+						throw new Exception(new StringBuilder("'").append(message[i]).append("' 不是有效数字!").toString());
+					}
 				}
 			}
 		}

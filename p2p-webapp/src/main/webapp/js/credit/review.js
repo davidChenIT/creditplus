@@ -83,15 +83,17 @@ $(function(){
 		var checkPass = true;
 		//1. 获取所有的必填项
 		//1. 获取所有的必填项
-		var validDoms = $("#firstTrial").find("[validation]");
+		var validDoms = $("#review").find("[validation]");
 		//2. 循环校验
 		if(validDoms.length > 0){
 			var isFocusError = false;
 			$.each(validDoms,function(i){
 				var validDomName = $(validDoms[i]).attr('name');
-				var elementVal = validateDom(validDomName, "firstTrial");
-				if(elementVal){
-					request_data[validDomName] = elementVal;
+				var resultObj = validateDom(validDomName, "review");
+				if(resultObj && resultObj.is_pass){
+					if(resultObj.value){
+						request_data[validDomName] = resultObj.value;
+					}
 				}else{
 					if(!isFocusError){
 						$(validDoms[i]).focus();
