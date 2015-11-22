@@ -2,11 +2,8 @@ package com.creditplus.p2p.common.util;
 
  
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
  
 /**
@@ -72,22 +69,13 @@ public class IDCardUtil {
      *@return 是否有效 null和"" 都是false 
      */
     public static boolean isIDCard(String cardNo){
+    	card_map.put("id_state", 0);
         if(cardNo == null || (cardNo.length() != 15 && cardNo.length() != 18))
             return false;
-        if(!StringUtils.isNumeric(cardNo.subSequence(0, 17)))
+        if(cardNo.length()==18 && !StringUtils.isNumeric(cardNo.subSequence(0, 17)))
         	return false;
-        final char[] cs = cardNo.toUpperCase().toCharArray();
-        //校验位数
-        int power = 0;
-        for(int i=0; i<cs.length; i++){
-            if(i==cs.length-1 && cs[i] == 'X')
-                break;//最后一位可以 是X或x
-            if(cs[i]<'0' || cs[i]>'9')
-                return false;
-            if(i < cs.length -1){
-                power += (cs[i] - '0') * POWER_LIST[i];
-            }
-        }
+        if(cardNo.length()==15 && !StringUtils.isNumeric(cardNo))
+        	return false;
          
         //校验区位码
         Integer province_code=Integer.valueOf(cardNo.substring(0,2));
@@ -114,42 +102,69 @@ public class IDCardUtil {
         if(iday < 1 || iday > 31)
             return false;       
          
-        //校验"校验码"
+        boolean flag=false;
         if(cardNo.length() == 15)
-            return true;
-        boolean flag= cs[cs.length -1 ] == PARITYBIT[power % 11];
+            flag=true;
+        if(cardNo.length()==18){
+        	 //校验"校验码"
+        	final char[] cs = cardNo.toUpperCase().toCharArray();
+            int power = 0;
+            for(int i=0; i<cs.length; i++){
+                if(i==cs.length-1 && cs[i] == 'X')
+                    break;//最后一位可以 是X或x
+                if(cs[i]<'0' || cs[i]>'9')
+                    return false;
+                if(i < cs.length -1){
+                    power += (cs[i] - '0') * POWER_LIST[i];
+                }
+            }
+        	flag= cs[cs.length -1 ] == PARITYBIT[power % 11];
+        }
+        
         card_map.put("id_state", flag?1:0);
         
         if(flag){
         	int age=(Calendar.getInstance().get(Calendar.YEAR)-Integer.valueOf(year));
-//        	String sex=Integer.valueOf(cardNo.substring(cardNo.length()-2, cardNo.length()-1))%2==1?"男":"女";
-        	Integer sex=Integer.valueOf(cardNo.substring(cardNo.length()-2, cardNo.length()-1))%2;
-        	System.out.println(cardNo.substring(cardNo.length()-2, cardNo.length()-1));
+        	//String sex=Integer.valueOf(cardNo.substring(cardNo.length()-2, cardNo.length()-1))%2==1?"男":"女";
+        	if(cardNo.length()==18){
+        		Integer sex=Integer.valueOf(cardNo.substring(cardNo.length()-2, cardNo.length()-1))%2;
+        		card_map.put("id_sex", sex);
+        	}
+        	else if(cardNo.length()==15){
+        		Integer sex=Integer.valueOf(cardNo.substring(cardNo.length()-1, cardNo.length()))%2;
+        		card_map.put("id_sex", sex);
+        	}
         	card_map.put("id_year", year);
         	card_map.put("id_province", zoneNum.get(province_code));
         	card_map.put("id_age", age);
-        	card_map.put("id_sex", sex);
         	card_map.put("id_6", cardNo.substring(0, 6));
         }
 		return flag;
     }
     
     public static Map getCardInfo(String cardNo){
-    	isIDCard(cardNo);
-    	return new HashMap(card_map);
+    	Map cardInfo=new HashMap();
+    	if(isIDCard(cardNo)){
+    		cardInfo=new HashMap(card_map);
+    		card_map=new HashMap();
+    	}
+    	return cardInfo;
     }
-    
-    private static int getIdcardCalendar() {        
-         GregorianCalendar curDay = new GregorianCalendar();
+
+    //15位号码只适应1900-2000这个区间
+    private static int getIdcardCalendar() {    
+         /*GregorianCalendar curDay = new GregorianCalendar();
          int curYear = curDay.get(Calendar.YEAR);
          int year2bit = Integer.parseInt(String.valueOf(curYear).substring(2));   
-         return  year2bit;
+         return year2bit;*/
+         return  19;
     }     
      
      
      
     public static void main(String[] args) {    
-    	String idcard="511702198307271621";
+    	String idcard="621225198305266899";
+    	System.out.println(isIDCard(idcard));
     	Map cardMap=getCardInfo(idcard);
         System.out.println(cardMap);
     }

@@ -149,7 +149,7 @@ $("[name='ofWithdrawalBtn']").click(function(){
 
 //查询按钮
 $("[name='tenderPublishedSearchBtn']").click(function(){
-    var request_data = getValue("conditionDiv");
+    var request_data = getValue("tenderPublishedConditionDiv");
     $("#tenderPublishedGrid").jqGrid('setGridParam',{  
         datatype:'json',  
         postData:{'request_data':JSON.stringify(request_data)}, //发送数据

@@ -32,8 +32,8 @@ $(function(){
 		{name:'loan_money', index:'loan_money',align:'center',"sortable":false},
 		{name:'dateCount', index:'dateCount',align:'center',"sortable":false},
 		{name:'loan_day', index:'loan_day',align:'center',"sortable":false},
-		{name:'cardAccountBank', index:'cardAccountBank',align:'center',"sortable":false},
-		{name:'bankCardNum', index:'bankCardNum',align:'center',"sortable":false}
+		{name:'card_bank', index:'cardAccountBank',align:'center',"sortable":false},
+		{name:'card_no', index:'bankCardNum',align:'center',"sortable":false}
 	],
 	pager: '#makeTenderListPager',
 //	multiselect: true,
@@ -66,8 +66,8 @@ $(function(){
  
 //查询按钮
  $("[name='makeTenderSearchBtn']").click(function(){
-     var request_data = getValue("conditionDiv");
-     $("#tenderMngListGrid").jqGrid('setGridParam',{  
+     var request_data = getValue("makeTenderConditionDiv");
+     $("#makeTenderListGrid").jqGrid('setGridParam',{  
          datatype:'json',  
          postData:{'request_data':JSON.stringify(request_data)}, //发送数据
          page:1,

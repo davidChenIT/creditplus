@@ -3,11 +3,8 @@ package com.creditplus.p2p.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.creditplus.p2p.common.annotation.ParamName;
 import com.creditplus.p2p.common.constant.Constant;
 import com.creditplus.p2p.common.util.CheckParamUtil;
 import com.creditplus.p2p.common.util.CommonUtil;
@@ -116,7 +113,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	public void creditFirstTrial(Map paramMap) throws Exception{
 		paramMap=CheckParamUtil.initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE,Constant.USER_ID);
-		checkParam(paramMap);
+		creditFirstParamCheck(paramMap);
 		Integer user_id=Integer.valueOf(paramMap.get(Constant.USER_ID)+"");
 		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
 		//更新客户信息
@@ -139,7 +136,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	public void creditReview(Map paramMap) throws Exception{
 		paramMap=CheckParamUtil.initParamMap(paramMap);
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID,Constant.APPROVE_CONTENT,Constant.APPLY_STATE,Constant.USER_ID);
-		checkParam(paramMap);
+		creditReviewParamCheck(paramMap);
 		Integer user_id=Integer.valueOf(paramMap.get(Constant.USER_ID)+"");
 		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
 		//增加信用维度工作可验证参数
@@ -382,9 +379,19 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	}
 	
 	
-	private void checkParam(Map paramMap) throws Exception{
-		String[] key={"seasame_score_v","tencent_credit_v","certificate_type_v"};
-		String[] message={"芝麻信用分数","腾讯信用分数","证书类型"};
+	private void creditFirstParamCheck(Map paramMap) throws Exception{
+		String[] key={"seasame_score_v","tencent_credit_v"};
+		String[] message={"芝麻信用分数","腾讯信用分数"};
+		CheckParamUtil.checkParamIsNumr(paramMap, key,message);
+		String id_num_v=(String) paramMap.get("id_num_v");
+		if(!IDCardUtil.isIDCard(id_num_v))
+			throw new Exception("身份证验证号码不合法!");
+			
+	}
+	
+	private void creditReviewParamCheck(Map paramMap) throws Exception{
+		String[] key={"seasame_score_v","tencent_credit_v","certificate_type_v","mobile_online_time_v"};
+		String[] message={"芝麻信用分数","腾讯信用分数","证书类型","手机在网时长"};
 		CheckParamUtil.checkParamIsNumr(paramMap, key,message);
 		String id_num_v=(String) paramMap.get("id_num_v");
 		if(!IDCardUtil.isIDCard(id_num_v))

@@ -110,7 +110,7 @@ $(function(){
 	 });
 	//查询按钮
 	  $("[name='cheatInterceptorSearchBtn']").click(function(){
-	      var request_data={};
+		  var request_data = getValue("cheatInterceptorConditionDiv");
 	      $("#cheatInterceptorGrid").jqGrid('setGridParam',{  
 	          datatype:'json',  
 	          postData:{'request_data':JSON.stringify(request_data)}, //发送数据

@@ -61,7 +61,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="apply_monney" >
+															<input type="text" name="loan_money" >
 														</div>
 											
 													</div>
@@ -106,7 +106,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="apply_code" >
+															<input type="text" name="loan_id" >
 														</div>
 													</div>
 												</div>
@@ -120,7 +120,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="apply_username" >
+															<input type="text" name="name" >
 														</div>
 													</div>
 												</div>
@@ -134,7 +134,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="apply_user_card" >
+															<input type="text" name="id_num" >
 														</div>
 													</div>
 												</div>
@@ -148,7 +148,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="approve_first_user" >
+															<input type="text" name="first_assign_user" >
 														</div>
 													</div>
 												</div>
@@ -162,7 +162,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="approve_last_user" >
+															<input type="text" name="review_assign_user" >
 														</div>
 													</div>
 												</div>

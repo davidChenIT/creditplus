@@ -24,7 +24,7 @@ public class CheckParamUtil {
 			for(int i=0;i<key.length;i++){
 				String value=paramMap.get(key[i])+"";
 				if(!isNumber(value)){
-					throw new Exception(new StringBuilder("'").append(message[i]).append("' is not a valid number!").toString());
+					throw new Exception(new StringBuilder("'").append(message[i]).append("' 不是有效数字!").toString());
 				}
 			}
 		}
