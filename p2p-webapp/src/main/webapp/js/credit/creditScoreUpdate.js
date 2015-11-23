@@ -220,7 +220,7 @@ $(function(){
 			var isFocusError = false;
 			$.each(validDoms,function(i){
 				var validDomName = $(validDoms[i]).attr('name');
-				var resultObj = validateDom(validDomName, "creditScoreUpdateForm");
+				var resultObj = validateDom(validDoms[i], "creditScoreUpdateForm");
 				if(resultObj && resultObj.is_pass){
 					if(resultObj.value){
 						creditInfo[validDomName] = resultObj.value;

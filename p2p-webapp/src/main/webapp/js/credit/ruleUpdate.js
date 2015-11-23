@@ -247,7 +247,7 @@ $(function(){
 			var isFocusError = false;
 			$.each(validDoms,function(i){
 				var validDomName = $(validDoms[i]).attr('name');
-				var resultObj = validateDom(validDomName, "ruleUpdateForm");
+				var resultObj = validateDom(validDoms[i], "ruleUpdateForm");
 				if(resultObj && resultObj.is_pass){
 					if(resultObj.value){
 						ruleInfo[validDomName] = resultObj.value;

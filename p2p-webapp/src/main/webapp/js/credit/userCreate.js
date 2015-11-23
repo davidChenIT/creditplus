@@ -195,7 +195,7 @@ $(function(){
 			var isFocusError = false;
 			$.each(validDoms,function(i){
 				var validDomName = $(validDoms[i]).attr('name');
-				var resultObj = validateDom(validDomName, "userCreateForm");
+				var resultObj = validateDom(validDoms[i], "userCreateForm");
 				if(resultObj && resultObj.is_pass){
 					if(resultObj.value){
 						request_data[validDomName] = resultObj.value;

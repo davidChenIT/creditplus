@@ -211,7 +211,7 @@ $(function(){
 			var isFocusError = false;
 			$.each(validDoms,function(i){
 				var validDomName = $(validDoms[i]).attr('name');
-				var resultObj = validateDom(validDomName, "ruleCreateForm");
+				var resultObj = validateDom(validDoms[i], "ruleCreateForm");
 				if(resultObj && resultObj.is_pass){
 					if(resultObj.value){
 						ruleInfo[validDomName] = resultObj.value;
