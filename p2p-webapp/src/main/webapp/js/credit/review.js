@@ -82,14 +82,13 @@ $(function(){
 		var request_data={"loan_id":$("#review").find("span[name='loan_id']").text(),"user_id":user_id,"apply_state":5};
 		var checkPass = true;
 		//1. 获取所有的必填项
-		//1. 获取所有的必填项
 		var validDoms = $("#review").find("[validation]");
 		//2. 循环校验
 		if(validDoms.length > 0){
 			var isFocusError = false;
 			$.each(validDoms,function(i){
 				var validDomName = $(validDoms[i]).attr('name');
-				var resultObj = validateDom(validDomName, "review");
+				var resultObj = validateDom(validDoms[i], "review");
 				if(resultObj && resultObj.is_pass){
 					if(resultObj.value){
 						request_data[validDomName] = resultObj.value;

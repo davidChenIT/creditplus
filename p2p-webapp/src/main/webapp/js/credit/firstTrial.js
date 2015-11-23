@@ -85,9 +85,9 @@ $(function(){
 		//2. 循环校验
 		if(validDoms.length > 0){
 			var isFocusError = false;
-			$.each(validDoms,function(i){
+			$.each(validDoms, function(i){
 				var validDomName = $(validDoms[i]).attr('name');
-				var resultObj = validateDom(validDomName, "firstTrial");
+				var resultObj = validateDom(validDoms[i], "firstTrial");
 				if(resultObj && resultObj.is_pass){
 					if(resultObj.value){
 						request_data[validDomName] = resultObj.value;

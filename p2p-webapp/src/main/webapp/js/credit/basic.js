@@ -526,19 +526,12 @@ var domValid = {
  * @param parentDivId
  * @param rules
  */
-function validateDom(elemName, parentDivId){
+function validateDom(elementDom, parentDivId){
 	debugger;
-	var value = "";
 	var tip = "";
 	var result = true;
-	//取dom
-	var elementDom;
-	if(parentDivId){
-		elementDom = $("#"+parentDivId).find("[name='"+elemName+"']");
-	}else{
-		elementDom = $("[name='"+ elemName +"']");
-	}
-	value = $(elementDom).val();
+	var elemName = $(elementDom).attr('name');
+	var value = $(elementDom).val();
 	//取span的值
 	var domType = $(elementDom).get(0).tagName;
 	if(domType == "SPAN") 
@@ -569,7 +562,7 @@ function validateDom(elemName, parentDivId){
 			break;
 		}
 	}
-	return {value:value,is_pass:result};
+	return {value:value, is_pass:result};
 }
 
 /**
@@ -577,21 +570,21 @@ function validateDom(elemName, parentDivId){
  * @param elemName
  * @param content
  */
-function validErrorTip(elemName, elementDom, tip,parentDivId){
+function validErrorTip(elemName, elementDom, tip, parentDivId){
 	var elemNameTipLength;
 	if(parentDivId){
-		elemNameTipLength=$("#"+parentDivId).find("span[name='" + elemName + "Tip']").length;
+		elemNameTipLength = $("#" + parentDivId).find("span[name='" + elemName + "_tip']").length;
 	}else{
-		elemNameTipLength=$("span[name='" + elemName + "Tip']").length;
+		elemNameTipLength = $("span[name='" + elemName + "_tip']").length;
 	}
     if(elemNameTipLength == 0){
-	    elementDom.parent().after("<span name='" + elemName + "Tip' style='color:red;'>" + tip + "</span>");
+	    $(elementDom).parent().after("<span class='error-tip' name='" + elemName + "_tip' style='color:red;'>" + tip + "</span>");
     }
-    elementDom.change(function(e){
+    $(elementDom).change(function(e){
     	if(parentDivId){
-    		$("#"+parentDivId).find("span[name='" + elemName + "Tip']").remove();
+    		$("#"+parentDivId).find("span[name='" + elemName + "_tip']").remove();
     	}else{
-    		$("span[name='" + elemName + "Tip']").remove();
+    		$("span[name='" + elemName + "_tip']").remove();
     	}
 	    $(this).unbind(e);
     });
