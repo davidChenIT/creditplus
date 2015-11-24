@@ -7,7 +7,8 @@ package com.creditplus.p2p.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.creditplus.p2p.common.constant.Constant;
 import com.creditplus.p2p.common.util.CheckParamUtil;
@@ -24,6 +25,7 @@ import com.creditplus.p2p.service.CreditScoreService;
  */
 public class CreditScoreServiceImpl implements CreditScoreService{
 
+	public static final Logger logger = LogManager.getLogger(CreditScoreServiceImpl.class);
 	@Autowired
 	CreditScoreDao creditScoreDao;
 	@Autowired
@@ -45,7 +47,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 			for(Map creditMap:creditScores){
 				String fact_table=(String) creditMap.get("fact_table");
 				String fact_column=(String) creditMap.get("fact_column");
-				Integer model_name= (Integer) creditMap.get("model_name");
+				String model_name= (String) creditMap.get("model_name");
 				String dimension_name=(String) creditMap.get("dimension_name");
 				String proportion=(String) creditMap.get("proportion");
 				Integer baifenbi=Integer.valueOf(proportion.substring(0, proportion.indexOf("%")).trim());
@@ -92,10 +94,10 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 							System.out.println("score:"+score);
 						}
 						
-						if(model_name==1){
+						if("1".equals(model_name)){
 							score1.put(dimension_name, dimesion_score);
 							total1+=dimesion_score;
-						}else if(model_name==2){
+						}else if("2".equals(model_name)){
 							score2.put(dimension_name, dimesion_score);
 							total2+=dimesion_score;
 						}
@@ -119,7 +121,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 	}
 	
 	
-	private Integer getItemResultSet(Map credit_item,Integer user_id){
+	/*private Integer getItemResultSet(Map credit_item,Integer user_id){
 		String main_table=(String) credit_item.get("main_table");
 		String child_table=(String) credit_item.get("child_table");
 		String relevance_colum=(String) credit_item.get("relevance_colum");
@@ -149,7 +151,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 		}
 		
 		return 0;
-	}
+	}*/
 	
 	
 
@@ -198,15 +200,23 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 	/* 
 	 * @param dataMap
 	 */
-	public void insertCreditScore(Map creditMap,List itemsList) {
-		if(creditMap!=null && creditMap.size()>0){
-			CheckParamUtil.initParamMap(creditMap);
-			creditScoreDao.insertCreditScore(creditMap);
-			
-			if(itemsList!=null && itemsList.size()>0){
-				Integer score_id=creditScoreDao.findByName(creditMap.get("dimension_name")+"");
-				saveCreditItems(score_id, itemsList);
+	public void insertCreditScore(Map creditMap,List itemsList) throws Exception {
+		try{
+			if(creditMap!=null && creditMap.size()>0){
+				CheckParamUtil.initParamMap(creditMap);
+				creditScoreDao.insertCreditScore(creditMap);
+				
+				if(itemsList!=null && itemsList.size()>0){
+					Integer score_id=creditScoreDao.findByName(creditMap.get("dimension_name")+"",creditMap.get("model_name")+"");
+					saveCreditItems(score_id, itemsList);
+				}
 			}
+		}catch(Exception e){
+			logger.error("insertCreditScore exception:"+e);
+			if(e.getMessage()!=null && e.getMessage().contains("model_dimension_name_unique"))
+				throw new Exception("同一模型同一维度，只能创建一条记录");
+			else
+				throw new Exception("保存失败");
 		}
 		
 	}
@@ -232,17 +242,34 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 	 * @param dataMap
 	 */
 	public void updateCreditScore(Map dataMap,List<Map> itemsList) throws Exception {
-		if(dataMap!=null && dataMap.size()>0){
-			CheckParamUtil.checkKey(dataMap, "score_id");
-			Integer score_id=Integer.valueOf(dataMap.get("score_id")+"");
-			CheckParamUtil.initParamMap(dataMap);
-			creditScoreDao.updateCreditScore(dataMap);
-			if(itemsList!=null && itemsList.size()>0){
-				this.saveCreditItems(score_id, itemsList);
+		try{
+			if(dataMap!=null && dataMap.size()>0){
+				CheckParamUtil.checkKey(dataMap, "score_id");
+				Integer score_id=Integer.valueOf(dataMap.get("score_id")+"");
+				CheckParamUtil.initParamMap(dataMap);
+				creditScoreDao.updateCreditScore(dataMap);
+				if(itemsList!=null && itemsList.size()>0){
+					this.saveCreditItems(score_id, itemsList);
+				}
 			}
+		}catch(Exception e){
+			logger.error("updateCreditScore exception:"+e);
+			if(e.getMessage()!=null && e.getMessage().contains("model_dimension_name_unique"))
+				throw new Exception("同一模型同一维度，只能创建一条记录");
+			else
+				throw new Exception("保存失败");
 		}
 	}
 
+	
+	/**
+	 * 模型名称和维度唯一性校验
+	 * 
+	 */
+	private void uniquenessCheck(Map dataMap,int operation){
+		
+	}
+	
 	/* 
 	 * @param score_id
 	 * @return

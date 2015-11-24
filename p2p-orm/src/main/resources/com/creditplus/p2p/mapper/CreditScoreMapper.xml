@@ -32,7 +32,7 @@
 	</select>
 	
 	<select id="findByName" parameterType="String" resultType="Integer">
-		select score_id from credit_score_t where dimension_name=#{dimension_name}
+		select score_id from credit_score_t where dimension_name=#{dimension_name} and model_name=#{model_name}
 	</select>
 	
 	<delete id="deleteCreditScore"  parameterType="java.util.List">

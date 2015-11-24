@@ -21,7 +21,7 @@ public interface CreditScoreService {
 	
 	void deleteCreditItem(List<Integer> idList);
 	
-	void insertCreditScore(@ParamName("creditInfo")Map dataMap,@ParamName("creditItemsList")List<Map> itemsList);
+	void insertCreditScore(@ParamName("creditInfo")Map dataMap,@ParamName("creditItemsList")List<Map> itemsList) throws Exception;
 	
 	void updateCreditScore(@ParamName("creditInfo")Map dataMap,@ParamName("creditItemsList")List<Map> itemsList) throws Exception;
 }

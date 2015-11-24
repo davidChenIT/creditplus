@@ -31,5 +31,5 @@ public interface CreditScoreDao {
 	
 	void updateCreditScore(Map dataMap);
 	
-	Integer findByName(String dimension_name);
+	Integer findByName(String dimension_name,String model_name);
 }

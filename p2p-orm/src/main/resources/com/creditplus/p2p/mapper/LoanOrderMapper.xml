@@ -90,7 +90,8 @@
 			(select url from attach_pic where user_id=#{user_id} and type=6) as income_pic,
 			(select url from attach_pic where user_id=#{user_id} and type=7) as bank_pic,
 			(select url from attach_pic where user_id=#{user_id} and type=8) as certificate_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=9) as address_pic
+			(select url from attach_pic where user_id=#{user_id} and type=9) as address_pic,
+			(select approve_content from approve_log_t where loan_id=#{loan_id} and state=5 limit 1) as approve_content
 	    from loan_list t
 		left join loan_apply_t a on t.loan_id=a.loan_id
 		left join user_info u on t.user_id=u.user_id
@@ -182,7 +183,8 @@
 			(select url from attach_pic where user_id=#{user_id} and type=6) as income_pic,
 			(select url from attach_pic where user_id=#{user_id} and type=7) as bank_pic,
 			(select url from attach_pic where user_id=#{user_id} and type=8) as certificate_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=9) as address_pic
+			(select url from attach_pic where user_id=#{user_id} and type=9) as address_pic,
+			(select approve_content from approve_log_t where loan_id=#{loan_id} and state=7 limit 1) as approve_content
 	    from loan_list t
 		left join loan_apply_t a on t.loan_id=a.loan_id
 		left join user_info u on t.user_id=u.user_id
@@ -561,6 +563,9 @@
 		    ifnull(apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
+			a.credit_score1,
+			a.credit_score2,
+			a.credit_score_total,
 		    concat(a.version,'') as version
 	    from (select * from loan_list where loan_id in( select loan_id from loan_apply_t where apply_state=6)) t
 		left join loan_apply_t a on t.loan_id=a.loan_id
@@ -638,6 +643,9 @@
 		    ifnull(apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
+			a.credit_score1,
+			a.credit_score2,
+			a.credit_score_total,
 		    concat(a.version,'') as version
 	    from (select * from loan_list where loan_id in( select loan_id from loan_apply_t where apply_state=7)) t
 		left join loan_apply_t a on t.loan_id=a.loan_id
@@ -714,6 +722,9 @@
 		    ifnull(apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
+			a.credit_score1,
+			a.credit_score2,
+			a.credit_score_total,
 		    concat(a.version,'') as version
 	    from (select * from loan_list where loan_id in( select loan_id from loan_apply_t where apply_state=7)) t
 		left join loan_apply_t a on t.loan_id=a.loan_id
