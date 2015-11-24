@@ -510,7 +510,7 @@ var domValid = {
 	},
     number : function(value){
     	if(isEmptyString(value)) return true;
-    	return /^[0-9]*$/.test(value);
+    	return /^(0|[1-9][0-9]*)$/.test(value);
 	},	
     id_card : function(value){
     	if(isEmptyString(value)) return true;
