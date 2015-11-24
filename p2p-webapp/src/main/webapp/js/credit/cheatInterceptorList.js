@@ -46,7 +46,7 @@ $(function(){
 		{name:'modifytime', index:'modifytime',align:'center',"sortable":false},
 		{name:'apply_state', index:'apply_state',align:'center',
 			"sortable":false,
-			edittype:'select',
+			formatter:'select',
 			editoptions:{value:applyStateSelectObj.jsonStr}
 		}
 	],

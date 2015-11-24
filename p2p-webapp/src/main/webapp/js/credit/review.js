@@ -131,20 +131,14 @@ $(function(){
 		//4. 校验通过调提交初审服务
 		if(checkPass){
 			$("#review").find("input,select,textarea").each(function(i,input){
-				var inputName=$(input).attr("name");
-				var inputValue=$(input).val();
+				var inputName = $(input).attr("name");
+				var inputValue = $(input).val();
 				//过滤空值
 				if(!isEmptyString(inputValue))
 					request_data[inputName] = inputValue;
 			});
-			//上传控件值
-			var  profession_img_v = $("[name=profession_img_v]").attr('img_path');
-			if(!isEmptyString(profession_img_v))
-				request_data.profession_img_v = $("[name=profession_img_v]").attr('img_path');
-			else{
-				messageBox.createMessageDialog("提示","证书网上抓图不能为空","","","warning");
-				return false;
-			}
+			//处理意见字符串特殊处理
+			request_data['approve_content'] = "复审意见:" + request_data['approve_content'];
 			debugger;
 			//提交
 			publicSaveAjax("loanOrderService","creditReview",JSON.stringify(request_data),"reviewTab","review","[name='reviewSearchBtn']");

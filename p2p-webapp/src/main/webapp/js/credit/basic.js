@@ -191,7 +191,7 @@ $(function(){
 	$("#credit_MainPanel").on("click",".upLoadBtn",function(){
 		debugger;
 		var uploadElement=$(this).siblings("span:first").attr("name");
-		 var img_path=$(this).siblings("span:first").attr("img_path");
+		 var img_path=$(this).siblings("span:first").attr("code");
 		 var img_name=$(this).siblings("span:first").text();
 		 //弹出文件选择框
 		 uploadDialog.createUploadDialog(uploadElement,img_path,img_name);
@@ -453,9 +453,13 @@ function setValues(divId,dataObj,appendHtml){
 			});
 			
 			//设置textarea的值
-			$("#"+divId).find(".credit-input").find("textarea").each(function(i,dom){
+			$("#"+divId).find("textarea").each(function(i,dom){
 				var name=$(dom).attr("name");
-				var textareaValue=dataObj[name]!=undefined?dataObj[name]:"";
+				var textareaValue = dataObj[name] != undefined ? dataObj[name] : "";
+				//处理意见字符串特殊处理
+				if(name = "approve_content" && textareaValue && textareaValue.indexOf(":") != -1){
+					textareaValue = textareaValue.substring(textareaValue.indexOf(":")+1);
+				}
 				$(dom).text(textareaValue);
 			});
 			
@@ -787,7 +791,7 @@ var uploadDialog={
 		    		uploadDialog.img_path="";
 		    		uploadDialog.img_name="";
 		    		$("span[name='"+uploadDialog.uploadElement+"']").text("");
-		    		$("span[name='"+uploadDialog.uploadElement+"']").attr("img_path","");
+		    		$("span[name='"+uploadDialog.uploadElement+"']").attr("code","");
 				}
 			});
 	    },
@@ -805,7 +809,7 @@ var uploadDialog={
 	    		uploadDialog.img_path=resultObj.img_path;
 	    		uploadDialog.img_name=resultObj.img_name;
 	    		$("span[name='"+uploadDialog.uploadElement+"']").text(resultObj.img_name);
-	    		$("span[name='"+uploadDialog.uploadElement+"']").attr("img_path",resultObj.img_path);
+	    		$("span[name='"+uploadDialog.uploadElement+"']").attr("code",resultObj.img_path);
 	    	}
 	    	loadingBox.hideLoading();
 	    },

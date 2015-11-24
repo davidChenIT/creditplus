@@ -15,7 +15,7 @@ $(function(){
 		mtype: 'POST',
 		height:205,
 	autowidth:true,
-	colNames:['操作','申请单编号','申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','信用分1','信用分2','状态'],
+	colNames:['操作','申请单编号','申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','信用分1','信用分2','排名'],
 	colModel :[
 		{name:'operate', index:'operate',align:'center',"sortable":false,
 			formatter:function(cellvalue, options, rowObject){
@@ -44,11 +44,11 @@ $(function(){
 		{name:'dateCount', index:'dateCount',align:'center',"sortable":false},
 		{name:'loan_day', index:'loan_day',align:'center',"sortable":false},
 		{name:'modifytime', index:'modifytime',align:'center',"sortable":false},
-		{name:'creditFraction1', index:'creditFraction1',align:'center',"sortable":false},
-		{name:'creditFraction2', index:'creditFraction2',align:'center',"sortable":false},
+		{name:'credit_score1', index:'credit_score1',align:'center',"sortable":false},
+		{name:'credit_score2', index:'credit_score2',align:'center',"sortable":false},
 		{name:'apply_state', index:'apply_state',align:'center',
 			"sortable":false,
-			edittype:'select',
+			formatter:'select',
 			editoptions:{value:applyStateSelectObj.jsonStr}
 		}
 	],
