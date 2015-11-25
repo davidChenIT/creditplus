@@ -203,7 +203,7 @@ $(function(){
 		$(this).parent().remove();
 		var tipDivName=$(this).parent().attr("name");
 		var tabId=$("li[class='tabs-selected']").attr("tabid");
-		var tipInput=$("div[tabid='"+tabId+"']").find("[name='"+xx.replace("_tip_div","")+"']");
+		var tipInput=$("div[tabid='"+tabId+"']").find("[name='"+tipDivName.replace("_tip_div","")+"']");
 		if(tipInput && tipInput.length>0){
 			tipInput.reomveClass("input-error");
 		}
@@ -215,7 +215,7 @@ $(function(){
 		$(this).parent().remove();
 		var tipDivName=$(this).parent().attr("name");
 		var tabId=$("li[class='tabs-selected']").attr("tabid");
-		var tipInput=$("div[tabid='"+tabId+"']").find("[name='"+xx.replace("_tip_div","")+"']");
+		var tipInput=$("div[tabid='"+tabId+"']").find("[name='"+tipDivName.replace("_tip_div","")+"']");
 		if(tipInput && tipInput.length>0){
 			tipInput.reomveClass("input-error");
 		}
