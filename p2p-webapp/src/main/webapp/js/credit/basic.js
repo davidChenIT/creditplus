@@ -205,7 +205,7 @@ $(function(){
 		var tabId=$("li[class='tabs-selected']").attr("tabid");
 		var tipInput=$("div[tabid='"+tabId+"']").find("[name='"+tipDivName.replace("_tip_div","")+"']");
 		if(tipInput && tipInput.length>0){
-			tipInput.reomveClass("input-error");
+			tipInput.removeClass("input-error");
 		}
 	});
 	
@@ -217,7 +217,7 @@ $(function(){
 		var tabId=$("li[class='tabs-selected']").attr("tabid");
 		var tipInput=$("div[tabid='"+tabId+"']").find("[name='"+tipDivName.replace("_tip_div","")+"']");
 		if(tipInput && tipInput.length>0){
-			tipInput.reomveClass("input-error");
+			tipInput.removeClass("input-error");
 		}
 	});
 })
