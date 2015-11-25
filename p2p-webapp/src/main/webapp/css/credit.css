@@ -2176,3 +2176,46 @@ h3{
     top: 2px;
     display: inline-block;
 }
+
+
+/**校验不通过的时候给出的tip提示层**/
+.input-error{
+    border: solid 1px #f6712a !important;
+}
+
+.tip-error{
+	position: absolute;
+    z-index: 10;
+    color: white;
+    background-color: #f6712a;
+    min-width: 120px;
+    padding: 5px;
+    border-radius: 3px;
+    max-width: 200px;
+    border: solid 1px #f6712a;
+}
+
+.tip-error:before{
+  content:"";
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #f6712a;
+  position: absolute;
+  z-index: 10;
+  left: 45%;
+  margin-top:-14px;
+}
+
+.tip-error-span{
+	display: inline-block;
+    padding: 1px 6px;
+    border-radius: 50%;
+    background-color: white;
+    color:#f6712a;
+}
+
+.tip-error-close{
+    float: right;
+    margin-top: -5px;
+    font-weight: bold;
+}

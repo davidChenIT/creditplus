@@ -12,7 +12,7 @@ version:	3.4
 .ztree li{padding:10px; margin:0; list-style:none; line-height:14px; text-align:left; white-space:nowrap; outline:0}
 .ztree li ul{ margin:0; padding:0 0 0 18px}
 .ztree li ul.line{ background:url(./img/line_conn.gif) 0 0 repeat-y;}
-.ztree-li-selected{background-color: #F3F7F8;border-left: solid 3px #3E89D4;border-top: 1px solid #d8e8f0;border-bottom: 1px solid #d8e8f0;}
+.ztree-li-selected{background-color: #F3F7F8;border-left: solid 3px #3E89D4;border-top: 1px solid #d8e8f0;border-bottom: 1px solid #d8e8f0;border-right: 1px solid #d8e8f0;}
 /**修改树节点的a标签鼠标浮动改变背景颜色#3e89d4*/
 .ztree li a:hover{color:blue;text-decoration:none;}
 .ztree li a:link{color:blue;text-decoration:none;}

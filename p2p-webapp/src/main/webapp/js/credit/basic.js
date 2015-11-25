@@ -196,6 +196,30 @@ $(function(){
 		 //弹出文件选择框
 		 uploadDialog.createUploadDialog(uploadElement,img_path,img_name);
 	});
+	
+	//关闭提示层
+	$("body").on("click",".tip-error-close",function(){
+		debugger;
+		$(this).parent().remove();
+		var tipDivName=$(this).parent().attr("name");
+		var tabId=$("li[class='tabs-selected']").attr("tabid");
+		var tipInput=$("div[tabid='"+tabId+"']").find("[name='"+xx.replace("_tip_div","")+"']");
+		if(tipInput && tipInput.length>0){
+			tipInput.reomveClass("input-error");
+		}
+	});
+	
+	//关闭提示层
+	$("body").on("click",".tip-error-span",function(){
+		debugger;
+		$(this).parent().remove();
+		var tipDivName=$(this).parent().attr("name");
+		var tabId=$("li[class='tabs-selected']").attr("tabid");
+		var tipInput=$("div[tabid='"+tabId+"']").find("[name='"+xx.replace("_tip_div","")+"']");
+		if(tipInput && tipInput.length>0){
+			tipInput.reomveClass("input-error");
+		}
+	});
 })
 
 //构造左侧菜单的函数
@@ -575,21 +599,49 @@ function validateDom(elementDom, parentDivId){
  * @param content
  */
 function validErrorTip(elemName, elementDom, tip, parentDivId){
-	var elemNameTipLength;
-	if(parentDivId){
-		elemNameTipLength = $("#" + parentDivId).find("span[name='" + elemName + "_tip']").length;
-	}else{
-		elemNameTipLength = $("span[name='" + elemName + "_tip']").length;
+	debugger;
+//	var elemNameTipLength;
+//	if(parentDivId){
+//		elemNameTipLength = $("#" + parentDivId).find("span[name='" + elemName + "_tip']").length;
+//	}else{
+//		elemNameTipLength = $("span[name='" + elemName + "_tip']").length;
+//	}
+//    if(elemNameTipLength == 0){
+//	    $(elementDom).parent().after("<span class='error-tip' name='" + elemName + "_tip' style='color:red;'>" + tip + "</span>");
+//    }
+//    $(elementDom).change(function(e){
+//    	if(parentDivId){
+//    		$("#"+parentDivId).find("span[name='" + elemName + "_tip']").remove();
+//    	}else{
+//    		$("span[name='" + elemName + "_tip']").remove();
+//    	}
+//	    $(this).unbind(e);
+//    });
+	var tabId=$("li[class='tabs-selected']").attr("tabid");
+	var tipDivName=$(elementDom).attr("name")+"_"+"tip_div";
+	$(elementDom).addClass("input-error");
+	var elementOffset=$(elementDom).offset();
+	var leftX=elementOffset.left+($(elementDom).width()/4-5);
+	leftX+="px";
+	var topY=elementOffset.top+($(elementDom).height())+10;
+	var tagName=$(elementDom)[0].tagName;
+    if(tagName=="TEXTAREA" || tagName=="SELECT"){
+    	topY+=6;
 	}
-    if(elemNameTipLength == 0){
-	    $(elementDom).parent().after("<span class='error-tip' name='" + elemName + "_tip' style='color:red;'>" + tip + "</span>");
+    topY+="px";
+    if($("div[name='"+tipDivName+"']").length>0){
+    	$("div[name='"+tipDivName+"']").remove();
     }
-    $(elementDom).change(function(e){
-    	if(parentDivId){
-    		$("#"+parentDivId).find("span[name='" + elemName + "_tip']").remove();
-    	}else{
-    		$("span[name='" + elemName + "_tip']").remove();
-    	}
+	$("div[tabid='"+tabId+"']").append('<div name="'+tipDivName+'" class="tip-error" style="display:none;"><span class="tip-error-close">X</span><span class="tip-error-span">x</span>'+tip+'</div>');
+	if($(elementDom).width()<200){
+		var tipW=$("div[name='"+tipDivName+"']").width()/2;
+		leftX=(elementOffset.left-tipW+5)+"px";
+	}
+	$("div[name='"+tipDivName+"']").css({"left":leftX,"top":topY});
+	$("div[name='"+tipDivName+"']").show();
+	$(elementDom).change(function(e){
+		$(this).removeClass("input-error");
+		$("div[tabid='"+tabId+"']").find("div[name='"+tipDivName+"']").remove();
 	    $(this).unbind(e);
     });
 }
@@ -810,6 +862,10 @@ var uploadDialog={
 	    		uploadDialog.img_name=resultObj.img_name;
 	    		$("span[name='"+uploadDialog.uploadElement+"']").text(resultObj.img_name);
 	    		$("span[name='"+uploadDialog.uploadElement+"']").attr("code",resultObj.img_path);
+	    		//移除提示层
+	    		var tabId=$("li[class='tabs-selected']").attr("tabid");
+	    		$("div[tabid='"+tabId+"']").find("div[name='"+uploadDialog.uploadElement+"_tip_div']").reomve();
+	    		$("span[name='"+uploadDialog.uploadElement+"']").removeClass("input-error");
 	    	}
 	    	loadingBox.hideLoading();
 	    },
