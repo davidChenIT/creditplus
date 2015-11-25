@@ -567,7 +567,7 @@
 			a.credit_score2,
 			a.credit_score_total,
 		    concat(a.version,'') as version
-	    from (select * from loan_list where loan_id in( select loan_id from loan_apply_t where apply_state=6)) t
+	    from (select * from loan_list where loan_id in( select loan_id from loan_apply_t where apply_state=6 or apply_state=11)) t
 		left join loan_apply_t a on t.loan_id=a.loan_id
 		left join user_info u on t.user_id=u.user_id) s
 		<where>

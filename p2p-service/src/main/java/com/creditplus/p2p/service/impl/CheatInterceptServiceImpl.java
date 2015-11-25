@@ -37,7 +37,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 			for(Map ruleMap:ruleList){
 				String rule_name=(String) ruleMap.get(Constant.RULE_NAME);
 				Integer rule_id=Integer.valueOf(ruleMap.get(Constant.RULE_ID)+"");
-				checkFlag=ruleSqlCheat(ruleMap, loan_id);
+				checkFlag=ruleSqlCheat(ruleMap, user_id,loan_id);
 				if(checkFlag){
 					CheatProcess(loan_id, new StringBuilder("检查规则 '").append(rule_name).append("' sql不通过").toString());
 					break;
@@ -89,7 +89,15 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	} 
 	
 	
-	private boolean ruleSqlCheat(Map ruleMap,Integer loan_id){
+	/**
+	 * 执行规则sql，规则sql这需要包含loan_id和user_id
+	 * @param ruleMap
+	 * @param user_id
+	 * @param loan_id
+	 * @return
+		boolean
+	 */
+	private boolean ruleSqlCheat(Map ruleMap,Integer user_id,Integer loan_id){
 		boolean flag=false;
 		if(ruleMap!=null && ruleMap.size()>0){
 			String rule_sql=(String) ruleMap.get("rule_sql");
@@ -97,6 +105,8 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 				Map<String, Object> sqlMap=new HashMap<String, Object>();
 				String sql=new StringBuilder("select count(1) as total_record from (").append(rule_sql).append(") xt").toString();
 				sqlMap.put("sql", sql);
+				sqlMap.put("user_id", user_id);
+				sqlMap.put("loan_id", loan_id);
 				Integer total_record=executeQuerySql(sqlMap);
 				flag=total_record>0?true:false;
 			}

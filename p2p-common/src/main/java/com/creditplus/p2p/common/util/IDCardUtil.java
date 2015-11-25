@@ -143,11 +143,9 @@ public class IDCardUtil {
     }
     
     public static Map getCardInfo(String cardNo){
-    	Map cardInfo=new HashMap();
-    	if(isIDCard(cardNo)){
-    		cardInfo=new HashMap(card_map);
-    		card_map=new HashMap();
-    	}
+    	isIDCard(cardNo);
+    	Map cardInfo=new HashMap(card_map);
+		card_map=new HashMap();
     	return cardInfo;
     }
 
