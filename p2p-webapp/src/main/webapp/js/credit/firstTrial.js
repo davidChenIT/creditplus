@@ -34,6 +34,11 @@ $(function(){
 			//移除静态html，循环输出动态列表元素
 			if(i == userInfoList.length-1) 
 				userTemplateDiv.remove();
+			else{
+				//triggerKey还原
+				$(userTemplateDiv).find("select[name=mobile_province]").attr("trigger", triggerKey);
+				$(userTemplateDiv).find("select[name=mobile_city]").attr("id", triggerKey);
+			}
 			//渲染下拉框
 			selectRender(userDivIdx);
 		});
