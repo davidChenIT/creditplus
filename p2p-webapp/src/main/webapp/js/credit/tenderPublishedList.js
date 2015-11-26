@@ -21,14 +21,14 @@ $(function(){
 			formatter:function(cellvalue, options, rowObject){
 				   debugger;
 				   var loan_id=rowObject.loan_id;
-				   return "<a name='a_ofWithdrawal' style='color:blue;' data-val='"+loan_id+"'>撤标</a>";
+				   return "<a class='a_ofWithdrawal' style='color:blue;' data-val='"+loan_id+"'>撤标</a>";
 			}
 			
 		}, 
 		{
 			name:'loan_id', index:'loan_id',align:'center',"sortable":false, hidden:true
 		},
-		{	name:'loan_id_render', index:'loan_id', align:'center', "sortable":false,
+		{	name:'loan_id_render', index:'loan_id_render', align:'center', "sortable":false,
 			formatter:function(cellvalue, options, rowObject){
 			   debugger;
 			   var paramsStr=JSON.stringify(rowObject);
@@ -114,6 +114,7 @@ $(function(){
 
 //撤标按钮
 $("[name='ofWithdrawalBtn']").click(function(){
+	debugger;
 	  var grid=$("#tenderPublishedGrid");
 	  var selectedIds = grid.jqGrid('getGridParam','selarrrow');
 	  if(selectedIds && selectedIds.length>0){
@@ -122,7 +123,7 @@ $("[name='ofWithdrawalBtn']").click(function(){
 			  var rowData = grid.jqGrid('getRowData',selectedIds[i]);
 			  delete rowData['loan_id_render'];
 			  rowData.apply_state = 8;//撤标状态
-			  rowData.approve_content = "撤标";
+			  rowData.approve_content = "撤标!";
 			  selectRowDataArray.push(rowData);
 		  }
 		  //调用撤标服务
@@ -133,18 +134,46 @@ $("[name='ofWithdrawalBtn']").click(function(){
 				data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(selectRowDataArray)},			
 				success: function(data){
 					//removeTabItem("userTab","userCreate");
-					$("[name=cheatInterceptorSearchBtn]").click();
+					$("[name=tenderPublishedSearchBtn]").click();
+					var ofWithdrawalMoneySpan=$("div[tabid='tenderPublished']").find("span[name='ofWithdrawalMoney']");
+					$(ofWithdrawalMoneySpan).text('0');
+					messageBox.createMessageDialog("提示","撤标成功！","","","true");
 				},error:function(error){
+					messageBox.createMessageDialog("提示","撤标失败！","","","error");
 				}
 		  });
-		  var ofWithdrawalMoneySpan=$("div[tabid='tenderPublished']").find("span[name='ofWithdrawalMoney']");
-		  $(ofWithdrawalMoneySpan).text('0');
-		  messageBox.createMessageDialog("提示","撤标！","","","warning");
+		  
 		  
 	  }else{
 		  messageBox.createMessageDialog("提示","请至少选择一条数据进行撤标！","","","warning");
 	  }
 	  
+});
+
+//grid里面的撤标动作
+$("div[tabid='tenderPublished']").on("click",".a_ofWithdrawal",function(){
+	debugger;
+	var ofWithdrawalData=[];
+	var rowData={};
+	rowData.loan_id=$(this).attr("data-val");
+	rowData.apply_state=8;
+	rowData.approve_content = "撤标!";
+	ofWithdrawalData.push(rowData);
+	//调用撤标服务
+	  $.ajax({ 
+			url: serviceAddress,
+			datatype: 'json',
+			method:"post",
+			data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(ofWithdrawalData)},			
+			success: function(data){
+				$("[name=tenderPublishedSearchBtn]").click();
+				var ofWithdrawalMoneySpan=$("div[tabid='tenderPublished']").find("span[name='ofWithdrawalMoney']");
+				$(ofWithdrawalMoneySpan).text('0');
+				messageBox.createMessageDialog("提示","撤标成功！","","","true");
+			},error:function(error){
+				messageBox.createMessageDialog("提示","撤标失败！","","","error");
+			}
+	  });
 });
 
 //查询按钮
@@ -156,7 +185,8 @@ $("[name='tenderPublishedSearchBtn']").click(function(){
         page:1,
         rowNum:10
     }).trigger("reloadGrid"); //重新载入
-	
+    var ofWithdrawalMoneySpan=$("div[tabid='tenderPublished']").find("span[name='ofWithdrawalMoney']");
+	$(ofWithdrawalMoneySpan).text('0');
 });
 	
 	//重置按钮
