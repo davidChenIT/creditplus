@@ -864,7 +864,10 @@ var uploadDialog={
 	    		$("span[name='"+uploadDialog.uploadElement+"']").attr("code",resultObj.img_path);
 	    		//移除提示层
 	    		var tabId=$("li[class='tabs-selected']").attr("tabid");
-	    		$("div[tabid='"+tabId+"']").find("div[name='"+uploadDialog.uploadElement+"_tip_div']").reomve();
+	    		var tipDiv=$("div[tabid='"+tabId+"']").find("div[name='"+uploadDialog.uploadElement+"_tip_div']");
+	    		if(tipDiv && tipDiv.length>0){
+	    			tipDiv.remove();
+	    		}
 	    		$("span[name='"+uploadDialog.uploadElement+"']").removeClass("input-error");
 	    	}
 	    	loadingBox.hideLoading();
