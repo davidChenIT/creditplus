@@ -619,6 +619,9 @@ function validErrorTip(elemName, elementDom, tip, parentDivId){
 //    });
 	var tabId=$("li[class='tabs-selected']").attr("tabid");
 	var tipDivName=$(elementDom).attr("name")+"_"+"tip_div";
+	if($(elementDom).attr("index")){
+		tipDivName+=$(elementDom).attr("index");
+	}
 	$(elementDom).addClass("input-error");
 	var elementOffset=$(elementDom).offset();
 	var leftX=elementOffset.left+($(elementDom).width()/4-5);
