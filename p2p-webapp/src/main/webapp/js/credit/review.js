@@ -21,11 +21,12 @@ $(function(){
 			//更新级联key
 			var triggerKey = $(userTemplateDiv).find("select[name=mobile_city]").attr("id");
 			var newTriggerKey = triggerKey.substring(0, triggerKey.length-1) + i;
+			var userDivIdx = "connectionUserIdx" + i;
 			$(userTemplateDiv).find("select[name=mobile_province]").attr("trigger", newTriggerKey);
 			$(userTemplateDiv).find("select[name=mobile_city]").attr("id", newTriggerKey);
+			$(userTemplateDiv).find("select[name=mobile_province]").attr("index", userDivIdx);
+			$(userTemplateDiv).find("select[name=mobile_city]").attr("index", userDivIdx);
 			var userDom = userTemplateDiv.html();
-			
-			var userDivIdx = "connectionUserIdx" + i;
 			var userTemplate = '<div id="'+userDivIdx+'">'+userDom+'</div>';
 			setValues("applyUserUrgentConnectionUserInfoDiv", userInfoList[i], userTemplate);
 			setValues(userDivIdx,userInfoList[i]);
