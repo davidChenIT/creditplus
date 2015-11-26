@@ -35,7 +35,8 @@ $(function(){
 			   debugger;
 			   var paramsStr=JSON.stringify(rowObject);
 			   if(paramsStr){
-				   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+//				   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+				   paramsStr=escape(paramsStr);
 			   }
 			   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','cheatInterceptorDetail','拦截欺诈信息','/p2p-webapp/page/cheatInterceptorDetail.html','true','/p2p-webapp/js/credit/cheatInterceptorDetail.js','"+paramsStr+"');\">"+rowObject.loan_id+"</a>";
 			}
@@ -85,7 +86,30 @@ $(function(){
 				// 如果是黑名单状态， 不显示复选框
 				if(rowData.apply_state && rowData.apply_state == '11'){
 					// 清空复选框
-					$($("#cheatInterceptorGrid #" + rowid)[0]).html('');
+					$($("#cheatInterceptorGrid #" + rowid + " td")[0]).html('');
+				}
+			});
+		}
+	},
+	onSelectRow : function(rowid,status){
+		debugger;
+		var grid = $("#cheatInterceptorGrid");
+		var rowData = grid.jqGrid("getRowData", rowid);
+		// 如果是黑名单状态， 不显示复选框
+		if(rowData.apply_state && rowData.apply_state == '11'){
+			$("#cheatInterceptorGrid #" + rowid).removeClass('ui-state-highlight');
+		}
+		return status;
+	},
+	onSelectAll : function(aRowids,status){
+		debugger;
+		if(status){
+			var grid = $("#cheatInterceptorGrid");
+			$.each(aRowids, function(i, rowid){
+				var rowData = grid.jqGrid("getRowData", rowid);
+				// 如果是黑名单状态， 不显示复选框
+				if(rowData.apply_state && rowData.apply_state == '11'){
+					$("#cheatInterceptorGrid #" + rowid).removeClass('ui-state-highlight');
 				}
 			});
 		}
@@ -97,10 +121,18 @@ $(function(){
 	 $("[name='joinBlacklistBtn']").click(function(){
 		  var grid=$("#cheatInterceptorGrid");
 		  var selectedIds = grid.jqGrid('getGridParam','selarrrow');
-		  if(selectedIds && selectedIds.length>0){
+		  //去除黑名单数据
+		  var newIds = [];
+		  $.each(selectedIds, function(i, rowid){
+			  var rowData = grid.jqGrid('getRowData',selectedIds[i]);
+			  if(rowData.apply_state && rowData.apply_state == '7'){
+				  newIds.push(rowid);
+			  }
+		  });
+		  if(newIds && newIds.length>0){
 			  var selectRowDataArray=[];
-			  for(var i=0;i<selectedIds.length;i++){
-				  var rowData = grid.jqGrid('getRowData',selectedIds[i]);
+			  for(var i=0;i<newIds.length;i++){
+				  var rowData = grid.jqGrid('getRowData',newIds[i]);
 				  delete rowData['loan_id_render'];
 				  rowData.apply_state = 11;//黑名单状态
 				  rowData.approve_content = "加入黑名单";

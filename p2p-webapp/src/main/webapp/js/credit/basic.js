@@ -412,7 +412,8 @@ function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
 		loadingBox.showLoading();
 		var paramsObj;
 		if(paramsStr){
-			paramsObj=JSON.parse(paramsStr.replace(/@#_@#/g,"\""));
+//			paramsObj=JSON.parse(paramsStr.replace(/@#_#@/g,"\""));//双引号替换
+			paramsObj=JSON.parse(unescape(paramsStr));
 		}else{
 			paramsObj={};
 		}
