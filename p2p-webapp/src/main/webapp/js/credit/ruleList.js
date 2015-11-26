@@ -18,7 +18,7 @@ $(function(){
 					   debugger;
 					   var paramsStr=JSON.stringify(rowObject);
 					   if(paramsStr){
-						   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+						   paramsStr=escape(paramsStr);
 					   }
 					   return "<span name='ruleEditSpan' class='ui-icon-edit' onclick=\"addTabItem('ruleTab','ruleUpdate','规则修改','/p2p-webapp/page/systemmng/ruleUpdate.html','true','/p2p-webapp/js/credit/ruleUpdate.js','"+paramsStr+"');\"></span>";
 					   

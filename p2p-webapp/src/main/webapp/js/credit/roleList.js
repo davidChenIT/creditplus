@@ -18,14 +18,9 @@ $(function(){
 						   debugger;
 						   var paramsStr=JSON.stringify(rowObject);
 						   if(paramsStr){
-							   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+							   paramsStr=escape(paramsStr);
 						   }
 						   return "<span name='ruleEditSpan' class='ui-icon-edit' onclick=\"addTabItem('roleTab','roleUpdate','角色修改','/p2p-webapp/page/systemmng/roleUpdate.html','true','/p2p-webapp/js/credit/roleUpdate.js','"+paramsStr+"');\"></span>";
-//						   var paramsStr=JSON.stringify(rowObject);
-//						   if(paramsStr){
-//							   paramsStr=paramsStr.replace(/"/g,"@#_@#");
-//						   }
-//						   return "<a style='color:blue;' onclick=\"addTabItem('roleTab','roleUpdate','角色修改','/p2p-webapp/page/systemmng/roleUpdate.html','true','/p2p-webapp/js/credit/roleUpdate.js','"+paramsStr+"');\">"+cellvalue+"</a>";
 					}
 				},
 				{name:'roleId', index:'roleId',align:'center',hidden:true},

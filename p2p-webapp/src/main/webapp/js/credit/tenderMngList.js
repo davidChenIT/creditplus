@@ -23,7 +23,7 @@ $(function(){
 					   debugger;
 					   var paramsStr=JSON.stringify(rowObject);
 					   if(paramsStr){
-						   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+						   paramsStr=escape(paramsStr);
 					   }
 					   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','rankPoolDetail','排名池详细信息','/p2p-webapp/page/rankPoolDetail.html','true','/p2p-webapp/js/credit/rankPoolDetail.js','"+paramsStr+"');\">"+rowObject.loan_id+"</a>";
 					}

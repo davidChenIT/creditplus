@@ -33,7 +33,7 @@ $(function(){
 			   debugger;
 			   var paramsStr=JSON.stringify(rowObject);
 			   if(paramsStr){
-				   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+				   paramsStr=escape(paramsStr);
 			   }
 			   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','tenderPublishedDetail','已发标信息','/p2p-webapp/page/tenderPublishedDetail.html','true','/p2p-webapp/js/credit/tenderPublishedDetail.js','"+paramsStr+"');\">"+rowObject.loan_id+"</a>";
 			}

@@ -35,7 +35,8 @@ $(function(){
 			   debugger;
 			   var paramsStr=JSON.stringify(rowObject);
 			   if(paramsStr){
-				   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+//				   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+				   paramsStr=escape(paramsStr);
 			   }
 			   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','cheatInterceptorDetail','拦截欺诈信息','/p2p-webapp/page/cheatInterceptorDetail.html','true','/p2p-webapp/js/credit/cheatInterceptorDetail.js','"+paramsStr+"');\">"+rowObject.loan_id+"</a>";
 			}

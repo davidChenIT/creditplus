@@ -23,7 +23,7 @@ $(function(){
 						   debugger;
 						   var paramsStr=JSON.stringify(rowObject);
 						   if(paramsStr){
-							   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+							   paramsStr=escape(paramsStr);
 						   }
 						   return "<a style='color:blue;' onclick=\"addTabItem('reviewTab','review','复审','/p2p-webapp/page/review.html','true','/p2p-webapp/js/credit/review.js','"+paramsStr+"');\">"+cellvalue+"</a>";
 					}

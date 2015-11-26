@@ -17,7 +17,7 @@ $(function(){
 					   debugger;
 					   var paramsStr=JSON.stringify(rowObject);
 					   if(paramsStr){
-						   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+						   paramsStr=escape(paramsStr);
 					   }
 					   return "<span data-val='" + rowObject.userId + "' class='ui-icon-edit' onclick=\"addTabItem('userTab','userUpdate','用户修改','/p2p-webapp/page/systemmng/userUpdate.html','true','/p2p-webapp/js/credit/userUpdate.js','"+paramsStr+"');\"></span>";
 					}

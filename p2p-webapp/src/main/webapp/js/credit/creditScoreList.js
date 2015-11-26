@@ -20,7 +20,7 @@ $(function(){
 					   debugger;
 					   var paramsStr=JSON.stringify(rowObject);
 					   if(paramsStr){
-						   paramsStr=paramsStr.replace(/"/g,"@#_@#");
+						   paramsStr=escape(paramsStr);
 					   }
 					   return "<span name='creditScoreEditSpan' class='ui-icon-edit' onclick=\"addTabItem('creditScoreTab','creditScoreUpdate','信用评分修改','/p2p-webapp/page/systemmng/creditScoreUpdate.html','true','/p2p-webapp/js/credit/creditScoreUpdate.js','"+paramsStr+"');\"></span>";
 					}
