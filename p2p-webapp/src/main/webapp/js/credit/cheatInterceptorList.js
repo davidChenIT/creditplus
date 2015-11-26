@@ -19,16 +19,18 @@ $(function(){
 	colModel :[
 	    {name:'operate', index:'operate',align:'center',"sortable":false,
 	    	formatter:function(cellvalue, options, rowObject){
-				   debugger;
-				   var loan_id=rowObject.loan_id;
-				   return "<a name='a_joinBlacklist' style='color:blue;' data-val='"+loan_id+"'>加入黑名单</a>";
+	    		debugger;
+				var loan_id=rowObject.loan_id;
+				var renderStr = "<a name='a_joinBlacklist' onclick=\"addInterceptor("+loan_id+")\" style='color:blue;' data-val='"+loan_id+"'>加入黑名单</a>";
+				if(rowObject.apply_state == "11") renderStr = '<span style="color: #555562;">加入黑名单</span>';
+				return renderStr;
 			}
-	    	
 	    },      
 	    {
 			name:'loan_id', index:'loan_id',align:'center',"sortable":false, hidden:true
 		},
-		{	name:'loan_id_render', index:'loan_id', align:'center', "sortable":false,
+		{	
+			name:'loan_id_render', index:'loan_id', align:'center', "sortable":false,
 			formatter:function(cellvalue, options, rowObject){
 			   debugger;
 			   var paramsStr=JSON.stringify(rowObject);
@@ -72,7 +74,22 @@ $(function(){
 		 var request_data = getValue("cheatInterceptorConditionDiv");
 		 var  grid=$(this).jqGrid();
 		 gridOnPaging(pgButton,grid,"cheatInterceptorPager",request_data);
-	}	 
+	},
+	gridComplete : function(rowId, e, arg3, arg4){
+		// 获取所有行序列
+		var rowIds = $("#cheatInterceptorGrid").jqGrid("getDataIDs");
+		if(rowIds && rowIds.length > 0){
+			$.each(rowIds, function(i, rowid){
+				// 获取行对象
+				var rowData = $("#cheatInterceptorGrid").jqGrid("getRowData", rowid);
+				// 如果是黑名单状态， 不显示复选框
+				if(rowData.apply_state && rowData.apply_state == '11'){
+					// 清空复选框
+					$($("#cheatInterceptorGrid #" + rowid)[0]).html('');
+				}
+			});
+		}
+	}
 		
 });
  
@@ -90,24 +107,13 @@ $(function(){
 				  selectRowDataArray.push(rowData);
 			  }
 			  //调用撤标服务
-			  $.ajax({ 
-					url: serviceAddress,
-					datatype: 'json',
-					method:"post",
-					data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(selectRowDataArray)},			
-					success: function(data){
-						//removeTabItem("userTab","userCreate");
-						$("[name=cheatInterceptorSearchBtn]").click();
-					},error:function(error){
-					}
-			  });
-			  messageBox.createMessageDialog("提示","加入黑名单成功！","","","warning");
-			  
+			  interceptorCall(selectRowDataArray);
 		  }else{
 			  messageBox.createMessageDialog("提示","请至少选择一条数据加入黑名单！","","","warning");
 		  }
-		  
 	 });
+	 
+	 
 	//查询按钮
 	  $("[name='cheatInterceptorSearchBtn']").click(function(){
 		  var request_data = getValue("cheatInterceptorConditionDiv");
@@ -126,4 +132,34 @@ $(function(){
 	  	clearDomVal("cheatInterceptorConditionDiv");
 	  });
 	 
-})
+});
+
+function addInterceptor(loan_id){
+	 var datas = [];
+	 var request_data = {};
+	 request_data.loan_id = loan_id;
+	 request_data.apply_state = 11;//黑名单状态
+	 request_data.approve_content = "加入黑名单";
+	 datas.push(request_data);
+	 //调服务
+	 interceptorCall(datas);
+}
+
+function interceptorCall(datas){
+	//调用撤标服务
+	  $.ajax({ 
+			url: serviceAddress,
+			datatype: 'json',
+			method:"post",
+			data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(datas)},			
+			success: function(data){
+				//removeTabItem("userTab","userCreate");
+				$("[name=cheatInterceptorSearchBtn]").click();
+			},error:function(error){
+				messageBox.createMessageDialog("提示","操作失败！","","","warning");
+			}
+	  });
+	  messageBox.createMessageDialog("提示","加入黑名单成功！","","","warning");
+	  //刷新数据
+	  $("[name='cheatInterceptorSearchBtn']").click();
+}
