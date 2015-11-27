@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.creditplus.p2p.common.constant.Constant;
@@ -29,37 +31,42 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	@Autowired
 	ApproveLogService approveLogService;
 	
-	
 	public boolean intercept(Integer user_id,Integer loan_id) throws Exception {
 		boolean checkFlag=false;
-		List<Map> ruleList=getRuleList();
-		if(ruleList!=null && ruleList.size()>0){
-			for(Map ruleMap:ruleList){
-				String rule_name=(String) ruleMap.get(Constant.RULE_NAME);
-				Integer rule_id=Integer.valueOf(ruleMap.get(Constant.RULE_ID)+"");
-				checkFlag=ruleSqlCheat(ruleMap, user_id,loan_id);
-				if(checkFlag){
-					CheatProcess(loan_id, new StringBuilder("检查规则 '").append(rule_name).append("' sql不通过").toString());
-					break;
-				}
-					
-				
-				List<Map> dimensionList=getDimensionByRuleId(rule_id);
-				if(dimensionList!=null && dimensionList.size()>0){
-					checkFlag=dimensionCheat(dimensionList, user_id,loan_id);
+		try{
+			List<Map> ruleList=getRuleList();
+			if(ruleList!=null && ruleList.size()>0){
+				for(Map ruleMap:ruleList){
+					String rule_name=(String) ruleMap.get(Constant.RULE_NAME);
+					Integer rule_id=Integer.valueOf(ruleMap.get(Constant.RULE_ID)+"");
+					checkFlag=ruleSqlCheat(ruleMap, user_id,loan_id);
 					if(checkFlag){
-						CheatProcess(loan_id, new StringBuilder("检查规则 '").append(rule_name).append("' 维度不通过").toString());
+						CheatProcess(loan_id, new StringBuilder("检查规则 '").append(rule_name).append("' sql不通过").toString());
 						break;
 					}
+						
+					
+					List<Map> dimensionList=getDimensionByRuleId(rule_id);
+					if(dimensionList!=null && dimensionList.size()>0){
+						checkFlag=dimensionCheat(dimensionList, user_id,loan_id);
+						if(checkFlag){
+							CheatProcess(loan_id, new StringBuilder("检查规则 '").append(rule_name).append("' 维度不通过").toString());
+							break;
+						}
+					}
+					checkFlag=false;
 				}
-				checkFlag=false;
 			}
+		}catch(Exception e){
+			System.out.println("dimensionCheat error:"+e);
+//			cheatExceptionProcess(loan_id, "防欺诈拦截异常,请检查防欺诈规则配置是否有误 ");
+			throw new Exception("防欺诈拦截异常,请检查防欺诈规则配置是否有误");
 		}
 		return checkFlag;
 	}
 	
 	
-	private boolean dimensionCheat(List<Map> dismensionList,Integer user_id,Integer loan_id){
+	private boolean dimensionCheat(List<Map> dismensionList,Integer user_id,Integer loan_id) {
 		boolean flag=false;
 		if(dismensionList!=null && dismensionList.size()>0){
 			Map<String, Object> sqlMap=new HashMap<String, Object>();
@@ -74,7 +81,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 				sbSql.append(column_name).append(semanteme).append("#{").append(key).append("} ");
 				sqlMap.put(key, value);
 				if(i<dismensionList.size()-1)
-					sbSql.append(arithmetic);
+					sbSql.append(arithmetic).append(" ");
 			}
 			sbSql.append(" and u.user_id=#{").append("user_id} and l.loan_id=#{").append("loan_id}");
 			sqlMap.put("user_id", user_id);
@@ -83,7 +90,6 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 			Integer total_record=executeQuerySql(sqlMap);
 			flag=total_record>0?true:false;
 		}
-		
 		System.out.println("=====flag:"+flag);
 		return flag;	
 	} 
@@ -96,6 +102,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	 * @param loan_id
 	 * @return
 		boolean
+	 * @throws Exception 
 	 */
 	private boolean ruleSqlCheat(Map ruleMap,Integer user_id,Integer loan_id){
 		boolean flag=false;
@@ -103,7 +110,8 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 			String rule_sql=(String) ruleMap.get("rule_sql");
 			if(StringUtils.isNotEmpty(rule_sql) && rule_sql.toLowerCase().contains("select")){
 				Map<String, Object> sqlMap=new HashMap<String, Object>();
-				String sql=new StringBuilder("select count(1) as total_record from (").append(rule_sql).append(") xt").toString();
+//				String sql=new StringBuilder("select count(1) as total_record from (").append(rule_sql).append(") xt").toString();
+				String sql=new StringBuilder(rule_sql).toString();
 				sqlMap.put("sql", sql);
 				sqlMap.put("user_id", user_id);
 				sqlMap.put("loan_id", loan_id);
@@ -157,6 +165,22 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 		}
 	}
 	
+	
+	/**
+	 * 欺诈拦截异常处理，不能因为防欺诈出异常导致审批不能走，所以只记录防欺诈异常记录
+	 * @param loan_id
+	 * @param intercept_cause
+		void
+	 */
+	private void cheatExceptionProcess(Integer loan_id,String intercept_cause){
+		String userName=CommonUtil.getCurrentUser();
+		Map<String, Object> approveMap=new HashMap<String, Object>();
+		approveMap.put(Constant.LOAN_ID, loan_id);
+		approveMap.put(Constant.APPLY_STATE, Constant.S_STOP);
+		approveMap.put(Constant.APPROVE_CONTENT, intercept_cause);
+		approveMap.put(Constant.LAST_UPDATED_BY, userName);
+		approveLogService.insertApproveLog(approveMap);
+	}
 	
 	private List<Map> getRuleList(){
 		return ruleDao.getRulesList(new HashMap());
