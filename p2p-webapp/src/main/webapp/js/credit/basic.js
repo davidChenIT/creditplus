@@ -544,6 +544,10 @@ var domValid = {
     id_card : function(value){
     	if(isEmptyString(value)) return true;
     	return /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(value);
+	},
+	percent_num:function(value){
+		if(isEmptyString(value)) return true;
+    	return /^(0|[1-9][0-9]*)[%]$/.test(value);
 	}
 }
 
@@ -582,6 +586,10 @@ function validateDom(elementDom, parentDivId){
 			case 'id_card':
 				result = domValid.id_card(value);
 				tip = "无效身份证号码！";
+				break;
+			case 'percent_num':
+				result = domValid.percent_num(value);
+				tip = "无效的百分比！";
 				break;
 		}
 		//校验失败， value重置为空
