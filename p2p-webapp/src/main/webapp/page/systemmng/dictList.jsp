@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
 <title>数据字典管理</title>
+<link rel="Shortcut Icon" href="/p2p-webapp/images/favicon.ico">
 </head>
 <body>
 <div id="credit_Top">
