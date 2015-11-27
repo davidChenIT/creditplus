@@ -5,6 +5,7 @@
 <head>
 <meta charset="utf-8">
 <title>500</title>
+<link rel="Shortcut Icon" href="/p2p-webapp/images/favicon.ico">
 </head>
 
 <body>

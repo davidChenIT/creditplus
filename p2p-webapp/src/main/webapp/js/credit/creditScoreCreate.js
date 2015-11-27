@@ -7,7 +7,7 @@ $(function(){
 	
 	
 	//grid中的数据字典
-	var semantemeDicObj=gridSelectColRender("","",{"type":"semanteme_dic"},"code","name",true);
+	var semantemeDicObj=gridSelectColRender("","",{"type":"score_semanteme_dic"},"code","name",true);
 	var incomeIntervalDicObj={"jsonArray":[],"jsonStr":""};
 	
 	

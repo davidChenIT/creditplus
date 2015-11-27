@@ -20,7 +20,6 @@
 	<script src="<%=request.getContextPath()%>/js/jqgrid/i18n/grid.locale-cn.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/credit/basic.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/jquery/ajaxfileupload.js" type="text/javascript"></script>
 </head>
 <script type="text/javascript">
 $(function(){

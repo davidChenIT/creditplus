@@ -4,6 +4,7 @@
 <head>
 <meta charset="utf-8">
 <title>投标列表</title>
+<link rel="Shortcut Icon" href="/p2p-webapp/images/favicon.ico">
 </head>
 
 

@@ -6,7 +6,7 @@ $(function(){
 	//查询详细信息，并赋值
 	publicQueryInfoAjax("creditScoreService","getCreditScoreById",JSON.stringify({"score_id":score_id}),"creditScoreUpdateForm");
 	//grid中的数据字典
-	var semantemeDicObj=gridSelectColRender("","",{"type":"semanteme_dic"},"code","name",true);
+	var semantemeDicObj=gridSelectColRender("","",{"type":"score_semanteme_dic"},"code","name",true);
 	var incomeIntervalDicObj={"jsonArray":[],"jsonStr":""};
 	var  custom_dimension_value_element=function(value, options) {
 		debugger;

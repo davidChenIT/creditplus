@@ -4,6 +4,7 @@
 <head>
 <meta charset="utf-8">
 <title>首页</title>
+<link rel="Shortcut Icon" href="/p2p-webapp/images/favicon.ico">
 </head>
 <body>
 
