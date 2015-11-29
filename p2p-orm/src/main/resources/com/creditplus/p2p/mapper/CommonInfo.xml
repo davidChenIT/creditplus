@@ -29,4 +29,8 @@
 	<delete id="deletePic" parameterType="java.util.Map">
 		delete from attach_pic  where user_id = #{user_id} and type = #{type}
 	</delete>
+	
+	<select id="getAntiRistByLoanId" parameterType="Integer" resultType="java.util.Map">
+		select tongdun_risk_score,tongdun_risk_level ,if(91_risk_score=0,'无借款','有借款') as 91_risk_score from anti_risk where loan_id=#{loan_id}
+	</select>
 </mapper>
