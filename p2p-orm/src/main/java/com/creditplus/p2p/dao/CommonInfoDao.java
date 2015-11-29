@@ -16,4 +16,6 @@ public interface CommonInfoDao {
 	void savePic(Map paramMap);
 	
 	void deletePic(Map paramMap);
+	
+	Map getAntiRistByLoanId(Integer loan_id);
 }

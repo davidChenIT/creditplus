@@ -19,14 +19,18 @@
 	
 	
 	<select id="getPictureSrcByUserIdAndType" parameterType="String" resultType="java.util.Map">
-		select url as imgPath from attach_pic where user_id=#{userId} and type=#{imgType}
+		select url as imgPath from attach_pic where user_id=#{userId} and type=#{imgType} order by modifytime desc limit 1
 	</select>
 	
-	<insert id="savePic" parameterType="java.util.Map">
-		insert into attach_pic(pic_id,user_id,type,url,current,modifytime)values(#{pic_id},#{user_id},#{type},#{url},#{current},sysdate())
+	<insert id="savePic" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="pic_id">
+		insert into attach_pic(user_id,type,url,current,modifytime)values(#{user_id},#{type},#{url},#{current},sysdate())
 	</insert>
 	
 	<delete id="deletePic" parameterType="java.util.Map">
 		delete from attach_pic  where user_id = #{user_id} and type = #{type}
 	</delete>
+	
+	<select id="getAntiRistByLoanId" parameterType="Integer" resultType="java.util.Map">
+		select tongdun_risk_score,tongdun_risk_level ,if(91_risk_score=0,'无借款','有借款') as 91_risk_score from anti_risk where loan_id=#{loan_id}
+	</select>
 </mapper>
