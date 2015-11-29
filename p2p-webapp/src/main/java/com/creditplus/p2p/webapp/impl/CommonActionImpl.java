@@ -59,13 +59,16 @@ public class CommonActionImpl implements CommonAction {
     		}
     	}
     	
+    	Set resSet = new HashSet();
     	if(!resourceSet.isEmpty() && null != catalogList && !catalogList.isEmpty()){
     		for(Map<String,Object> catalogMap : catalogList){
     			int catalogId = (Integer) catalogMap.get("catalog_id");
 	        	Iterator<ResourceVO> resIter = resourceSet.iterator();
 	        	while(resIter.hasNext()){
 	        		ResourceVO resourceVO = resIter.next();
-	        		if(catalogId == resourceVO.getResourceId()){
+	        		if(catalogId == resourceVO.getResourceId() 
+	        				&& !resSet.contains(catalogId)){
+	        			resSet.add(catalogId);
 	        			rsList.add(catalogMap);
 	        		}
 	        	}
