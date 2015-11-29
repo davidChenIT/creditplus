@@ -490,7 +490,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<span name="work_tel"></span><span class="ip138" mobile="work_tel"></span>
+							<span name="work_tel"></span>
 						</div>
 					</div>
 				</div>
@@ -504,12 +504,8 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select style="width: 48%;" is_cache="true" trigger="city_cascade_tel_place" textField="province" valueField="province"  name="work_tel_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
-								<option value="">请选择</option>
-							</select>
-							<select style="width: 48%;" is_cache="true" id="city_cascade_tel_place" textField="city" valueField="city" name="work_tel_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
-								<option value="">请选择</option>
-							</select>
+							<span name="work_tel_place_v"/>&nbsp;
+							<span name="work_tel_place_city_v"/>
 						</div>
 					</div>
 				</div>
