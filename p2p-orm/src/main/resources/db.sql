@@ -224,6 +224,36 @@ INSERT INTO `config_data` VALUES (9,'income',1,'10000以上','10000以上',6),(1
 UNLOCK TABLES;
 
 --
+-- Table structure for table `contract_t`
+--
+
+DROP TABLE IF EXISTS `contract_t`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `contract_t` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `loan_id` int(11) NOT NULL COMMENT '订单号id',
+  `contract_id` int(11) NOT NULL,
+  `sign_time` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '合同生成时间',
+  `investor` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '借款人',
+  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='合同表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `contract_t`
+--
+
+LOCK TABLES `contract_t` WRITE;
+/*!40000 ALTER TABLE `contract_t` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contract_t` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `credit_score_item_t`
 --
 
@@ -596,17 +626,19 @@ DROP TABLE IF EXISTS `loan_protocol`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `loan_protocol` (
-  `sn` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
+  `sn` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `contract_id` int(11) NOT NULL,
+  `loan_id` int(11) DEFAULT NULL,
   `loan_money` float NOT NULL,
   `loan_name` varchar(100) NOT NULL,
+  `loan_id_num` varchar(100) NOT NULL,
   `borrow_name` varchar(100) NOT NULL,
+  `url` varchar(300) NOT NULL,
   `sign_time` varchar(20) NOT NULL,
-  `url` varchar(300) DEFAULT NULL,
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`sn`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -615,7 +647,6 @@ CREATE TABLE `loan_protocol` (
 
 LOCK TABLES `loan_protocol` WRITE;
 /*!40000 ALTER TABLE `loan_protocol` DISABLE KEYS */;
-INSERT INTO `loan_protocol` VALUES (1,NULL,20151129,3000,'朱胜','','2015-11-29 07:19:39',NULL,'2015-11-28 22:19:39'),(3,29,20151129,3000,'测试','','2015-11-29 14:38:14','/data/web/clx/my_loan/protocol_mirror/o8EeQw_voTztu6J-jPttrk7LBGSA_1448779094.shtml','2015-11-29 06:38:14'),(4,29,20151129,3000,'测试','','2015-11-29 14:46:24','/data/web/clx/my_loan/protocol_mirror/o8EeQw_voTztu6J-jPttrk7LBGSA_1448779584.shtml','2015-11-29 06:46:24'),(5,29,20151129,3000,'测试','','2015-11-29 14:47:09','/data/web/clx/my_loan/protocol_mirror/o8EeQw_voTztu6J-jPttrk7LBGSA_1448779629.shtml','2015-11-29 06:47:09');
 /*!40000 ALTER TABLE `loan_protocol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1094,4 +1125,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-29 16:55:23
+-- Dump completed on 2015-11-29 18:01:27

@@ -31,4 +31,9 @@ public class ContractServiceImpl implements ContractService {
 		return PageUtil.getPageVO();	
 	}
 
+	
+	public void insert(Map paramMap) {
+		contractDao.insert(paramMap);
+	}
+
 }

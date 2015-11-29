@@ -12,4 +12,6 @@ public interface ContractService {
 	 * @return
 	 */
 	PageVO getContractListWithPage(PageVO pageVO,Map map);
+	
+	void insert(Map paramMap);
 }

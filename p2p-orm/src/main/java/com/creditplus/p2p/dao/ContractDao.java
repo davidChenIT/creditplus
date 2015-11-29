@@ -19,4 +19,6 @@ public interface ContractDao {
 	 */
 	List<Map> getContractListWithPage(Map map);
 	
+	void insert(Map paramMap);
+	
 }
