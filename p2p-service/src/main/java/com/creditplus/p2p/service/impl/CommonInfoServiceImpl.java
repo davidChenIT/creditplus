@@ -66,4 +66,13 @@ public class CommonInfoServiceImpl implements CommonInfoService{
 	}
 
 
+	/* 
+	 * @param loan_id
+	 * @return
+	 */
+	public Map getAntiRistByLoanId(Integer loan_id) {
+		return commonInfoDao.getAntiRistByLoanId(loan_id);
+	}
+	
+
 }

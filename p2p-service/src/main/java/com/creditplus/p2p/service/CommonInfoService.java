@@ -12,4 +12,5 @@ public interface CommonInfoService {
 	
 	void savePic(Map paramMap);
 	
+	Map getAntiRistByLoanId(Integer loan_id);
 }
