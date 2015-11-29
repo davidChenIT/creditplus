@@ -499,19 +499,14 @@
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
-						<div class="credit-label lable-red-oblique">
+						<div class="credit-label">
 							公司电话属地
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select is_cache="true" style="width: 48%;" trigger="city_cascade_tel_place" textField="province" valueField="province"  name="work_tel_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  >
-								<option value="">请选择</option>
-							</select>
-							<!-- validation="required" -->
-							<select is_cache="true" style="width: 48%;" id="city_cascade_tel_place" textField="city" valueField="city" name="work_tel_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" >
-								<option value="">请选择</option>
-							</select>
+							<span name="work_tel_place_v"/>&nbsp;
+							<span name="work_tel_place_city_v"/>
 						</div>
 					</div>
 				</div>
