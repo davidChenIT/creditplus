@@ -20,12 +20,12 @@
 
      <tx:advice id="txAdvice" transaction-manager="transactionManager"> 
         <tx:attributes> 
-            <tx:method name="add*" propagation="REQUIRED" /> 
-            <tx:method name="delete*" propagation="REQUIRED" /> 
-            <tx:method name="update*" propagation="REQUIRED" /> 
-            <tx:method name="insert*" propagation="REQUIRED" /> 
-            <tx:method name="getCredit*" propagation="REQUIRED" /> 
-            <tx:method name="credit*" propagation="REQUIRED" /> 
+            <tx:method name="add*" propagation="REQUIRED"   rollback-for="Exception" /> 
+            <tx:method name="delete*" propagation="REQUIRED"   rollback-for="Exception"/> 
+            <tx:method name="update*" propagation="REQUIRED"   rollback-for="Exception"/> 
+            <tx:method name="insert*" propagation="REQUIRED"    rollback-for="Exception" /> 
+            <tx:method name="getCredit*" propagation="REQUIRED"   rollback-for="Exception"/> 
+            <tx:method name="credit*" propagation="REQUIRED"   rollback-for="Exception"/> 
         </tx:attributes>
     </tx:advice> 
  

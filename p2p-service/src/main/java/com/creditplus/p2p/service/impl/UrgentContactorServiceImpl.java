@@ -22,16 +22,14 @@ public class UrgentContactorServiceImpl implements UrgentContactorService {
 	 */
 	public List<?> getListByUserId(Integer user_id) {
 		List<Map> list=(List<Map>) urgentDao.getListByUserId(user_id);
-		if(list==null || list.size()==0)
-			list=(List<Map>) urgentDao.getUrgentListByUserId(user_id);
-		
-		//补全号码归属地
-		for(Map map:list){
-			String phoneNum=(String) map.get("mobile");
-			Map phoneMap=commonInfoService.getPhoneInfoById(phoneNum);
-			if(phoneMap!=null && phoneMap.size()>0)
-				map.putAll(phoneMap);
-		}
+		if(list!=null && list.size()>0)
+			//补全号码归属地
+			for(Map map:list){
+				String phoneNum=(String) map.get("mobile");
+				Map phoneMap=commonInfoService.getPhoneInfoById(phoneNum);
+				if(phoneMap!=null && phoneMap.size()>0)
+					map.putAll(phoneMap);
+			}
 		return list;
 		
 	}
