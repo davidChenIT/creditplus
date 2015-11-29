@@ -258,10 +258,10 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select style="width: 48%;" is_cache="true" trigger="city_cascade_registered_place" textField="province" valueField="province"  name="registered_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
+							<select style="width: 48%;" is_cache="true" trigger="city_cascade_registered_province_code" textField="province" valueField="province"  name="registered_province_code" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
 								<option value="">请选择</option>
 							</select>
-							<select style="width: 48%;" is_cache="true" id="city_cascade_registered_place" textField="city" valueField="city" name="registered_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
+							<select style="width: 48%;" is_cache="true" id="city_cascade_registered_city_code" textField="city" valueField="city" name="registered_city_code"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -627,7 +627,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="credit-spacecontrol col-xs-12 col-sm-4">
+			<!--<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
 						<div class="credit-label">
@@ -640,17 +640,17 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="credit-spacecontrol col-xs-12 col-sm-4">
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
 						<div class="credit-label">
-							网银截图
+							银行流水或网银截图
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<span name="net_bank_pic" class="show-img-span" img-type="7" user-id="" img-title="网银截图"></span>
+							<span name="net_bank_pic" class="show-img-span" img-type="7" user-id="" img-title="银行流水或网银截图"></span>
 						</div>
 					</div>
 				</div>
@@ -659,12 +659,12 @@
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
 						<div class="credit-label">
-							收入证明截图
+							 工资单截图
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<span name="income_pic" class="show-img-span" img-type="6" user-id="" img-title="收入证明截图"></span>
+							<span name="income_pic" class="show-img-span" img-type="6" user-id="" img-title="工资单截图"></span>
 						</div>
 					</div>
 				</div>
