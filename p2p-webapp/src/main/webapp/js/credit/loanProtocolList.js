@@ -26,7 +26,7 @@ $(function(){
 					}
 				},
 				{name:'loan_money', index:'loan_money', align:'center',"sortable":false},
-				{name:'loan_name', index:'loan_name',align:'center',"sortable":false},,
+				{name:'loan_name', index:'loan_name',align:'center',"sortable":false},
 				{name:'investor', index:'investor',align:'center',"sortable":false},
 				{name:'sign_time', index:'sign_time',align:'center',"sortable":false}
 			],
