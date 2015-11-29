@@ -6,7 +6,7 @@
 <mapper namespace="com.creditplus.p2p.dao.UrgentContactorDao">
     
 	<select id="getListByUserId" parameterType="Integer" resultType="java.util.Map">
-		select u.sn,u.user_id,u.name,u.relation,u.mobile,t.mobile_province,t.mobile_city,t.created_by,t.created_date,t.last_updated_by,t.last_updated_date from urgent_list u left join urgent_contactor_t t on u.sn=t.sn where u.user_id = #{user_id}
+		select u.sn,u.user_id,u.name,u.relation,u.mobile,t.mobile_province,t.mobile_city,t.created_by,t.created_date,t.last_updated_by,t.last_updated_date from urgent_list u left join urgent_contactor_t t on u.sn=t.sn where u.user_id = #{user_id} order by u.modifytime desc limit 2
 	</select>    
 	
 	<insert id="insertBatch" parameterType="java.util.Map">
