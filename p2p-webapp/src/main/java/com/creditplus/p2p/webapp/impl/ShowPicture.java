@@ -28,6 +28,9 @@ public class ShowPicture extends HttpServlet {
 //	@Autowired
 	private CommonInfoService commonInfoService;
 	
+	//手机端上传图片存入的路径
+	private final String PATH_FOLDER="/data/web/clx";
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -74,7 +77,7 @@ public class ShowPicture extends HttpServlet {
 		paramsMap.put("imgType", imgType);
 		paramsMap.put("userId", userId);
 		if(imgPath==null || "".equals(imgPath)){
-			imgPath=commonInfoService.getPictureSrcByUserIdAndType(paramsMap);
+			imgPath=PATH_FOLDER+commonInfoService.getPictureSrcByUserIdAndType(paramsMap);
 		}
 		logger.info("imgPath1:"+imgPath);
 		String imgSuffix = imgPath.substring(imgPath.lastIndexOf(".")+1);
