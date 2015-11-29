@@ -51,4 +51,7 @@
     <bean id="originPlaceService" class="com.creditplus.p2p.service.impl.OriginPlaceServiceImpl" />     
     <bean id="creditScoreService" class="com.creditplus.p2p.service.impl.CreditScoreServiceImpl" />     
     <bean id="highSchoolService" class="com.creditplus.p2p.service.impl.HighSchoolServiceImpl" />     
+    <bean id="creditScoreService" class="com.creditplus.p2p.service.impl.CreditScoreServiceImpl" />
+    <bean id="contractService" class="com.creditplus.p2p.service.impl.ContractServiceImpl" />
+    <bean id="highSchoolService" class="com.creditplus.p2p.service.impl.HighSchoolServiceImpl" />       
 </beans>
