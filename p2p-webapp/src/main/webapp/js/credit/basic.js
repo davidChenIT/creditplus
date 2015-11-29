@@ -141,7 +141,7 @@ $(function(){
 		var ip138Address="http://www.ip138.com:8080/search.asp?action=mobile&mobile=";
 		var mobileElement=$(this).attr("mobile");
 		if(mobileElement){
-			var phoneNumber=$(this).parent().find("[name='"+mobileElement+"']").val() || $(this).parent().find("[name='"+mobileElement+"']").text() || $($(this).parents("div")[3]).find("[name='"+mobileElement+"']").val() || $("div[tabid='"+tabid+"']").find("[name='"+mobileElement+"']").text();
+			var phoneNumber=$(this).parent().find("[name='"+mobileElement+"']").val() || $(this).parent().find("[name='"+mobileElement+"']").text() || $($(this).parents("div")[3]).find("[name='"+mobileElement+"']").val() || $($(this).parents("div")[3]).find("[name='"+mobileElement+"']").text();
 			ip138Address+=phoneNumber;
 		}
 		window.open(ip138Address);  
