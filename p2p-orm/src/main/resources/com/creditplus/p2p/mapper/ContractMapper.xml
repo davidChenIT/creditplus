@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.creditplus.p2p.dao.ContractDao">  
+   <select id="getContractListWithPage" parameterType="java.util.Map" resultType="java.util.Map">
+       select c.contract_id as contract_id, 
+              l.loan_money as loan_money,
+              l.loan_name as loan_name,
+              c.sign_time as sign_time,
+              c.investor  as investor
+         from contract_t c,
+              loan_protocol l 
+               where c.contract_id=l.contract_id
+ 		<if test="loan_money !=null ">          
+               and l.loan_money = #{loan_money}
+       </if>
+       <if test="sign_time !=null ">          
+               and c.sign_time = #{sign_time}
+       </if>        
+	   <if test="loan_id !=null ">          
+               and l.loan_id = #{loan_id}
+       </if>       
+       <if test="contract_id !=null ">          
+               and l.contract_id = #{contract_id}
+       </if>
+       <if test="loan_name !=null ">          
+               and l.loan_name = #{loan_name}
+       </if>
+       <if test="loan_id_num !=null ">          
+               and l.loan_id_num = #{loan_id_num}
+       </if>
+       <if test="investor !=null ">          
+               and l.investor = #{investor}
+       </if>                         
+    </select>
+</mapper>
