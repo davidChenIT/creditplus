@@ -77,7 +77,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="modifytime" widget="datepicker">
+															<input type="text" name="sign_time" widget="datepicker">
 														</div>
 													</div>
 												</div>
@@ -91,7 +91,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="loan_id" >
+															<input type="text" name="apply_no" >
 														</div>
 													</div>
 												</div>
@@ -119,7 +119,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="name" >
+															<input type="text" name="loan_name" >
 														</div>
 													</div>
 												</div>
@@ -133,7 +133,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="name" >
+															<input type="text" name="loan_idNum" >
 														</div>
 													</div>
 												</div>
@@ -147,7 +147,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="name" >
+															<input type="text" name="user_id" >
 														</div>
 													</div>
 												</div>
