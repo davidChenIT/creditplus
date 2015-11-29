@@ -1,5 +1,6 @@
 //rest服务地址
-var serviceAddress="http://"+window.location.host+"/p2p-webapp/services/process"; 
+var appContext="http://"+window.location.host;
+var serviceAddress=appContext+"/p2p-webapp/services/process"; 
 //页面初始化加载函数
 $(function(){
 	$(window).resize(function(){
@@ -73,7 +74,7 @@ $(function(){
 			   if(pageAddress){
 				    loadingBox.showLoading();
 				    $(".tabs-body").children("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
-				    var requestUrl="http://"+window.location.host+"/p2p-webapp/"+pageAddress;
+				    var requestUrl=appContext+"/p2p-webapp/"+pageAddress;
 				    var jsFileUrl="../js/credit/"+pageAddress.substring(pageAddress.lastIndexOf("/")+1,pageAddress.lastIndexOf("."))+".js";
 					$.ajax({ 
 						url: requestUrl,
@@ -81,7 +82,7 @@ $(function(){
 						success: function(data){
 							loadingBox.hideLoading();
 							if(data && data.indexOf("loginBtn")!=-1){
-								window.location.href="http://localhost:8080/p2p-webapp/page/login.jsp";
+								window.location.href=appContext+"/p2p-webapp/page/login.jsp";
 							}else if(data && data.indexOf("<p>No Permission</p>")!=-1){
 								$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">403</h2><p class="credit-errtext">No Permission</p><div></div><p></p><p>诚立信金融</p></div>');
 								return;
@@ -140,7 +141,7 @@ $(function(){
 		var ip138Address="http://www.ip138.com:8080/search.asp?action=mobile&mobile=";
 		var mobileElement=$(this).attr("mobile");
 		if(mobileElement){
-			var phoneNumber=$(this).parent().find("[name='"+mobileElement+"']").val() || $(this).parent().find("[name='"+mobileElement+"']").text();
+			var phoneNumber=$(this).parent().find("[name='"+mobileElement+"']").val() || $(this).parent().find("[name='"+mobileElement+"']").text() || $($(this).parents("div")[3]).find("[name='"+mobileElement+"']").val() || $("div[tabid='"+tabid+"']").find("[name='"+mobileElement+"']").text();
 			ip138Address+=phoneNumber;
 		}
 		window.open(ip138Address);  
@@ -303,7 +304,7 @@ function createCatalogTree(){
 								loadingBox.showLoading();
 								var jsFileUrl="/p2p-webapp/js/credit/"+fileUrlstr.substring(fileUrlstr.lastIndexOf("/")+1,fileUrlstr.lastIndexOf("."))+".js";
 								fileUrlstr=fileUrlstr.indexOf("/")==0?fileUrlstr.substring(1):fileUrlstr;
-								var requestUrl="http://"+window.location.host+"/p2p-webapp/"+fileUrlstr;
+								var requestUrl=appContext+"/p2p-webapp/"+fileUrlstr;
 								$("title").text(treeNode.catalog_name);
 								$.ajax({ 
 									url: requestUrl,
@@ -311,7 +312,7 @@ function createCatalogTree(){
 									success: function(data){
 										loadingBox.hideLoading(500);
 										if(data && data.indexOf("loginBtn")!=-1){
-											window.location.href="http://localhost:8080/p2p-webapp/page/login.jsp";
+											window.location.href=appContext+"/p2p-webapp/page/login.jsp";
 										}else if(data && data.indexOf("<p>No Permission</p>")!=-1){
 											$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">403</h2><p class="credit-errtext">No Permission</p><div></div><p></p><p>诚立信金融</p></div>');
 											return;
@@ -427,13 +428,13 @@ function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
     	$("div[name='"+tabId+"']").find(".tabs-head ul").append(newLiHtml);
     	$("div[name='"+tabId+"']").find("li[tabid='"+itemId+"']").data(paramsObj);
     	$("div[name='"+tabId+"']").find(".tabs-body").children("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
-		var requestUrl="http://"+window.location.host+pageUrl;
+		var requestUrl=appContext+pageUrl;
 		$.ajax({ 
 			url: requestUrl,
 			success: function(data){
 				loadingBox.hideLoading(500);
 				if(data && data.indexOf("loginBtn")!=-1){
-					window.location.href="http://localhost:8080/p2p-webapp/page/login.jsp";
+					window.location.href=appContext+"/p2p-webapp/page/login.jsp";
 				}
 				if(data && data.length>0){
 					$("div[name='"+tabId+"']").find(".tabs-body").append(data);
@@ -752,7 +753,7 @@ var showImgDialog={
     	showImgDialog.removeImgDialogDiv();
     	var servletUrl="";
     	if(imgType && userId){
-    		servletUrl="http://"+window.location.host+"/p2p-webapp/ShowPicture?imgType="+imgType+"&userId="+userId;
+    		servletUrl=appContext+"/p2p-webapp/ShowPicture?imgType="+imgType+"&userId="+userId;
     	}
     	var showHtml="";
     	if(servletUrl){
@@ -848,7 +849,7 @@ var uploadDialog={
 					}
 					loadingBox.showLoading();
 					var uploadImgForm=$("#uploadDialogDiv").find("form[name='uploadImgForm']");
-					uploadImgForm[0].action="http://"+window.location.host+"/p2p-webapp/UploadPicture";
+					uploadImgForm[0].action=appContext+"/p2p-webapp/UploadPicture";
 					uploadImgForm.submit();
 				}else{
 					$("#uploadDialogDiv").find("td").html("点击上传按钮选择图片！");
