@@ -153,20 +153,6 @@
 				<div class="row">
 							<label class="col-xs-12 col-sm-3">
 						<div class="credit-label">
-							身份证地址
-						</div>
-						</label>
-						<div class="col-xs-12 col-sm-9">
-						<div class="credit-input">
-					 		<span name="address"></span>
-						</div>
-						</div>
-				</div>
-			</div>	
-			<div class="credit-spacecontrol col-xs-12 col-sm-4">
-				<div class="row">
-							<label class="col-xs-12 col-sm-3">
-						<div class="credit-label">
 							状态
 						</div>
 						</label>
@@ -286,7 +272,21 @@
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
 						<div class="credit-label label-red">
-							<span style="color:red;">*</span>电话属地<span class="ip138"></span>
+							*身份证地址
+						</div>
+						</label>
+						<div class="col-xs-12 col-sm-9">
+						<div class="credit-input">
+					 		<input name="id_address" type="text"></input>
+						</div>
+						</div>
+				</div>
+			</div>	
+			<div class="credit-spacecontrol col-xs-12 col-sm-4">
+				<div class="row">
+					<label class="col-xs-12 col-sm-3">
+						<div class="credit-label label-red">
+							<span style="color:red;">*</span>电话属地<span class="ip138" mobile="mobile"></span>
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
@@ -337,12 +337,26 @@
 				<div class="row">
 					<label class="col-xs-12 col-sm-3">
 						<div class="credit-label">
+							当前居住省
+						</div>
+					</label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="credit-input">
+							<span name="province"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="credit-spacecontrol col-xs-12 col-sm-4">
+				<div class="row">
+					<label class="col-xs-12 col-sm-3">
+						<div class="credit-label">
 							当前居住城市
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<span name="current_city_v"></span>
+							<span name="city"></span>
 						</div>
 					</div>
 				</div>
@@ -356,7 +370,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<span name="current_address_v"></span>
+							<span name="address"></span>
 						</div>
 					</div>
 				</div>
@@ -975,12 +989,13 @@
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
 						<div class="credit-label label-red">
-							<span style="color:red;">*</span>证书网上抓图
+							*证书网上抓图
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-						   	<span name="profession_img_v" widget="dropdown" width="50" validation="required"></span>
+						   	<span name="profession_img_v" widget="dropdown" width="50" validation="required"  style="display:none"></span>
+							<span name="pic" class="show-img-span" img-type="11" user-id="" img-title="证书网上抓图"/>
 						    <button class="upLoadBtn" type="button">上传图片</button>
 						</div>
 					</div>
