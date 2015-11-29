@@ -412,9 +412,9 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		String[] key={"seasame_score_v","tencent_credit_v","certificate_type_v","mobile_online_time_v"};
 		String[] message={"芝麻信用分数","腾讯信用分数","证书类型","手机在网时长"};
 		CheckParamUtil.checkParamIsNumr(paramMap, key,message);
-		String id_num_v=(String) paramMap.get("id_num_v");
+		/*String id_num_v=(String) paramMap.get("id_num_v");
 		if(!IDCardUtil.isIDCard(id_num_v))
-			throw new Exception("身份证验证号码不合法!");
+			throw new Exception("身份证验证号码不合法!");*/
 			
 	}
 
