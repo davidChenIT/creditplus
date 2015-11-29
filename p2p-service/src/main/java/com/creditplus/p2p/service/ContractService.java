@@ -14,4 +14,5 @@ public interface ContractService {
 	PageVO getContractListWithPage(PageVO pageVO,Map map);
 	
 	String getContractUrl(String contract_id);
+	void insert(Map paramMap);
 }

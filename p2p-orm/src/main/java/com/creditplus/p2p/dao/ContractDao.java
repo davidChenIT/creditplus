@@ -22,4 +22,6 @@ public interface ContractDao {
 	
 	String getContractUrl(String contract_id);
 	
+	void insert(Map paramMap);
+	
 }

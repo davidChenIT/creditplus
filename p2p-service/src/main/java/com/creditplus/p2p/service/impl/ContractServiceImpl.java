@@ -36,5 +36,9 @@ public class ContractServiceImpl implements ContractService {
 	}
 	
 	
+	
+	public void insert(Map paramMap) {
+		contractDao.insert(paramMap);
+	}
 
 }
