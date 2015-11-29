@@ -60,7 +60,11 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 			Map cardInfo=commonInfoService.getCardInfoById(loanOrderMap.get(Constant.ID_NUM)+"");
 			if(cardInfo!=null && cardInfo.size()>0)
 				loanOrderMap.putAll(cardInfo);
-			filterColumnByRole(loanOrderMap);
+			//工作电话号码归属地映射
+			Map work_tel_address=getWorkAddress(loanOrderMap);
+			if(work_tel_address!=null && work_tel_address.size()>0)
+				loanOrderMap.putAll(work_tel_address);
+//			filterColumnByRole(loanOrderMap);
 		}
 		return loanOrderMap;
 	}
@@ -100,6 +104,21 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		return loanOrderMap;
 	}
 
+	
+	private Map getWorkAddress(Map loanOrderMap){
+		Map phone=new HashMap();
+		String work_tel_place_v=(String) loanOrderMap.get("work_tel_place_v");
+		String work_tel_place_city_v=(String) loanOrderMap.get("work_tel_place_city_v");
+		if(StringUtils.isEmpty(work_tel_place_v)){
+			String work_tel=(String) loanOrderMap.get("work_tel");
+			Map phoneInfo=commonInfoService.getPhoneInfoById(work_tel);
+			if(phoneInfo!=null && phoneInfo.size()>0){
+				phone.put("work_tel_place_v", phoneInfo.get("mobile_province"));
+				phone.put("work_tel_place_city_v", phoneInfo.get("mobile_city"));
+			}
+		}
+		return phone;
+	}
 	
 	/**
 	 * 初审服务
