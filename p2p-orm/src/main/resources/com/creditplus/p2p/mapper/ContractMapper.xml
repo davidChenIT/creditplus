@@ -35,4 +35,8 @@
                and l.investor = #{investor}
        </if>                         
     </select>
+    
+    <select id="getContractListWithPage" parameterType="String" resultType="String">
+     	select l.url as url from loan_protocol l where l.contract_id = #{contract_id}
+    </select>
 </mapper>
