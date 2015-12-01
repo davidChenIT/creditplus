@@ -16,7 +16,7 @@
 			</div>
 			
 			<!-- 左侧栏目树区域 -->
-			<div id="menu_ztree" class="ztree">
+			<div id="menu_ztree" class="ztree" style="overflow-x: hidden;overflow-y:auto;height: 500px;">
 			
 			</div>
 		
