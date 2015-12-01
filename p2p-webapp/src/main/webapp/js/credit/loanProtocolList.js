@@ -64,7 +64,7 @@ $(function(){
           postData:{'request_data':JSON.stringify(request_data)}, //发送数据
           page:1,
           rowNum:10
-      }).trigger("contractGrid"); //重新载入
+      }).trigger("reloadGrid"); //重新载入
   	
   });
 	

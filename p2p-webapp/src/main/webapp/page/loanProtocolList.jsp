@@ -72,12 +72,12 @@
 												<div class="row">
 													<label class="col-xs-12 col-sm-3">
 														<div class="credit-label">
-															申请时间
+															合同生成时间
 														</div>
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="modifytime" widget="datepicker">
+															<input type="text" name="sign_time" widget="datepicker">
 														</div>
 													</div>
 												</div>
@@ -119,7 +119,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="name" >
+															<input type="text" name="loan_name" >
 														</div>
 													</div>
 												</div>
@@ -133,7 +133,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="name" >
+															<input type="text" name="loan_id_num" >
 														</div>
 													</div>
 												</div>
@@ -147,7 +147,7 @@
 													</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="credit-input">
-															<input type="text" name="name" >
+															<input type="text" name="investor" >
 														</div>
 													</div>
 												</div>

@@ -35,4 +35,12 @@
                and l.investor = #{investor}
        </if>                         
     </select>
+    
+    <select id="getContractListWithPage" parameterType="String" resultType="String">
+     	select l.url as url from loan_protocol l where l.contract_id = #{contract_id}
+    </select>
+   	<insert id="insert" parameterType="java.util.Map">
+    	insert into contract_t(id,loan_id,contract_id,sign_time,investor,created_by,created_date,last_updated_by,last_updated_date)values(#{id},#{loan_id},(select contract_id from loan_protocol where loan_id=#{loan_id}),sysdate(),#{last_updated_by},#{last_updated_by},sysdate(),#{last_updated_by},sysdate())
+    </insert>
+    
 </mapper>

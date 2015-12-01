@@ -12,4 +12,7 @@ public interface ContractService {
 	 * @return
 	 */
 	PageVO getContractListWithPage(PageVO pageVO,Map map);
+	
+	String getContractUrl(String contract_id);
+	void insert(Map paramMap);
 }

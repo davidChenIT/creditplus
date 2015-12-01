@@ -31,4 +31,14 @@ public class ContractServiceImpl implements ContractService {
 		return PageUtil.getPageVO();	
 	}
 
+	public String getContractUrl(String contract_id) {
+		return contractDao.getContractUrl(contract_id);
+	}
+	
+	
+	
+	public void insert(Map paramMap) {
+		contractDao.insert(paramMap);
+	}
+
 }
