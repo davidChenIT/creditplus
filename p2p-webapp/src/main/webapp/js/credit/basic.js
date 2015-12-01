@@ -466,8 +466,9 @@ function setValues(divId,dataObj,appendHtml){
 				var name=$(dom).attr("name");
 				var textValue=dataObj[name]!=undefined?dataObj[name]:"";
 				$(dom).text(textValue);
-				if($(dom).attr("widget") && $(dom).attr("widget")=="dropdown"){
-					$(dom).attr("code",textValue);
+				if($(dom).attr("widget") && $(dom).attr("widget") == "dropdown"
+					|| $(dom).attr("is_data") == "true"){
+					$(dom).attr("code", textValue);
 				}
 			});
 			
@@ -511,10 +512,16 @@ function getValue(divId){
 	var request_data = {};
 	if(divId && $("#"+divId) && $("#"+divId).length>0){
 		//设置input和select的值
-		$("#"+divId).find(".credit-input").find("input,select").each(function(i,dom){
-			var name=$(dom).attr("name");
+		$("#"+divId).find("input,select,textarea,span").each(function(i,dom){
+			var domType = $("#"+divId).get(0).tagName;
+			var name = $(dom).attr("name");
 			var value = $(dom).val();
-			if(!isEmptyString(value)) request_data[name] = $(dom).val();
+			if(domType == "SPAN" && $(dom).attr("is_data") != null){
+				value = $(dom).attr("code");
+			}
+			//过滤控制;
+			if(!isEmptyString(value)) 
+				request_data[name] = value;
 		});
 	}
 	return request_data;
@@ -600,7 +607,7 @@ function validateDom(elementDom, parentDivId){
 			break;
 		}
 	}
-	return {value:value, is_pass:result};
+	return result;
 }
 
 /**

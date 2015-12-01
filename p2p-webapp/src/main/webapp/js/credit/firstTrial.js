@@ -80,12 +80,6 @@ $(function(){
 	//提交初审按钮
 	$("[name='firstTrialBtn']").click(function(){
 		debugger;
-		var request_data = {
-				"loan_id" : $("#firstTrial").find("span[name='loan_id']").text(),
-				"user_id" : user_id,
-				"approve_content" : "初审完毕",
-				"apply_state" : 3
-		};
 		var checkPass = true;
 		//1. 获取所有的必填项
 		var validDoms = $("#firstTrial").find("[validation]");
@@ -94,54 +88,48 @@ $(function(){
 			var isFocusError = false;
 			$.each(validDoms, function(i){
 				var validDomName = $(validDoms[i]).attr('name');
-				var resultObj = validateDom(validDoms[i], "firstTrial");
-				if(resultObj && resultObj.is_pass){
-					if(resultObj.value){
-						request_data[validDomName] = resultObj.value;
-					}
-				}else{
-					if(!isFocusError){
-						$(validDoms[i]).focus();
-						isFocusError = true;
-					}
+				var checkResult = validateDom(validDoms[i], "firstTrial");
+				// 校验失败获得焦点
+				if(!checkResult && !isFocusError){
+					$(validDoms[i]).focus();
+					isFocusError = true;
 					checkPass = false;
 				}
-			});	
+			});
 		}
-		//3. 获取紧急联系人数据
-		var connectionUserDoms = $("div[id*=connectionUserIdx]");
-		var urgentList = [];
-		$.each(connectionUserDoms, function(i){
-			var userObj = {};
-			var valDomTypes = ["input","span","select"];
-			$.each(valDomTypes, function(y){
-				var valDoms = $($(connectionUserDoms)[i]).find(valDomTypes[y]);
-				if(valDoms.length > 0){
-					$.each(valDoms, function(k){
-						var key = $(valDoms[k]).attr('name');
-						switch(valDomTypes[y]){
-						case "span" :
-							userObj[key] = $(valDoms[k]).text();
-							break;
-						default:
-							userObj[key] = $(valDoms[k]).val();
-						}
-					});
-				}
-			});
-			urgentList.push(userObj);
-		});
-		request_data['urgentList'] = urgentList;
 		
-		//4. 校验通过调提交初审服务
 		if(checkPass){
-			$("#firstTrial").find("input,select,textarea").each(function(i,input){
-				var inputName=$(input).attr("name");
-				var inputValue=$(input).val();
-				//过滤空值
-				if(!isEmptyString(inputValue))
-					request_data[inputName]=inputValue;
+			//3. 校验通过调提交初审服务
+			var request_data = getValue("firstTrial");
+			//4. 获取紧急联系人数据
+			var connectionUserDoms = $("div[id*=connectionUserIdx]");
+			var urgentList = [];
+			$.each(connectionUserDoms, function(i){
+				var userObj = {};
+				var valDomTypes = ["input","span","select"];
+				$.each(valDomTypes, function(y){
+					var valDoms = $($(connectionUserDoms)[i]).find(valDomTypes[y]);
+					if(valDoms.length > 0){
+						$.each(valDoms, function(k){
+							var key = $(valDoms[k]).attr('name');
+							switch(valDomTypes[y]){
+							case "span" :
+								userObj[key] = $(valDoms[k]).text();
+								break;
+							default:
+								userObj[key] = $(valDoms[k]).val();
+							}
+						});
+					}
+				});
+				urgentList.push(userObj);
 			});
+			request_data['urgentList'] = urgentList;
+			//基础数据
+			request_data["loan_id"] = $("#firstTrial").find("span[name='loan_id']").text(),
+			request_data["user_id"] = user_id;
+			request_data["approve_content"] = "初审完毕";
+            request_data["apply_state"] = 3;
 			debugger;
 			publicSaveAjax("loanOrderService","creditFirstTrial",JSON.stringify(request_data),"firstTrialTab","firstTrial","[name='firstTrialSearhBtn']");
 		}
@@ -151,7 +139,15 @@ $(function(){
 	/**
 	 * 省份下拉框onChange事件，级联城市数据
 	 */
-	$("[trigger*=city_cascade_]").change(function(e){
-		elementCascade(e.target, $(e.target).val());
+	$("select").change(function(e){
+		var trigger = e.target.attributes['trigger'];
+		var code_ref = e.target.attributes['code_ref'];
+		//需要关联code赋值
+		if(code_ref){
+			
+		}
+		//级联城市
+		if(trigger)
+			elementCascade(e.target, $(e.target).val());
 	});
 });
