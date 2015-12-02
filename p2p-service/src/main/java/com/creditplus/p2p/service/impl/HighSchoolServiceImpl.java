@@ -21,8 +21,8 @@ public class HighSchoolServiceImpl implements HighSchoolService{
 	@Autowired
 	private HighSchoolDao highSchoolDao;
 
-	public List<Map> getHighSchoolList() {
-		return highSchoolDao.getHighSchoolList();
+	public List<Map> getHighSchoolList(Map paramMap) {
+		return highSchoolDao.getHighSchoolList(paramMap);
 	}
 
 	public List<Map> getHighSchoolLevel() {

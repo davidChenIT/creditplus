@@ -17,4 +17,5 @@ public interface OriginPlaceDao {
 	
 	List<Map> queryCityByProvince(String type);
 
+	Integer getCityCode(Map paramMap);
 }

@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface HighSchoolService {
 
-	List<Map> getHighSchoolList();
+	List<Map> getHighSchoolList(Map paramMap);
 	
 	List<Map> getHighSchoolLevel();
 }

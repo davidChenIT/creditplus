@@ -20,19 +20,17 @@ public class OriginPlaceServiceImpl implements OriginPlaceService {
 
 	@Autowired
 	OriginPlaceDao originPlaceDao;
-	/* 
-	 * @return
-	 */
+
 	public List<Map> queryProvince() {
 		return originPlaceDao.queryProvince();
 	}
 
-	/* 
-	 * @param id
-	 * @return
-	 */
 	public List<Map> queryCityByProvince(String province) {
 		return originPlaceDao.queryCityByProvince(province);
+	}
+
+	public Integer getCityCode(Map paramMap) {
+		return originPlaceDao.getCityCode(paramMap);
 	}
 
 }

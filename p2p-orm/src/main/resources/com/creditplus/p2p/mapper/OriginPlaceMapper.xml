@@ -13,5 +13,7 @@
 		select sn as id,city from tel_area_code where province=#{type} group by city
 	</select>
 	
-	
+	<select id="getCityCode" parameterType="java.util.Map" resultType="Integer">
+		select sn as code from tel_area_code where province=#{type} and city=#{city} limit 1
+	</select>
 </mapper>

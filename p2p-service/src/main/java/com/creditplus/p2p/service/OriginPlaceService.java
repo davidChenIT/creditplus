@@ -19,4 +19,5 @@ public interface OriginPlaceService {
 	
 	List<Map> queryCityByProvince(@ParamName("type")String type);
 
+	Integer getCityCode(Map paramMap);
 }

@@ -7,6 +7,14 @@
 
 	<select id="getHighSchoolList" resultType="java.util.Map">
 	     select full_name,level from high_school
+	     <where>
+	     	<if test="full_name!=null">
+	     		and lower(full_name) LIKE CONCAT(CONCAT('%', lower(#{full_name})),'%')  
+	     	</if>
+	     	<if test="level!=null">
+	     		and lower(level) LIKE CONCAT(CONCAT('%', lower(#{level})),'%')  
+	     	</if>
+	     </where>
 	</select>
 	
 	<select id="getHighSchoolLevel" resultType="java.util.Map">

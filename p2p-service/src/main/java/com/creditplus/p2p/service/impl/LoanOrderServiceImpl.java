@@ -18,6 +18,7 @@ import com.creditplus.p2p.service.CheatInterceptService;
 import com.creditplus.p2p.service.CommonInfoService;
 import com.creditplus.p2p.service.CreditScoreService;
 import com.creditplus.p2p.service.LoanOrderService;
+import com.creditplus.p2p.service.OriginPlaceService;
 import com.creditplus.p2p.service.UrgentContactorService;
 
 
@@ -37,6 +38,8 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	CheatInterceptService cheatInterceptService;
 	@Autowired
 	CreditScoreService creditScoreService;
+	@Autowired
+	OriginPlaceService originPlaceService;
 
 	
 	/**
@@ -103,6 +106,43 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		}
 		return loanOrderMap;
 	}
+	
+	
+	private Map getCityCode(Map loanOrderMap){
+		Map codeMap=new HashMap();
+		String registered_place_v=(String) loanOrderMap.get("registered_place_v");
+		String registered_place_city_v=(String) loanOrderMap.get("registered_place_city_v");
+		Map registeredMap=getCityCode(registered_place_v, registered_place_city_v, "registered_province_code", "registered_city_code");
+		if(registeredMap!=null && registeredMap.size()>0)
+			codeMap.putAll(registeredMap);
+		
+		String work_tel_place_v=(String) loanOrderMap.get("work_tel_place_v");
+		String work_tel_place_city_v=(String) loanOrderMap.get("work_tel_place_city_v");
+		Map workMap=getCityCode(work_tel_place_v, work_tel_place_city_v, "work_tel_province_code", "work_tel_city_code");
+		if(workMap!=null && workMap.size()>0)
+			codeMap.putAll(workMap);
+		
+		String id_province=(String) loanOrderMap.get("id_province");
+		String id_city=(String) loanOrderMap.get("id_city");
+		Map idMap=getCityCode(id_province, id_city, "id_province_code", "id_city_code");
+		if(idMap!=null && idMap.size()>0)
+			codeMap.putAll(idMap);
+		return codeMap;
+			
+	}
+	
+	private Map getCityCode(String province,String city,String province_code,String city_code){
+		Map codeMap=new HashMap();
+		Map registeredMap=new HashMap();
+		registeredMap.put("province", province);
+		registeredMap.put("city", city);
+		Integer code=originPlaceService.getCityCode(registeredMap);
+		if(code!=null){
+			codeMap.put("province_code", code);
+			codeMap.put("city_code", code);
+		}
+		return codeMap;
+	}
 
 	
 	private Map getWorkAddress(Map loanOrderMap){
@@ -135,6 +175,13 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		creditFirstParamCheck(paramMap);
 		Integer user_id=Integer.valueOf(paramMap.get(Constant.USER_ID)+"");
 		Integer loan_id=Integer.valueOf(paramMap.get(Constant.LOAN_ID)+"");
+		
+		//获取城市编码
+		Map codeMap=getCityCode(paramMap);
+		if(codeMap!=null && codeMap.size()>0){
+			System.out.println("====codeMap:"+codeMap);
+			paramMap.putAll(codeMap);
+		}
 		//更新客户信息
 		updateCustomerInfo(paramMap, user_id);
 		//防欺诈拦截
@@ -177,6 +224,11 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 			paramMap.put("url", profession_img_v);
 			commonInfoService.savePic(paramMap);
 		}
+		
+		//获取城市编码
+		Map codeMap=getCityCode(paramMap);
+		if(codeMap!=null && codeMap.size()>0)
+			paramMap.putAll(codeMap);
 		
 		//更新客户表信息
 		updateCustomerInfo(paramMap, user_id);
@@ -398,6 +450,12 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	}
 	
 	
+	/**
+	 * 初审基本参数校验
+	 * @param paramMap
+	 * @throws Exception
+		void
+	 */
 	private void creditFirstParamCheck(Map paramMap) throws Exception{
 		String[] key={"seasame_score_v","tencent_credit_v"};
 		String[] message={"芝麻信用分数","腾讯信用分数"};
@@ -412,13 +470,13 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		String[] key={"seasame_score_v","tencent_credit_v","certificate_type_v","mobile_online_time_v"};
 		String[] message={"芝麻信用分数","腾讯信用分数","证书类型","手机在网时长"};
 		CheckParamUtil.checkParamIsNumr(paramMap, key,message);
-		/*String id_num_v=(String) paramMap.get("id_num_v");
+		String id_num_v=(String) paramMap.get("id_num_v");
 		if(!IDCardUtil.isIDCard(id_num_v))
-			throw new Exception("身份证验证号码不合法!");*/
+			throw new Exception("身份证验证号码不合法!");
 			
 	}
-
-
+	
+	
 	private void filterColumnByRole(Map dataMap){
 		if(dataMap!=null && dataMap.size()>0){
 			if(!CommonUtil.isSuperUser()){
