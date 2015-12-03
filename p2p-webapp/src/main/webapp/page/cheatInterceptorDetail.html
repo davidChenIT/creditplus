@@ -243,9 +243,8 @@
 	 				</label>
 	 				<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-					 		<select disabled="true" name="thnic_v" widget="dropdown" is_cache="true" dictionary_type="thnic" validation="required">
-								<option value="">请选择</option>
-							</select>
+					 		<span is_data="true" name="thnic_v" widget="dropdown" is_cache="true" dictionary_type="thnic">
+							</span>
 						</div>
 	 				</div>
 				</div>
@@ -259,12 +258,10 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select disabled="true" style="width: 48%;" is_cache="true" trigger="city_cascade_registered_place" textField="province" valueField="province"  name="registered_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
-								<option value="">请选择</option>
-							</select>
-							<select disabled="true" style="width: 48%;" is_cache="true" id="city_cascade_registered_place" textField="city" valueField="city" name="registered_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
-								<option value="">请选择</option>
-							</select>
+							<span is_data="true" style="width: 48%;" is_cache="true" trigger="city_cascade_registered_place" textField="province" valueField="province"  name="registered_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince" >
+							</span>
+							<span is_data="true" style="width: 48%;" is_cache="true" id="city_cascade_registered_place" textField="city" valueField="city" name="registered_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" >
+							</span>
 						</div>
 					</div>
 				</div>
@@ -278,7 +275,7 @@
 						</label>
 						<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-					 		<input name="id_address_v" type="text" disabled="true"></input>
+					 		<span name="id_address_v" is_data="true"></span>
 						</div>
 						</div>
 				</div>
@@ -292,12 +289,10 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select disabled="true" style="width: 48%;" is_cache="true" trigger="city_cascade_mobile_place" textField="province" valueField="province"  name="mobile_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  validation="required">
-								<option value="">请选择</option>
-							</select>
-							<select disabled="true" style="width: 48%;" is_cache="true" id="city_cascade_mobile_place" textField="city" valueField="city" name="mobile_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" validation="required">
-								<option value="">请选择</option>
-							</select>
+							<span is_data="true" style="width: 48%;" is_cache="true" trigger="city_cascade_mobile_place" textField="province" valueField="province"  name="mobile_place_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince"  >
+							</span>
+							<span is_data="true" style="width: 48%;" is_cache="true" id="city_cascade_mobile_place" textField="city" valueField="city" name="mobile_place_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince" >
+							</span>
 						</div>
 					</div>
 				</div>
@@ -311,7 +306,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input disabled="true" name="id_num_name_v" type="text" validation="required">
+							<span is_data="true" name="id_num_name_v"></span>
 						</div>
 					</div>
 				</div>
@@ -325,7 +320,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input disabled="true" name="id_num_v" type="text" validation="required">
+							<span is_data="true" name="id_num_v"></span>
 						</div>
 					</div>
 				</div>
@@ -413,7 +408,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input disabled="true" type="text" name="address_phone_v"/>
+							<input  type="text" name="address_phone_v"/>
 						</div>
 					</div>
 				</div>
@@ -427,9 +422,8 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select disabled="true" trigger="city_cascade_current" is_cache="true" textField="province" valueField="province"  name="current_province_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince">
-								<option value="">请选择</option>
-							</select>
+							<span is_data="true" trigger="city_cascade_current" is_cache="true" textField="province" valueField="province"  name="current_province_v" widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince">
+							</span>
 						</div>
 					</div>
 				</div>
@@ -443,9 +437,8 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<select disabled="true" id="city_cascade_current" is_cache="true"  textField="city" valueField="city" name="current_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince">
-								<option value="">请选择</option>
-							</select>
+							<span is_data="true" id="city_cascade_current" is_cache="true"  textField="city" valueField="city" name="current_city_v"  serviceModule="originPlaceService" serviceMethod="queryCityByProvince">
+							</span>
 						</div>
 					</div>
 				</div>
@@ -459,7 +452,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input disabled="true" type="text" name="current_address_v"/>
+							<span is_data="true" name="current_address_v"></span>
 						</div>
 					</div>
 				</div>
@@ -562,7 +555,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input disabled="true" type="text" name="company_name_v"/>
+							<span is_data="true" name="company_name_v"></span>
 						</div>
 					</div>
 				</div>
@@ -576,7 +569,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input disabled="true" type="text" name="work_name_v"/>
+							<span is_data="true" name="work_name_v"></span>
 						</div>
 					</div>
 				</div>
@@ -590,7 +583,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input disabled="true" type="text" name="work_tel_v"/>
+							<span is_data="true" name="work_tel_v"></span>
 						</div>
 					</div>
 				</div>
@@ -604,7 +597,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input disabled="true" type="text" name="work_position_v"/>
+							<span is_data="true" name="work_position_v"></span>
 						</div>
 					</div>
 				</div>
@@ -678,7 +671,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input disabled="true" name="income_name_v" type="text"/>
+							<span is_data="true" name="income_name_v" ></span>
 						</div>
 					</div>
 				</div>
@@ -692,7 +685,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-9">
 						<div class="credit-input">
-							<input disabled="true" name="income_v" type="text"/>
+							<span is_data="true" name="income_v"></span>
 						</div>
 					</div>
 				</div>
@@ -711,7 +704,7 @@
 						</label>
 						<div class="col-xs-12 col-sm-8">
 							<div class="credit-input">
-								<input disabled="true" name="user_id" style="display:none"/>
+								<input name="user_id" style="display:none"/>
 								<span name="name"></span>
 							</div>
 						</div>
@@ -754,12 +747,10 @@
 						</label>
 						<div class="col-xs-12 col-sm-7">
 							<div class="credit-input">
-								<select disabled="true" name="mobile_province" widget="dropdown" is_cache="true"  trigger="city_cascade_contact_x" textField="province" valueField="province"  widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince" style="width: 48%;">
-									<option value="">请选择</option>
-								</select>
-								<select disabled="true" id="city_cascade_contact_x" name="mobile_city" is_cache="true"  textField="city" valueField="city" serviceModule="originPlaceService" serviceMethod="queryCityByProvince" style="width: 48%;">
-									<option value="">请选择</option>
-								</select>
+								<span is_data="true" name="mobile_province" widget="dropdown" is_cache="true"  trigger="city_cascade_contact_x" textField="province" valueField="province"  widget="dropdown" serviceModule="originPlaceService" serviceMethod="queryProvince" style="width: 48%;">
+								</span>
+								<span is_data="true" id="city_cascade_contact_x" name="mobile_city" is_cache="true"  textField="city" valueField="city" serviceModule="originPlaceService" serviceMethod="queryCityByProvince" style="width: 48%;">
+								</span>
 							</div>
 						</div>
 					</div>
@@ -792,7 +783,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input disabled="true" type="text" name="seasame_score_v"></input>
+							<span is_data="true" name="seasame_score_v"></span>
 						</div>
 					</div>
 				</div>
@@ -820,7 +811,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-7">
 						<div class="credit-input">
-							<input disabled="true" type="text" name="tencent_credit_v"></input>
+							<span is_data="true"  name="tencent_credit_v"></span>
 						</div>
 					</div>
 				</div>
@@ -852,9 +843,8 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<select disabled="true" name="certificate_type_v" widget="dropdown" is_cache="true" dictionary_type="certificate">
-								<option value="">请选择</option>
-							</select>
+							<span is_data="true" name="certificate_type_v" widget="dropdown" is_cache="true" dictionary_type="certificate">
+							</span>
 						</div>
 					</div>
 				</div>
@@ -868,7 +858,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input disabled="true" type="text" name="certificate_name_v"></input>
+							<span is_data="true" name="certificate_name_v"></span>
 						</div>
 					</div>
 				</div>
@@ -882,7 +872,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-7">
 						<div class="credit-input">
-							<input disabled="true" type="text" name="profession_grade_v"></input>
+							<span is_data="true" name="profession_grade_v"></span>
 						</div>
 					</div>
 				</div>
@@ -914,7 +904,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input disabled="true" name="mobile_name_v" type="text"/>
+							<span is_data="true" name="mobile_name_v"></span>
 						</div>
 					</div>
 				</div>
@@ -928,7 +918,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input disabled="true" name="mobile_online_time_v" type="text"/>
+							<span is_data="true" name="mobile_online_time_v" ></span>
 						</div>
 					</div>
 				</div>
@@ -1006,7 +996,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input disabled="true" name="profession_code" type="text" validation="required"/>
+							<span is_data="true" name="profession_code" type="text" ></span>
 						</div>
 					</div>
 				</div>
@@ -1020,9 +1010,8 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<select disabled="true" name="grad_school_level_v" widget="dropdown" is_cache="true" dictionary_type="school_level" validation="required">
-								<option value="">请选择</option>
-							</select>
+							<span is_data="true" name="grad_school_level_v" widget="dropdown" is_cache="true" dictionary_type="school_level">
+							</span>
 						</div>
 					</div>
 				</div>
@@ -1036,7 +1025,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input disabled="true" name="degree_name_v" type="text" validation="required">
+							<span is_data="true" name="degree_name_v"></span>
 						</div>
 					</div>
 				</div>
@@ -1050,7 +1039,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<input disabled="true" name="school_name_v" type="text" validation="required">
+							<span is_data="true" name="school_name_v"></span>
 						</div>
 					</div>
 				</div>
@@ -1064,9 +1053,8 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<select disabled="true" name="highest_degree_v" widget="dropdown" is_cache="true" dictionary_type="highest_degree" validation="required">
-								<option value="">请选择</option>
-							</select>
+							<span is_data="true" name="highest_degree_v" widget="dropdown" is_cache="true" dictionary_type="highest_degree">
+							</span>
 						</div>
 					</div>
 				</div>
