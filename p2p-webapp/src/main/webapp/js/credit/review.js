@@ -88,7 +88,7 @@ $(function(){
 			var isFocusError = false;
 			$.each(validDoms,function(i){
 				var validDomName = $(validDoms[i]).attr('name');
-				var checkResult = validateDom(validDoms[i], "firstTrial");
+				var checkResult = validateDom(validDoms[i], "review");
 				// 校验失败获得焦点
 				if(!checkResult && !isFocusError){
 					$(validDoms[i]).focus();
@@ -130,8 +130,7 @@ $(function(){
 			//基础数据
 			request_data["loan_id"] = $("#review").find("span[name='loan_id']").text(),
 			request_data["user_id"] = user_id;
-			request_data["approve_content"] = "初审完毕";
-            request_data["apply_state"] = 3;
+            request_data["apply_state"] = 5;
 			debugger;
 			//6. 提交
 			publicSaveAjax("loanOrderService","creditReview",JSON.stringify(request_data),"reviewTab","review","[name='reviewSearchBtn']");
@@ -144,7 +143,16 @@ $(function(){
 	
 	$("[name='rejectBtn']").click(function(){
 		debugger;
-		var request_data={"loan_id":$("#review").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":"驳回，用户身份信息不正确","apply_state":2};
+		//获取驳回意见
+		var approve_content = "";
+		var checkResult = validateDom($("[name=approve_content]"), "review");
+		if(checkResult){
+			approve_content = "复审驳回:" + $("[name=approve_content]").val();
+		}else{
+			messageBox.createMessageDialog("提示","审核驳回意见不能为空！","","","warning");
+			return;
+		}
+		var request_data={"loan_id":$("#review").find("span[name='loan_id']").text(),"user_id":user_id,"approve_content":approve_content,"apply_state":2};
 		var checkPass = true;
 		if(checkPass){
 			$("div[name='firstTrial']").find("input").each(function(i,input){

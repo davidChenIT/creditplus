@@ -513,7 +513,7 @@ function getValue(divId){
 	if(divId && $("#"+divId) && $("#"+divId).length>0){
 		//设置input和select的值
 		$("#"+divId).find("input,select,textarea,span").each(function(i,dom){
-			var domType = $("#"+divId).get(0).tagName;
+			var domType = $(dom).get(0).tagName;
 			var name = $(dom).attr("name");
 			var value = $(dom).val();
 			if(domType == "SPAN" && $(dom).attr("is_data") != null){
