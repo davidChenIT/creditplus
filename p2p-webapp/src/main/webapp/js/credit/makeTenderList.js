@@ -19,7 +19,7 @@ $(function(){
 			formatter:function(cellvalue, options, rowObject){
 				   debugger;
 				   var loan_id=rowObject.loan_id;
-				   return "<a name='a_makeTender' style='color:blue;' data-val='"+loan_id+"'>投标</a>";
+				   return "<a class='a_makeTender' style='color:blue;' data-val='"+loan_id+"'>投标</a>";
 			}
 			
 		},   
@@ -74,6 +74,33 @@ $(function(){
          rowNum:10
      }).trigger("reloadGrid"); //重新载入
  	
+ });
+ 
+ 
+ /**
+  * 投标动作
+  */
+ $("div[tabid='makeTenderList']").on("click",".a_makeTender",function(){
+ 	debugger;
+ 	var ofWithdrawalData=[];
+ 	var rowData={};
+ 	rowData.loan_id=$(this).attr("data-val");
+ 	rowData.apply_state = 9; //投标
+ 	rowData.approve_content = "生成合同!";
+ 	ofWithdrawalData.push(rowData);
+ 	//调用撤标服务
+ 	  $.ajax({ 
+ 			url: serviceAddress,
+ 			datatype: 'json',
+ 			method:"post",
+ 			data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(ofWithdrawalData)},			
+ 			success: function(data){
+ 				messageBox.createMessageDialog("提示","投标成功！","","","true");
+ 				$("[name=makeTenderSearchBtn]").click();
+ 			},error:function(error){
+ 				messageBox.createMessageDialog("提示","投标失败！","","","error");
+ 			}
+ 	  });
  });
 	
 	//重置按钮
