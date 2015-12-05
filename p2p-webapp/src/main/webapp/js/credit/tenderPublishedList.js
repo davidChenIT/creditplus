@@ -15,7 +15,7 @@ $(function(){
 		mtype: 'POST',
 		height:205,
 	autowidth:true,
-	colNames:['操作','申请单编号','申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','信用分1','信用分2','排名'],
+	colNames:['操作','申请单编号','申请单编号','申请人姓名','申请人身份证号','金额','期次','时长','申请时间','信用分1','信用分2','状态'],
 	colModel :[
 		{name:'operate', index:'operate',align:'center',"sortable":false,
 			formatter:function(cellvalue, options, rowObject){
