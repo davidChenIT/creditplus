@@ -219,11 +219,11 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 			paramMap.put("mobile_age", mobile_age);
 		}
 		//保存上传的证书图片
-		if(StringUtils.isNotEmpty(profession_img_v)){
-			paramMap.put("type", 11);
-			paramMap.put("url", profession_img_v);
-			commonInfoService.savePic(paramMap);
-		}
+//		if(StringUtils.isNotEmpty(profession_img_v)){
+//			paramMap.put("type", 11);
+//			paramMap.put("url", profession_img_v);
+//			commonInfoService.savePic(paramMap);
+//		}
 		
 		//获取城市编码
 		Map codeMap=getCityCode(paramMap);

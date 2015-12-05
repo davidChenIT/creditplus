@@ -22,6 +22,10 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.creditplus.p2p.service.CommonInfoService;
 /**
  * Servlet implementation class UploadPicture
  */
@@ -30,19 +34,34 @@ public class UploadPicture extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static final Logger logger = LogManager.getLogger(UploadPicture.class);
 	// 保存文件的目录
-	private static String PATH_FOLDER = "/";
+	private static String PATH_FOLDER = "D:/data/web/pic";
 	// 存放临时文件的目录
-	private static String TEMP_FOLDER = "/";
+//	private static String TEMP_FOLDER = "/";
 	
+	private CommonInfoService commonInfoService;
+	
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public UploadPicture() {
+		super();
+	}
 	
 	@Override
-	public void init(ServletConfig config) throws ServletException {
-		ServletContext servletCtx = config.getServletContext();
+	public void init() throws ServletException {
+//		ServletContext servletCtx = config.getServletContext();
 		// 初始化路径
 		// 保存文件的目录
-		PATH_FOLDER = servletCtx.getRealPath("/images/upload");
-		// 存放临时文件的目录,存放xxx.tmp文件的目录
-		TEMP_FOLDER = servletCtx.getRealPath("/images/uploadTemp");
+//		// 存放临时文件的目录,存放xxx.tmp文件的目录
+//		TEMP_FOLDER = servletCtx.getRealPath("/images/uploadTemp");
+		super.init();  
+        ServletContext servletContext = this.getServletContext();  
+//		PATH_FOLDER = servletContext.getRealPath("/data/web/pic");
+  
+        WebApplicationContext ctx = WebApplicationContextUtils  
+                .getWebApplicationContext(servletContext);  
+  
+        commonInfoService = (CommonInfoService) ctx.getBean("commonInfoService"); 
 	}
 
 	/**
@@ -93,7 +112,7 @@ public class UploadPicture extends HttpServlet {
 		 * 原理 它是先存到 暂时存储室，然后在真正写到 对应目录的硬盘上， 按理来说 当上传一个文件时，其实是上传了两份，第一个是以 .tem
 		 * 格式的 然后再将其真正写到 对应目录的硬盘上
 		 */
-		factory.setRepository(new File(TEMP_FOLDER));
+//		factory.setRepository(new File(TEMP_FOLDER));
 		// 设置 缓存的大小，当上传文件的容量超过该缓存时，直接放到 暂时存储室
 		factory.setSizeThreshold(1024 * 1024);
 
@@ -111,22 +130,27 @@ public class UploadPicture extends HttpServlet {
 			// 获取文件名
 			String filename = getUploadFileName(item);
 			// 保存后的文件名
-			String saveName = new Date().getTime() + filename.substring(filename.lastIndexOf("."));
+//			String saveName = new Date().getTime() +"_"+ filename.substring(filename.lastIndexOf("."));
+			String saveName = new Date().getTime() +"_"+ filename;
 			// 保存后图片的浏览器访问路径
-			String picUrl = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/upload/"+saveName;
+//			String picUrl = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/upload/"+saveName;
 
 			System.out.println("存放目录:" + PATH_FOLDER);
 			System.out.println("文件名:" + filename);
-			System.out.println("浏览器访问路径:" + picUrl);
-
 			// 真正写到磁盘上
 			item.write(new File(PATH_FOLDER, saveName)); // 第三方提供的
+			//调用服务，将图片路径写入图片表
+			String userId = request.getParameter("userId");//用户id
+			System.out.println("用户id:" +userId);
+			Map paramMap=new HashMap();
+			paramMap.put("user_id", userId);
+			paramMap.put("type", 11);
+			paramMap.put("url", saveName);
+			commonInfoService.savePic(paramMap);
+			
 			
 			PrintWriter writer = response.getWriter();
-			
-//			Map<String, String> map = new HashMap<String, String>();  
-//            map.put("path", "/images/upload" + saveName); 
-            String resultStr="{\"img_path\":\"/p2p-webapp/images/upload/"+saveName+"\",\"img_name\":\""+filename+"\"}";
+            String resultStr="{\"result\":\"true\"}";
             PrintWriter out = response.getWriter();  
             out.print("<script type='text/javascript'>window.parent.uploadDialog.uploadCallBack('"+resultStr+"');</script>"); 
 			writer.close();

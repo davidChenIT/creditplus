@@ -192,10 +192,11 @@ $(function(){
 	$("#credit_MainPanel").on("click",".upLoadBtn",function(){
 		debugger;
 		var uploadElement=$(this).siblings("span:first").attr("name");
-		 var img_path=$(this).siblings("span:first").attr("code");
-		 var img_name=$(this).siblings("span:first").text();
+		 var img_type=$(this).siblings("span:first").attr("img-type");
+		 var user_id=$(this).siblings("span:first").attr("user-id");
+		 var is_upload=$(this).siblings("span:first").attr("is-upload");
 		 //弹出文件选择框
-		 uploadDialog.createUploadDialog(uploadElement,img_path,img_name);
+		 uploadDialog.createUploadDialog(uploadElement,img_type,user_id,is_upload);
 	});
 	
 	//关闭提示层
@@ -805,20 +806,23 @@ var showImgDialog={
 
 //上传文件弹出框
 var uploadDialog={
-		img_path:"",
-		img_name:"",
+		img_type:"",
+		user_id:"",
+		is_upload:"",
 		uploadElement:"",
 		//创建弹出框
-	    createUploadDialog:function(uploadElement,img_path,img_name){
+	    createUploadDialog:function(uploadElement,img_type,user_id,is_upload){
 	    	$("#uploadDialogDiv").remove();
 	    	uploadDialog.removeMaskDiv();
 	    	uploadDialog.createMaskDiv();
     		uploadDialog.uploadElement=uploadElement || "";
-    		uploadDialog.img_path=img_path || "";
-    		uploadDialog.img_name=img_name || "";
+    		uploadDialog.img_type=img_type || "";
+    		uploadDialog.user_id=user_id || "";
+    		uploadDialog.is_upload=is_upload || "";
     		var tdHtml="";
-    		if(uploadDialog.img_path){
-    			tdHtml="<img style='max-width: 430px;max-height:280px;' src='"+uploadDialog.img_path+"' />";
+    		if(uploadDialog.is_upload){
+    			var servletUrl=appContext+"/p2p-webapp/ShowPicture?imgType="+img_type+"&userId="+user_id;
+    			tdHtml="<img style='max-width: 430px;max-height:280px;' src='"+servletUrl+"' />";
     		}else{
     			tdHtml="点击上传按钮选择图片！";
     		}
@@ -856,14 +860,11 @@ var uploadDialog={
 					}
 					loadingBox.showLoading();
 					var uploadImgForm=$("#uploadDialogDiv").find("form[name='uploadImgForm']");
-					uploadImgForm[0].action=appContext+"/p2p-webapp/UploadPicture";
+					uploadImgForm[0].action=appContext+"/p2p-webapp/UploadPicture?userId="+uploadDialog.user_id+"&imgType="+uploadDialog.img_type;
 					uploadImgForm.submit();
 				}else{
 					$("#uploadDialogDiv").find("td").html("点击上传按钮选择图片！");
-		    		uploadDialog.img_path="";
-		    		uploadDialog.img_name="";
-		    		$("span[name='"+uploadDialog.uploadElement+"']").text("");
-		    		$("span[name='"+uploadDialog.uploadElement+"']").attr("code","");
+		    		$("span[name='"+uploadDialog.uploadElement+"']").attr("is_upload","false");
 				}
 			});
 	    },
@@ -877,18 +878,18 @@ var uploadDialog={
 	    	debugger;
 	    	if(data){
 	    		var resultObj=JSON.parse(data);
-	    		$("#uploadDialogDiv").find("td").html("<img style='max-width: 430px;max-height:280px;' src='"+resultObj.img_path+"' />");
-	    		uploadDialog.img_path=resultObj.img_path;
-	    		uploadDialog.img_name=resultObj.img_name;
-	    		$("span[name='"+uploadDialog.uploadElement+"']").text(resultObj.img_name);
-	    		$("span[name='"+uploadDialog.uploadElement+"']").attr("code",resultObj.img_path);
-	    		//移除提示层
-	    		var tabId=$("li[class='tabs-selected']").attr("tabid");
-	    		var tipDiv=$("div[tabid='"+tabId+"']").find("div[name='"+uploadDialog.uploadElement+"_tip_div']");
-	    		if(tipDiv && tipDiv.length>0){
-	    			tipDiv.remove();
+	    		if(resultObj && resultObj.result=="true"){
+	    			var servletUrl=appContext+"/p2p-webapp/ShowPicture?imgType="+uploadDialog.img_type+"&userId="+uploadDialog.user_id;
+	    			$("#uploadDialogDiv").find("td").html("<img style='max-width: 430px;max-height:280px;' src='"+servletUrl+"' />");
+	    			$("span[name='"+uploadDialog.uploadElement+"']").attr("is-upload","true");
+	    			//移除提示层
+	    			var tabId=$("li[class='tabs-selected']").attr("tabid");
+	    			var tipDiv=$("div[tabid='"+tabId+"']").find("div[name='"+uploadDialog.uploadElement+"_tip_div']");
+	    			if(tipDiv && tipDiv.length>0){
+	    				tipDiv.remove();
+	    			}
+	    			$("span[name='"+uploadDialog.uploadElement+"']").removeClass("input-error");
 	    		}
-	    		$("span[name='"+uploadDialog.uploadElement+"']").removeClass("input-error");
 	    	}
 	    	loadingBox.hideLoading();
 	    },

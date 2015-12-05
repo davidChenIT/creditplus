@@ -6,6 +6,7 @@ $(function(){
 	//查询详细信息，并赋值
 	var queryReviewDetailParmsStr=JSON.stringify({"loan_id":loan_id,"approve_content":"开始复审","apply_state":4});
 	var resultData = publicQueryInfoAjax("loanOrderService","getCreditReviewDetailByLoanId",queryReviewDetailParmsStr,"review");
+	$("span[name='profession_img_v_upload']").attr("is-upload",resultData.profession_img_v);//证书网上抓图
 	if(resultData.apply_state == 4){
 		$("[name='reviewBtn']").show();
 		$("[name='rejectBtn']").show();
@@ -98,9 +99,18 @@ $(function(){
 			});	
 		}
 		
+		//校验网上抓图
+		var profession_img_v_upload=$("span[name='profession_img_v_upload']").attr("is-upload");
+		if(profession_img_v_upload!="true"){
+			validErrorTip("profession_img_v_upload",$("span[name='profession_img_v_upload']"),"请上传证书网上抓图");
+			checkPass=false;
+		}
+		
+		
 		if(checkPass){
 			//3. 校验通过调提交初审服务
 			var request_data = getValue("review");
+			request_data.profession_img_v=profession_img_v_upload;//证书网上抓图
 			//4. 获取紧急联系人数据
 			var connectionUserDoms = $("div[id*=connectionUserIdx]");
 			var urgentList = [];
