@@ -25,7 +25,12 @@ $(function(){
 						   if(paramsStr){
 							   paramsStr=escape(paramsStr);
 						   }
-						   return "<a style='color:blue;' onclick=\"addTabItem('reviewTab','review','复审','/p2p-webapp/page/review.html','true','/p2p-webapp/js/credit/review.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+						   var apply_state=rowObject.apply_state;
+						   if(apply_state==3 || apply_state==4 || apply_state==8){
+							   return "<a style='color:blue;' onclick=\"addTabItem('reviewTab','review','复审','/p2p-webapp/page/review.html','true','/p2p-webapp/js/credit/review.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+						   }else{
+							   return "<a style='color:blue;' onclick=\"addTabItem('reviewTab','review','复审','/p2p-webapp/page/reviewRead.html','true','/p2p-webapp/js/credit/reviewRead.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+						   }
 					}
 				},
 				{name:'name', index:'name',align:'center',"sortable":false},

@@ -7,10 +7,6 @@ $(function(){
 	var queryReviewDetailParmsStr=JSON.stringify({"loan_id":loan_id,"approve_content":"开始复审","apply_state":4});
 	var resultData = publicQueryInfoAjax("loanOrderService","getCreditReviewDetailByLoanId",queryReviewDetailParmsStr,"review");
 	$("span[name='profession_img_v_upload']").attr("is-upload",resultData.profession_img_v);//证书网上抓图
-	if(resultData.apply_state == 4){
-		$("[name='reviewBtn']").show();
-		$("[name='rejectBtn']").show();
-	}
 	//查询用户紧急联系人
 	var user_id = paramsObj.user_id || "";
 	$(".show-img-span").attr("user-id",user_id);
@@ -19,14 +15,7 @@ $(function(){
 		$.each(userInfoList, function(i){//更新级联key
 			//取模板
 			var userTemplateDiv = $("#applyUserUrgentConnectionUserInfoDiv .connection-user");
-			//更新级联key
-//			var triggerKey = $(userTemplateDiv).find("select[name=mobile_city]").attr("id");
-//			var newTriggerKey = triggerKey.substring(0, triggerKey.length-1) + i;
 			var userDivIdx = "connectionUserIdx" + i;
-//			$(userTemplateDiv).find("select[name=mobile_province]").attr("trigger", newTriggerKey);
-//			$(userTemplateDiv).find("select[name=mobile_city]").attr("id", newTriggerKey);
-//			$(userTemplateDiv).find("select[name=mobile_province]").attr("index", userDivIdx);
-//			$(userTemplateDiv).find("select[name=mobile_city]").attr("index", userDivIdx);
 			var userDom = userTemplateDiv.html();
 			var userTemplate = '<div id="'+userDivIdx+'">'+userDom+'</div>';
 			setValues("applyUserUrgentConnectionUserInfoDiv", userInfoList[i], userTemplate);
@@ -34,14 +23,6 @@ $(function(){
 			//移除静态html，循环输出动态列表元素
 			if(i == userInfoList.length-1) 
 				userTemplateDiv.remove();
-//			else{
-//				//triggerKey还原
-//				$(userTemplateDiv).find("select[name=mobile_province]").attr("trigger", triggerKey);
-//				$(userTemplateDiv).find("select[name=mobile_city]").attr("id", triggerKey);
-//			}
-				
-			//渲染下拉框
-			//selectRender(userDivIdx);
 		});
 	}
 	//构造grid
