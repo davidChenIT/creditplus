@@ -7,10 +7,10 @@
 <head>
 
 <meta charset="utf-8">
-	<link href="<%=request.getContextPath()%>/css/credit.css" rel="stylesheet" type="text/css">
+	<link href="<%=request.getContextPath()%>/css/credit.v.1.0.css" rel="stylesheet" type="text/css">
 	<!-- jquery中的ui、ztree、grid对应的css -->
 	<link href="<%=request.getContextPath()%>/css/jqueryui/jquery-ui.css" rel="stylesheet" type="text/css">
-	<link href="<%=request.getContextPath()%>/css/jqueryztree/zTreeStyle.css" rel="stylesheet" type="text/css">
+	<link href="<%=request.getContextPath()%>/css/jqueryztree/zTreeStyle.v.1.0.css" rel="stylesheet" type="text/css">
 	<link href="<%=request.getContextPath()%>/css/jqgridui/ui.jqgrid.css" rel="stylesheet" type="text/css">
 	<script src="<%=request.getContextPath()%>/js/jquery/json2.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/jquery/jquery-2.0.3.min.js" type="text/javascript"></script>
@@ -20,7 +20,7 @@
 	<script src="<%=request.getContextPath()%>/js/jquery/jquery.ztree.excheck-3.5.min.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/jqgrid/i18n/grid.locale-cn.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/credit/basic.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/credit/basic.v.1.0.js" type="text/javascript"></script>
 </head>
 <script type="text/javascript">
 $(function(){

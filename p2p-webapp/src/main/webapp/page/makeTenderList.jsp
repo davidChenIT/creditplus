@@ -18,7 +18,7 @@
        <section class="row">
             <!-- 引入左侧菜单区域 -->
             <jsp:include page="leftMenu.jsp"></jsp:include>
-            <script src="<%=request.getContextPath()%>/js/credit/makeTenderList.js" type="text/javascript"></script>
+            <script src="<%=request.getContextPath()%>/js/credit/makeTenderList.v.1.0.js" type="text/javascript"></script>
             <!--  主区域start -->
 			<div id="credit_MainPanel" class="equalheight-item render content-credit-mainPanel creditRendered credit-fullscreen" widget="fullScreen">
 				<!-- 面包屑区域 -->

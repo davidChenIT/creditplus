@@ -10,21 +10,21 @@ $(function(){
 		//2. 循环校验
 		if(validDoms.length > 0){
 			var isFocusError = false;
-			$.each(validDoms,function(i){
+			$.each(validDoms, function(i){
 				var validDomName = $(validDoms[i]).attr('name');
-				var resultObj = validateDom(validDoms[i], "changeUserPassWordDiv");
-				if(resultObj && resultObj.is_pass){
-					if(resultObj.value){
-						request_data[validDomName] = resultObj.value;
-					}
-				}else{
+				var domValue = $(validDoms[i]).val();
+				var checkResult = validateDom(validDoms[i], "changeUserPassWordDiv");
+				// 校验失败获得焦点
+				if(!checkResult){
 					if(!isFocusError){
 						$(validDoms[i]).focus();
 						isFocusError = true;
 					}
 					checkPass = false;
+				}else{
+					request_data[validDomName] = domValue;
 				}
-			});	
+			});
 		}
 		if(!checkPass){
 			return false;

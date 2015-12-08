@@ -38,7 +38,7 @@ $(function(){
 //				   paramsStr=paramsStr.replace(/"/g,"@#_@#");
 				   paramsStr=escape(paramsStr);
 			   }
-			   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','cheatInterceptorDetail','拦截欺诈信息','/p2p-webapp/page/cheatInterceptorDetail.html','true','/p2p-webapp/js/credit/cheatInterceptorDetail.js','"+paramsStr+"');\">"+rowObject.loan_id+"</a>";
+			   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','cheatInterceptorDetail','拦截欺诈信息','/p2p-webapp/page/cheatInterceptorDetail.html','true','/p2p-webapp/js/credit/cheatInterceptorDetail"+app_verion+".js','"+paramsStr+"');\">"+rowObject.loan_id+"</a>";
 			}
 		},
 		{name:'name', index:'name',align:'center',"sortable":false},

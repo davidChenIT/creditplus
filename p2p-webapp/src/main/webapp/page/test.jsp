@@ -5,7 +5,6 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>测试界面</title>
-<script src="<%=request.getContextPath()%>/js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
 </head>
 <body>
 <form action="<%=request.getContextPath()%>/services/process" method="post">

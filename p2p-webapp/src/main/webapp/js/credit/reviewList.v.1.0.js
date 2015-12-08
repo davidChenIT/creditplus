@@ -27,9 +27,9 @@ $(function(){
 						   }
 						   var apply_state=rowObject.apply_state;
 						   if(apply_state==3 || apply_state==4 || apply_state==8){
-							   return "<a style='color:blue;' onclick=\"addTabItem('reviewTab','review','复审','/p2p-webapp/page/review.html','true','/p2p-webapp/js/credit/review.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+							   return "<a style='color:blue;' onclick=\"addTabItem('reviewTab','review','复审','/p2p-webapp/page/review.html','true','/p2p-webapp/js/credit/review"+app_verion+".js','"+paramsStr+"');\">"+cellvalue+"</a>";
 						   }else{
-							   return "<a style='color:blue;' onclick=\"addTabItem('reviewTab','review','复审','/p2p-webapp/page/reviewRead.html','true','/p2p-webapp/js/credit/reviewRead.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+							   return "<a style='color:blue;' onclick=\"addTabItem('reviewTab','review','复审','/p2p-webapp/page/reviewRead.html','true','/p2p-webapp/js/credit/reviewRead"+app_verion+".js','"+paramsStr+"');\">"+cellvalue+"</a>";
 						   }
 					}
 				},

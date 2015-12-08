@@ -22,7 +22,7 @@ $(function(){
 					   if(paramsStr){
 						   paramsStr=escape(paramsStr);
 					   }
-					   return "<span name='creditScoreEditSpan' class='ui-icon-edit' onclick=\"addTabItem('creditScoreTab','creditScoreUpdate','信用评分修改','/p2p-webapp/page/systemmng/creditScoreUpdate.html','true','/p2p-webapp/js/credit/creditScoreUpdate.js','"+paramsStr+"');\"></span>";
+					   return "<span name='creditScoreEditSpan' class='ui-icon-edit' onclick=\"addTabItem('creditScoreTab','creditScoreUpdate','信用评分修改','/p2p-webapp/page/systemmng/creditScoreUpdate.html','true','/p2p-webapp/js/credit/creditScoreUpdate"+app_verion+".js','"+paramsStr+"');\"></span>";
 					}
 				},
 				{name:'score_id', index:'score_id',hidden:true,"sortable":false},
@@ -83,7 +83,7 @@ $(function(){
     
     //点击用户列表中的新增按钮
     $("[name='addCreditScoreBtn']").click(function(){
-    	addTabItem("creditScoreTab","creditScoreCreate","信用评分新增","/p2p-webapp/page/systemmng/creditScoreCreate.html",true,"/p2p-webapp/js/credit/creditScoreCreate.js");   	
+    	addTabItem("creditScoreTab","creditScoreCreate","信用评分新增","/p2p-webapp/page/systemmng/creditScoreCreate.html",true,"/p2p-webapp/js/credit/creditScoreCreate"+app_verion+".js");   	
     });
        
     //点击用户列表中的删除按钮

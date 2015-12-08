@@ -1,6 +1,7 @@
+var app_verion=".v.1.0";
 //rest服务地址
 var appContext="http://"+window.location.host;
-var serviceAddress=appContext+"/p2p-webapp/services/process"; 
+var serviceAddress=appContext+"/p2p-webapp/services/process";
 //页面初始化加载函数
 $(function(){
 	$(window).resize(function(){
@@ -75,7 +76,7 @@ $(function(){
 				    loadingBox.showLoading();
 				    $(".tabs-body").children("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
 				    var requestUrl=appContext+"/p2p-webapp/"+pageAddress;
-				    var jsFileUrl="../js/credit/"+pageAddress.substring(pageAddress.lastIndexOf("/")+1,pageAddress.lastIndexOf("."))+".js";
+				    var jsFileUrl="../js/credit/"+pageAddress.substring(pageAddress.lastIndexOf("/")+1,pageAddress.lastIndexOf("."))+app_verion+".js";
 					$.ajax({ 
 						url: requestUrl,
 						//context: document.body,
@@ -303,7 +304,7 @@ function createCatalogTree(){
 							var fileUrlstr=treeNode.url;
 							if(fileUrlstr && fileUrlstr!="#"){
 								loadingBox.showLoading();
-								var jsFileUrl="/p2p-webapp/js/credit/"+fileUrlstr.substring(fileUrlstr.lastIndexOf("/")+1,fileUrlstr.lastIndexOf("."))+".js";
+								var jsFileUrl="/p2p-webapp/js/credit/"+fileUrlstr.substring(fileUrlstr.lastIndexOf("/")+1,fileUrlstr.lastIndexOf("."))+app_verion+".js";
 								fileUrlstr=fileUrlstr.indexOf("/")==0?fileUrlstr.substring(1):fileUrlstr;
 								var requestUrl=appContext+"/p2p-webapp/"+fileUrlstr;
 								$("title").text(treeNode.catalog_name);

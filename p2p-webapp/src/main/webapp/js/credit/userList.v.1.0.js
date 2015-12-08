@@ -19,7 +19,7 @@ $(function(){
 					   if(paramsStr){
 						   paramsStr=escape(paramsStr);
 					   }
-					   return "<span data-val='" + rowObject.userId + "' class='ui-icon-edit' onclick=\"addTabItem('userTab','userUpdate','用户修改','/p2p-webapp/page/systemmng/userUpdate.html','true','/p2p-webapp/js/credit/userUpdate.js','"+paramsStr+"');\"></span>";
+					   return "<span data-val='" + rowObject.userId + "' class='ui-icon-edit' onclick=\"addTabItem('userTab','userUpdate','用户修改','/p2p-webapp/page/systemmng/userUpdate.html','true','/p2p-webapp/js/credit/userUpdate"+app_verion+".js','"+paramsStr+"');\"></span>";
 					}
 				},
 				{name:'username', index:'username',align:'center',"sortable":false},
@@ -74,7 +74,7 @@ $(function(){
        
     //点击用户列表中的新增按钮
     $("[name='addUserBtn']").click(function(){
-    	addTabItem("userTab","userCreate","用户新增","/p2p-webapp/page/systemmng/userCreate.html",true,"/p2p-webapp/js/credit/userCreate.js");
+    	addTabItem("userTab","userCreate","用户新增","/p2p-webapp/page/systemmng/userCreate.html",true,"/p2p-webapp/js/credit/userCreate"+app_verion+".js");
     });
     
     //点击用户列表中的删除按钮

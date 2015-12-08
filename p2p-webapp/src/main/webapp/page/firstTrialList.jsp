@@ -11,7 +11,7 @@
 <div id="credit_Top">
   <!-- 引入头部 -->
   <jsp:include page="header.jsp"></jsp:include>
-  <script src="<%=request.getContextPath()%>/js/credit/firstTrialList.js" type="text/javascript"></script>
+  <script src="<%=request.getContextPath()%>/js/credit/firstTrialList.v.1.0.js" type="text/javascript"></script>
   <!-- 中间区域 -->
   <section id="credit_Body" class="credit-layout layout-equalheight ">
        <section class="row">

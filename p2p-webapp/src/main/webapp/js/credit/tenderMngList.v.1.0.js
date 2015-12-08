@@ -25,7 +25,7 @@ $(function(){
 					   if(paramsStr){
 						   paramsStr=escape(paramsStr);
 					   }
-					   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','rankPoolDetail','排名池详细信息','/p2p-webapp/page/rankPoolDetail.html','true','/p2p-webapp/js/credit/rankPoolDetail.js','"+paramsStr+"');\">"+rowObject.loan_id+"</a>";
+					   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','rankPoolDetail','排名池详细信息','/p2p-webapp/page/rankPoolDetail.html','true','/p2p-webapp/js/credit/rankPoolDetail"+app_verion+".js','"+paramsStr+"');\">"+rowObject.loan_id+"</a>";
 					}
 				},
 				{name:'name', index:'name',align:'center',"sortable":false},

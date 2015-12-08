@@ -28,10 +28,10 @@ $(function(){
 						   var apply_state=rowObject.apply_state;
 						   if(apply_state==1 || apply_state==2){
 							   //跳转到可以初审的页面
-							   return "<a style='color:blue;' onclick=\"addTabItem('firstTrialTab','firstTrial','初审','/p2p-webapp/page/firstTrial.html','true','/p2p-webapp/js/credit/firstTrial.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+							   return "<a style='color:blue;' onclick=\"addTabItem('firstTrialTab','firstTrial','初审','/p2p-webapp/page/firstTrial.html','true','/p2p-webapp/js/credit/firstTrial"+app_verion+".js','"+paramsStr+"');\">"+cellvalue+"</a>";
 						   }else{
 							   //跳转到初审只读页面
-							   return "<a style='color:blue;' onclick=\"addTabItem('firstTrialTab','firstTrial','初审','/p2p-webapp/page/firstTrialRead.html','true','/p2p-webapp/js/credit/firstTrialRead.js','"+paramsStr+"');\">"+cellvalue+"</a>";
+							   return "<a style='color:blue;' onclick=\"addTabItem('firstTrialTab','firstTrial','初审','/p2p-webapp/page/firstTrialRead.html','true','/p2p-webapp/js/credit/firstTrialRead"+app_verion+".js','"+paramsStr+"');\">"+cellvalue+"</a>";
 						   }
 					}
 				},

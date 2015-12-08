@@ -35,7 +35,7 @@ $(function(){
 			   if(paramsStr){
 				   paramsStr=escape(paramsStr);
 			   }
-			   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','tenderPublishedDetail','已发标信息','/p2p-webapp/page/tenderPublishedDetail.html','true','/p2p-webapp/js/credit/tenderPublishedDetail.js','"+paramsStr+"');\">"+rowObject.loan_id+"</a>";
+			   return "<a style='color:blue;' onclick=\"addTabItem('tenderTab','tenderPublishedDetail','已发标信息','/p2p-webapp/page/tenderPublishedDetail.html','true','/p2p-webapp/js/credit/tenderPublishedDetail"+app_verion+".js','"+paramsStr+"');\">"+rowObject.loan_id+"</a>";
 			}
 		},
 		{name:'name', index:'name',align:'center',"sortable":false},
