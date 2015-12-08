@@ -52,8 +52,8 @@ $(function(){
 			colNames:['<input type="checkbox" class="credit-score-update-selall-cbox">',"<span style='color:red;'>*</span>序号","<span style='color:red;'>*</span>运算符","","<span style='color:red;'>*</span>刻度描述","<span style='color:red;'>*</span>分数"],
 			colModel :[
 			    {
-			    	name:'rule_sel_create',
-					index:'rule_sel_create',
+			    	name:'rule_sel_update',
+					index:'rule_sel_update',
 					align:'center',
 					width:"5%",
 					sortable:false,
@@ -259,6 +259,7 @@ $(function(){
       			rowData[selectName]=selectVal;
       		}
       	  });
+      	  delete rowData.rule_sel_update;
       	  grid_data.push(rowData);
       	}    
     	if(grid_data && grid_data.length>0){

@@ -226,6 +226,7 @@ $(function(){
       			rowData[selectName]=selectVal;
       		}
       	  });
+      	  delete rowData.rule_sel_create;
       	  grid_data.push(rowData);
       	}    
     	if(grid_data && grid_data.length>0){

@@ -207,7 +207,10 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 				creditScoreDao.insertCreditScore(creditMap);
 				
 				if(itemsList!=null && itemsList.size()>0){
-					Integer score_id=creditScoreDao.findByName(creditMap.get("dimension_name")+"",creditMap.get("model_name")+"");
+					Map searchMap=new HashMap();
+					searchMap.put("dimension_name", (String)creditMap.get("dimension_name"));
+					searchMap.put("model_name",(String)creditMap.get("model_name"));
+					Integer score_id=creditScoreDao.findByName(searchMap);
 					saveCreditItems(score_id, itemsList);
 				}
 			}
