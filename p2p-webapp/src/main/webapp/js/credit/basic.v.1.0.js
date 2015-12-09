@@ -465,8 +465,12 @@ function setValues(divId,dataObj,appendHtml){
 		}else{
 			//设置span的值
 			$("#"+divId).find(".credit-input").find("span").each(function(i,dom){
-				var name=$(dom).attr("name");
-				var textValue=dataObj[name]!=undefined?dataObj[name]:"";
+				var name = $(dom).attr("name");
+				var textValue = dataObj[name]!=undefined?dataObj[name]:"";
+				//处理意见字符串特殊处理
+				if(name = "approve_content" && textValue && textValue.indexOf(":") != -1){
+					textValue = textValue.substring(textValue.indexOf(":")+1);
+				}
 				$(dom).text(textValue);
 				if($(dom).attr("widget") && $(dom).attr("widget") == "dropdown"
 					|| $(dom).attr("is_data") == "true"){
@@ -485,10 +489,6 @@ function setValues(divId,dataObj,appendHtml){
 			$("#"+divId).find("textarea").each(function(i,dom){
 				var name=$(dom).attr("name");
 				var textareaValue = dataObj[name] != undefined ? dataObj[name] : "";
-				//处理意见字符串特殊处理
-				if(name = "approve_content" && textareaValue && textareaValue.indexOf(":") != -1){
-					textareaValue = textareaValue.substring(textareaValue.indexOf(":")+1);
-				}
 				$(dom).text(textareaValue);
 			});
 			
