@@ -58,4 +58,7 @@ public interface LoanOrderService {
 	 //修改状态
 	 void updateLoanOrderState(List<Map> updateList) throws Exception;
 	 
+	 //投标服务
+	 void createTenderService(List<Map> updateList) throws Exception;
+	 
 }

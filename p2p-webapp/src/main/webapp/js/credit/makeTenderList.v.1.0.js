@@ -93,7 +93,7 @@ $(function(){
  			url: serviceAddress,
  			datatype: 'json',
  			method:"post",
- 			data:{"module":"loanOrderService","method":"updateLoanOrderState","request_data":JSON.stringify(ofWithdrawalData)},			
+ 			data:{"module":"loanOrderService","method":"createTenderService","request_data":JSON.stringify(ofWithdrawalData)},			
  			success: function(data){
  				messageBox.createMessageDialog("提示","投标成功！","","","true");
  				$("[name=makeTenderSearchBtn]").click();

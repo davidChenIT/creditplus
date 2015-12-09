@@ -16,6 +16,7 @@ import com.creditplus.p2p.page.PageUtil;
 import com.creditplus.p2p.service.ApproveLogService;
 import com.creditplus.p2p.service.CheatInterceptService;
 import com.creditplus.p2p.service.CommonInfoService;
+import com.creditplus.p2p.service.ContractService;
 import com.creditplus.p2p.service.CreditScoreService;
 import com.creditplus.p2p.service.LoanOrderService;
 import com.creditplus.p2p.service.OriginPlaceService;
@@ -40,6 +41,8 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	CreditScoreService creditScoreService;
 	@Autowired
 	OriginPlaceService originPlaceService;
+	@Autowired
+	ContractService contractService;
 
 	
 	/**
@@ -488,4 +491,24 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		}
 	}
 	private String []adminKey={"thnic_v","registered_place_v","address_phone","address_phone_v","current_province_v","current_city_v","current_address_v","id_num_name_v","id_num_v","mobile_place_v","company_name_v","work_tel_v","work_tel_place_v","work_name_v","work_position_v","income_v","income_name_v","seasame_score_v","tencent_credit_v","certificate_type_v","certificate_name_v","profession_grade_v","mobile_name_v","mobile_online_time_v","profession_code","degree_name_v","school_name_v","highest_degree_v","grad_school_level_v"};
+
+
+	/**
+	 * 投标服务
+	 */
+	public void createTenderService(List<Map> updateList) throws Exception {
+		if(updateList!=null && updateList.size()>0){
+			for(Map map:updateList){
+				CheckParamUtil.checkKey(map, Constant.LOAN_ID,Constant.APPLY_STATE,Constant.APPROVE_CONTENT);
+				CheckParamUtil.initParamMap(map);
+			}
+			
+			//写入合同表
+			contractService.insert(updateList.get(0));
+			
+			//更新申请单状态并且写入操作日志
+			updateMuiltLoanOrderByLoanId(updateList);
+			approveLogService.batchInsertApproveLog(updateList); 
+		}
+	}
 }
