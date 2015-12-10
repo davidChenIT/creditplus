@@ -467,10 +467,10 @@ function setValues(divId,dataObj,appendHtml){
 			$("#"+divId).find(".credit-input").find("span").each(function(i,dom){
 				var name = $(dom).attr("name");
 				var textValue = dataObj[name]!=undefined?dataObj[name]:"";
-				//处理意见字符串特殊处理
-				if(name = "approve_content" && textValue && textValue.indexOf(":") != -1){
-					textValue = textValue.substring(textValue.indexOf(":")+1);
-				}
+//				//处理意见字符串特殊处理
+//				if(name = "approve_content" && textValue && textValue.indexOf(":") != -1){
+//					textValue = textValue.substring(textValue.indexOf(":")+1);
+//				}
 				$(dom).text(textValue);
 				if($(dom).attr("widget") && $(dom).attr("widget") == "dropdown"
 					|| $(dom).attr("is_data") == "true"){
