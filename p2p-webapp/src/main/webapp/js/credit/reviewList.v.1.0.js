@@ -89,6 +89,6 @@ $(function(){
 	//重置按钮
     $("[name='reviewClearBtn']").click(function(){
         //调用重置函数
-    	clearDomVal("conditionDiv");
+    	clearDomVal("reviewConditionDiv");
     });
 })
