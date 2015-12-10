@@ -7,7 +7,7 @@ $(function(){
 	var queryReviewDetailParmsStr=JSON.stringify({"loan_id":loan_id,"approve_content":"开始复审","apply_state":4});
 	var resultData = publicQueryInfoAjax("loanOrderService","getCreditReviewDetailByLoanId",queryReviewDetailParmsStr,"review");
 	if(resultData && resultData.approve_content){
-		$("span[name='approve_content']").text(resultData.approve_content.substring(textValue.indexOf(":")+1));
+		$("span[name='approve_content']").text(resultData.approve_content.substring(resultData.approve_content.indexOf(":")+1));
 	}
 	$("span[name='profession_img_v_upload']").attr("is-upload",resultData.profession_img_v);//证书网上抓图
 	//查询用户紧急联系人
