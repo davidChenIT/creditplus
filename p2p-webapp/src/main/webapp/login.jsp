@@ -51,13 +51,13 @@ $(function(){
 <div id="credit_Top">
 
   <!--  头部start -->
-	<header id="credit_Header" class="credit-header">
+	<div id="credit_Header" class="credit-header">
 		<!-- logo区域-->
-		<nav class="credit-logo pull-left">
+		<div class="credit-logo pull-left">
 			<li class="logo-credit"></li>
 			<li class="logo-text">立信贷,好生活!</li>
-		</nav>
-	</header>
+		</div>
+	</div>
 	<!--  头部end -->
 	
    <form action="<%=request.getContextPath()%>/j_spring_security_check" method="post" onsubmit="return validateForm(this)" autocomplete="off">
