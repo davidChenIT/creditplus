@@ -1241,24 +1241,30 @@ label {
   padding: 5px 10px;
   z-index:99;
 }
+
+
 .credit-footer ul {
   margin: 5px 0;
 }
-.credit-header .credit-logo > li,
-.credit-header .credit-toplink > ul:nth-child(2) > li,
-.credit-footer ul > li {
+.credit-footer ul li{
+  display: inline-block;
+  margin: 0;
+  vertical-align: middle;
+  padding-left: 20px;
+}
+.credit-header .credit-logo li{
   display: inline-block;
   margin: 0;
   vertical-align: middle;
 }
-.credit-header .credit-logo > li + li:before,
-.credit-header .credit-toplink > ul:nth-child(2) > li + li:before,
-.credit-footer ul > li + li:before {
+
+/**.credit-header .credit-logo > li + li:before,
+.credit-header .credit-toplink > ul:nth-child(2) > li + li:before{
   padding-right: 10px;
   padding-left: 0;
   color: rgba(0, 0, 0, 0);
   content: '';
-}
+}*/
 .credit-wrong {
   text-align: center;
   padding: 1px 0;
@@ -1815,11 +1821,9 @@ input[type="text"]:focus + .input-btn .credit-icon {
 input[type="text"]:focus {
     border-color: #66afe9;
     outline: 0;
-    /* -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6); */
-    /* box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6); */
 }
 
- .credit-header .credit-logo > li.logo-credit {
+ .credit-header .credit-logo li.logo-credit {
     background: url(../images/logo.png) -380px -190px no-repeat!important;
     width: 200px;
     height: 55px;
@@ -1843,7 +1847,7 @@ input[type="text"]:focus {
     border-right: 1px solid #d0e2f5;
     color: #dbe9f9;
 }
-.credit-header .toprloe-admin li:last-child {
+.credit-header .toprloe-admin li.last-child {
     padding: 0 14px;
     margin: 20px 0;
     height: 12px;

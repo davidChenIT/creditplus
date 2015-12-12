@@ -13,7 +13,7 @@
 	<link href="<%=request.getContextPath()%>/css/jqueryztree/zTreeStyle.v.1.0.css" rel="stylesheet" type="text/css">
 	<link href="<%=request.getContextPath()%>/css/jqgridui/ui.jqgrid.css" rel="stylesheet" type="text/css">
 	<script src="<%=request.getContextPath()%>/js/jquery/json2.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/jquery/jquery-2.0.3.min.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
 	<!--  <script src="<%-- <%=request.getContextPath()%>/js/jquery/jquery-migrate-custom.js --%>" type="text/javascript"></script>-->
 	<script src="<%=request.getContextPath()%>/js/jquery/jquery-ui.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/jquery/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
@@ -41,7 +41,7 @@ $(function(){
 		<nav class="credit-toprole pull-right">
 			<ul class="credit-menu menu-hor toprloe-admin">
 				<li><span>欢迎</span>&nbsp;<span class="creditRendered"><sec:authentication property="name"/></span>&nbsp;<span>登录！</span></li>
-				<li><a href="/p2p-webapp/j_spring_security_logout">注销</a></li>
+				<li class="last-child"><a href="/p2p-webapp/j_spring_security_logout">注销</a></li>
 			</ul>
 		</nav>
 	</header>

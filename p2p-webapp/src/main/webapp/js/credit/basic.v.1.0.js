@@ -2,6 +2,27 @@ var app_verion=".v.1.0";
 //rest服务地址
 var appContext="http://"+window.location.host;
 var serviceAddress=appContext+"/p2p-webapp/services/process";
+//浏览器校验
+var browserCheck=function(){
+    var Sys = {};
+    var ua = navigator.userAgent.toLowerCase();
+    var s;
+    (s = ua.match(/msie ([\d.]+)/)) ? Sys.ie = s[1] :(s = ua.match(/firefox\/([\d.]+)/)) ? Sys.firefox = s[1] :
+
+    (s = ua.match(/chrome\/([\d.]+)/)) ? Sys.chrome = s[1]:(s = ua.match(/opera.([\d.]+)/)) ? Sys.opera = s[1] :
+
+    (s = ua.match(/version\/([\d.]+).*safari/)) ? Sys.safari = s[1] : 0;
+    //以下进行测试
+    if (Sys.ie) return {"browserType":"IE","browserVersion":Sys.ie};
+    
+    if (Sys.firefox) return {"browserType":"Firefox","browserVersion":Sys.firefox};
+
+    if (Sys.chrome) return {"browserType":"Chrome","browserVersion":Sys.chrome};
+
+    if (Sys.opera) return {"browserType":"Opera","browserVersion":Sys.opera};
+
+    if (Sys.safari) return {"browserType":"Safari","browserVersion":Sys.safari};
+}
 //页面初始化加载函数
 $(function(){
 	$(window).resize(function(){
@@ -15,20 +36,24 @@ $(function(){
 		loadingBox.resetLoadingDiv();
 		showImgDialog.resetImgDialogDiv();
 	});
-	//注册window的onpopstate事件
-	window.onpopstate = function(e) {  
-		  //点击浏览器的前进后退按钮处理
-          if (e.state) {
-              window.location.href=e.state.url;
-          }
-	};
-	//处理点浏览器返回时候最后一个不刷新页面内容问题
-    var state = {
-        title: document.title,
-        url: document.location.href,
-        otherkey: null
-    };
-    window.history.replaceState(state, document.title, document.location.href);
+	debugger;
+	//判断是否是ie浏览器
+	if(browserCheck.browserType!="IE" || (browserCheck.browserType=="IE" &&browserCheck.browserVersion>=10)){
+		//注册window的onpopstate事件
+		window.onpopstate = function(e) {  
+			//点击浏览器的前进后退按钮处理
+			if (e.state) {
+				window.location.href=e.state.url;
+			}
+		};
+		//处理点浏览器返回时候最后一个不刷新页面内容问题
+		var state = {
+				title: document.title,
+				url: document.location.href,
+				otherkey: null
+		};
+		window.history.replaceState(state, document.title, document.location.href);
+	}
     //创建左侧栏目
     createCatalogTree();
 	loadingBox.hideLoading();
@@ -331,13 +356,15 @@ function createCatalogTree(){
 											  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>');
 										  }
 										}
-										//加入到历史状态里面
-										var state = {
-											title:treeNode.catalog_name,
-											url: requestUrl,
-											isloadjs:treeNode.isloadjs
-										};
-										window.history.pushState(state,data,requestUrl);
+										if(browserCheck.browserType!="IE" || (browserCheck.browserType=="IE" &&browserCheck.browserVersion>=10)){
+											//加入到历史状态里面
+											var state = {
+													title:treeNode.catalog_name,
+													url: requestUrl,
+													isloadjs:treeNode.isloadjs
+											};
+											window.history.pushState(state,data,requestUrl);
+										}
 									},error:function(error){
 										loadingBox.hideLoading(500);
 									    $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">500</h2><p class="credit-errtext">Error</p><div></div><p></p><p>诚立信金融</p></div>');
