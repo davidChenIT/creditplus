@@ -63,11 +63,11 @@ $(function(){
    <form action="<%=request.getContextPath()%>/j_spring_security_check" method="post" onsubmit="return validateForm(this)" autocomplete="off">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
     <!-- 中间区域 -->
-	<section id="credit_Body" class="credit-layout layout-equalheight ">
-		<section class="row">
+	<div id="credit_Body" class="credit-layout layout-equalheight ">
+		<div class="row">
 			
 			<!--  主区域start -->
-			<section id="credit_MainPanel" class="equalheight-item render content-credit-mainPanel creditRendered credit-fullscreen" widget="fullScreen">
+			<div id="credit_MainPanel" class="equalheight-item render content-credit-mainPanel creditRendered credit-fullscreen" widget="fullScreen">
 				
 				<!-- 主内容区域 -->
 				<div id="credit_Main" class="credit-page creditPageContext" creditpagecontextid="main">
@@ -145,10 +145,10 @@ $(function(){
 				<!-- 主内容区域end -->
 				
 				
-			</section>
+			</div>
 			<!--  主区域end -->
-		</section>
-	</section>	
+		</div>
+	</div>	
 	</form>	
 	<!-- 引入底部 -->
   <jsp:include page="page/footer.jsp"></jsp:include>

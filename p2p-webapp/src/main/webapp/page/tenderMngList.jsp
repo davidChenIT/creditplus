@@ -14,8 +14,8 @@
   <script src="<%=request.getContextPath()%>/js/credit/tenderMngList.v.1.0.js" type="text/javascript"></script>
   
   <!-- 中间区域 -->
-  <section id="credit_Body" class="credit-layout layout-equalheight ">
-       <section class="row">
+  <div id="credit_Body" class="credit-layout layout-equalheight ">
+       <div class="row">
             <!-- 引入左侧菜单区域 -->
             <jsp:include page="leftMenu.jsp"></jsp:include>
             
@@ -205,8 +205,8 @@
 				
 			</div>
 			<!--  主区域end -->
-       </section>
-  </section>
+       </div>
+  </div>
   
   <!-- 引入底部 -->
   <jsp:include page="footer.jsp"></jsp:include>

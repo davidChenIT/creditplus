@@ -10,8 +10,8 @@
 <div id="credit_Top">
 <jsp:include page="../header.jsp"></jsp:include>
  <!-- 中间区域 -->
-  <section id="credit_Body" class="credit-layout layout-equalheight ">
-       <section class="row">
+  <div id="credit_Body" class="credit-layout layout-equalheight ">
+       <div class="row">
             <!-- 引入左侧菜单区域 -->
             <jsp:include page="../leftMenu.jsp"></jsp:include>
             <script src="<%=request.getContextPath()%>/js/credit/roleList.v.1.0.js" type="text/javascript"></script>
@@ -94,8 +94,8 @@
 				
 			</div>
 			<!--  主区域end -->
-       </section>
-  </section>
+       </div>
+  </div>
   
   <!-- 引入底部 -->
   <jsp:include page="../footer.jsp"></jsp:include>
