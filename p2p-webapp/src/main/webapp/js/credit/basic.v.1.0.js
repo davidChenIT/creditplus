@@ -38,7 +38,7 @@ $(function(){
 	});
 	debugger;
 	//判断是否是ie浏览器
-	if(browserCheck.browserType!="IE" || (browserCheck.browserType=="IE" &&browserCheck.browserVersion>=10)){
+	if(browserCheck() && browserCheck().browserType!="IE" || (browserCheck().browserType=="IE" && browserCheck().browserVersion>=10)){
 		//注册window的onpopstate事件
 		window.onpopstate = function(e) {  
 			//点击浏览器的前进后退按钮处理

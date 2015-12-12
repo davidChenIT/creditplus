@@ -30,21 +30,21 @@ $(function(){
 </script>
 <body>
 	<!--  头部start -->
-	<header id="credit_Header" class="credit-header">
+	<div id="credit_Header" class="credit-header">
 		<!-- logo区域-->
-		<nav class="credit-logo pull-left">
+		<div class="credit-logo pull-left">
 			<li class="logo-credit"></li>
 			<li class="logo-text">立信贷,好生活!</li>
-		</nav>
+		</div>
 		
 		<!-- 右边登录人、角色区域 -->
-		<nav class="credit-toprole pull-right">
+		<div class="credit-toprole pull-right">
 			<ul class="credit-menu menu-hor toprloe-admin">
 				<li><span>欢迎</span>&nbsp;<span class="creditRendered"><sec:authentication property="name"/></span>&nbsp;<span>登录！</span></li>
 				<li class="last-child"><a href="/p2p-webapp/j_spring_security_logout">注销</a></li>
 			</ul>
-		</nav>
-	</header>
+		</div>
+	</div>
 	<!--  头部end -->
 
 </body>

@@ -13,13 +13,13 @@
   <jsp:include page="header.jsp"></jsp:include>
   
   <!-- 中间区域 -->
-  <section id="credit_Body" class="credit-layout layout-equalheight ">
-       <section class="row">
+  <div id="credit_Body" class="credit-layout layout-equalheight ">
+       <div class="row">
             <!-- 引入左侧菜单区域 -->
             <jsp:include page="leftMenu.jsp"></jsp:include>
             
             <!--  主区域start -->
-			<section id="credit_MainPanel" class="equalheight-item render content-credit-mainPanel creditRendered credit-fullscreen" widget="fullScreen">
+			<div id="credit_MainPanel" class="equalheight-item render content-credit-mainPanel creditRendered credit-fullscreen" widget="fullScreen">
 				<!-- 面包屑区域 -->
 				<div class="row" id="credit_MainTop">
 					<div id="breadcrumb" class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -40,10 +40,10 @@
 				</div>
 				<!--credit_Main_end-->
 				
-			</section>
+			</div>
 			<!--  主区域end -->
-       </section>
-  </section>
+       </div>
+  </div>
   
   <!-- 引入底部 -->
   <jsp:include page="footer.jsp"></jsp:include>

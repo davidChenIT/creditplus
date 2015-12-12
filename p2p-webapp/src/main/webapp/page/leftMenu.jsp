@@ -6,7 +6,7 @@
 </head>
 <body>
    <!-- 菜单区域 -->
-	<section id="credit_LeftPanel" class="equalheight-item content-equalheight-item">
+	<div id="credit_LeftPanel" class="equalheight-item content-equalheight-item">
 		<div class="heightfixed-left">
 			<!--展开、收缩图标区域 -->
 			<div id="credit_Menu" widget="ToggleMenu" name="credit_bigIcon" class="render credit-menu menu-tree menu-togglemenu creditRendered tree-togglemenu credit-tree">
@@ -21,6 +21,6 @@
 			</div>
 		
 		</div>
-	</section>
+	</div>
 </body>
 </html>
