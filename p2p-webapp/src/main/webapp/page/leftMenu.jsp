@@ -6,8 +6,8 @@
 </head>
 <body>
    <!-- 菜单区域 -->
-	<div id="credit_LeftPanel" class="equalheight-item content-equalheight-item">
-		<div class="heightfixed-left">
+	<div id="credit_LeftPanel">
+		<div>
 			<!--展开、收缩图标区域 -->
 			<div id="credit_Menu" widget="ToggleMenu" name="credit_bigIcon" class="render credit-menu menu-tree menu-togglemenu creditRendered tree-togglemenu credit-tree">
 				<div class="credit-menu-toggle">
@@ -16,10 +16,9 @@
 			</div>
 			
 			<!-- 左侧栏目树区域 -->
-			<div id="menu_ztree" class="ztree" style="overflow-x: hidden;overflow-y:auto;height: 500px;">
+			<div id="menu_ztree" class="ztree" style="overflow-x: hidden;overflow-y:auto;height: 490px;">
 			
 			</div>
-		
 		</div>
 	</div>
 </body>

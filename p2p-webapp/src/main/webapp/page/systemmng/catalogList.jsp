@@ -10,13 +10,13 @@
 <div id="credit_Top">
 <jsp:include page="../header.jsp"></jsp:include>
  <!-- 中间区域 -->
-  <div id="credit_Body" class="credit-layout layout-equalheight ">
-       <div class="row">
+  <div id="credit_Body">
+       <div>
             <!-- 引入左侧菜单区域 -->
             <jsp:include page="../leftMenu.jsp"></jsp:include>
             <script src="<%=request.getContextPath()%>/js/credit/catalogList.v.1.0.js" type="text/javascript"></script>
             <!--  主区域start -->
-			<div id="credit_MainPanel" class="equalheight-item render content-credit-mainPanel creditRendered credit-fullscreen" widget="fullScreen">
+			<div id="credit_MainPanel" class="credit_MainPanel">
 				<!-- 面包屑区域 -->
 				<div class="row" id="credit_MainTop">
 					<div id="breadcrumb" class="col-xs-12 col-sm-8 col-md-8 col-lg-8">

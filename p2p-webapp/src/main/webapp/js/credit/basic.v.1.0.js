@@ -65,14 +65,16 @@ $(function(){
 		if(thisClss.indexOf("icon-chevron-left")!=-1){
 			 $(this).attr("class",thisClss.replace("icon-chevron-left","icon-chevron-right"));
 			 $(this).text(">");
-			 $(this).parent("div").width("29");
-			 $("#credit_LeftPanel").width("30");
+			 $("#credit_LeftPanel").width("2%");
+			 $("#credit_MainPanel").css({"left":"3%"});
+			 $("#credit_MainPanel").width("56%");
 			 $("#menu_ztree").hide()
 		}else{
 			 $(this).attr("class",thisClss.replace("icon-chevron-right","icon-chevron-left"));
 			 $(this).text("<");
-			 $(this).parent("div").width("215");
-			 $("#credit_LeftPanel").width("216");
+			 $("#credit_LeftPanel").width("15%");
+			 $("#credit_MainPanel").css({"left":"16%"});
+			 $("#credit_MainPanel").width("43%");
 			 $("#menu_ztree").show()
 		}
 		
@@ -296,6 +298,7 @@ function createCatalogTree(){
 						},
 						//节点点击事件
 						onClick:function(event, treeId, treeNode){
+							debugger;
 							var parentLiId=$(event.toElement).parents("li:last").attr("id");
 							$("#menu_ztree").find("span[class='credit-span-blue']").attr("class","");
 							$("#menu_ztree").find(".ztree-li-selected").removeClass("ztree-li-selected");
@@ -317,7 +320,11 @@ function createCatalogTree(){
 								if(treeNode==null){
 									return;
 								}else{
-									liHtml="<li><a>"+treeNode.catalog_name+"</a></li>"+liHtml;
+									if(!liHtml){
+										liHtml="<li><a>"+treeNode.catalog_name+"</a></li>";
+									}else{
+										liHtml="<li><a>"+treeNode.catalog_name+"</a></li><li class=\"split-li\">></li>"+liHtml;
+									}
 									checkAllParents(treeNode.getParentNode());
 								}
 							}
@@ -328,35 +335,36 @@ function createCatalogTree(){
 							//获取页面
 							var fileUrlstr=treeNode.url;
 							if(fileUrlstr && fileUrlstr!="#"){
-								loadingBox.showLoading();
 								var jsFileUrl="/p2p-webapp/js/credit/"+fileUrlstr.substring(fileUrlstr.lastIndexOf("/")+1,fileUrlstr.lastIndexOf("."))+app_verion+".js";
 								fileUrlstr=fileUrlstr.indexOf("/")==0?fileUrlstr.substring(1):fileUrlstr;
 								var requestUrl=appContext+"/p2p-webapp/"+fileUrlstr;
-								$("title").text(treeNode.catalog_name);
-								$.ajax({ 
-									url: requestUrl,
-									//context: document.body,
-									success: function(data){
-										loadingBox.hideLoading(500);
-										if(data && data.indexOf("loginBtn")!=-1){
-											window.location.href=appContext+"/p2p-webapp/page/login.jsp";
-										}else if(data && data.indexOf("<p>No Permission</p>")!=-1){
-											$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">403</h2><p class="credit-errtext">No Permission</p><div></div><p></p><p>诚立信金融</p></div>');
-											return;
-										}else if(data && data.indexOf("<p>Not Found</p>")!=-1){
-											$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
-											return;
-										}
-										if(data && data.length>0){
-										  var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->")+24,data.indexOf("<!--credit_Main_end-->"));
-										  $("#credit_MainPanel").find("#credit_Main").remove();
-										  $("#credit_MainPanel").append(creditMainHtml);
-										  if(fileUrlstr.indexOf("index.jsp")==-1){
-											  $("head").find("script[src='"+jsFileUrl+"']").remove();
-											  $("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>');
-										  }
-										}
-										if(browserCheck.browserType!="IE" || (browserCheck.browserType=="IE" &&browserCheck.browserVersion>=10)){
+								if(browserCheck() && browserCheck().browserType=="IE" && browserCheck().browserVersion<10){
+									window.location.href=requestUrl;
+								}else{
+									loadingBox.showLoading();
+									document.title = treeNode.catalog_name;
+									$.ajax({ 
+										url: requestUrl,
+										success: function(data){
+											loadingBox.hideLoading(500);
+											if(data && data.indexOf("loginBtn")!=-1){
+												window.location.href=appContext+"/p2p-webapp/page/login.jsp";
+											}else if(data && data.indexOf("<p>No Permission</p>")!=-1){
+												$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">403</h2><p class="credit-errtext">No Permission</p><div></div><p></p><p>诚立信金融</p></div>');
+												return;
+											}else if(data && data.indexOf("<p>Not Found</p>")!=-1){
+												$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">404</h2><p class="credit-errtext">Not Found</p><div></div><p></p><p>诚立信金融</p></div>');
+												return;
+											}
+											if(data && data.length>0){
+												var  creditMainHtml=data.substring(data.indexOf("<!--credit_Main_start-->")+24,data.indexOf("<!--credit_Main_end-->"));
+												$("#credit_MainPanel").find("#credit_Main").remove();
+												$("#credit_MainPanel").append(creditMainHtml);
+												if(fileUrlstr.indexOf("index.jsp")==-1){
+													$("head").find("script[src='"+jsFileUrl+"']").remove();
+													$("head").append('<script src="'+jsFileUrl+'" type="text/javascript"></script>');
+												}
+											}
 											//加入到历史状态里面
 											var state = {
 													title:treeNode.catalog_name,
@@ -364,15 +372,13 @@ function createCatalogTree(){
 													isloadjs:treeNode.isloadjs
 											};
 											window.history.pushState(state,data,requestUrl);
+										},error:function(error){
+											loadingBox.hideLoading(500);
+											$("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">500</h2><p class="credit-errtext">Error</p><div></div><p></p><p>诚立信金融</p></div>');
 										}
-									},error:function(error){
-										loadingBox.hideLoading(500);
-									    $("#credit_Main").html('<div class="credit-wrong"><h2 class="credit-errcode">500</h2><p class="credit-errtext">Error</p><div></div><p></p><p>诚立信金融</p></div>');
-									}
-								});
+									});
+								}
 							}
-							
-							
 						}
 				}
 
@@ -402,7 +408,11 @@ function createCatalogTree(){
 				if(curentTreeNode==null){
 					return;
 				}else{
-					liHtml="<li><a>"+curentTreeNode.catalog_name+"</a></li>"+liHtml;
+					if(!liHtml){
+						liHtml="<li><a>"+curentTreeNode.catalog_name+"</a></li>";
+					}else{
+						liHtml="<li><a>"+curentTreeNode.catalog_name+"</a></li><li class=\"split-li\">></li>"+liHtml;
+					}
 					checkAllParents1(curentTreeNode.getParentNode());
 				}
 			}
@@ -438,11 +448,11 @@ function removeTabItem(tabId,itemId){
 
 //移除tab控件的也签
 function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
+	debugger;
 	if(tabId && itemId && pageUrl){
 		loadingBox.showLoading();
 		var paramsObj;
 		if(paramsStr){
-//			paramsObj=JSON.parse(paramsStr.replace(/@#_#@/g,"\""));//双引号替换
 			paramsObj=JSON.parse(unescape(paramsStr));
 		}else{
 			paramsObj={};
@@ -461,6 +471,7 @@ function addTabItem(tabId,itemId,title,pageUrl,isLoadJs,jsFileUrl,paramsStr){
 		$.ajax({ 
 			url: requestUrl,
 			success: function(data){
+				debugger;
 				loadingBox.hideLoading(500);
 				if(data && data.indexOf("loginBtn")!=-1){
 					window.location.href=appContext+"/p2p-webapp/page/login.jsp";
@@ -646,23 +657,6 @@ function validateDom(elementDom, parentDivId){
  */
 function validErrorTip(elemName, elementDom, tip, parentDivId){
 	debugger;
-//	var elemNameTipLength;
-//	if(parentDivId){
-//		elemNameTipLength = $("#" + parentDivId).find("span[name='" + elemName + "_tip']").length;
-//	}else{
-//		elemNameTipLength = $("span[name='" + elemName + "_tip']").length;
-//	}
-//    if(elemNameTipLength == 0){
-//	    $(elementDom).parent().after("<span class='error-tip' name='" + elemName + "_tip' style='color:red;'>" + tip + "</span>");
-//    }
-//    $(elementDom).change(function(e){
-//    	if(parentDivId){
-//    		$("#"+parentDivId).find("span[name='" + elemName + "_tip']").remove();
-//    	}else{
-//    		$("span[name='" + elemName + "_tip']").remove();
-//    	}
-//	    $(this).unbind(e);
-//    });
 	var tabId=$("li[class='tabs-selected']").attr("tabid");
 	var tipDivName=$(elementDom).attr("name")+"_"+"tip_div";
 	if($(elementDom).attr("index")){

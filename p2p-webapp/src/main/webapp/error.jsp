@@ -16,13 +16,13 @@
 	
 	
 	<!-- 中间区域 -->
-	<div id="credit_Body" class="credit-layout layout-equalheight ">
-		<div class="row">
+	<div id="credit_Body">
+		<div>
 			<!-- 引入左侧菜单区域 -->
             <jsp:include page="page/leftMenu.jsp"></jsp:include>
 			
 			<!--  主区域start -->
-			<div id="credit_MainPanel" class="equalheight-item render content-credit-mainPanel creditRendered credit-fullscreen" widget="fullScreen">
+			<div id="credit_MainPanel" class="credit_MainPanel">
 				<!-- 面包屑区域 -->
 				<div class="row" id="credit_MainTop">
 					<div id="breadcrumb" class="col-xs-12 col-sm-8 col-md-8 col-lg-8">

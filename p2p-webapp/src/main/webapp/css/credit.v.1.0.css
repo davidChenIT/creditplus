@@ -1083,25 +1083,8 @@ label {
     height: 32px;
     padding: 3px 6px;
 }
-.layout-equalheight {
-  margin:0;
-}
-.layout-equalheight > .row {
-  display: table;
-  width: 100%;
-  margin: 0;
-  table-layout: fixed;
-  border-spacing: 0;
-}
-.layout-equalheight > .row .equalheight-item {
-  float: none;
-  display: table-cell;
-  vertical-align: top;
-}
-.layout-equalheight > .row:before,
-.layout-equalheight > .row:after {
-  display: none;
-}
+
+
 /** 设置内容居面包屑距离 */
 .credit-page {
   margin-top: 9px;
@@ -1121,7 +1104,7 @@ label {
 .credit-tree.tree-togglemenu .credit-menu-toggle {
   height: 40px;
   font-size: 1.66666667em;
-  width:214px;
+  width:100%;
   text-align: right;
 }
 .credit-tree.tree-togglemenu .credit-menu-toggle a.credit-icon {
@@ -1169,7 +1152,7 @@ label {
 	font-family: cursive;
 	font-weight: bold;
 }
-.row .credit-tabs .tabs-head {
+.credit-tabs .tabs-head {
   margin: 0 0 20px 0;
 }
 .credit-toolbar {
@@ -1189,8 +1172,7 @@ label {
 .credit-breadcrumb li {
   display: inline-block;
 }
-.credit-breadcrumb li + li:before {
-  content: ">";
+.credit-breadcrumb .split-li {
   font-family: "宋体", sans-serif;
   font-weight: bold;
   padding: 0 5px;
@@ -1205,24 +1187,25 @@ label {
 #credit_RightPanel {
   padding: 10px;
 }
-#credit_LeftPanel[class$="equalheight-item"],
-#credit_MainPanel[class$="equalheight-item"],
-#credit_RightPanel[class$="equalheight-item"] {
-  height: 500px;
-}
-#credit_LeftPanel,
-#credit_RightPanel {
-  width: 240px;
-}
 @media (max-width: 1023px) {
-  #credit_LeftPanel,
-  #credit_RightPanel {
+  #credit_LeftPanel{
     display: none !important;
   }
 }
 #credit_LeftPanel {
   padding: 10px 0;
 }
+
+
+/**内容区域**/
+.credit_MainPanel{
+    position: absolute;
+    width: 83%;
+    left: 16%;
+    top: 55px;
+    margin-left: 5px;
+}
+
 /* header  */
 .credit-header {
   min-height: 55px;
@@ -1257,14 +1240,6 @@ label {
   margin: 0;
   vertical-align: middle;
 }
-
-/**.credit-header .credit-logo > li + li:before,
-.credit-header .credit-toplink > ul:nth-child(2) > li + li:before{
-  padding-right: 10px;
-  padding-left: 0;
-  color: rgba(0, 0, 0, 0);
-  content: '';
-}*/
 .credit-wrong {
   text-align: center;
   padding: 1px 0;
@@ -1323,7 +1298,7 @@ label {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.row .credit-tabs .tabs-head {
+.credit-tabs .tabs-head {
   margin-bottom: 0;
 }
 
@@ -1474,11 +1449,7 @@ input[type="text"]:focus + .input-btn .credit-icon {
 .heightfixed-left{
 	position: fixed !important;
 }
-/*布局类*/
- .layout-equalheight.adapt-heightfixed .heightfixed-left {
-    
-    margin-top: 74px;
-}
+
 /*快速链接*/
  .credit-linkmenu .linkmenu-setting span, .credit-linkmenu .linkmenu-setting span:hover {
     color: #ff8f00;
@@ -1487,7 +1458,7 @@ input[type="text"]:focus + .input-btn .credit-icon {
  .toprloe-admin {
     font-size: 14px;
 }
-.credit-toprole .toprloe-admin>ul>li, .credit-toprole .toprloe-admin>ul>li a, .toprloe-admin>ul>li a:hover {
+.credit-toprole .toprloe-admin ul li, .credit-toprole .toprloe-admin ul li a, .toprloe-admin ul li a:hover {
     color: #888;
 }
 .credit-toprole .poplist-account li, .poplist-language li {
@@ -1628,10 +1599,10 @@ input[type="text"]:focus + .input-btn .credit-icon {
     padding: 0 15px;
     line-height: 27px;
 }
-.credit-btn span, .credit-btn :hover, .credit-btn > em {
+.credit-btn span, .credit-btn :hover, .credit-btn em {
     color: #fff;
 }
-.credit-menubtn > .credit-btn.btn-minor:nth-child(2), .credit-menubtn > btn-minor:nth-child(2) {
+.credit-menubtn .credit-btn.btn-minor:nth-child(2), .credit-menubtn btn-minor:nth-child(2) {
     border-left: 1px solid #fff;
 }
 .credit-input-arrow {
@@ -1645,7 +1616,7 @@ input[type="text"]:focus + .input-btn .credit-icon {
 .credit-breadcrumb {
     margin-bottom: 60px;
 }
-.credit-breadcrumb > li {
+.credit-breadcrumb li {
     line-height: 25px;
 }
 .credit-breadcrumb li a:hover, .credit-breadcrumb li.breadcrumb-selected a, .credit-breadcrumb li.breadcrumb-selected span {
@@ -1743,7 +1714,7 @@ input[type="text"]:focus + .input-btn .credit-icon {
 .credit-flow {
     overflow:hidden;
 }
-.credit-flow .flow-container > li {
+.credit-flow .flow-container li {
     float:left;
 }
 
@@ -1870,8 +1841,8 @@ input[type="text"]:focus {
 }
 #credit_LeftPanel {
     padding: 10px 5px 10px 0;
-    position: relative;
-    width: 216px;
+    position: fixed;
+    width: 16%;
     overflow: hidden;
     padding-right: 0;
     padding-top: 0;

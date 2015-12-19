@@ -63,11 +63,10 @@ $(function(){
    <form action="<%=request.getContextPath()%>/j_spring_security_check" method="post" onsubmit="return validateForm(this)" autocomplete="off">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
     <!-- 中间区域 -->
-	<div id="credit_Body" class="credit-layout layout-equalheight ">
-		<div class="row">
-			
+	<div id="credit_Body">
+		<div>
 			<!--  主区域start -->
-			<div id="credit_MainPanel" class="equalheight-item render content-credit-mainPanel creditRendered credit-fullscreen" widget="fullScreen">
+			<div id="credit_MainPanel">
 				
 				<!-- 主内容区域 -->
 				<div id="credit_Main" class="credit-page creditPageContext" creditpagecontextid="main">
