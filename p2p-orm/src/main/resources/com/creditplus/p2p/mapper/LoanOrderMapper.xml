@@ -90,15 +90,15 @@
 			a.first_assign_user,
 			a.review_assign_user,
 		    concat(a.version,'') as version,
-		    (select url from attach_pic where user_id=#{user_id} and type=1) as id_num_pic1,
-			(select url from attach_pic where user_id=#{user_id} and type=2) as id_num_pic2,
-			(select url from attach_pic where user_id=#{user_id} and type=3) as work_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=4) as degree_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=5) as seasame_score_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=6) as income_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=7) as bank_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=8) as certificate_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=9) as address_pic,
+		   <!--  (select url from attach_pic where user_id=#{user_id} and type=1 order by modifytime desc limit 1) as id_num_pic1,
+			(select url from attach_pic where user_id=#{user_id} and type=2 order by modifytime desc limit 1) as id_num_pic2,
+			(select url from attach_pic where user_id=#{user_id} and type=3 order by modifytime desc limit 1) as work_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=4 order by modifytime desc limit 1) as degree_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=5 order by modifytime desc limit 1) as seasame_score_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=6 order by modifytime desc limit 1) as income_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=7 order by modifytime desc limit 1) as bank_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=8 order by modifytime desc limit 1) as certificate_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=9 order by modifytime desc limit 1) as address_pic, -->
 			(select approve_content from approve_log_t where loan_id=#{loan_id} and state=5 limit 1) as approve_content
 	    from loan_list t
 		left join loan_apply_t a on t.loan_id=a.loan_id
@@ -106,6 +106,20 @@
         left join customer_info_t c on t.user_id=c.user_id
        	where t.loan_id=#{loan_id}
 	</select>
+	
+	
+	 <!-- 
+	 		 (select url from attach_pic where user_id=#{user_id} and type=1 order by modifytime desc limit 1) as id_num_pic1,
+			(select url from attach_pic where user_id=#{user_id} and type=2 order by modifytime desc limit 1) as id_num_pic2,
+			(select url from attach_pic where user_id=#{user_id} and type=3 order by modifytime desc limit 1) as work_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=4 order by modifytime desc limit 1) as degree_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=5 order by modifytime desc limit 1) as seasame_score_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=6 order by modifytime desc limit 1) as income_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=7 order by modifytime desc limit 1) as bank_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=8 order by modifytime desc limit 1) as certificate_pic,
+			(select url from attach_pic where user_id=#{user_id} and type=9 order by modifytime desc limit 1) as address_pic,
+	 -->
+	
 	
 	<select id="getBiaoDetailByLoanId" parameterType="Integer" resultType="java.util.Map">
 	select 		
@@ -191,15 +205,6 @@
 			a.first_assign_user,
 			a.review_assign_user,
 		    concat(a.version,'') as version,
-		    (select url from attach_pic where user_id=#{user_id} and type=1) as id_num_pic1,
-			(select url from attach_pic where user_id=#{user_id} and type=2) as id_num_pic2,
-			(select url from attach_pic where user_id=#{user_id} and type=3) as work_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=4) as degree_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=5) as seasame_score_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=6) as income_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=7) as bank_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=8) as certificate_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=9) as address_pic,
 			(select approve_content from approve_log_t where loan_id=#{loan_id} and state=7 limit 1) as approve_content
 	    from loan_list t
 		left join loan_apply_t a on t.loan_id=a.loan_id
@@ -291,16 +296,7 @@
 		    ifnull(a.apply_state,t.state) as apply_state,
 			a.first_assign_user,
 			a.review_assign_user,
-		    concat(a.version,'') as version,
-		    (select url from attach_pic where user_id=#{user_id} and type=1) as id_num_pic1,
-			(select url from attach_pic where user_id=#{user_id} and type=2) as id_num_pic2,
-			(select url from attach_pic where user_id=#{user_id} and type=3) as work_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=4) as degree_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=5) as seasame_score_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=6) as income_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=7) as bank_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=8) as certificate_pic,
-			(select url from attach_pic where user_id=#{user_id} and type=9) as address_pic
+		    concat(a.version,'') as version
 	    from loan_list t
 		left join loan_apply_t a on t.loan_id=a.loan_id
 		left join user_info u on t.user_id=u.user_id

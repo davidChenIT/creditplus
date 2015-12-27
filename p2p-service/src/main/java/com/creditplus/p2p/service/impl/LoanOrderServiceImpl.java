@@ -372,9 +372,10 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		List<Map> gridData=pageVo.getGriddata();
 		int rowNum=pageVo.getRowNum();
 		int currpage=pageVo.getCurrpage();
+		int rownum=(currpage-1)*rowNum;
 		if(gridData!=null && gridData.size()>0){
 			for(Map dataMap:gridData){
-				dataMap.put("top", (currpage-1)*rowNum+1);
+				dataMap.put("top", ++rowNum);
 			}
 		}
 		pageVo.setGriddata(gridData);
