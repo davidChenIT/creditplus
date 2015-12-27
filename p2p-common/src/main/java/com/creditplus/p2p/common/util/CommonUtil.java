@@ -114,7 +114,7 @@ public class CommonUtil {
 		 return myformat.format(num);
 	}
 	
-	public static void main(String[] args) throws ScriptException {
+	/*public static void main(String[] args) throws ScriptException {
 		 String jsex="certificate_type_v>0.5";
 		 ScriptEngineManager factory = new ScriptEngineManager();
 		 ScriptEngine engine=factory.getEngineByName("js");
@@ -132,6 +132,37 @@ public class CommonUtil {
 		 java.text.DecimalFormat myformat=new java.text.DecimalFormat("0.0");
 		 String str = myformat.format(c); 
 		 System.out.println(str);
+	}*/
+	
+	public static void main(String[] args) {
+		System.out.println(0D);
+		double   f   =   111231.4585*2.0;  
+		System.out.println(f);
+		f=getDouble(f);
+		System.out.println(f);
+		System.out.println(getInteger(f));
+	}
+	
+	/**
+	 * 按四舍五入保留两位小数
+	 * @param d
+	 * @return
+		double
+	 */
+	private static double getDouble(double d){
+		BigDecimal   b   =   new   BigDecimal(d);
+		return b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 	}
 
+	/**
+	 * 
+	 * 按四舍五入返回整数
+	 * @param d
+	 * @return
+		int
+	 */
+	private static int getInteger(double d){
+		BigDecimal   b   =   new   BigDecimal(d);
+		return b.setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
+	}
 }

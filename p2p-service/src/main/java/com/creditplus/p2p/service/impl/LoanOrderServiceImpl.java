@@ -363,7 +363,21 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		loanOrderDao.rankingPoolListWithPage(paramMap);
 		//得到分页VO
 		PageVO pageVo=PageUtil.getPageVO();
+		initRownum(pageVo);
 		return pageVo;
+	}
+	
+	
+	private void initRownum(PageVO pageVo){
+		List<Map> gridData=pageVo.getGriddata();
+		int rowNum=pageVo.getRowNum();
+		int currpage=pageVo.getCurrpage();
+		if(gridData!=null && gridData.size()>0){
+			for(Map dataMap:gridData){
+				dataMap.put("top", (currpage-1)*rowNum+1);
+			}
+		}
+		pageVo.setGriddata(gridData);
 	}
 
 	

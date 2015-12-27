@@ -4,6 +4,7 @@
  */
 package com.creditplus.p2p.service.impl;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,9 +40,9 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 	
 	private Map getCreditScoreMap(Integer user_id,Integer loan_id){
 		List<Map> creditScores=creditScoreDao.getCreditScoreList(new HashMap());
-		Map<String,Integer> score1=new HashMap<String,Integer>();
-		Map<String,Integer> score2=new HashMap<String,Integer>();
-		Integer total1=0,total2=0;     //信用总分，模型1，明星2
+		Map<String,Object> score1=new HashMap<String,Object>();
+		Map<String,Object> score2=new HashMap<String,Object>();
+		Double total1=0D,total2=0D;     //信用总分，模型1，模型2
 		if(creditScores!=null && creditScores.size()>0){
 			
 			for(Map creditMap:creditScores){
@@ -50,7 +51,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 				String model_name= (String) creditMap.get("model_name");
 				String dimension_name=(String) creditMap.get("dimension_name");
 				String proportion=(String) creditMap.get("proportion");
-				Integer baifenbi=Integer.valueOf(proportion.substring(0, proportion.indexOf("%")).trim());
+				Double baifenbi=Double.valueOf(proportion.substring(0, proportion.indexOf("%")).trim());
 				Integer score_id=(Integer) creditMap.get("score_id");
 				List<Map> itemsList=creditScoreDao.getCreditItemById(score_id);
 				if(itemsList!=null && itemsList.size()>0){
@@ -72,7 +73,7 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 					Map valueMap=new HashMap();
 					valueMap.put(fact_column, value);
 					
-					Integer dimesion_score=0;
+					Double dimesion_score=0D;
 					for(Map itemMap:itemsList){
 						String arithmetic=(String) itemMap.get("arithmetic");
 						String dimension_value=(String) itemMap.get("dimension_value");
@@ -90,8 +91,8 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 						//执行维度评分逻辑表达式
 						boolean flag=CommonUtil.exeExpression(expression.toString(), valueMap);
 						if(flag){
-							dimesion_score=score*baifenbi/100;
-							System.out.println("score:"+score);
+							dimesion_score=getDouble(score*baifenbi/100);
+							System.out.println("score:"+score+" dimesion_score:"+dimesion_score);
 						}
 						
 						if("1".equals(model_name)){
@@ -109,49 +110,40 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 			
 		}
 		
-		score1.put("credit_total_score", total1);
-		score2.put("credit_total_score", total2);
+		score1.put("credit_total_score", getInteger(total1));
+		score2.put("credit_total_score", getInteger(total2));
 		Map scoreMap=new HashMap();
 		scoreMap.put("score1", score1);
 		scoreMap.put("score2", score2);
-		scoreMap.put("credit_score1", total1);
-		scoreMap.put("credit_score2", total2);
-		scoreMap.put("credit_score_total", (total1+total2));
+		scoreMap.put("credit_score1", getInteger(total1));
+		scoreMap.put("credit_score2", getInteger(total2));
+		scoreMap.put("credit_score_total", getInteger(total1+total2));
 		return scoreMap;
 	}
 	
 	
-	/*private Integer getItemResultSet(Map credit_item,Integer user_id){
-		String main_table=(String) credit_item.get("main_table");
-		String child_table=(String) credit_item.get("child_table");
-		String relevance_colum=(String) credit_item.get("relevance_colum");
-		String expression=(String) credit_item.get("expression");
-		Integer score=Integer.valueOf(credit_item.get("score")+"");
-		StringBuilder sbSql=new StringBuilder();
-		if(StringUtils.isNotEmpty(child_table) && StringUtils.isNotEmpty(relevance_colum)){
-			sbSql.append("select z.*,c.* from ").append(main_table).append(" z left join ").append(child_table).append(" c on z.").append(relevance_colum).append(" = c.").append(relevance_colum);
-		}else{
-			sbSql.append("select * from ").append(main_table);
-		}
-		sbSql.append(" where user_id = ").append("#{user_id}");
-		
-		Map sqlMap=new HashMap();
-		sqlMap.put("user_id", user_id);
-		sqlMap.put("sql", sbSql.toString());
-		System.out.println("creditScoreSql:"+sbSql.toString());
-		List<Map> result=commonInfoDao.executeDonamicSQL(sqlMap);
-		System.out.println("=====result:"+result);
-		if(result!=null && result.size()>0){
-			for(int i=0;i<result.size();i++){
-				Map paramMap=result.get(i);
-				boolean flag=CommonUtil.exeExpression(expression, paramMap);
-				if(flag)
-					return score;
-			}
-		}
-		
-		return 0;
-	}*/
+	/**
+	 * 按四舍五入保留两位小数
+	 * @param d
+	 * @return
+		double
+	 */
+	private double getDouble(double d){
+		BigDecimal   b   =   new   BigDecimal(d);
+		return b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+	}
+
+	/**
+	 * 
+	 * 按四舍五入返回整数
+	 * @param d
+	 * @return
+		int
+	 */
+	private int getInteger(double d){
+		BigDecimal   b   =   new   BigDecimal(d);
+		return b.setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
+	}
 	
 	
 
