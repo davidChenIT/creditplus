@@ -36,7 +36,7 @@ $(function(){
 				{name:'modifytime', index:'modifytime',align:'center',"sortable":false},
 				{name:'credit_score1', index:'credit_score1',align:'center',"sortable":false},
 				{name:'credit_score2', index:'credit_score2',align:'center',"sortable":false},
-				{name:'rank', index:'rank',align:'center',"sortable":false}
+				{name:'top', index:'top',align:'center',"sortable":false}
 			],
 			pager: '#rankPoolPager',
 			multiselect: true,
