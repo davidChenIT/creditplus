@@ -3,6 +3,8 @@ package com.creditplus.p2p.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.creditplus.p2p.common.constant.Constant;
@@ -14,6 +16,8 @@ public class ApproveLogServiceImpl  implements ApproveLogService{
 
 	@Autowired
 	private ApproveLogDao approveLogDao;
+	
+	public final Logger logger = LogManager.getLogger(ApproveLogServiceImpl.class);
 	
 	public Map getAppLogByLoanId(Map paramMap) throws Exception {
 		CheckParamUtil.checkKey(paramMap, Constant.LOAN_ID);
@@ -30,7 +34,6 @@ public class ApproveLogServiceImpl  implements ApproveLogService{
 	public void insertApproveLog(Map paramMap) {
 		//判断是否已插入日志
 //		CheckParamUtil.checkKey(paramMap, "loan_id","approve_content","apply_state");
-		System.out.println("paramMap:"+paramMap);
 		approveLogDao.insertApproveLog(paramMap);
 	}
 

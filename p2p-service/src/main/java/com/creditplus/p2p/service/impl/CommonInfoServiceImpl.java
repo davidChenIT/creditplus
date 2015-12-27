@@ -2,9 +2,9 @@ package com.creditplus.p2p.service.impl;
 
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.creditplus.p2p.common.util.CheckParamUtil;
 import com.creditplus.p2p.common.util.IDCardUtil;
 import com.creditplus.p2p.dao.CommonInfoDao;
 import com.creditplus.p2p.service.CommonInfoService;
@@ -14,17 +14,19 @@ public class CommonInfoServiceImpl implements CommonInfoService{
 	@Autowired
 	CommonInfoDao commonInfoDao;
 
+	public final Logger logger = LogManager.getLogger(CommonInfoServiceImpl.class);
+	
 	public Map getCardInfoById(String cardNo) {
 		Map cardMap=IDCardUtil.getCardInfo(cardNo);
-		System.out.println("cardMap:"+cardMap);
+		logger.info("cardMap:"+cardMap);
 		if("1".equals(cardMap.get("id_state")+"")){
 			String id_first_6num=(String) cardMap.get("id_6");
 			Map dbCardInfo=commonInfoDao.getCardInfoById(id_first_6num);
-			System.out.println("dbCardInfo:"+dbCardInfo);
+			logger.info("dbCardInfo:"+dbCardInfo);
 			if(dbCardInfo!=null && dbCardInfo.size()>0)
 				cardMap.putAll(dbCardInfo);
 		}
-		System.out.println("cardMap:"+cardMap);
+		logger.info("cardMap:"+cardMap);
 		return cardMap;
 	}
 
@@ -43,14 +45,14 @@ public class CommonInfoServiceImpl implements CommonInfoService{
 			}*/
 			String[] area=phoneNum.split("-");
 			phoneMap=commonInfoDao.getPhoneInfoById(area[0]);
-			System.out.println("phoneMap:"+phoneMap);
+			logger.info("phoneMap:"+phoneMap);
 		}
 		return phoneMap;
 	}
 	
 	public String getPictureSrcByUserIdAndType(Map paramsMap){
 		Map resultMap=commonInfoDao.getPictureSrcByUserIdAndType(paramsMap);
-		System.out.println("resultMap:"+resultMap);
+		logger.info("resultMap:"+resultMap);
 		if(resultMap!=null){
 			return (String)resultMap.get("imgPath");
 		}else{

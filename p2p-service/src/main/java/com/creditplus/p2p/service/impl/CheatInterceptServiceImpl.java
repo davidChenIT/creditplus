@@ -31,6 +31,8 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 	@Autowired
 	ApproveLogService approveLogService;
 	
+	public final Logger logger = LogManager.getLogger(LoanOrderServiceImpl.class);
+	
 	public boolean intercept(Integer user_id,Integer loan_id) throws Exception {
 		boolean checkFlag=false;
 		try{
@@ -58,7 +60,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 				}
 			}
 		}catch(Exception e){
-			System.out.println("dimensionCheat error:"+e);
+			logger.error("dimensionCheat error:"+e);
 //			cheatExceptionProcess(loan_id, "防欺诈拦截异常,请检查防欺诈规则配置是否有误 ");
 			throw new Exception("防欺诈拦截异常,请检查防欺诈规则配置是否有误");
 		}
@@ -90,7 +92,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 			Integer total_record=executeQuerySql(sqlMap);
 			flag=total_record>0?true:false;
 		}
-		System.out.println("=====flag:"+flag);
+		logger.info("=====flag:"+flag);
 		return flag;	
 	} 
 	
@@ -159,7 +161,7 @@ public class CheatInterceptServiceImpl implements CheatInterceptService {
 		try {
 			approveLogService.insertApproveLog(approveMap);
 		} catch (Exception e) {
-			System.out.println(e);
+			logger.info(e);
 			//throw new Exception(e);
 			//写异常日志表
 		}

@@ -8,6 +8,8 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.*;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.SystemMetaObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.creditplus.p2p.model.PageVO;
 import com.creditplus.p2p.page.PageUtil;
@@ -20,8 +22,9 @@ import java.util.Properties;
 		@Signature(type = ResultSetHandler.class, method = "handleResultSets", args = { Statement.class }) })
 public class PagingInterceptor implements Interceptor {
 	
+	public static final Logger logger = LogManager.getLogger(PagingInterceptor.class);
+
 	String rule="";
-	
 	public Object intercept(Invocation invocation) throws Throwable {
 		PageVO page = PageUtil.getPageInfo();
 		if (page == null) {
@@ -43,9 +46,9 @@ public class PagingInterceptor implements Interceptor {
 			}
 			MappedStatement mappedStatement = (MappedStatement) metaStatementHandler.getValue("delegate.mappedStatement");
 			String sqlid=mappedStatement.getId();
-			System.out.println("sqlid====>"+sqlid);
+			logger.info("sqlid====>"+sqlid);
 			if(sqlid.matches(rule)){
-				System.out.println("start interceptor");
+				logger.info("start interceptor");
 				// 分页信息if (localPage.get() != null) {
 				BoundSql boundSql = (BoundSql) metaStatementHandler.getValue("delegate.boundSql");
 				// 分页参数作为参数对象parameterObject的一个属性
@@ -69,6 +72,7 @@ public class PagingInterceptor implements Interceptor {
 				page.setTotalrecords(total_record);
 				int totalPage = total_record / page.getRowNum() + ((total_record % page.getRowNum() == 0) ? 0 : 1);
 				page.setTotalpages(totalPage);
+				logger.info("PagingInterceptor===page currpage: "+page.getCurrpage()+" rowNum: "+page.getRowNum());
 			}
 			// 将执行权交给下一个拦截器
 			return invocation.proceed();
@@ -98,7 +102,7 @@ public class PagingInterceptor implements Interceptor {
 
 	public void setProperties(Properties properties) {
 		rule=properties.getProperty("rule");
-		System.out.println("rule=====>"+rule);
+		logger.info("rule=====>"+rule);
 	}
 
 	/**

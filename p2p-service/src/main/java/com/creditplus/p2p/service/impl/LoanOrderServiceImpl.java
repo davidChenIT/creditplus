@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.creditplus.p2p.common.constant.Constant;
 import com.creditplus.p2p.common.util.CheckParamUtil;
@@ -45,6 +47,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 	ContractService contractService;
 
 	
+	public final Logger logger = LogManager.getLogger(LoanOrderServiceImpl.class);
 	/**
 	 * 初审详情查看
 	 * 1.先插入初审日志
@@ -182,7 +185,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		//获取城市编码
 		Map codeMap=getCityCode(paramMap);
 		if(codeMap!=null && codeMap.size()>0){
-			System.out.println("====codeMap:"+codeMap);
+			logger.info("====codeMap:"+codeMap);
 			paramMap.putAll(codeMap);
 		}
 		//更新客户信息
@@ -286,7 +289,7 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		
 		List<Map> loanAppList=(List<Map>) loanOrderDao.selectLoanApplyList(loanMap); 
 //		Integer total_record=loanOrderDao.getCountByLoanId(loan_id);
-		System.out.println("updateLoanApply===loanMap:"+loanMap);
+		logger.info("updateLoanApply===loanMap:"+loanMap);
 		if(loanAppList.size()==0){
 			loanOrderDao.insertLoanApply(loanMap);
 			approveLogService.insertApproveLog(paramMap);
@@ -372,10 +375,11 @@ public class LoanOrderServiceImpl implements LoanOrderService{
 		List<Map> gridData=pageVo.getGriddata();
 		int rowNum=pageVo.getRowNum();
 		int currpage=pageVo.getCurrpage();
-		int rownum=(currpage-1)*rowNum;
+		int startIndex=(currpage-1)*rowNum;
+		logger.info("startIndex: "+startIndex+" currpage: "+currpage+" rowNum: "+rowNum);
 		if(gridData!=null && gridData.size()>0){
 			for(Map dataMap:gridData){
-				dataMap.put("top", ++rowNum);
+				dataMap.put("top", ++startIndex);
 			}
 		}
 		pageVo.setGriddata(gridData);
