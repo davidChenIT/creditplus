@@ -22,7 +22,7 @@ $(function(){
 					   if(paramsStr){
 						   paramsStr=escape(paramsStr);
 					   }
-					   return "<a style='color:blue;' onclick=\"\">"+rowObject.contract_id+"</a>";
+					   return "<a style='color:blue;' href='/p2p-webapp/ShowContract?contract_id="+rowObject.contract_id+"' target='_blank'>"+rowObject.contract_id+"</a>";
 					}
 				},
 				{name:'loan_money', index:'loan_money', align:'center',"sortable":false},
