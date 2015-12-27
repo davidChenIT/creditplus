@@ -30,6 +30,7 @@ $(function(){
 		messageBox.resetMessageDialogDiv();
 		loadingBox.resetLoadingDiv();
 		showImgDialog.resetImgDialogDiv();
+		tipsDivResize();
 	});
 	$(window).scroll(function(){
 		messageBox.resetMessageDialogDiv();
@@ -81,6 +82,8 @@ $(function(){
 		//放大或缩小grid
 		gridResize("credit_Main");
 		
+		//重新设置下tips层的坐标
+		tipsDivResize();
 	});
 
 
@@ -139,8 +142,7 @@ $(function(){
 				   currentTab.siblings("div").attr("class","tabs-body-item creditPageContext credit-validator credit-hide");
 			   }
 			}
-		
-		
+			tipsDivResize();
 	});
 	
 	//点击tab的关闭x图标
@@ -435,6 +437,45 @@ function createCatalogTree(){
 	});
 }
 
+
+//重新设置tipsdev的坐标
+function tipsDivResize(){
+	var tabid=$("li[class='tabs-selected']").attr("tabid");
+	//获取主内容div的宽度
+	var mainDivOffset=$("#credit_MainPanel").offset();
+	
+	$("div[tabid='"+tabid+"']").find(".tip-error").each(function(i,tipDom){
+		debugger;
+		//获取元素名称
+		var tipDivName=$(tipDom).attr("name")
+		var elementName=tipDivName.substring(0,tipDivName.indexOf("_tip_div"));
+		
+		//获取元素的下标
+		var index=tipDivName.substring(tipDivName.indexOf("_tip_div")+8);
+		
+		var elementDom=$("div[tabid='"+tabid+"']").find("[name='"+elementName+"']");
+		
+		var tagName=$(elementDom)[0].tagName;
+		var elementOffset=$(elementDom).offset();
+		var leftX=(elementOffset.left-mainDivOffset.left)+($(elementDom).width()/4+15);
+		if(tagName=="TEXTAREA" || tagName=="SELECT"){
+			leftX-=2;
+		}
+		leftX+="px";
+		var topY=(elementOffset.top-55)+($(elementDom).height())+10;
+	    if(tagName=="TEXTAREA" || tagName=="SELECT"){
+	    	topY+=6;
+		}
+	    topY+="px";
+		if($(elementDom).width()<200){
+			var tipW=$("div[name='"+tipDivName+"']").width()/2;
+			leftX=(elementOffset.left-mainDivOffset.left-tipW+5)+"px";
+		}
+		$("div[name='"+tipDivName+"']").css({"left":leftX,"top":topY});
+	})
+	
+}
+
 //移除tab控件的也签
 function removeTabItem(tabId,itemId){
 	var currentItemLi=$("div[name='"+tabId+"']").find("li[tabid='"+itemId+"']");
@@ -657,17 +698,22 @@ function validateDom(elementDom, parentDivId){
  */
 function validErrorTip(elemName, elementDom, tip, parentDivId){
 	debugger;
+	var maindivOffset=$("#credit_MainPanel").offset();
+	
 	var tabId=$("li[class='tabs-selected']").attr("tabid");
 	var tipDivName=$(elementDom).attr("name")+"_"+"tip_div";
 	if($(elementDom).attr("index")){
 		tipDivName+=$(elementDom).attr("index");
 	}
 	$(elementDom).addClass("input-error");
-	var elementOffset=$(elementDom).offset();
-	var leftX=elementOffset.left+($(elementDom).width()/4-5);
-	leftX+="px";
-	var topY=elementOffset.top+($(elementDom).height())+10;
 	var tagName=$(elementDom)[0].tagName;
+	var elementOffset=$(elementDom).offset();
+	var leftX=(elementOffset.left-maindivOffset.left)+($(elementDom).width()/4+15);
+	if(tagName=="TEXTAREA" || tagName=="SELECT"){
+		leftX-=2;
+	}
+	leftX+="px";
+	var topY=(elementOffset.top-55)+($(elementDom).height())+10;
     if(tagName=="TEXTAREA" || tagName=="SELECT"){
     	topY+=6;
 	}
@@ -678,7 +724,7 @@ function validErrorTip(elemName, elementDom, tip, parentDivId){
 	$("div[tabid='"+tabId+"']").append('<div name="'+tipDivName+'" class="tip-error" style="display:none;"><span class="tip-error-close">X</span><span class="tip-error-span">x</span>'+tip+'</div>');
 	if($(elementDom).width()<200){
 		var tipW=$("div[name='"+tipDivName+"']").width()/2;
-		leftX=(elementOffset.left-tipW+5)+"px";
+		leftX=(elementOffset.left-maindivOffset.left-tipW+5)+"px";
 	}
 	$("div[name='"+tipDivName+"']").css({"left":leftX,"top":topY});
 	$("div[name='"+tipDivName+"']").show();
