@@ -49,15 +49,8 @@ public class UploadPicture extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
-//		ServletContext servletCtx = config.getServletContext();
-		// 初始化路径
-		// 保存文件的目录
-//		// 存放临时文件的目录,存放xxx.tmp文件的目录
-//		TEMP_FOLDER = servletCtx.getRealPath("/images/uploadTemp");
 		super.init();  
         ServletContext servletContext = this.getServletContext();  
-//		PATH_FOLDER = servletContext.getRealPath("/data/web/pic");
-  
         WebApplicationContext ctx = WebApplicationContextUtils  
                 .getWebApplicationContext(servletContext);  
   
@@ -130,29 +123,30 @@ public class UploadPicture extends HttpServlet {
 			// 获取文件名
 			String filename = getUploadFileName(item);
 			// 保存后的文件名
-//			String saveName = new Date().getTime() +"_"+ filename.substring(filename.lastIndexOf("."));
-			String saveName = new Date().getTime() +"_"+ filename;
-			// 保存后图片的浏览器访问路径
-//			String picUrl = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/upload/"+saveName;
-
-			System.out.println("存放目录:" + PATH_FOLDER);
-			System.out.println("文件名:" + filename);
-			// 真正写到磁盘上
-			item.write(new File(PATH_FOLDER, saveName)); // 第三方提供的
-			//调用服务，将图片路径写入图片表
-			String userId = request.getParameter("userId");//用户id
-			System.out.println("用户id:" +userId);
-			Map paramMap=new HashMap();
-			paramMap.put("user_id", userId);
-			paramMap.put("type", 11);
-			paramMap.put("url", saveName);
-			commonInfoService.savePic(paramMap);
-			
-			
+			String fileSuffix=filename.substring(filename.lastIndexOf(".")+1);
+			String resultStr="{\"result\":\"false\"}";
+			if(fileSuffix!=null && ("jpg".equals(fileSuffix.toLowerCase()) 
+					|| "jpeg".equals(fileSuffix.toLowerCase()) 
+					|| "png".equals(fileSuffix.toLowerCase()) 
+					|| "bmp".equals(fileSuffix.toLowerCase()))){
+				String saveName = new Date().getTime() +"_"+ filename;
+				System.out.println("存放目录:" + PATH_FOLDER);
+				System.out.println("文件名:" + filename);
+				// 真正写到磁盘上
+				item.write(new File(PATH_FOLDER, saveName)); // 第三方提供的
+				//调用服务，将图片路径写入图片表
+				String userId = request.getParameter("userId");//用户id
+				System.out.println("用户id:" +userId);
+				Map paramMap=new HashMap();
+				paramMap.put("user_id", userId);
+				paramMap.put("type", 11);
+				paramMap.put("url", saveName);
+				commonInfoService.savePic(paramMap);
+				resultStr="{\"result\":\"true\"}";
+			}
 			PrintWriter writer = response.getWriter();
-            String resultStr="{\"result\":\"true\"}";
-            PrintWriter out = response.getWriter();  
-            out.print("<script type='text/javascript'>window.parent.uploadDialog.uploadCallBack('"+resultStr+"');</script>"); 
+			PrintWriter out = response.getWriter();  
+			out.print("<script type='text/javascript'>window.parent.uploadDialog.uploadCallBack('"+resultStr+"');</script>"); 
 			writer.close();
 		} catch (FileUploadException e) {
 			e.printStackTrace();

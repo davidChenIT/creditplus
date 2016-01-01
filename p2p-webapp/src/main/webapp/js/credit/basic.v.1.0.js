@@ -895,7 +895,7 @@ var uploadDialog={
     			tdHtml="点击上传按钮选择图片！";
     		}
 			var temp="<form name='uploadImgForm' method='post' enctype='multipart/form-data' target='hidden_frame'><div style=\"border:2px solid #37B6D1;background-color: #fff; font-weight: bold;font-size: 12px;\" >"
-					+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">图片上传(类型：jpg、png、bmp)<span style=\"float: right;\" class=\"img-dialog-close\"><a style=\"text-decoration: underline;color: blue;\">关闭</a></span></div>"
+					+"<div style=\"line-height:25px; padding:0px 5px;	background-color: #37B6D1;\">图片上传(类型：jpg、jpeg、png、bmp)<span style=\"float: right;\" class=\"img-dialog-close\"><a style=\"text-decoration: underline;color: blue;\">关闭</a></span></div>"
 					+"<table width=\"500px\" height=\"300px\" cellspacing=\"0\" border=\"0\"><tr>" 
 					+"<td  style=\" padding:0px 0px 0px 20px;align:center;font-size: 20px;\" align=\"center\">"+tdHtml+"</td>"
 					+"</tr></table>"
@@ -922,8 +922,8 @@ var uploadDialog={
 				var imgUrl=$(this).val();
 				if(imgUrl){
 					var imgSuffix=imgUrl.substring(imgUrl.lastIndexOf(".")+1);
-					if(imgSuffix && imgSuffix.toLowerCase()!="jpg" && imgSuffix.toLowerCase()!="png" && imgSuffix.toLowerCase()!="bmp"){
-						$("#uploadDialogDiv").find("td").html("<span style='color:red;'>只能上传jpg、png、bmp类型的图片！</span>");
+					if(imgSuffix && imgSuffix.toLowerCase()!="jpg" && imgSuffix.toLowerCase()!="jpeg" && imgSuffix.toLowerCase()!="png" && imgSuffix.toLowerCase()!="bmp"){
+						$("#uploadDialogDiv").find("td").html("<span style='color:red;'>只能上传jpg、jpeg、png、bmp类型的图片！</span>");
 						return false;
 					}
 					loadingBox.showLoading();
