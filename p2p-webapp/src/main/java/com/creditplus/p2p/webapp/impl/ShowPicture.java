@@ -31,7 +31,7 @@ public class ShowPicture extends HttpServlet {
 	private final String PATH_FOLDER_PHONE="/data/web/clx";
 	
 	//web端上传图片存入的路径(网上抓图)
-	private final String PATH_FOLDER_WEB="D:/data/web/pic/";
+	private final String PATH_FOLDER_WEB="/data/web/pic/";
 	
 	private static final long serialVersionUID = 1L;
 

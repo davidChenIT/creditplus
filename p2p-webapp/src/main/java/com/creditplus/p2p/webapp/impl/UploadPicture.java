@@ -34,7 +34,7 @@ public class UploadPicture extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static final Logger logger = LogManager.getLogger(UploadPicture.class);
 	// 保存文件的目录
-	private static String PATH_FOLDER = "D:/data/web/pic";
+	private static String PATH_FOLDER = "/data/web/pic";
 	// 存放临时文件的目录
 //	private static String TEMP_FOLDER = "/";
 	
