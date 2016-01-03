@@ -31,7 +31,7 @@ $(function(){
 				{name:'sign_time', index:'sign_time',align:'center',"sortable":false}
 			],
 			pager: '#contractPager',
-			multiselect: true,
+//			multiselect: true,
 			rowNum:10,
 			rowList:[10,20,30],
 			sortable:true,
