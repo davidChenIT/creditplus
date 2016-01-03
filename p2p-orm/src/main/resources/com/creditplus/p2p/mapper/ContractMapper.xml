@@ -32,7 +32,7 @@
                and l.loan_id_num = #{loan_id_num}
        </if>
        <if test="investor !=null ">          
-               and l.investor = #{investor}
+               and c.investor = #{investor}
        </if>                         
     </select>
     

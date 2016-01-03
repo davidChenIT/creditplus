@@ -55,15 +55,15 @@ DROP TABLE IF EXISTS `approve_log_t`;
 CREATE TABLE `approve_log_t` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `loan_id` int(11) NOT NULL,
-  `assign_user` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '审批人名称',
-  `approve_content` varchar(1024) COLLATE utf8_unicode_ci NOT NULL COMMENT '审核内容',
+  `assign_user` varchar(200)  NOT NULL COMMENT '审批人名称',
+  `approve_content` varchar(1024)  NOT NULL COMMENT '审核内容',
   `state` int(11) NOT NULL COMMENT '1 开始初审 2 开始复审 3 发标审核',
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
+  `created_by` varchar(200)  NOT NULL COMMENT '创建人',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='审批日志';
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8  COMMENT='审批日志';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,17 +142,17 @@ DROP TABLE IF EXISTS `catalog_t`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `catalog_t` (
   `catalog_id` int(11) NOT NULL AUTO_INCREMENT,
-  `catalog_name` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '栏目名称',
+  `catalog_name` varchar(200)  NOT NULL COMMENT '栏目名称',
   `parent_id` int(11) NOT NULL,
-  `url` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `url` varchar(512)  DEFAULT NULL,
   `order_number` int(11) NOT NULL,
-  `remark` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
+  `remark` varchar(512)  DEFAULT NULL,
+  `created_by` varchar(200)  NOT NULL COMMENT '创建人',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`catalog_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='栏目表';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8  COMMENT='栏目表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,16 +174,16 @@ DROP TABLE IF EXISTS `cheat_intercept_t`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cheat_intercept_t` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `loan_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '申请单编号',
-  `intercept_source` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '拦截来源',
-  `check_item` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '检查项',
-  `intercept_cause` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '拦截原因',
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
+  `loan_id` varchar(50)  NOT NULL COMMENT '申请单编号',
+  `intercept_source` varchar(200)  DEFAULT NULL COMMENT '拦截来源',
+  `check_item` varchar(200)  DEFAULT NULL COMMENT '检查项',
+  `intercept_cause` varchar(200)  DEFAULT NULL COMMENT '拦截原因',
+  `created_by` varchar(200)  NOT NULL COMMENT '创建人',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='欺诈用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='欺诈用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,14 +234,14 @@ CREATE TABLE `contract_t` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `loan_id` int(11) NOT NULL COMMENT '订单号id',
   `contract_id` int(11) NOT NULL,
-  `sign_time` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '合同生成时间',
-  `investor` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '借款人',
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
+  `sign_time` varchar(20)  NOT NULL COMMENT '合同生成时间',
+  `investor` varchar(20)  NOT NULL COMMENT '借款人',
+  `created_by` varchar(200)  NOT NULL COMMENT '创建人',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='合同表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8  COMMENT='合同表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,16 +265,16 @@ CREATE TABLE `credit_score_item_t` (
   `item_id` int(11) NOT NULL AUTO_INCREMENT,
   `score_id` int(11) NOT NULL COMMENT '信用评分id',
   `sequence_num` int(11) DEFAULT NULL COMMENT '序号',
-  `arithmetic` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '运算符',
-  `dimension_value` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '维度列值',
+  `arithmetic` varchar(200)  DEFAULT NULL COMMENT '运算符',
+  `dimension_value` varchar(200)  DEFAULT NULL COMMENT '维度列值',
   `score` int(11) NOT NULL COMMENT '得分',
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
+  `created_by` varchar(200)  NOT NULL COMMENT '创建人',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `remark` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '描述',
+  `remark` varchar(1024)  DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='信用评分项';
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8  COMMENT='信用评分项';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -296,21 +296,21 @@ DROP TABLE IF EXISTS `credit_score_t`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `credit_score_t` (
   `score_id` int(11) NOT NULL AUTO_INCREMENT,
-  `dimension_name` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '维度名',
-  `proportion` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '权重',
-  `model_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '模型名称',
-  `dimension_table` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '维表',
-  `dimension_column` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '维表列',
-  `fact_table` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '事实表',
-  `fact_column` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '事实表字段',
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
+  `dimension_name` varchar(200)  NOT NULL COMMENT '维度名',
+  `proportion` varchar(20)  DEFAULT NULL COMMENT '权重',
+  `model_name` varchar(20)  NOT NULL COMMENT '模型名称',
+  `dimension_table` varchar(200)  DEFAULT NULL COMMENT '维表',
+  `dimension_column` varchar(200)  DEFAULT NULL COMMENT '维表列',
+  `fact_table` varchar(200)  DEFAULT NULL COMMENT '事实表',
+  `fact_column` varchar(200)  DEFAULT NULL COMMENT '事实表字段',
+  `created_by` varchar(200)  NOT NULL COMMENT '创建人',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `remark` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '描述',
+  `remark` varchar(1024)  DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`score_id`),
   UNIQUE KEY `model_dimension_name_unique` (`model_name`,`dimension_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='信用评分';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8  COMMENT='信用评分';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -333,60 +333,60 @@ DROP TABLE IF EXISTS `customer_info_t`;
 CREATE TABLE `customer_info_t` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `thnic_v` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '名族',
-  `registered_place_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '户口所在地',
-  `registered_place_city_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '户口所在地城市',
-  `registered_province_code` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '户口所在地省份编码',
-  `registered_city_code` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '户口所在地城市编码',
-  `address_phone` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '住址电话',
-  `address_phone_v` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '住址验证电话',
-  `current_province_v` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '当前居住身份',
-  `current_city_v` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '当前居住城市',
-  `current_address_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '当前居住详址',
-  `id_num_name_v` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '身份证验证姓名',
-  `id_num_v` char(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '身份证验证号码',
-  `id_province` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '身份证籍贯省份',
-  `id_city` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '身份证籍贯城市',
-  `id_province_code` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '身份证省份编码',
-  `id_city_code` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '身份证省份编码',
+  `thnic_v` varchar(50)  DEFAULT NULL COMMENT '名族',
+  `registered_place_v` varchar(200)  DEFAULT NULL COMMENT '户口所在地',
+  `registered_place_city_v` varchar(200)  DEFAULT NULL COMMENT '户口所在地城市',
+  `registered_province_code` varchar(20)  DEFAULT NULL COMMENT '户口所在地省份编码',
+  `registered_city_code` varchar(20)  DEFAULT NULL COMMENT '户口所在地城市编码',
+  `address_phone` varchar(20)  DEFAULT NULL COMMENT '住址电话',
+  `address_phone_v` varchar(20)  DEFAULT NULL COMMENT '住址验证电话',
+  `current_province_v` varchar(50)  DEFAULT NULL COMMENT '当前居住身份',
+  `current_city_v` varchar(50)  DEFAULT NULL COMMENT '当前居住城市',
+  `current_address_v` varchar(200)  DEFAULT NULL COMMENT '当前居住详址',
+  `id_num_name_v` varchar(100)  DEFAULT NULL COMMENT '身份证验证姓名',
+  `id_num_v` char(20)  DEFAULT NULL COMMENT '身份证验证号码',
+  `id_province` varchar(100)  DEFAULT NULL COMMENT '身份证籍贯省份',
+  `id_city` varchar(100)  DEFAULT NULL COMMENT '身份证籍贯城市',
+  `id_province_code` varchar(100)  DEFAULT NULL COMMENT '身份证省份编码',
+  `id_city_code` varchar(100)  DEFAULT NULL COMMENT '身份证省份编码',
   `id_age` int(11) DEFAULT NULL COMMENT '年龄',
-  `id_address_v` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '身份证地址',
-  `sex` char(2) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '性别',
-  `mobile_place_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '电话属地',
-  `mobile_place_city_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '电话属地所在城市',
-  `company_name_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '工作验证全称',
-  `work_tel_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '工作验证电话',
-  `work_tel_place_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '公司电话属地',
-  `work_tel_place_city_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '公司电话属地城市',
-  `work_tel_province_code` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '公司电话属地省份编码',
-  `work_tel_city_code` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '公司电话属地省份编码',
-  `work_name_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '工作验证姓名',
-  `work_position_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '工作职位验证',
-  `income_v` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '收入验证',
-  `income_name_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '收入验证姓名',
+  `id_address_v` varchar(100)  DEFAULT NULL COMMENT '身份证地址',
+  `sex` char(2)  DEFAULT NULL COMMENT '性别',
+  `mobile_place_v` varchar(200)  DEFAULT NULL COMMENT '电话属地',
+  `mobile_place_city_v` varchar(200)  DEFAULT NULL COMMENT '电话属地所在城市',
+  `company_name_v` varchar(200)  DEFAULT NULL COMMENT '工作验证全称',
+  `work_tel_v` varchar(200)  DEFAULT NULL COMMENT '工作验证电话',
+  `work_tel_place_v` varchar(200)  DEFAULT NULL COMMENT '公司电话属地',
+  `work_tel_place_city_v` varchar(200)  DEFAULT NULL COMMENT '公司电话属地城市',
+  `work_tel_province_code` varchar(20)  DEFAULT NULL COMMENT '公司电话属地省份编码',
+  `work_tel_city_code` varchar(20)  DEFAULT NULL COMMENT '公司电话属地省份编码',
+  `work_name_v` varchar(200)  DEFAULT NULL COMMENT '工作验证姓名',
+  `work_position_v` varchar(200)  DEFAULT NULL COMMENT '工作职位验证',
+  `income_v` varchar(100)  DEFAULT NULL COMMENT '收入验证',
+  `income_name_v` varchar(200)  DEFAULT NULL COMMENT '收入验证姓名',
   `seasame_score_v` int(11) DEFAULT NULL COMMENT '芝麻评分',
   `tencent_credit_v` int(11) DEFAULT NULL COMMENT '腾讯征信',
   `certificate_type_v` int(11) DEFAULT NULL COMMENT '证书类型',
-  `certificate_name_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '证书验证姓名',
-  `profession_grade_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '证书等级',
-  `mobile_name_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '手机验证姓名',
+  `certificate_name_v` varchar(200)  DEFAULT NULL COMMENT '证书验证姓名',
+  `profession_grade_v` varchar(200)  DEFAULT NULL COMMENT '证书等级',
+  `mobile_name_v` varchar(200)  DEFAULT NULL COMMENT '手机验证姓名',
   `mobile_online_time_v` float DEFAULT NULL COMMENT '手机在网时长',
-  `profession_code` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '证书编号',
-  `profession_img_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '证书网站抓图',
-  `degree_name_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '学历验证姓名',
-  `school_name_v` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '学校验证全称',
-  `highest_degree_v` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '最高学历',
-  `grad_school_level_v` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '毕业学校等级',
+  `profession_code` varchar(200)  DEFAULT NULL COMMENT '证书编号',
+  `profession_img_v` varchar(200)  DEFAULT NULL COMMENT '证书网站抓图',
+  `degree_name_v` varchar(200)  DEFAULT NULL COMMENT '学历验证姓名',
+  `school_name_v` varchar(200)  DEFAULT NULL COMMENT '学校验证全称',
+  `highest_degree_v` varchar(100)  DEFAULT NULL COMMENT '最高学历',
+  `grad_school_level_v` varchar(100)  DEFAULT NULL COMMENT '毕业学校等级',
   `mobile_age` float DEFAULT NULL COMMENT '电话年限',
   `work_verify` int(11) DEFAULT NULL COMMENT '工作是否验证 1可验证，0不可验证',
-  `current_city_level` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '地址信息城市级别',
-  `registered_city_level` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '户口城市级别',
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
+  `current_city_level` varchar(200)  DEFAULT NULL COMMENT '地址信息城市级别',
+  `registered_city_level` varchar(200)  DEFAULT NULL COMMENT '户口城市级别',
+  `created_by` varchar(200)  NOT NULL COMMENT '创建人',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='客户表审批补全字段';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8  COMMENT='客户表审批补全字段';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -408,19 +408,19 @@ DROP TABLE IF EXISTS `dict_t`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `dict_t` (
   `dict_id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '字典编码',
-  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '名称',
-  `type` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '类型',
+  `code` varchar(200)  NOT NULL COMMENT '字典编码',
+  `name` varchar(200)  NOT NULL COMMENT '名称',
+  `type` varchar(200)  NOT NULL COMMENT '类型',
   `state` int(11) DEFAULT NULL COMMENT '状态  1有效 0 无效',
   `parent_id` int(11) NOT NULL,
   `order_number` int(11) NOT NULL,
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
+  `created_by` varchar(200)  NOT NULL COMMENT '创建人',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `remark` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '字典描述',
+  `remark` varchar(1024)  DEFAULT NULL COMMENT '字典描述',
   PRIMARY KEY (`dict_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=255 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='数据字典表';
+) ENGINE=InnoDB AUTO_INCREMENT=255 DEFAULT CHARSET=utf8  COMMENT='数据字典表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -443,18 +443,18 @@ DROP TABLE IF EXISTS `dimension_t`;
 CREATE TABLE `dimension_t` (
   `dis_id` int(11) NOT NULL AUTO_INCREMENT,
   `rule_id` int(11) NOT NULL COMMENT '规则id',
-  `table_name` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '表名',
-  `column_name` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '字段名',
-  `semanteme` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '语义',
-  `dis_value` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '匹配值',
-  `arithmetic` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '运算',
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
+  `table_name` varchar(200)  DEFAULT NULL COMMENT '表名',
+  `column_name` varchar(200)  DEFAULT NULL COMMENT '字段名',
+  `semanteme` varchar(200)  DEFAULT NULL COMMENT '语义',
+  `dis_value` varchar(200)  DEFAULT NULL COMMENT '匹配值',
+  `arithmetic` varchar(200)  DEFAULT NULL COMMENT '运算',
+  `created_by` varchar(200)  NOT NULL COMMENT '创建人',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `remark` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '维度描述',
+  `remark` varchar(1024)  DEFAULT NULL COMMENT '维度描述',
   PRIMARY KEY (`dis_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='维度配置表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='维度配置表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -501,15 +501,15 @@ DROP TABLE IF EXISTS `high_school`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `high_school` (
   `sn` int(11) NOT NULL AUTO_INCREMENT,
-  `full_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '全称',
+  `full_name` varchar(64)  DEFAULT NULL COMMENT '全称',
   `is_985` int(11) DEFAULT NULL COMMENT '是否是985',
   `is_211` int(11) DEFAULT NULL COMMENT '是否是211',
-  `level` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '等级',
-  `auth` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '修改用户',
-  `modifty_reason` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '修改原因',
+  `level` varchar(16)  DEFAULT NULL COMMENT '等级',
+  `auth` varchar(16)  DEFAULT NULL COMMENT '修改用户',
+  `modifty_reason` varchar(256)  DEFAULT NULL COMMENT '修改原因',
   `modifytime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`sn`)
-) ENGINE=InnoDB AUTO_INCREMENT=1984 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1984 DEFAULT CHARSET=utf8 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -561,14 +561,14 @@ CREATE TABLE `loan_apply_t` (
   `loan_id` int(11) NOT NULL,
   `version` double(3,1) NOT NULL COMMENT '版本',
   `apply_state` int(11) NOT NULL COMMENT '借款单状态',
-  `first_assign_user` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '初审人',
-  `review_assign_user` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '复审人',
+  `first_assign_user` varchar(200)  DEFAULT NULL COMMENT '初审人',
+  `review_assign_user` varchar(200)  DEFAULT NULL COMMENT '复审人',
   `credit_score1` int(11) DEFAULT NULL COMMENT '信用分1',
   `credit_score2` int(11) DEFAULT NULL COMMENT '信用分2',
   `credit_score_total` int(11) DEFAULT NULL COMMENT '信用总分',
   `modifytime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='借款申请后台表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8  COMMENT='借款申请后台表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -749,17 +749,17 @@ DROP TABLE IF EXISTS `resource_t`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resource_t` (
   `resource_id` int(11) NOT NULL AUTO_INCREMENT,
-  `resource_name` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `url` varchar(512) COLLATE utf8_unicode_ci NOT NULL,
+  `resource_name` varchar(128)  NOT NULL,
+  `url` varchar(512)  NOT NULL,
   `priority` int(11) DEFAULT NULL,
   `resource_type` int(11) DEFAULT NULL,
-  `remark` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `remark` varchar(1024)  DEFAULT NULL,
+  `created_by` varchar(200)  NOT NULL,
   `created_date` datetime NOT NULL,
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` datetime NOT NULL,
   PRIMARY KEY (`resource_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -783,12 +783,12 @@ CREATE TABLE `role_resource_t` (
   `rr_id` int(11) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) NOT NULL,
   `resource_id` int(11) NOT NULL,
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `created_by` varchar(200)  NOT NULL,
   `created_date` datetime NOT NULL,
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` datetime NOT NULL,
   PRIMARY KEY (`rr_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -811,14 +811,14 @@ DROP TABLE IF EXISTS `role_t`;
 CREATE TABLE `role_t` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT,
   `enable` int(11) NOT NULL DEFAULT '1',
-  `role_name` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `remark` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `role_name` varchar(128)  NOT NULL,
+  `remark` varchar(1024)  DEFAULT NULL,
+  `created_by` varchar(200)  NOT NULL,
   `created_date` datetime NOT NULL,
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` datetime NOT NULL,
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -840,17 +840,17 @@ DROP TABLE IF EXISTS `rule_t`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rule_t` (
   `rule_id` int(11) NOT NULL AUTO_INCREMENT,
-  `rule_name` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '规则名称',
+  `rule_name` varchar(200)  NOT NULL COMMENT '规则名称',
   `state` int(11) NOT NULL DEFAULT '1' COMMENT '规则状态',
-  `rule_sql` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '规则sql',
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
+  `rule_sql` varchar(1024)  DEFAULT NULL COMMENT '规则sql',
+  `created_by` varchar(200)  NOT NULL COMMENT '创建人',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `remark` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '规则描述',
+  `remark` varchar(1024)  DEFAULT NULL COMMENT '规则描述',
   PRIMARY KEY (`rule_id`),
   UNIQUE KEY `rule_name_UNIQUE` (`rule_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='规则配置表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='规则配置表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -859,6 +859,7 @@ CREATE TABLE `rule_t` (
 
 LOCK TABLES `rule_t` WRITE;
 /*!40000 ALTER TABLE `rule_t` DISABLE KEYS */;
+INSERT INTO `rule_t` VALUES (1,'字段值校验',1,'\nSELECT \n    COUNT(1) AS total_record\nFROM\n    loan_list l\n        LEFT JOIN\n    user_info u ON l.user_id = u.user_id\n        LEFT JOIN\n    customer_info_t c ON l.user_id = c.user_id\nWHERE\n    u.id_num != c.id_num_v\n        OR u.name != c.work_name_v\n        or u.name != c.certificate_name_v and\n    l.loan_id = #{loan_id} AND l.user_id =#{user_id} ','clx2015','2016-01-03 09:15:56','clx2015','2016-01-03 09:15:56','校验工作,学历姓名是否一致，身份证是否一致');
 /*!40000 ALTER TABLE `rule_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -960,14 +961,14 @@ CREATE TABLE `urgent_contactor_t` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT '用户id',
   `sn` int(11) NOT NULL COMMENT '外键id',
-  `mobile_province` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '联系人电话所在省份',
-  `mobile_city` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '联系人电话所在城市',
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `mobile_province` varchar(200)  DEFAULT NULL COMMENT '联系人电话所在省份',
+  `mobile_city` varchar(200)  DEFAULT NULL COMMENT '联系人电话所在城市',
+  `created_by` varchar(200)  NOT NULL,
   `created_date` datetime NOT NULL,
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='紧急联系人';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8  COMMENT='紧急联系人';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1069,12 +1070,12 @@ CREATE TABLE `user_role_t` (
   `role_id` int(11) NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `created_by` varchar(200)  NOT NULL,
   `created_date` datetime NOT NULL,
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` datetime NOT NULL,
   PRIMARY KEY (`ur_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1097,15 +1098,15 @@ DROP TABLE IF EXISTS `user_t`;
 CREATE TABLE `user_t` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `enable` int(11) NOT NULL DEFAULT '1',
-  `username` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `remark` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(128)  NOT NULL,
+  `password` varchar(128)  NOT NULL,
+  `remark` varchar(1024)  DEFAULT NULL,
+  `created_by` varchar(200)  NOT NULL,
   `created_date` datetime NOT NULL,
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` datetime NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
