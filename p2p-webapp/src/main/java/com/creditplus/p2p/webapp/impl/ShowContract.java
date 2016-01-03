@@ -2,9 +2,12 @@ package com.creditplus.p2p.webapp.impl;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -62,11 +65,11 @@ public class ShowContract  extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException {	
 		/*try {
-			request.setCharacterEncoding("gbk");
 			String contract_id = request.getParameter("contract_id");
 			if(null != contract_id){
 				String contractUrl = contractService.getContractUrl(contract_id);
-				response.setContentType("text/html;charset=gbk");
+				response.setCharacterEncoding("UTF-8");
+				response.setHeader("Content-Type","text/html;charset=UTF-8");
 		        OutputStream os = response.getOutputStream(); // 输出流
 		        File file = new File(contractUrl); //打开文件
 		        
@@ -86,28 +89,26 @@ public class ShowContract  extends HttpServlet{
 		} catch (IOException e) {
 			logger.error(e);
 		}*/
-		print(request, response);
+		constractGenerate(request, response);
 	}
 	
-	private void print(HttpServletRequest request, HttpServletResponse response){
+	private void constractGenerate(HttpServletRequest request, HttpServletResponse response){
 		try {
-			request.setCharacterEncoding("gbk");
-			String contract_id = request.getParameter("contract_id");
+			String charSet=java.nio.charset.Charset.defaultCharset().name();
+			request.setCharacterEncoding("UTF-8");
+			String contract_id = getRequestParam(request, "contract_id");
 			if(null != contract_id){
-				String sign_time=isNull(request.getParameter("sign_time"));
-				String loan_money=isNull(request.getParameter("loan_money"));
-				String loan_name=isNull(request.getParameter("loan_name"));
-				String investor=isNull(request.getParameter("investor"));
-				logger.info(sign_time+" "+ loan_money+" "+" "+loan_name+" "+investor);
+				String sign_time=getRequestParam(request, "sign_time");
+				String loan_money=getRequestParam(request, "loan_money");
+				String loan_name=getRequestParam(request, "loan_name");
+				String investor=getRequestParam(request, "investor");
 				String contractUrl = contractService.getContractUrl(contract_id);
-				response.setContentType("text/html;charset=gbk");
-//				response.setHeader("Content-type", "text/html;charset=gbk");
-				response.setCharacterEncoding("gbk");  
+				response.setCharacterEncoding("UTF-8");
+				response.setHeader("Content-Type","text/html;charset=UTF-8");
 		        OutputStream os = response.getOutputStream(); // 输出流
 		        
 		        File file = new File(contractUrl); //打开文件
 		        BufferedReader br=new BufferedReader(new FileReader(file));
-		        logger.info("br:"+br);
 		        try {
 		        	String line = null;
 		        	StringBuilder sb=new StringBuilder();
@@ -130,28 +131,17 @@ public class ShowContract  extends HttpServlet{
 		}
 	}
 	
-	private String isNull(String value){
-		return StringUtils.isEmpty(value)?"":value;
+	private String getRequestParam(HttpServletRequest request,String key){
+		String value="";
+		String paramValue=request.getParameter(key);
+		if(StringUtils.isNotBlank(paramValue)){
+			try {
+				value=new String(paramValue.getBytes("ISO-8859-1"),"UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				logger.error(e);
+			}
+		}
+		return value;
 	}
 	
-	public static void main(String[] args) {
-        try { 
-        	File file = new File("E:\\xampp5\\htdocs\\my_loan\\protocol_mirror\\test_1448778299.shtml"); //打开文件
-        	String line = null;
-        	BufferedReader br=new BufferedReader(new FileReader(file));
-        	StringBuilder sb=new StringBuilder();
-        	logger.info("br:"+br);
-            while ((line=br.readLine())!=null) {
-            	sb.append(line);
-            }
-            logger.info("sb:"+sb.toString());
-            String templateStr=sb.toString();
-            templateStr=templateStr.replace("${sign_time}", null);
-            logger.info(templateStr);
-//            os.write(templateStr.getBytes());
-        } catch (IOException e) {
-		}finally{
-        	
-        }
-	}
 }
