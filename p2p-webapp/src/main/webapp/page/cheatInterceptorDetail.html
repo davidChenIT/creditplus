@@ -1005,21 +1005,6 @@
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
 						<div class="credit-label label-red">
-							*毕业学校等级
-						</div>
-					</label>
-					<div class="col-xs-12 col-sm-8">
-						<div class="credit-input">
-							<span name="grad_school_level_v" widget="dropdown" is_cache="true" dictionary_type="school_level" istext="true">
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="credit-spacecontrol col-xs-12 col-sm-3">
-				<div class="row">
-					<label class="col-xs-12 col-sm-4">
-						<div class="credit-label label-red">
 							<span style="color:red;">*</span>学历姓名验证
 						</div>
 					</label>
@@ -1034,12 +1019,12 @@
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
 						<div class="credit-label label-red">
-							<span style="color:red;">*</span>学历毕业学校
+							*学历毕业学校
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<span name="school_name_v"></span>
+							<span name="school_name_v" widget="dropdown" is_cache="true" istext="true" textField="full_name" valueField="full_name" serviceModule="highSchoolService" serviceMethod="getHighSchoolList"></span>
 						</div>
 					</div>
 				</div>
@@ -1048,13 +1033,12 @@
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
 						<div class="credit-label label-red">
-							<span style="color:red;">*</span>最高学历验证
+							*学校级别
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<span istext="true" name="highest_degree_v" widget="dropdown" is_cache="true" dictionary_type="highest_degree">
-							</span>
+							<span name="highest_degree_v" widget="dropdown" is_cache="true" istext="true" textField="level" valueField="level" serviceModule="highSchoolService" serviceMethod="getHighSchoolLevel"></span>
 						</div>
 					</div>
 				</div>

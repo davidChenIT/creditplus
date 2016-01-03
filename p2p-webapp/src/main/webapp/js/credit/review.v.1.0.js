@@ -174,7 +174,12 @@ $(function(){
 		elementCascade(e.target, $(e.target).val());
 	});
 	
-	
+	//毕业学校改变事件
+	$("select[name='school_name_v']").change(function(){
+		debugger;
+		var level=$(this).find("option:selected").attr("item-val");
+		$("select[name='highest_degree_v']").val(level);
+	});
 
   
 });

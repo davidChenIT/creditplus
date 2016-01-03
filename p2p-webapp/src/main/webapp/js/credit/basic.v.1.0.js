@@ -1123,6 +1123,7 @@ function selectRender(formDivId){
 		var istext=$(dom).attr("istext");
 		var code=$(dom).attr("code");
 		var is_cache=$(dom).attr("is_cache");//是否需要缓存
+		var otherField = $(dom).attr("otherField") || "";//用来存储数据中想要存储的列的字段
 		//缓存可以ps:模块名_方法名_数据字典key(可选)
 		var cacheKey = moduleName + "_" + methodName + "_" + (dictionaryType || "");
 		if(code){
@@ -1140,7 +1141,7 @@ function selectRender(formDivId){
 				});
 			}else{
 				//下拉框填充
-				_setOptions(dom, dicDataArray, textField, valueField, code);
+				_setOptions(dom, dicDataArray, textField, valueField, code,otherField);
 			}
 		}else{
 			var paramsObj={};
@@ -1171,7 +1172,7 @@ function selectRender(formDivId){
 							});
 						}else{
 							//下拉框填充
-							_setOptions(dom, data, textField, valueField, code);
+							_setOptions(dom, data, textField, valueField, code,otherField);
 						}
 						localStorage[cacheKey]=JSON.stringify(data);
 					}
@@ -1285,6 +1286,7 @@ function elementCascade(e, value){
 	var valueField = $(triggerDom).attr("valueField") || "code";
 	var textField = $(triggerDom).attr("textField") || "name";
 	var params_key = $(triggerDom).attr("params_key") || "type";
+	var otherField = $(triggerDom).attr("otherField") || "";//用来存储数据中想要存储的列的字段
 	var dictionary_type=$(triggerDom).attr("dictionary_type");
 	var parent_type=$(triggerDom).attr("parent_type");
 	var parent_id=$(e).find("option:selected").attr("item-val");
@@ -1306,7 +1308,7 @@ function elementCascade(e, value){
 		$(triggerDom).empty();
 		$(triggerDom).append('<option value="">请选择</option>');
 		//赋值
-		_setOptions(triggerDom, elementDataArray, textField, valueField, code);
+		_setOptions(triggerDom, elementDataArray, textField, valueField, code,otherField);
 	}else{
 		//调用数据字典服务
 		$.ajax({ 
@@ -1323,7 +1325,7 @@ function elementCascade(e, value){
 				$(triggerDom).append('<option value="">请选择</option>');
 				//赋值
 				if(data && data.length>0){
-					_setOptions(triggerDom, data, textField, valueField, code)
+					_setOptions(triggerDom, data, textField, valueField, code,otherField)
 				}
 				//加入缓存
 				localStorage[cacheKey]=JSON.stringify(data);
@@ -1342,20 +1344,22 @@ function elementCascade(e, value){
  * @param textField
  * @param valueField
  * @param code 选中值(可选)
+ * @param otherField 选中值(可选)
  */
-function _setOptions(dom, data, textField, valueField, code){
+function _setOptions(dom, data, textField, valueField, code,otherField){
 	//赋值
 	if(data && data.length>0){
 		for(var i=0;i<data.length;i++){
+			var itemVal=data[i][otherField] || data[i].dictId;
 			if(!isEmptyString(code) && code == data[i][valueField]){
-				$(dom).append('<option item-val="'+data[i].dictId+'" value="'+data[i][valueField]+'"  selected="selected">'+data[i][textField]+'</option>');
+				$(dom).append('<option item-val="'+itemVal+'" value="'+data[i][valueField]+'"  selected="selected">'+data[i][textField]+'</option>');
 				// 下拉框（如果是省份，则触发change事件，级联城市）
 				var triggerKey = $(dom).attr('trigger');
 				if(triggerKey != null && triggerKey.indexOf("city_cascade_") != -1){
 					elementCascade(dom, code);
 				}
 			}else{
-				$(dom).append('<option item-val="'+data[i].dictId+'" value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
+				$(dom).append('<option item-val="'+itemVal+'" value="'+data[i][valueField]+'">'+data[i][textField]+'</option>');
 			}
 		}
 	}

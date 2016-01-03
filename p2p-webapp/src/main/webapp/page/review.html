@@ -1006,7 +1006,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<select is_cache="true" trigger="city_cascade_school_name" textField="full_name" valueField="full_name"  name="school_name_v" widget="dropdown" serviceModule="highSchoolService" serviceMethod="getHighSchoolList"  validation="required">
+							<select otherField="level" is_cache="true" textField="full_name" valueField="full_name"  name="school_name_v" widget="dropdown" serviceModule="highSchoolService" serviceMethod="getHighSchoolList"  validation="required">
 								<option value="">请选择</option>
 							</select>
 						</div>
@@ -1017,12 +1017,12 @@
 				<div class="row">
 					<label class="col-xs-12 col-sm-4">
 						<div class="credit-label label-red">
-							*最高学历验证
+							*学校级别
 						</div>
 					</label>
 					<div class="col-xs-12 col-sm-8">
 						<div class="credit-input">
-							<select id="city_cascade_school_name" name="highest_degree_v" widget="dropdown" is_cache="true" textField="level" valueField="level" widget="dropdown" serviceModule="highSchoolService" serviceMethod="getHighSchoolLevel" params_key="schoolCode" validation="required">
+							<select name="highest_degree_v" widget="dropdown" is_cache="true" textField="level" valueField="level" widget="dropdown" serviceModule="highSchoolService" serviceMethod="getHighSchoolLevel" validation="required">
 								<option value="">请选择</option>
 							</select>
 						</div>
