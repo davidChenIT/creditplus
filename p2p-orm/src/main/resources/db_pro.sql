@@ -26,14 +26,14 @@ CREATE TABLE `contract_t` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `loan_id` int(11) NOT NULL COMMENT '订单号id',
   `contract_id` int(11) NOT NULL,
-  `sign_time` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '合同生成时间',
-  `investor` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '借款人',
-  `created_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '创建人',
+  `sign_time` varchar(20)  NOT NULL COMMENT '合同生成时间',
+  `investor` varchar(20)  NOT NULL COMMENT '借款人',
+  `created_by` varchar(200)  NOT NULL COMMENT '创建人',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `last_updated_by` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `last_updated_by` varchar(200)  NOT NULL,
   `last_updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='合同表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8  COMMENT='合同表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
