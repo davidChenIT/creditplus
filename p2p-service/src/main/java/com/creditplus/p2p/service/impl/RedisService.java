@@ -39,14 +39,10 @@ public class RedisService<M extends Serializable> {
 	 * 将list对象存入到redis中
 	 * @param key
 	 * @param dataList
+	 * @param seconds
+	 * @return
 	 */
-	/** 
-     * 添加到List 
-     * @param key 
-     * @param value 
-     * @return 
-     */  
-    public boolean setList(String key, List dataList) {  
+    public boolean setList(String key, List dataList,int seconds) {  
         if(key == null || dataList == null || dataList.size()==0){  
             return false;  
         }  
@@ -56,6 +52,9 @@ public class RedisService<M extends Serializable> {
         try {  
             shardedJedis = shardedJedisPool.getResource();  
             shardedJedis.set(key.getBytes(), byteArr);
+            if(seconds>0){
+            	shardedJedis.expire(key.getBytes(), seconds);
+            }
             return true;  
         } catch (Exception ex) {  
             logger.error("setList error.", ex);  

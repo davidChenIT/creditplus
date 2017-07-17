@@ -103,8 +103,8 @@ public class CatalogServiceImpl implements CatalogService{
 		}
 		//重数据库中获取菜单数据
 		catalogList = catalogDao.getCatalogTree();
-		//并将数据添加到redis缓存中
-		redisService.setList(catalogCacheKey, catalogList);
+		//并将数据添加到redis缓存中,三十分钟后过期
+		redisService.setList(catalogCacheKey, catalogList,1800);
 		return catalogList;
 	}	
 }
