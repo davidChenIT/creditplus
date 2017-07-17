@@ -7,7 +7,7 @@
      http://www.springframework.org/schema/context
      http://www.springframework.org/schema/context/spring-context.xsd">
      
-    <context:property-placeholder location="classpath:jdbc.properties" /> 
+    <context:property-placeholder location="classpath:jdbc.properties" />
     <bean id="mysqlXADataSource" class="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource">
        <property name="url" value="${mysql.url}" />
        <property name="user" value="${mysql.username}" />

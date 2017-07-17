@@ -23,6 +23,8 @@ import com.creditplus.p2p.service.CatalogService;
  *
  */
 public class CatalogServiceImpl implements CatalogService{
+	@Autowired
+	private RedisService redisService;
 	
 	@Autowired
 	private CatalogDao catalogDao;
@@ -94,7 +96,15 @@ public class CatalogServiceImpl implements CatalogService{
 	}
 	
 	public List<Map<String,Object>> getCatalogTree(){
-		List<Map<String,Object>> catalogList = catalogDao.getCatalogTree();
+		String catalogCacheKey="catalog_cache";
+		List<Map<String,Object>> catalogList=redisService.getListObj(catalogCacheKey);
+		if(catalogList!=null && catalogList.size()>0){
+			return catalogList;
+		}
+		//重数据库中获取菜单数据
+		catalogList = catalogDao.getCatalogTree();
+		//并将数据添加到redis缓存中
+		redisService.setList(catalogCacheKey, catalogList);
 		return catalogList;
 	}	
 }

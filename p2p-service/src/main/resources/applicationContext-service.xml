@@ -11,7 +11,8 @@
      http://www.springframework.org/schema/aop 
      http://www.springframework.org/schema/aop/spring-aop.xsd           
      http://www.springframework.org/schema/context
-     http://www.springframework.org/schema/context/spring-context.xsd ">          
+     http://www.springframework.org/schema/context/spring-context.xsd ">         
+     
 
      <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager" depends-on="systemPrereqs">
        <property name="transactionManager" ref="jbossTransactionManager"/>
@@ -52,4 +53,35 @@
     <bean id="creditScoreService" class="com.creditplus.p2p.service.impl.CreditScoreServiceImpl" />     
     <bean id="highSchoolService" class="com.creditplus.p2p.service.impl.HighSchoolServiceImpl" />     
     <bean id="contractService" class="com.creditplus.p2p.service.impl.ContractServiceImpl" />
+    
+    <bean id="redisService" class="com.creditplus.p2p.service.impl.RedisService" />
+    
+    <!-- redis配置 -->
+    <bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool">  
+       <constructor-arg index="0" ref="jedisPoolConfig"/>  
+       <constructor-arg index="1">  
+           <list>  
+                <bean name="master" class="redis.clients.jedis.JedisShardInfo">  
+                   <constructor-arg index="0" value="${redis.master.host}"/>  
+                   <constructor-arg index="1" value="${redis.master.port}" type="int"/>  
+               </bean>  
+           </list>  
+       </constructor-arg>  
+   </bean>  
+  
+   <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+       <property name="maxTotal" value="2048" />  
+       <property name="maxIdle" value="200" />  
+       <property name="numTestsPerEvictionRun" value="1024"/>  
+       <property name="timeBetweenEvictionRunsMillis" value="30000" />  
+       <property name="minEvictableIdleTimeMillis" value="-1" />  
+       <property name="softMinEvictableIdleTimeMillis" value="10000" />  
+       <property name="maxWaitMillis" value="1500"/>  
+       <property name="testOnBorrow" value="true" />  
+       <property name="testWhileIdle" value="true"/>  
+       <property name="testOnReturn" value="false"/>  
+       <property name="jmxEnabled" value="true"/>  
+       <property name="jmxNamePrefix" value="youyuan"/>  
+       <property name="blockWhenExhausted" value="false"/>  
+   </bean> 
 </beans>
