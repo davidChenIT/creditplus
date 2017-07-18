@@ -84,4 +84,45 @@
        <property name="jmxNamePrefix" value="youyuan"/>  
        <property name="blockWhenExhausted" value="false"/>  
    </bean> 
+   
+   <!-- 定义一个定时任务bean -->
+   <bean id="myTask1" class="com.creditplus.p2p.service.quartz.impl.MyTask1"></bean>
+    
+    <!-- 将需要执行的定时任务注入JOB中。 -->
+    <bean id="myJob1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="myTask1"></property>
+        <!-- 任务类中需要执行的方法 -->
+        <property name="targetMethod" value="printMessage"></property>
+        <!-- 上一次未执行完成的，要等待有再执行。 -->
+        <property name="concurrent" value="false"></property>
+    </bean>
+
+    <!-- 基本的定时器，会绑定具体的任务。 -->
+    <bean id="myTrigger1" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="myJob1"></property>
+        <property name="startDelay" value="3000"></property>
+        <property name="repeatInterval" value="2000"></property>
+    </bean>
+    
+    
+    <bean id="myTask2" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.creditplus.p2p.service.quartz.impl.MyTask2"></property>
+        <property name="durability" value="true"></property>
+    </bean>
+
+    <bean id="myTrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="myTask2" />
+        <property name="cronExpression" value="0/5 * * * * ?"></property>
+    </bean>
+    
+    
+    <!-- 调度器 -->
+    <bean id="schedulerFactoryBean1" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="myTrigger1"></ref>
+                <ref bean="myTrigger2"></ref>
+            </list>
+        </property>
+    </bean>
 </beans>
