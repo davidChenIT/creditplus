@@ -402,33 +402,35 @@ function createCatalogTree(){
 			//创建ztree
 			zTreeObj = $.fn.zTree.init($("#menu_ztree"), setting, zTreeNodes);
 			var treeNodes=zTreeObj.getNodesByParam("catalog_id",nodeId,null);
-			var curentTreeNode=treeNodes[0];
-			//获取父节点
-			var liHtml="";
-			var checkAllParents1=function(curentTreeNode){
-				zTreeObj.expandNode(curentTreeNode, true, false, true,false);
-				if(curentTreeNode==null){
-					return;
-				}else{
-					if(!liHtml){
-						liHtml="<li><a>"+curentTreeNode.catalog_name+"</a></li>";
+			if(treeNodes && treeNodes.length>0){
+				var curentTreeNode=treeNodes[0];
+				//获取父节点
+				var liHtml="";
+				var checkAllParents1=function(curentTreeNode){
+					zTreeObj.expandNode(curentTreeNode, true, false, true,false);
+					if(curentTreeNode==null){
+						return;
 					}else{
-						liHtml="<li><a>"+curentTreeNode.catalog_name+"</a></li><li class=\"split-li\">></li>"+liHtml;
+						if(!liHtml){
+							liHtml="<li><a>"+curentTreeNode.catalog_name+"</a></li>";
+						}else{
+							liHtml="<li><a>"+curentTreeNode.catalog_name+"</a></li><li class=\"split-li\">></li>"+liHtml;
+						}
+						checkAllParents1(curentTreeNode.getParentNode());
 					}
-					checkAllParents1(curentTreeNode.getParentNode());
 				}
+				checkAllParents1(curentTreeNode);
+				//设置选中菜单区域对应的背景色
+				var currentSelSpanId=curentTreeNode.tId+"_span";
+				$("#"+currentSelSpanId).attr("class","credit-span-blue");
+				if(curentTreeNode.tId=="menu_ztree_1"){
+					$("#"+currentSelSpanId).parents("li:last").attr("style","border-top: none;");
+				}
+				$("#"+currentSelSpanId).parents("li:last").addClass("ztree-li-selected");
+				//设置面包屑
+				$(".credit-breadcrumb").html(liHtml);
+				$(".credit-breadcrumb").find("li:last").find("a").attr("style","color:blue;");
 			}
-			checkAllParents1(curentTreeNode);
-			//设置选中菜单区域对应的背景色
-			var currentSelSpanId=curentTreeNode.tId+"_span";
-			$("#"+currentSelSpanId).attr("class","credit-span-blue");
-			if(curentTreeNode.tId=="menu_ztree_1"){
-				$("#"+currentSelSpanId).parents("li:last").attr("style","border-top: none;");
-			}
-			$("#"+currentSelSpanId).parents("li:last").addClass("ztree-li-selected");
-			//设置面包屑
-			$(".credit-breadcrumb").html(liHtml);
-			$(".credit-breadcrumb").find("li:last").find("a").attr("style","color:blue;");
 			loadingBox.hideLoading();
 		},error:function(error){
 		    loadingBox.hideLoading();
